@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="./style/style.css" />
+        <link rel="stylesheet" type="text/css" href="./style/index_style.css" />
+        <title>SmartEXPO</title>
+
+    </head>
+
+    <body>
+        <div id="header">
+            <p class="navi">
+                <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+            </p>
+            <img id="logo" src="./images/logo.png">
+            <div id="decologo">
+                <div id="shortbar"></div>
+                <div id="longbar"></div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div id="backbar"></div><!-- this is the background of content part-->
+            <div id="framewrapper">
+                <div id="frame">
+                    <img class="frame_content" src="./images/frame.png" />
+                    <img id="display_item" src="./images/item.png"/>
+                    <img class="frame_content" src="./images/framehl.png" />
+                </div>
+                <div id="detail">
+                    <h1 class="detail_content">Title</h1>
+                    <div class="detail_content"
+                    style="width:200px;height:3px;background-color:#464646;margin-right:0px;margin-left:auto;"></div>
+                    <p class="detail_content">
+                        This is an item.
+                        <br/>
+                        Here we put some description of the item.
+                        <br/>
+                        We include several lines in the description part of the item.
+                        <br/>
+                        This is only a test of this part. More detailed information will come soon.
+                        <br/>
+                        This is an additional line.should not be displayed for the height constrain
+                        <br/>
+                        more?
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            test
+        </div>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="./scripts/index_effect.js"></script>
+
+    </body>
+</html>

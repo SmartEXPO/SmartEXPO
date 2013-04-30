@@ -1,0 +1,105 @@
+/*
+ * Author: ben
+ * Create time: 30/4/2013
+ * Function: to define the style of the index page.
+ * */
+
+body {
+	float:none;
+}
+
+/*Header part*/
+#header {
+	text-align: center;
+	display: block;
+}
+
+img#logo {
+	margin: 0 auto;
+	display: block;
+}
+
+.navi {
+	margin-left: 5px;
+	margin-right: 5px;
+	color: #ffffff;
+	font-size: 120%;
+	text-decoration: none;
+}
+
+a.navi:hover {
+	color: #464646;
+}
+
+#decologo {
+	margin-top: 20px;
+}
+
+#decologo #longbar {
+	width: 100%;
+	height: 4px;
+	background-color: #464646;
+}
+
+#decologo #shortbar {
+	width: 360px;
+	height: 4px;
+	background-color: #464646;
+	margin: 0 auto;
+}
+
+/*End of header part*/
+
+/*Content part*/
+#content {
+	position: relative;
+	display: block;
+}
+
+#content #backbar {
+	z-index: -1; /*as the background*/
+	position: absolute;
+	top: 150px;
+	background-color: #c8c8c3;
+	width: 100%;
+	height: 200px;
+}
+
+#content #framewrapper {
+	position: relative;
+	margin: 0 auto;
+	width: 1024px;
+}
+
+#content #framewrapper .frame_content {
+	position: absolute; /*relative to framewrapper*/
+	top: 70px;
+	right: 20px;
+}
+
+#content #framewrapper #display_item {
+	position: absolute; /*relative to framewrapper*/
+	top: 80px;
+	right: 46px;
+}
+
+#content #framewrapper #detail {
+	overflow: hidden; /*cannot be put at the end*/
+	position: absolute;
+	top: 150px;
+	left: 20px;
+	text-align: right;
+	height: 180px;
+	width: 400px;
+	text-overflow: ellipsis;
+}
+
+/*End of content part*/
+
+/*Footer part*/
+#footer {
+	position: relative;
+	background-color: black;
+	text-align: center;
+	display: block;
+}
