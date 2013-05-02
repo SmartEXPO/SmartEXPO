@@ -125,8 +125,9 @@ a.navi:hover {
 	height: 609px;
 	width: 677px;
 	top: 50%;
-	left: 0px;
+	left: -677px;
 	margin-top: -304px;
+	
 }
 
 #side_bar #expand_sidebar #sidebar_content {
