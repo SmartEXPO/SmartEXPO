@@ -9,6 +9,7 @@
     </head>
 
     <body>
+        <!--This part should be implemented by a standalone file.-->
         <div id="header">
             <p class="navi">
                 <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
@@ -21,7 +22,6 @@
         </div>
 
         <div id="content">
-            <div id="backbar"></div><!-- this is the background of content part-->
             <div id="framewrapper">
                 <div id="frame">
                     <img class="frame_content" src="./images/frame.png" />
@@ -47,12 +47,29 @@
                     </p>
                 </div>
             </div>
+            <div id="backbar"></div><!-- this is the background of content part-->
         </div>
 
+        <!--This part should be implemented by a standalone file.-->
         <div id="footer">
-            test
+            Copyright (C) 2013 by SmartEXPO orgnization.
         </div>
 
+        <div id="side_bar">
+            <img id="handler" src="./images/handler.png" />
+            <div id="expand_sidebar">
+                <div id="sidebar_content">
+                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
+                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
+                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
+                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
+                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
+                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
+                </div>
+                <div id="handler_vanish"></div>
+            </div> 
+        </div>
+    
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script src="./scripts/index_effect.js"></script>
 

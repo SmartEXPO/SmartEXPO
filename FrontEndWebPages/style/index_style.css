@@ -5,13 +5,12 @@
  * */
 
 body {
-	float:none;
+	float: none;
 }
 
 /*Header part*/
 #header {
 	text-align: center;
-	display: block;
 }
 
 img#logo {
@@ -53,7 +52,7 @@ a.navi:hover {
 /*Content part*/
 #content {
 	position: relative;
-	display: block;
+	min-height: 520px;
 }
 
 #content #backbar {
@@ -99,7 +98,58 @@ a.navi:hover {
 /*Footer part*/
 #footer {
 	position: relative;
-	background-color: black;
 	text-align: center;
-	display: block;
+}
+
+/*End of footer part*/
+/*这个地方数字都写死了*/
+
+/*Sidebar part*/
+
+/*#side_bar {
+ position: fixed;
+ top: 50%;
+ left: 0px;
+ height: 600px;
+ margin-top: -300px;
+ }*/
+
+#side_bar #handler {
+	position: fixed;
+	top: 50%;
+	margin-top: -123px;
+}
+
+#side_bar #expand_sidebar {
+	position: fixed;
+	height: 609px;
+	width: 677px;
+	top: 50%;
+	left: 0px;
+	margin-top: -304px;
+}
+
+#side_bar #expand_sidebar #sidebar_content {
+	height: 574px;
+	width: 650px;
+	background-color: #eeeee8;
+	opacity: 0.8;
+	box-shadow: 0 10px 10px -6px #a9a9a9;
+	-webkit-box-shadow: 0 10px 10px -6px #a9a9a9;
+	-moz-box-shadow: 0 10px 10px -6px #a9a9a9;
+	margin-top: 15px;
+	margin-left: 0px;
+	margin-right: 0px;
+	overflow-y: auto;
+	overflow-x: none;
+}
+
+#side_bar #expand_sidebar #handler_vanish {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-color: #d2d2cd;
+	height: 609px;
+	width: 43px;
+	background-image: url(../images/sidebar_handler.png);
 }
