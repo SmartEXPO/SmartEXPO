@@ -26,16 +26,7 @@ $(document).ready(function() {
     $('#handler').mouseleave(function() {
         $(this).attr("src", "./images/handler.png");
     });
-    $('#handler').click(function() {
-        $(this).animate({
-            'opacity' : '0',
-            'left' : '-43px',
-        }, 'fast');
-
-        $('#expand_sidebar').animate({
-            'left' : '0px',
-        }, 500);
-    });
+    $('#handler').click(sidebar_appear);
 
     $('#handler_vanish').click(function() {
         $('#expand_sidebar').animate({
@@ -50,6 +41,8 @@ $(document).ready(function() {
 
     display();
     setInterval(display, 10000);
+    
+    sidebar_appear();
 });
 
 var t = 0;
@@ -119,3 +112,14 @@ function dechoose() {
 function choose(i) {
     $("#item_chooser #" + i).removeClass("idle").addClass("chosen");
 }
+
+function sidebar_appear() {
+        $("#handler").animate({
+            'opacity' : '0',
+            'left' : '-43px',
+        }, 'fast');
+
+        $('#expand_sidebar').animate({
+            'left' : '0px',
+        }, 500);
+    }
