@@ -6,6 +6,20 @@
         <link rel="stylesheet" type="text/css" href="./style/index_style.css" />
         <title>SmartEXPO</title>
 
+        <script>
+            function infotemplate(title, path, description) {
+                this.title = title;
+                this.path = path;
+                this.description = description;
+            }
+
+            var info = new Array();
+            info[0] = new infotemplate("Title1", "./images/item.png", "This is an item.<br/>here we put some description of the item.<br/>We include servral lines in the description part of the item.<br/>This is only a test of theis part. More detailed information will come soon.");
+            info[1] = new infotemplate("Title2", "./images/item1.png", "This is another item description");
+            info[2] = new infotemplate("Title3", "./images/item2.png", "This is a third item description");
+
+        </script>
+
     </head>
 
     <body>
@@ -23,6 +37,10 @@
 
         <div id="content">
             <div id="framewrapper">
+                <div id="item_chooser">
+                    <div id="0" class="idle"></div>
+                    <div id="1" class="chosen"></div>
+                </div>
                 <div id="frame">
                     <img class="frame_content" src="./images/frame.png" />
                     <img id="display_item" src="./images/item.png"/>
@@ -32,6 +50,7 @@
                     <h1 class="detail_content">Title</h1>
                     <div class="detail_content"
                     style="width:200px;height:3px;background-color:#464646;margin-right:0px;margin-left:auto;"></div>
+                    <!--seperator-->
                     <p class="detail_content">
                         This is an item.
                         <br/>
@@ -56,20 +75,146 @@
         </div>
 
         <div id="side_bar">
-            <img id="handler" src="./images/handler.png" />
+            <img id="handler" src="./images/handler.png"/>
             <div id="expand_sidebar">
                 <div id="sidebar_content">
-                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
-                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
-                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
-                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
-                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
-                    hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
+                    hello
+                    <br/>
                 </div>
                 <div id="handler_vanish"></div>
-            </div> 
+            </div>
         </div>
-    
+
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script src="./scripts/index_effect.js"></script>
 

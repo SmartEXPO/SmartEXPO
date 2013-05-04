@@ -70,6 +70,36 @@ a.navi:hover {
 	width: 1024px;
 }
 
+#framewrapper #item_chooser {
+	height: 25px;
+	width: 200px;
+	position: absolute;
+	top: 355px;
+	left: 280px;
+	overflow: hidden;
+	text-align: right;
+}
+
+#item_chooser .idle {
+	height: 10px;
+	width: 10px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background-color: #C8C8C8;
+	margin-right: 4px;
+	display: inline-block;
+}
+
+#item_chooser .chosen {
+	height: 10px;
+	width: 10px;
+	border-radius: 5px;
+	background-color: #464646;
+	margin-right: 4px;
+	display: inline-block;
+}
+
 #content #framewrapper .frame_content {
 	position: absolute; /*relative to framewrapper*/
 	top: 70px;
@@ -91,6 +121,12 @@ a.navi:hover {
 	height: 180px;
 	width: 400px;
 	text-overflow: ellipsis;
+}
+
+h1.detail_content, p.detail_content {
+	position: relative;
+	right: 50px; /*default*/
+	opacity: 0;
 }
 
 /*End of content part*/
@@ -118,6 +154,7 @@ a.navi:hover {
 	position: fixed;
 	top: 50%;
 	margin-top: -123px;
+	cursor: pointer;
 }
 
 #side_bar #expand_sidebar {
@@ -153,4 +190,5 @@ a.navi:hover {
 	height: 609px;
 	width: 43px;
 	background-image: url(../images/sidebar_handler.png);
+	cursor: pointer;
 }
