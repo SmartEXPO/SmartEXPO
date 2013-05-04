@@ -2,16 +2,24 @@
  * @author Ben
  */
 $(document).ready(function() {
-    
+
     $("#item_chooser").html(pointsgen());
-    $("#item_chooser .idle").mouseenter(function(){
-       $(this).css("background-color","#8f8f8f"); 
+    $("#item_chooser .idle").mouseenter(function() {
+        $(this).addClass("hover");
     });
-    $("#item_chooser .idle").mouseleave(function(){
-        $(this).css("background-color","#c8c8c8");
+    $("#item_chooser .idle").mouseleave(function() {
+        $(this).removeClass("hover");
     });
-    
-    
+    $("#item_chooser .idle").click(function() {
+        
+        t = parseInt($(this).attr("id"));
+        t--;
+        if (t == -1) t = 0;
+        console.log(t);
+        //display();
+        //setInterval(display, 10000);
+    });
+
     $('#handler').mouseenter(function() {
         $(this).attr("src", "./images/handler_hover.png");
     });
@@ -39,7 +47,7 @@ $(document).ready(function() {
             }, 500);
         });
     });
-    
+
     display();
     setInterval(display, 10000);
 });
@@ -63,14 +71,16 @@ function display() {
         }, 350);
         $("img#display_item").animate({
             'opacity' : '0'
-        }, 500, function(){
-                    $("img#display_item").attr("src", dis.path);
+        }, 500, function() {
+            $("img#display_item").attr("src", dis.path);
         });
         $("img#display_item").animate({
             'opacity' : '1'
         }, 500);
         $(this).dequeue();
     });
+    dechoose();
+    choose(t);
     setTimeout(disappear, 9000);
 
 }
@@ -88,7 +98,8 @@ function disappear() {
         $(this).dequeue();
     });
     t++;
-    if (t == info.length) t = 0;
+    if (t == info.length)
+        t = 0;
 }
 
 function pointsgen() {
@@ -97,4 +108,14 @@ function pointsgen() {
         str.push("<div id='" + i + "' class='idle'></div>");
     }
     return str.join("");
+}
+
+function dechoose() {
+    var kids = $("#item_chooser").children();
+    kids.removeClass("chosen");
+    kids.addClass("idle");
+}
+
+function choose(i) {
+    $("#item_chooser #" + i).removeClass("idle").addClass("chosen");
 }
