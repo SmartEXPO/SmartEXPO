@@ -1,0 +1,49 @@
+/*Header part*/
+
+header {
+	height: 100px;
+	width: 100%;
+	text-align: center;
+	margin-top: 30px;
+}
+
+header #logo {
+	display: inline-block;
+}
+
+nav {
+	position: relative;
+	bottom: 30px;
+	margin-left: 20px;
+	color: #ffffff;
+	font-size: 120%;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.navi {
+	margin-left: 5px;
+	margin-right: 5px;
+	color: #ffffff;
+	font-size: 120%;
+	text-decoration: none;
+}
+
+a.navi:hover {
+	color: #464646;
+}
+
+#login {
+	display: inline-block;
+	width: 350px;
+	text-align: right;
+}
+
+/*End of header part*/
+
+/*Footer part*/
+
+footer {
+	position: relative;
+	text-align: center;
+}

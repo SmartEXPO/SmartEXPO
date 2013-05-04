@@ -9,13 +9,23 @@ body {
 }
 
 /*Header part*/
-#header {
+header {
 	text-align: center;
 }
 
 img#logo {
 	margin: 0 auto;
 	display: block;
+}
+
+nav {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #ffffff;
+	font-size: 120%;
+	text-decoration: none;
 }
 
 .navi {
@@ -145,7 +155,7 @@ h1.detail_content, p.detail_content {
 /*End of content part*/
 
 /*Footer part*/
-#footer {
+footer {
 	position: relative;
 	text-align: center;
 }
@@ -196,9 +206,8 @@ h1.detail_content, p.detail_content {
 
 #side_bar #expand_sidebar #handler_vanish {
 	position: absolute;
-	top: 0px;
+	top: 3px;
 	right: 0px;
-	background-color: #d2d2cd;
 	height: 609px;
 	width: 43px;
 	background-image: url(../images/sidebar_handler.png);
