@@ -14,6 +14,7 @@ $(document).ready(function() {
         
         t = parseInt($(this).attr("id"));
         t--;
+        //setInterval(display,1);
         if (t == -1) t = 0;
         console.log(t);
         //display();
