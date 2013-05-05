@@ -41,6 +41,46 @@ a.navi:hover {
 
 /*End of header part*/
 
+/*Content part*/
+#content {
+	position: relative;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+#content #contentwrapper {
+	width: 1024px;
+	margin:0 auto;
+}
+
+#content #contentwrapper #frame {
+	position: relative;
+	margin-left: 0px;
+}
+
+#content #contentwrapper #frame #frame_back {
+	z-index: -1;
+	margin-left: 0;
+	margin-top: 0;
+}
+
+#content #contentwrapper #frame #frame_highlight {
+	position: absolute;
+	top:11px;
+	left: 17px;
+}
+
+#content #contentwrapper #frame #frame_image {
+	height: 485px; /*fixed dimension*/
+	width: 480px;
+	position: absolute;
+	top: 11px;
+	left: 17px;
+}
+
+/*End of content part*/
+
+
 /*Footer part*/
 
 footer {
