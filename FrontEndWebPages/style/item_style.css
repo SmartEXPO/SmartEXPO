@@ -49,13 +49,16 @@ a.navi:hover {
 }
 
 #content #contentwrapper {
+	position: relative;
 	width: 1024px;
 	margin:0 auto;
+	height: auto;
 }
 
 #content #contentwrapper #frame {
 	position: relative;
 	margin-left: 0px;
+	display: inline-block;
 }
 
 #content #contentwrapper #frame #frame_back {
@@ -78,12 +81,49 @@ a.navi:hover {
 	left: 17px;
 }
 
+#contentwrapper #shade {
+	position: absolute;
+	top: -40px;
+	right: 0px;
+	background-image: url(../images/item_shade.png);
+	width: 500px;
+	height: 197px;
+	z-index: 1;
+}
+
+#contentwrapper #title {
+	position: absolute;
+	top: 20px;
+	left: 570px;
+	z-index: 1;
+}
+
+#contentwrapper #description {
+	position: absolute;
+	top: 100px;
+	left: 570px;
+	width: 400px;
+}
+
+#description p:first-letter {
+	font-size: 2em;
+	padding: 0.1em;
+	vertical-align:baseline;
+	text-transform: capitalize;
+}
+
 /*End of content part*/
 
 
 /*Footer part*/
 
 footer {
-	position: relative;
+	position: fixed;
+	bottom: 0;
+	width:100%;
+	background-color: #DADAD2;
+	min-height: 30px;
+	box-shadow: 0 0 20px 30px #dadad2;
 	text-align: center;
+	display: none;
 }
