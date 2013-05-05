@@ -41,6 +41,22 @@ a.navi:hover {
 
 /*End of header part*/
 
+/*Content part*/
+#content {
+	position: relative;
+	width: 100%;
+}
+
+#content #contentwrapper {
+	width: 1024px;
+	margin:0 auto;
+	height: 200px;
+	background-color: black;
+}
+
+/*End of content part*/
+
+
 /*Footer part*/
 
 footer {
