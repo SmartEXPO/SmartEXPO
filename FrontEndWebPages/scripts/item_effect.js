@@ -3,6 +3,8 @@
  */
 
 var isBottomBarDisplayed = false;
+var isSearchBarDisplayed = false;
+var isCommentBarDisplayed = false;
 
 $(document).ready(function() {
     $("#frame").click(function() {
@@ -28,10 +30,64 @@ $(document).ready(function() {
     });
 
     $(".func_button").mouseenter(function() {
-        $(this).fadeTo('fast',1);
+        $(this).fadeTo('fast', 1);
     });
-    
+
     $(".func_button").mouseleave(function() {
-        $(this).fadeTo('fast',0.8);
+        $(this).fadeTo('fast', 0.8);
     })
+
+    $("#search_img").click(function() {
+        if (isSearchBarDisplayed == false) {
+            isSearchBarDisplayed = true;
+            $("#search").animate({
+                "width" : "250px",
+            }, 500);
+            $("#search_box").css('display', 'inline');
+            $("#search_box").animate({
+                width : '200px',
+            }, 500);
+            $("#search_box").val("Search");
+        } else {
+            isSearchBarDisplayed = false;
+            $("#search").animate({
+                "width" : "40px",
+                "height" : "40px",
+            }, 500);
+            $("#search_box").animate({
+                width : '0px',
+            }, 500, function() {
+                $("#search_box").css('display', 'none');
+            });
+            $("#search_result").css('display', 'none');
+
+        }
+    });
+
+    $("#search_box").focus(function() {
+        $(this).val("");
+        $("#search").animate({
+            height : '300px',
+        }, 500, function() {
+            $("#search_result").css('display', 'block');
+
+        });
+    });
+
+    $("#comment_img").click(function() {
+        console.log("aa");
+        if ( isCommentBarDisplayed == false) {
+            isCommentBarDisplayed = true;
+            $("#comment").animate({
+                "width" : "250px",
+            }, 500);
+        } else {
+            isCommentBarDisplayed = false;
+            $("#comment").animate({
+                "width" : "40px",
+                'height' : '40px',
+            }, 500);
+
+        }
+    });
 });

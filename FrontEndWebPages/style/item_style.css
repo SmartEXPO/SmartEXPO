@@ -139,6 +139,7 @@ footer {
 }
 
 .func_button {
+	position: relative;
 	height: 40px;
 	width: 40px;
 	border-radius: 20px;
@@ -152,6 +153,40 @@ footer {
 	-webkit-box-shadow: 0 0 10px ;
 	-moz-box-sadow: 0 0 10px;
 	opacity: 0.8;
-	text-align: center;
 	cursor: pointer;
+}
+
+#function img {
+	position: absolute;
+	left:7px;
+	bottom: 6px;
+}
+
+#function #search_box {
+	height: 25px;
+	/*width: 200px;*/
+	width: 0;
+	border-radius: 10px;
+	border: none;
+	background-color:#DADAD2;
+	font-size: 110%;
+	position: absolute;
+	right: 10px;
+	bottom: 7px;
+	display: none;
+	padding-left:2px;
+	padding-right: 2px;
+}
+
+#function #search_result {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	bottom: 5px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	display:none;
+	height: 250px;
+	color: white;
 }
