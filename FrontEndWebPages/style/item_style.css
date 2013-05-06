@@ -122,8 +122,34 @@ footer {
 	bottom: 0;
 	width:100%;
 	background-color: #DADAD2;
-	min-height: 30px;
+	min-height: 20px;
 	box-shadow: 0 0 20px 30px #dadad2;
+	-webkit-box-shadow: 0 0 20px 30px #dadad2;
+	-moz-box-shadow: 0 0 20px 30px #dadad2;
 	text-align: center;
 	display: none;
+}
+
+/*Function button part*/
+
+#function {
+	position: fixed;
+	bottom: 30px;
+	right: 10%;
+}
+
+.func_button {
+	height: 50px;
+	width: 50px;
+	border-radius: 25px;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	background-color: #464646;
+	z-index: 2;
+	display: inline-block;
+	margin-right: 10px;
+	box-shadow: 0 0 10px ;
+	-webkit-box-shadow: 0 0 10px ;
+	-moz-box-sadow: 0 0 10px;
+
 }
