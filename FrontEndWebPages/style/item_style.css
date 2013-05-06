@@ -139,11 +139,11 @@ footer {
 }
 
 .func_button {
-	height: 50px;
-	width: 50px;
-	border-radius: 25px;
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
+	height: 40px;
+	width: 40px;
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
 	background-color: #464646;
 	z-index: 2;
 	display: inline-block;
@@ -151,5 +151,7 @@ footer {
 	box-shadow: 0 0 10px ;
 	-webkit-box-shadow: 0 0 10px ;
 	-moz-box-sadow: 0 0 10px;
-
+	opacity: 0.8;
+	text-align: center;
+	cursor: pointer;
 }

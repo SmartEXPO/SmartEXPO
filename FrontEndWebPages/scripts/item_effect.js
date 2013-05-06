@@ -24,7 +24,14 @@ $(document).ready(function() {
                 isBottomBarDisplayed = false;
                 $("footer").fadeOut('slow');
             }
-
         }
     });
+
+    $(".func_button").mouseenter(function() {
+        $(this).fadeTo('fast',1);
+    });
+    
+    $(".func_button").mouseleave(function() {
+        $(this).fadeTo('fast',0.8);
+    })
 });
