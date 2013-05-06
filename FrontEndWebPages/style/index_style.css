@@ -190,17 +190,6 @@ footer {
 }
 
 #side_bar #expand_sidebar #sidebar_content {
-	position: relative;
-	top: -574px;
-	height: 574px;
-	width: 650px;
-	margin-left: 0px;
-	margin-right: 0px;
-	overflow-y: auto;
-	overflow-x: none;
-}
-
-#side_bar #expand_sidebar #sidebar_back {
 	height: 574px;
 	width: 650px;
 	background-color: #eeeee8;
@@ -208,9 +197,11 @@ footer {
 	box-shadow: 0 10px 10px -6px #a9a9a9;
 	-webkit-box-shadow: 0 10px 10px -6px #a9a9a9;
 	-moz-box-shadow: 0 10px 10px -6px #a9a9a9;
-	margin-top:15px;
+	margin-top: 15px;
 	margin-left: 0px;
 	margin-right: 0px;
+	overflow-y: auto;
+	overflow-x: none;
 }
 
 #side_bar #expand_sidebar #handler_vanish {
