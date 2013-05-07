@@ -38,6 +38,7 @@ $(document).ready(function() {
     })
 
     $("#search_img").click(function() {
+        hideCommentPane();
         if (isSearchBarDisplayed == false) {
             isSearchBarDisplayed = true;
             $("#search").animate({
@@ -49,20 +50,24 @@ $(document).ready(function() {
             }, 500);
             $("#search_box").val("Search");
         } else {
-            isSearchBarDisplayed = false;
-            $("#search").animate({
-                "width" : "40px",
-                "height" : "40px",
-            }, 500);
-            $("#search_box").animate({
-                width : '0px',
-            }, 500, function() {
-                $("#search_box").css('display', 'none');
-            });
-            $("#search_result").css('display', 'none');
-
+            hideSearchPane();
         }
     });
+
+    function hideSearchPane() {
+        isSearchBarDisplayed = false;
+        $("#search").animate({
+            "width" : "40px",
+            "height" : "40px",
+        }, 500);
+        $("#search_box").animate({
+            width : '0px',
+        }, 500, function() {
+            $("#search_box").css('display', 'none');
+        });
+        $("#search_result").css('display', 'none');
+    }
+
 
     $("#search_box").focus(function() {
         $(this).val("");
@@ -75,19 +80,23 @@ $(document).ready(function() {
     });
 
     $("#comment_img").click(function() {
-        console.log("aa");
-        if ( isCommentBarDisplayed == false) {
+        hideSearchPane();
+        if (isCommentBarDisplayed == false) {
             isCommentBarDisplayed = true;
             $("#comment").animate({
                 "width" : "250px",
             }, 500);
         } else {
-            isCommentBarDisplayed = false;
-            $("#comment").animate({
-                "width" : "40px",
-                'height' : '40px',
-            }, 500);
-
+            hideCommentPane();
         }
     });
+
+    function hideCommentPane() {
+        isCommentBarDisplayed = false;
+        $("#comment").animate({
+            "width" : "40px",
+            'height' : '40px',
+        }, 500);
+    }
+
 });
