@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListVideoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListVideoEmpty}" rendered="#{videoController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{videoController.items.rowCount > 0}">
+                    <h:outputText value="#{videoController.pagination.pageFirstItem + 1}..#{videoController.pagination.pageLastItem + 1}/#{videoController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{videoController.previous}" value="#{bundle.Previous} #{videoController.pagination.pageSize}" rendered="#{videoController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{videoController.next}" value="#{bundle.Next} #{videoController.pagination.pageSize}" rendered="#{videoController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{videoController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVideoTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVideoTitle_title}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.title}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVideoTitle_url}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.url}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVideoTitle_videoId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.videoId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{videoController.prepareView}" value="#{bundle.ListVideoViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{videoController.prepareEdit}" value="#{bundle.ListVideoEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{videoController.destroy}" value="#{bundle.ListVideoDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{videoController.prepareCreate}" value="#{bundle.ListVideoCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListVideoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

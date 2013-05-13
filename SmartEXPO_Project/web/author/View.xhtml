@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewAuthorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewAuthorLabel_authorId}"/>
+                    <h:outputText value="#{authorController.selected.authorId}" title="#{bundle.ViewAuthorTitle_authorId}"/>
+                    <h:outputText value="#{bundle.ViewAuthorLabel_name}"/>
+                    <h:outputText value="#{authorController.selected.name}" title="#{bundle.ViewAuthorTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewAuthorLabel_birthday}"/>
+                    <h:outputText value="#{authorController.selected.birthday}" title="#{bundle.ViewAuthorTitle_birthday}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewAuthorLabel_deathDate}"/>
+                    <h:outputText value="#{authorController.selected.deathDate}" title="#{bundle.ViewAuthorTitle_deathDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewAuthorLabel_introduction}"/>
+                    <h:outputText value="#{authorController.selected.introduction}" title="#{bundle.ViewAuthorTitle_introduction}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{authorController.destroyAndView}" value="#{bundle.ViewAuthorDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewAuthorEditLink}"/>
+                <br />
+                <h:commandLink action="#{authorController.prepareCreate}" value="#{bundle.ViewAuthorCreateLink}" />
+                <br />
+                <h:commandLink action="#{authorController.prepareList}" value="#{bundle.ViewAuthorShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewAuthorIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreatePermissionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreatePermissionLabel_permissionId}" for="permissionId" />
+                    <h:inputText id="permissionId" value="#{permissionController.selected.permissionId}" title="#{bundle.CreatePermissionTitle_permissionId}" required="true" requiredMessage="#{bundle.CreatePermissionRequiredMessage_permissionId}"/>
+                    <h:outputLabel value="#{bundle.CreatePermissionLabel_permissionName}" for="permissionName" />
+                    <h:inputText id="permissionName" value="#{permissionController.selected.permissionName}" title="#{bundle.CreatePermissionTitle_permissionName}" required="true" requiredMessage="#{bundle.CreatePermissionRequiredMessage_permissionName}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{permissionController.create}" value="#{bundle.CreatePermissionSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{permissionController.prepareList}" value="#{bundle.CreatePermissionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreatePermissionIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

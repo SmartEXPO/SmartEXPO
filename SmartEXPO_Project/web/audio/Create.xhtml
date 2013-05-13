@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateAudioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateAudioLabel_audioId}" for="audioId" />
+                    <h:inputText id="audioId" value="#{audioController.selected.audioId}" title="#{bundle.CreateAudioTitle_audioId}" required="true" requiredMessage="#{bundle.CreateAudioRequiredMessage_audioId}"/>
+                    <h:outputLabel value="#{bundle.CreateAudioLabel_title}" for="title" />
+                    <h:inputText id="title" value="#{audioController.selected.title}" title="#{bundle.CreateAudioTitle_title}" required="true" requiredMessage="#{bundle.CreateAudioRequiredMessage_title}"/>
+                    <h:outputLabel value="#{bundle.CreateAudioLabel_url}" for="url" />
+                    <h:inputText id="url" value="#{audioController.selected.url}" title="#{bundle.CreateAudioTitle_url}" required="true" requiredMessage="#{bundle.CreateAudioRequiredMessage_url}"/>
+                    <h:outputLabel value="#{bundle.CreateAudioLabel_description}" for="description" />
+                    <h:inputText id="description" value="#{audioController.selected.description}" title="#{bundle.CreateAudioTitle_description}" required="true" requiredMessage="#{bundle.CreateAudioRequiredMessage_description}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{audioController.create}" value="#{bundle.CreateAudioSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{audioController.prepareList}" value="#{bundle.CreateAudioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateAudioIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
