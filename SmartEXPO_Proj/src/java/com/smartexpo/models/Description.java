@@ -31,7 +31,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Description.findAll", query = "SELECT d FROM Description d"),
     @NamedQuery(name = "Description.findByDescriptionId", query = "SELECT d FROM Description d WHERE d.descriptionId = :descriptionId"),
     @NamedQuery(name = "Description.findByTitle", query = "SELECT d FROM Description d WHERE d.title = :title"),
-    @NamedQuery(name = "Description.findByContent", query = "SELECT d FROM Description d WHERE d.content = :content")})
+    @NamedQuery(name = "Description.findByContent", query = "SELECT d FROM Description d WHERE d.content = :content"),
+    @NamedQuery(name = "Description.findByItemId", query = "SELECT d FROM Description d WHERE d.itemId = :itemId")
+})
+
 public class Description implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

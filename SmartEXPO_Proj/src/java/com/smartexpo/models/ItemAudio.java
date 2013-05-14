@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ItemAudio.findAll", query = "SELECT i FROM ItemAudio i"),
-    @NamedQuery(name = "ItemAudio.findByItemAudioId", query = "SELECT i FROM ItemAudio i WHERE i.itemAudioId = :itemAudioId")})
+    @NamedQuery(name = "ItemAudio.findByItemAudioId", query = "SELECT i FROM ItemAudio i WHERE i.itemAudioId = :itemAudioId"),
+    @NamedQuery(name = "ItemAudio.findByItemId",query = "SELECT i FROM ItemAudio i WHERE i.itemId = :itemId")})
 public class ItemAudio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
