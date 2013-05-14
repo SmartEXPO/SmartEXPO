@@ -120,9 +120,9 @@ public class InsertItemServlet extends HttpServlet {
             utx.commit();
             
             GetInfo gi=new GetInfo(em, utx);
-            Item item2 = gi.getItemByID(11);
+            Item item2 = gi.getItemByID(1);
             logger.log(Level.WARNING,item2.getItemName());
-            List<Author> authors=gi.getAuthorsByItemID(11);
+            List<Author> authors=gi.getAuthorsByItemID(item.getItemId());
             for(int i=0;i<authors.size();i++){
                 logger.log(Level.WARNING,authors.get(i).getName());
             }
