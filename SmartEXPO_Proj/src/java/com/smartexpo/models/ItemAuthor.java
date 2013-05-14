@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ItemAuthor.findAll", query = "SELECT i FROM ItemAuthor i"),
-    @NamedQuery(name = "ItemAuthor.findByItemAuthorId", query = "SELECT i FROM ItemAuthor i WHERE i.itemAuthorId = :itemAuthorId")})
+    @NamedQuery(name = "ItemAuthor.findByItemAuthorId", query = "SELECT i FROM ItemAuthor i WHERE i.itemAuthorId = :itemAuthorId"),
+    @NamedQuery(name = "ItemAuthor.findByItemId",query = "SELECT i FROM ItemAuthor i WHERE i.itemId = :itemId")})//WHERE i.itemId.itemId = :itemId
 public class ItemAuthor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,7 +42,9 @@ public class ItemAuthor implements Serializable {
     @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "AUTHOR_ID")
     @ManyToOne(optional = false)
     private Author authorId;
-
+    
+    
+    
     public ItemAuthor() {
     }
 

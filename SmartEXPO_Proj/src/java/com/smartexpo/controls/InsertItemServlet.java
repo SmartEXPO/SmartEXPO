@@ -12,10 +12,12 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
+import java.awt.ItemSelectable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -78,7 +80,7 @@ public class InsertItemServlet extends HttpServlet {
 
             Author author = new Author();
             author.setIntroduction(request.getParameter("author_introduction"));
-            author.setName("author_name");
+            author.setName(request.getParameter("author_name"));
 
 
             ItemAuthor itemAuthor = new ItemAuthor();
@@ -116,8 +118,14 @@ public class InsertItemServlet extends HttpServlet {
             em.persist(itemVideo);
             
             utx.commit();
-
-
+            
+            GetInfo gi=new GetInfo(em, utx);
+            Item item2 = gi.getItemByID(11);
+            logger.log(Level.WARNING,item2.getItemName());
+            List<Author> authors=gi.getAuthorsByItemID(11);
+            for(int i=0;i<authors.size();i++){
+                logger.log(Level.WARNING,authors.get(i).getName());
+            }
 
             request.getRequestDispatcher("itemPages/itemInserted.jsp").forward(request, response);
         } catch (NotSupportedException ex) {
