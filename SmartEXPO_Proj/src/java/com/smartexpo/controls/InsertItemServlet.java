@@ -120,13 +120,42 @@ public class InsertItemServlet extends HttpServlet {
             utx.commit();
             
             GetInfo gi=new GetInfo(em, utx);
-            Item item2 = gi.getItemByID(1);
-            logger.log(Level.WARNING,item2.getItemName());
+            logger.log(Level.WARNING,item.getItemName());
             List<Author> authors=gi.getAuthorsByItemID(item.getItemId());
             for(int i=0;i<authors.size();i++){
                 logger.log(Level.WARNING,authors.get(i).getName());
             }
+            
+            
+            List<Audio> audios=gi.getAudioByItemID(item.getItemId());
+            for(int i=0;i<audios.size();i++){
+                logger.log(Level.WARNING,audios.get(i).getTitle());
+            }
 
+            List<Video> videos=gi.getVideoByItemID(item.getItemId());
+            for(int i=0;i<authors.size();i++){
+                logger.log(Level.WARNING,videos.get(i).getTitle());
+            }
+            
+            List<Description> descriptions=gi.getDescriptionByItemID(item.getItemId());
+            for(int i=0;i<authors.size();i++){
+                logger.log(Level.WARNING,descriptions.get(i).getTitle());
+            }
+            
+            
+            request.setAttribute("item_name", gi.getItemByID(item.getItemId()).getItemName());
+            request.setAttribute("des_content", gi.getDescriptionByItemID(item.getItemId()).get(0).getContent());
+            request.setAttribute("des_title", gi.getDescriptionByItemID(item.getItemId()).get(0).getTitle());
+            request.setAttribute("author_introduction", gi.getAuthorsByItemID(item.getItemId()).get(0).getIntroduction());
+            request.setAttribute("author_name", gi.getAuthorsByItemID(item.getItemId()).get(0).getName());
+            request.setAttribute("video_title", gi.getVideoByItemID(item.getItemId()).get(0).getTitle());
+            request.setAttribute("video_url", gi.getVideoByItemID(item.getItemId()).get(0).getUrl());
+            request.setAttribute("video_description", gi.getVideoByItemID(item.getItemId()).get(0).getDescription());
+            request.setAttribute("audio_description", gi.getAudioByItemID(item.getItemId()).get(0).getDescription());
+            request.setAttribute("audio_title", gi.getAudioByItemID(item.getItemId()).get(0).getTitle());
+            request.setAttribute("audio_url", gi.getAudioByItemID(item.getItemId()).get(0).getUrl());
+            
+            
             request.getRequestDispatcher("itemPages/itemInserted.jsp").forward(request, response);
         } catch (NotSupportedException ex) {
             Logger.getLogger(InsertItemServlet.class.getName()).log(Level.SEVERE, null, ex);

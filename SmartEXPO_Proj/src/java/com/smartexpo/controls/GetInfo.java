@@ -4,9 +4,14 @@
  */
 package com.smartexpo.controls;
 
+import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
+import com.smartexpo.models.Description;
 import com.smartexpo.models.Item;
+import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
+import com.smartexpo.models.ItemVideo;
+import com.smartexpo.models.Video;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -55,6 +60,46 @@ public class GetInfo {
         
         
         return authors;
+        
+    }
+    
+    
+    public List<Audio> getAudioByItemID(int id){
+        if(item==null){
+            getItemByID(id);
+        }
+        List<ItemAudio> itemAudios= em.createNamedQuery("ItemAudio.findByItemId").setParameter("itemId", item).getResultList();//.setParameter("itemId", item.getItemId())
+        List<Audio> audios=new ArrayList<Audio>();
+        for(int i=0;i<itemAudios.size();i++){
+            ItemAudio ia=itemAudios.get(i);
+            audios.addAll(em.createNamedQuery("Audio.findByAudioId").setParameter("audioId", ia.getAudioId().getAudioId()).getResultList());
+        }
+        
+        
+        return audios;
+    }
+    
+    public List<Video> getVideoByItemID(int id){
+        if(item==null){
+            getItemByID(id);
+        }
+        List<ItemVideo> itemVideos= em.createNamedQuery("ItemVideo.findByItemId").setParameter("itemId", item).getResultList();//.setParameter("itemId", item.getItemId())
+        List<Video> videos=new ArrayList<Video>();
+        for(int i=0;i<itemVideos.size();i++){
+            ItemVideo ia=itemVideos.get(i);
+            videos.addAll(em.createNamedQuery("Video.findByVideoId").setParameter("videoId", ia.getVideoId().getVideoId()).getResultList());
+        }
+        
+        
+        return videos;
+    }
+    public List<Description> getDescriptionByItemID(int id){
+        if(item==null){
+            getItemByID(id);
+        }
+        
+        List<Description> descriptions=em.createNamedQuery("Description.findByItemId").setParameter("itemId", item).getResultList();
+        return descriptions;
         
     }
 }
