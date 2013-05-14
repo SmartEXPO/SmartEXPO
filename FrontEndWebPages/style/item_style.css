@@ -84,7 +84,7 @@ a.navi:hover {
 #contentwrapper #shade {
 	position: absolute;
 	top: -40px;
-	right: 0px;
+	left: 570px;
 	background-image: url(../images/item_shade.png);
 	width: 500px;
 	height: 197px;

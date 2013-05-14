@@ -28,6 +28,9 @@
 			.video_s {
 			    border: 4px solid #464646;
 			}
+			.content_fixed {
+			    /*position:relative;*/
+			}
         </style>
 
     </head>
@@ -81,10 +84,10 @@
                             this is the description of this item.9
                         </p>
                         <h1 class="content_title">video</h1>
-                        <video class="video_s" width="360" height="270" controls>
+                        <video width="360" height="270" controls>
                             <source src="./videos/movie.mp4" type="video/mp4">
                             <source src="./videos/movie.ogg" type="video/ogg">
-                            Your browser does not support the HTML5 video tag.
+                            Your browser does not support the HTML5 video.
                         </video>
                         <h1 class="content_title">See Also</h1>
                         <p>This is the content of see also</p>
@@ -94,13 +97,13 @@
                         <br/>
                     </div>
 
-                    <div id="content_fixed" style="position:relative;width:1024px;">
-                        <div id="frame">
+                    <!-- <div id="content_fixed" style="position:relative;width:1024px;"> -->
+                        <div id="frame" class="content_fixed">
                             <img id="frame_back" src="./images/item_frame.png" />
                             <img id="frame_image" src="./images/item_item.png" />
                             <img id="frame_highlight" src="./images/item_frame_highlight.png" />
                         </div>
-                        <div>
+                        <div  class="content_fixed">
 
                             <div id="shade"></div>
                             <div id="title">
@@ -110,7 +113,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
 
