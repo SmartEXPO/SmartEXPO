@@ -236,9 +236,9 @@ footer {
 .inbox {
 	font-size: 20px;
 	margin-top: 10px;
-	margin-left: 0px;
+	margin-left: 10px;
 	height: 35px;
-	width: 300px;
+	width: 280px;
 	border: none;
 	border-radius: 0px;
 	-webkit-border-radius: 0px;
