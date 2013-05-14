@@ -98,5 +98,23 @@ $(document).ready(function() {
             'height' : '40px',
         }, 500);
     }
+    
+    $('.inbox').focus(function() {
+        $(this).val("");
+        $(this).css('color','black');
+        if ($(this).attr('name') === "password") {
+            $(this).attr('type','password');
+        }
+    });
 
 });
+
+function popupLogin() {
+    $('#overall_shade').fadeTo('fast',0.4);
+    $('#login_panel').fadeIn('fast');
+}
+
+function vanishLogin() {
+    $('#overall_shade').fadeOut('fast');
+    $('#login_panel').fadeOut('fast');
+}

@@ -29,7 +29,7 @@
                 <nav>
                     <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
                     <div id="login">
-                        <a class="navi" href="#">Log in</a>
+                        <a class="navi" href="#" onclick="popupLogin();void(0);">Log in</a>
                     </div>
                 </nav>
                 <!--seperator-->
@@ -144,18 +144,31 @@
                 Copyright &copy; 2013 by SmartEXPO orgnization.
             </footer>
         </div>
-        
+
         <div id="function">
             <div id="search" class="func_button">
-                <div id="search_result">here we put search results, using ajax</div>
+                <div id="search_result">
+                    here we put search results, using ajax
+                </div>
                 <img id="search_img" src="./images/item_search_button.png" />
                 <input id="search_box" type="text" value="Search" />
             </div>
             <div id="comment" class="func_button">
-                <img id="comment_img" src="./images/item_comment_button.png" /> 
+                <img id="comment_img" src="./images/item_comment_button.png" />
             </div>
         </div>
-        
+
+        <div id="overall_shade"></div>
+
+        <div id="login_panel">
+            <form action="#" method="POST">
+                <input type="text" class="inbox" id="username" name="username" value="Username" />
+                <input type="text" class="inbox" id="password" name="password" value="Password" />
+                <input type="submit" id="login_button" name="login_button" value="Sign in" />
+                <input type="button" id="close_panel" value="x" onclick="vanishLogin();void(0);" />
+            </form>
+        </div>
+
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script src="./scripts/item_effect.js"></script>
 
