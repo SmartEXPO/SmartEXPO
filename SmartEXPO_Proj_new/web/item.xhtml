@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta charset="utf-8" />
+        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+        Remove this if you use the .htaccess -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="description" content="" />
+        <meta name="author" content="Ben" />
+
+        <!--<meta name="viewport" content="width=device-width; user-scalable=no, maximun-scale=1.0" />-->
+
+        <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+        <h:outputStylesheet library="theme1" name="css/style.css" />
+        <h:outputStylesheet library="theme1" name="css/item_style.css" />
+
+        <title>SmartEXPO</title>
+
+        <style>
+            h1.content_title {
+                text-decoration: underline;
+                text-transform: uppercase;
+            }
+            .video_s {
+                border: 4px solid #464646;
+            }
+            .content_fixed {
+                /*position:relative;*/
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div>
+            <header>
+                <h:graphicImage id="logo" library="theme1" name="images/item_logo.png" />
+                <nav>
+                    <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+                    <div id="login">
+                        <a class="navi" href="#" onclick="popupLogin();
+                                void(0);">Log in</a>
+                    </div>
+                </nav>
+                <!--seperator-->
+                <div style="height:4px;width:100%;background-color:#464646;position:relative;bottom:6px;"></div>
+            </header>
+
+            <div id="content">
+                <div id="contentwrapper">
+                    <div id="description">
+                        <br/>
+                        <h1 class="content_title">Description</h1>
+                        <p id="description_content">
+                            #{itemManagedBean.description}
+                            this is description.
+                            this is description.
+                            this is description.
+                            this is description.
+                            this is description.
+                            this is description.
+                            this is description.
+                        </p>
+                        <h1 class="content_title">video</h1>
+                        <p:media value="#{itemManagedBean.videoURL}"
+                                 width="360" height="270">
+                            <f:param name="autoPlay" value="false" />
+                        </p:media>
+                        <h1 class="content_title">See Also</h1>
+                        <p>This is the content of see also</p>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
+
+                    <!--<div id="content_fixed" style="position:relative;width:1024px;">-->
+                    <div id="frame" class="content_fixed">
+                        <h:graphicImage id="frame_back" library="theme1" name="images/item_frame.png" />
+                        <h:graphicImage id="frame_image" library="theme1" name="#{itemManagedBean.pic}" />
+                        <h:graphicImage id="frame_highlight" library="theme1" name="images/item_frame_highlight.png" />
+                    </div>
+                    <div class="content_fixed">
+
+                        <div id="shade"></div>
+                        <div id="title">
+                            <h1>#{itemManagedBean.itemName}</h1>
+                            <div class="separator" style="margin-top:-10px;margin-bottom:-15px;"></div>
+                            <h3>#{itemManagedBean.authorNames}</h3>
+                        </div>
+
+                    </div>
+                    <!--</div>-->
+                </div>
+            </div>
+
+            <footer>
+                Copyright &copy; 2013 by SmartEXPO orgnization.
+            </footer>
+        </div>
+
+        <div id="function">
+            <div id="search" class="func_button">
+                <div id="search_result">
+                    here we put search results, using ajax
+                </div>
+                <h:graphicImage id="search_img" library="theme1" name="images/item_search_button.png" />
+                <h:inputText id="search_box" class="func_input_box" value="Search" />
+            </div>
+            <div id="comment" class="func_button">
+                <div id="users_comment">
+                    here we put user comments, using ajax
+                </div>
+                <h:graphicImage id="comment_img" library="theme1" name="images/item_comment_button.png" />
+                <div id="comment_input">
+                    <h:inputText id="comment_name_box" class="func_input_box"
+                                 value="Name" style="display:inline-block" />
+                    <h:inputText id="comment_content_box" class="func_input_box"
+                                 value="Your Comment" style="display: inline-block" />
+                </div>
+            </div>
+        </div>
+
+        <div id="overall_shade"></div>
+
+        <div id="login_panel">
+            <h:form id="login_form">
+                <input type="text" class="inbox" id="username" name="username" value="#{loginManagedBean.username}" />
+                <input type="text" class="inbox" id="password" name="password" value="#{loginManagedBean.password}" />
+                <h:commandButton class="login_button" type="submit" action="item"
+                                 id="login_button" value="Sign In" />
+                <input type="button" id="close_panel" value="x" onclick="vanishLogin();
+                                void(0);" />
+            </h:form>
+        </div>
+
+        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js" target="head" />
+        <h:outputScript library="theme1" name="scripts/item_effect.js" target="head" />
+    </h:body>
+</html>

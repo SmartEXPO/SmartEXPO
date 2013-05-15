@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1><a href="itemPages/itemInsertPage.jsp">click me to insert item</a></h1>
+        <h1><a href="InsertManagerServlet">click me to insert manager</a></h1>
     </body>
 </html>

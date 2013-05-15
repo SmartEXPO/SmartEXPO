@@ -6,17 +6,23 @@ package com.smartexpo.controls;
 
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
+import com.smartexpo.models.Comment;
 import com.smartexpo.models.Description;
 import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
+import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.ItemVideo;
+import com.smartexpo.models.Manager;
+import com.smartexpo.models.ManagerPermission;
+import com.smartexpo.models.Permission;
 import com.smartexpo.models.Video;
 import java.awt.ItemSelectable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,6 +93,15 @@ public class InsertItemServlet extends HttpServlet {
             itemAuthor.setAuthorId(author);
             itemAuthor.setItemId(item);
 
+            Author author1 = new Author();
+            author1.setIntroduction(request.getParameter("author_introduction"));
+            author1.setName(request.getParameter("author_name")+"something");
+
+
+            ItemAuthor itemAuthor1 = new ItemAuthor();
+            itemAuthor1.setAuthorId(author1);
+            itemAuthor1.setItemId(item);
+            
             Video video = new Video();
             video.setTitle(request.getParameter("video_title"));
             video.setUrl(request.getParameter("video_url"));
@@ -105,15 +120,80 @@ public class InsertItemServlet extends HttpServlet {
             itemAudio.setAudioId(audio);
             itemAudio.setItemId(item);
 
+            Audio audio1 = new Audio();
+            audio1.setDescription(request.getParameter("audio_description"));
+            audio1.setTitle(request.getParameter("audio_title"));
+            audio1.setUrl(request.getParameter("audio_url"));
 
+            ItemAudio itemAudio1=new ItemAudio();
+            itemAudio1.setAudioId(audio1);
+            itemAudio1.setItemId(item);
+
+
+            
+            Manager manager=new Manager();
+            manager.setUsername("asdfasd");
+            manager.setPassword("owefnwnv");
+            
+            Permission permission=new Permission();
+            permission.setPermissionName("asfe11");
+            
+            Permission permission2=new Permission();
+            permission2.setPermissionName("asfe22");
+            
+            ManagerPermission mp=new ManagerPermission();
+            mp.setManagerId(manager);
+            mp.setPermissionId(permission);
+            
+            ManagerPermission mp2=new ManagerPermission();
+            mp2.setManagerId(manager);
+            mp2.setPermissionId(permission2);
+            
+            
+            Comment comment=new Comment();
+            comment.setContent("heiehei");
+            comment.setUsername("max");
+            comment.setTime(new Date());
+            
+            Comment comment2=new Comment();
+            comment2.setContent("asdfadf");
+            comment2.setUsername("asdf");
+            comment2.setTime(new Date());
+            
+            
+            ItemComment ic=new ItemComment();
+            ic.setItemId(item);
+            ic.setCommentId(comment);
+            
+            ItemComment ic2=new ItemComment();
+            ic2.setItemId(item);
+            ic2.setCommentId(comment2);
+            
             utx.begin();
+            
+            em.persist(permission);
+            em.persist(manager);
+            em.persist(mp);
+            em.persist(mp2);
+            em.persist(permission2);
+            
+            em.persist(comment);
+            em.persist(ic);
+           // em.persist(item);
+            
+            em.persist(comment2);
+            em.persist(ic2);
             
             em.persist(item);
             em.persist(des);
             em.persist(itemAuthor);
+            em.persist(itemAuthor1);
+            em.persist(author1);
             em.persist(author);
             em.persist(audio);
             em.persist(itemAudio);
+            em.persist(audio1);
+            em.persist(itemAudio1);
             em.persist(video);
             em.persist(itemVideo);
             
@@ -133,13 +213,25 @@ public class InsertItemServlet extends HttpServlet {
             }
 
             List<Video> videos=gi.getVideoByItemID(item.getItemId());
-            for(int i=0;i<authors.size();i++){
+            for(int i=0;i<videos.size();i++){
                 logger.log(Level.WARNING,videos.get(i).getTitle());
             }
             
             List<Description> descriptions=gi.getDescriptionByItemID(item.getItemId());
-            for(int i=0;i<authors.size();i++){
+            for(int i=0;i<descriptions.size();i++){
                 logger.log(Level.WARNING,descriptions.get(i).getTitle());
+            }
+            
+            List<Permission> permissions = gi.getPermissionByID(4);
+            for (int i = 0; i < permissions.size(); i++) {
+                logger.log(Level.WARNING,permissions.get(i).getPermissionName());
+            }
+            
+            List<Comment> comments = gi.getCommentByItemID(item.getItemId());
+            for (int i=0;i<comments.size();i++){
+                Comment commenti;
+                commenti = comments.get(i);
+                logger.log(Level.WARNING,commenti.getUsername()+" "+commenti.getContent());
             }
             
             

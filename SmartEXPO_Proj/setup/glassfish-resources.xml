@@ -21,4 +21,6 @@
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="jdbc/smartexpo_local" object-type="user" pool-name="mysql_SmartEXPO_rootPool"/>
+    <jdbc-resource enabled="true" jndi-name="jdbc/smart_local" object-type="user" pool-name="mysql_SmartEXPO_rootPool"/>
+    <jdbc-resource enabled="true" jndi-name="jdbc/smart" object-type="user" pool-name="mysql_SmartEXPO_rootPool"/>
 </resources>

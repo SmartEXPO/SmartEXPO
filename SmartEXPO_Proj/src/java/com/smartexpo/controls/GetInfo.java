@@ -6,11 +6,16 @@ package com.smartexpo.controls;
 
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
+import com.smartexpo.models.Comment;
 import com.smartexpo.models.Description;
 import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
+import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.ItemVideo;
+import com.smartexpo.models.Manager;
+import com.smartexpo.models.ManagerPermission;
+import com.smartexpo.models.Permission;
 import com.smartexpo.models.Video;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,7 @@ public class GetInfo {
     private UserTransaction utx=null;
     
     private Item item;
+    private Manager manager;
     
     public GetInfo(EntityManager _em,UserTransaction _utx){
         this.em=_em;
@@ -42,6 +48,30 @@ public class GetInfo {
         }
         return null;
     }
+    
+    
+    
+    
+    
+    public List<Manager> getManagerByManagerID(int id){
+        List<Manager> managers=em.createNamedQuery("Manager.findByManagerId").setParameter("managerId", id).getResultList();
+        if(!managers.isEmpty()){
+            this.manager=managers.get(0);
+            return managers;
+        }      
+        return null;
+    }
+    
+    public List<Manager> getManagerByName(String name){
+        List<Manager> managers= em.createNamedQuery("Manager.findByUsername").setParameter("username", name).getResultList();
+        if(!managers.isEmpty()){
+            this.manager=managers.get(0);
+            return managers;
+        }
+        return null;
+    }
+    
+    
     /**
      *
      * @param id
@@ -62,7 +92,22 @@ public class GetInfo {
         return authors;
         
     }
-    
+    public List<Permission> getPermissionByID(int id){
+        if(manager==null){
+            getManagerByManagerID(id);
+            if(manager==null) return null;
+        }
+        List<ManagerPermission> managerPermissions=em.createNamedQuery("ManagerPermission.findByManagerId").setParameter("managerId", manager).getResultList();
+        List<Permission> permissions=new ArrayList<Permission>();
+        for(int i=0;i<managerPermissions.size();i++){
+            ManagerPermission mp=managerPermissions.get(i);
+            permissions.addAll(em.createNamedQuery("Permission.findByPermissionId").setParameter("permissionId", mp.getPermissionId().getPermissionId()).getResultList());
+        }
+        
+        return permissions;
+        
+        
+    }
     
     public List<Audio> getAudioByItemID(int id){
         if(item==null){
@@ -77,6 +122,21 @@ public class GetInfo {
         
         
         return audios;
+    }
+    
+    public List<Comment> getCommentByItemID(int id){
+        if(item==null){
+            getItemByID(id);
+            
+        }
+        List<ItemComment> itemComments=em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", item).getResultList();
+        List<Comment> comments=new ArrayList<Comment>();
+        for(int i=0;i<itemComments.size();i++){
+            ItemComment ic = itemComments.get(i);
+            comments.addAll(em.createNamedQuery("Comment.findByCommentId").setParameter("commentId", ic.getCommentId().getCommentId()).getResultList());
+        }
+        
+        return comments;
     }
     
     public List<Video> getVideoByItemID(int id){
@@ -102,4 +162,7 @@ public class GetInfo {
         return descriptions;
         
     }
+    
+    
+    
 }
