@@ -19,6 +19,8 @@ public class LoginManagedBean {
      * Creates a new instance of LoginManagedBean
      */
     public LoginManagedBean() {
+        username = "Username";
+        password = "Password";
     }
     
     private String username;

@@ -299,7 +299,7 @@ footer {
     border: none;
 }
 
-.close_panel {
+#close_panel {
     position: absolute;
     top: 8px;
     right: 8px;
