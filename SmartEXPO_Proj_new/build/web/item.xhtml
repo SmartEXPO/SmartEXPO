@@ -106,12 +106,23 @@
 
         <div id="function">
             <div id="search" class="func_button">
-                <div id="search_result">here we put search results, using ajax</div>
+                <div id="search_result">
+                    here we put search results, using ajax
+                </div>
                 <h:graphicImage id="search_img" library="theme1" name="images/item_search_button.png" />
-                <input id="search_box" type="text" value="Search" />
+                <h:inputText id="search_box" class="func_input_box" value="Search" />
             </div>
             <div id="comment" class="func_button">
+                <div id="users_comment">
+                    here we put user comments, using ajax
+                </div>
                 <h:graphicImage id="comment_img" library="theme1" name="images/item_comment_button.png" />
+                <div id="comment_input">
+                    <h:inputText id="comment_name_box" class="func_input_box"
+                                 value="Name" style="display:inline-block" />
+                    <h:inputText id="comment_content_box" class="func_input_box"
+                                 value="Your Comment" style="display: inline-block" />
+                </div>
             </div>
         </div>
 

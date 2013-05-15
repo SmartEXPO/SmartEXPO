@@ -23,6 +23,7 @@ public class LoginManagedBean {
     
     private String username;
     private String password;
+    private boolean status;
 
     /**
      * @return the username
@@ -50,5 +51,19 @@ public class LoginManagedBean {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the status
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
