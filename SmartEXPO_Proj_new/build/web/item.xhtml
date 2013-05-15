@@ -129,13 +129,20 @@
         <div id="overall_shade"></div>
 
         <div id="login_panel">
-            <form action="#" method="POST">
-                <input type="text" class="inbox" id="username" name="username" value="Username" />
-                <input type="text" class="inbox" id="password" name="password" value="Password" />
-                <input type="submit" id="login_button" name="login_button" value="Sign in" />
-                <input type="button" id="close_panel" value="x" onclick="vanishLogin();
+            <h:form id="login_form">
+                <h:inputText class="inbox" id="username" value="#{loginManagedBean.username}" />
+                <h:inputSecret class="inbox" id="password" value="#{loginManagedBean.password}" />
+                <h:commandButton class="login_button" type="submit" id="login_button" value="Sign In" />
+                <h:button class="close_pannel" id="close_pannel" value="x" onclick="vanishLogin();
                                 void(0);" />
-            </form>
+            </h:form>
+            <!--            <form action="#" method="POST">
+                            <input type="text" class="inbox" id="username" name="username" value="Username" />
+                            <input type="text" class="inbox" id="password" name="password" value="Password" />
+                            <input type="submit" id="login_button" name="login_button" value="Sign in" />
+                            <input type="button" id="close_panel" value="x" onclick="vanishLogin();
+                                            void(0);" />
+                        </form>-->
         </div>
 
         <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js" target="head" />

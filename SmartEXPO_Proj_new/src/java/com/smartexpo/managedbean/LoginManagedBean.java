@@ -5,14 +5,14 @@
 package com.smartexpo.managedbean;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Boy
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class LoginManagedBean {
 
     /**

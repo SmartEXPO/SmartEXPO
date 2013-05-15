@@ -7,32 +7,27 @@ package com.smartexpo.managedbean;
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
-import com.smartexpo.models.Description;
 import com.smartexpo.models.Item;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
+
+
 
 /**
  *
  * @author Boy
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ItemManagedBean {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
