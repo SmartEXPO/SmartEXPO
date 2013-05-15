@@ -53,6 +53,8 @@ public class Audio implements Serializable {
     @Size(max = 1000)
     @Column(name = "DESCRIPTION")
     private String description;
+    
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "audioId")
     private ItemAudio itemAudio;
 

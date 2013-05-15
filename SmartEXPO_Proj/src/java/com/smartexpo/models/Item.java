@@ -35,12 +35,30 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Item.findByItemId", query = "SELECT i FROM Item i WHERE i.itemId = :itemId"),
     @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName")})
 public class Item implements Serializable {
+    @OneToOne(mappedBy = "itemId")
+    private ItemComment itemComment;
+
+    public ItemComment getItemComment() {
+        return itemComment;
+    }
+
+    public void setItemComment(ItemComment itemComment) {
+        this.itemComment = itemComment;
+    }
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private ItemVideo itemVideo;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private ItemAudio itemAudio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemId")
-    private Collection<ItemAuthor> itemAuthorCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
+    private ItemAuthor itemAuthor;
+
+    public ItemAuthor getItemAuthor() {
+        return itemAuthor;
+    }
+
+    public void setItemAuthor(ItemAuthor itemAuthor) {
+        this.itemAuthor = itemAuthor;
+    }
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,14 +134,7 @@ public class Item implements Serializable {
         return "com.smartexpo.models.Item[ itemId=" + itemId + " ]";
     }
 
-    @XmlTransient
-    public Collection<ItemAuthor> getItemAuthorCollection() {
-        return itemAuthorCollection;
-    }
-
-    public void setItemAuthorCollection(Collection<ItemAuthor> itemAuthorCollection) {
-        this.itemAuthorCollection = itemAuthorCollection;
-    }
+    
 
     public ItemVideo getItemVideo() {
         return itemVideo;
@@ -140,5 +151,7 @@ public class Item implements Serializable {
     public void setItemAudio(ItemAudio itemAudio) {
         this.itemAudio = itemAudio;
     }
+
+    
     
 }

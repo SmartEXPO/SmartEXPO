@@ -36,9 +36,14 @@ public class ItemAudio implements Serializable {
     @Basic(optional = false)
     @Column(name = "ITEM_AUDIO_ID")
     private Integer itemAudioId;
+    
+    
     @JoinColumn(name = "AUDIO_ID", referencedColumnName = "AUDIO_ID")
     @OneToOne(optional = false)
     private Audio audioId;
+    
+    
+    
     @JoinColumn(name = "ITEM_ID", referencedColumnName = "ITEM_ID")
     @OneToOne(optional = false)
     private Item itemId;
