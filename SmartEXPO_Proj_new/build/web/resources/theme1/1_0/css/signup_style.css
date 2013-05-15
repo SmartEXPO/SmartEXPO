@@ -1,0 +1,57 @@
+/* 
+    Document   : signup_style
+    Created on : May 14, 2013, 7:10:06 PM
+    Author     : Boy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#content {
+    position: relative;
+    min-height: 520px;
+}
+
+#content #sign_up {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    display: block;
+}
+
+.login_bt {
+    position: absolute;
+    top: 5%;
+    right: 15%;
+    height: 50px;
+    width: 100px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.back_to_home_bt {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    height: 50px;
+    width: 100px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #fff;
+}
+
+img#logo {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    margin-left: -179.5px;
+    display: block;
+}
+
+/* Footer part */
+footer {
+    position: relative;
+    text-align: center;
+}

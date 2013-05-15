@@ -1,0 +1,279 @@
+/*Header part*/
+
+header {
+    height: 100px;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+header #logo {
+    display: inline-block;
+}
+
+nav {
+    position: relative;
+    bottom: 30px;
+    margin-left: 20px;
+    color: #ffffff;
+    font-size: 120%;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.navi {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #ffffff;
+    font-size: 120%;
+    text-decoration: none;
+}
+
+a.navi:hover {
+    color: #464646;
+}
+
+#login {
+    display: inline-block;
+    width: 350px;
+    text-align: right;
+}
+
+/*End of header part*/
+
+/*Content part*/
+#content {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#content #contentwrapper {
+    position: relative;
+    width: 1024px;
+    margin: 0 auto;
+    height: auto;
+}
+
+#content #contentwrapper #frame {
+    position: relative;
+    margin-left: 0px;
+    display: inline-block;
+}
+
+#content #contentwrapper #frame #frame_back {
+    z-index: -1;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+#content #contentwrapper #frame #frame_highlight {
+    position: absolute;
+    top: 11px;
+    left: 17px;
+}
+
+#content #contentwrapper #frame #frame_image {
+    height: 485px; /*fixed dimension*/
+    width: 480px;
+    position: absolute;
+    top: 11px;
+    left: 17px;
+}
+
+#contentwrapper #shade {
+    position: absolute;
+    top: -40px;
+    left: 570px;
+    background-image: url(../images/item_shade.png?ln=theme1);
+    width: 500px;
+    height: 197px;
+    z-index: 1;
+}
+
+#contentwrapper #title {
+    position: absolute;
+    top: 20px;
+    left: 570px;
+    z-index: 1;
+}
+
+#contentwrapper #description {
+    position: absolute;
+    top: 100px;
+    left: 570px;
+    width: 400px;
+}
+
+#description p:first-letter {
+    font-size: 2em;
+    padding: 0.1em;
+    vertical-align: baseline;
+    text-transform: capitalize;
+}
+
+/*End of content part*/
+
+/*Footer part*/
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #DADAD2;
+    min-height: 20px;
+    box-shadow: 0 0 20px 30px #dadad2;
+    -webkit-box-shadow: 0 0 20px 30px #dadad2;
+    -moz-box-shadow: 0 0 20px 30px #dadad2;
+    text-align: center;
+    display: none;
+}
+
+/*Function button part*/
+
+#function {
+    position: fixed;
+    bottom: 30px;
+    right: 10%;
+}
+
+.func_button {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    background-color: #464646;
+    z-index: 2;
+    display: inline-block;
+    margin-right: 10px;
+    box-shadow: 0 0 10px;
+    -webkit-box-shadow: 0 0 10px;
+    -moz-box-sadow: 0 0 10px;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#function img {
+    position: absolute;
+    left: 7px;
+    bottom: 6px;
+}
+
+#function #search_box {
+    height: 25px;
+    /*width: 200px;*/
+    width: 0;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border: none;
+    background-color: #DADAD2;
+    font-size: 110%;
+    position: absolute;
+    right: 10px;
+    bottom: 7px;
+    display: none;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+#function #search_result {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: none;
+    height: 250px;
+    color: white;
+    /*border-radius: 20px;
+     -webkit-border-radius: 20px;
+     -moz-border-radius: 20px;
+     background-color: #DADAD2;
+     * 心情不好，先不研究这个效果了
+     * */
+}
+
+#overall_shade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.4;
+    display: none;
+}
+
+#login_panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    margin-top: -100px;
+    margin-left: -150px;
+    width: 300px;
+    height: 200px;
+    background-color: #464646;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    box-shadow: 0 0 20px;
+    -webkit-box-shadow: 0 0 20px;
+    -moz-box-sadow: 0 0 20px;
+    display: none;
+}
+
+#login_panel form {
+    margin-top: 50px;
+}
+
+.inbox {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 35px;
+    width: 280px;
+    border: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    display: block;
+    color: #A9A9A9;
+    background-color: #DADAD2;
+    text-align: center;
+}
+
+#login_button {
+    height: 35px;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    display: block;
+    margin-top: 10px;
+    width: 100px;
+    margin-left: 100px;
+    background: #000000;
+    color: #DADAD2;
+    font-size: 15px;
+    border: none;
+}
+
+#close_panel {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    background: #000000;
+    color: #DADAD2;
+    border: none;
+}
