@@ -8,10 +8,12 @@ import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
 import com.smartexpo.models.Comment;
 import com.smartexpo.models.Description;
+import com.smartexpo.models.DisplayColumn;
 import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemComment;
+import com.smartexpo.models.ItemDisplayColumn;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
@@ -24,9 +26,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
@@ -40,6 +44,7 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+import org.jboss.weld.util.collections.ArraySet;
 
 /**
  *
@@ -169,6 +174,21 @@ public class InsertItemServlet extends HttpServlet {
             ic2.setItemId(item);
             ic2.setCommentId(comment2);
             
+            DisplayColumn dc=new DisplayColumn();
+            dc.setDisplayContent("somethings11");
+            
+            DisplayColumn dc2=new DisplayColumn();
+            dc2.setDisplayContent("somethings211");
+            
+            ItemDisplayColumn idc=new ItemDisplayColumn();
+            idc.setItemId(item);
+            idc.setDisplayColumnId(dc);
+
+            ItemDisplayColumn idc2=new ItemDisplayColumn();
+            idc2.setItemId(item);
+            idc2.setDisplayColumnId(dc2);
+            
+            
             utx.begin();
             
             em.persist(permission);
@@ -179,6 +199,11 @@ public class InsertItemServlet extends HttpServlet {
             
             em.persist(comment);
             em.persist(ic);
+            em.persist(dc);
+            em.persist(dc2);
+            em.persist(idc);
+            em.persist(idc2);
+            
            // em.persist(item);
             
             em.persist(comment2);
@@ -232,6 +257,11 @@ public class InsertItemServlet extends HttpServlet {
                 Comment commenti;
                 commenti = comments.get(i);
                 logger.log(Level.WARNING,commenti.getUsername()+" "+commenti.getContent());
+            }
+            
+            List<DisplayColumn> displayColumns=gi.getDisplayColumnsByItemID(item.getItemId());
+            for(int i=0;i<displayColumns.size();i++){
+                logger.log(Level.WARNING,displayColumns.get(i).getDisplayContent());
             }
             
             

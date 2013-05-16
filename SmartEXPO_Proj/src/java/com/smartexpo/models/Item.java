@@ -6,6 +6,7 @@ package com.smartexpo.models;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,6 +36,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Item.findByItemId", query = "SELECT i FROM Item i WHERE i.itemId = :itemId"),
     @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName")})
 public class Item implements Serializable {
+    @OneToOne(mappedBy = "itemId")
+    private ItemDisplayColumn itemDisplayColumn;
+    
+    
     @OneToOne(mappedBy = "itemId")
     private ItemComment itemComment;
 
@@ -151,6 +156,19 @@ public class Item implements Serializable {
     public void setItemAudio(ItemAudio itemAudio) {
         this.itemAudio = itemAudio;
     }
+
+    public ItemDisplayColumn getItemDisplayColumn() {
+        return itemDisplayColumn;
+    }
+
+    public void setItemDisplayColumn(ItemDisplayColumn itemDisplayColumn) {
+        this.itemDisplayColumn = itemDisplayColumn;
+    }
+
+    
+
+   
+
 
     
     

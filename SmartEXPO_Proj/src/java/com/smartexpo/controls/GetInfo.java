@@ -8,10 +8,12 @@ import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
 import com.smartexpo.models.Comment;
 import com.smartexpo.models.Description;
+import com.smartexpo.models.DisplayColumn;
 import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemComment;
+import com.smartexpo.models.ItemDisplayColumn;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
@@ -153,6 +155,25 @@ public class GetInfo {
         
         return videos;
     }
+    
+    public List<DisplayColumn> getDisplayColumnsByItemID(int id){
+        if(item == null){
+            getItemByID(id);
+            
+        }
+        
+        List<ItemDisplayColumn> itemDisplayColumns=em.createNamedQuery("ItemDisplayColumn.fineByItemId").setParameter("itemId", item).getResultList();
+        List<DisplayColumn> displayColumns = new ArrayList<DisplayColumn>();
+        for(int i=0;i<itemDisplayColumns.size();i++){
+            ItemDisplayColumn idc=itemDisplayColumns.get(i);
+            displayColumns.addAll(em.createNamedQuery("DisplayColumn.findByDisplayColumnId").setParameter("displayColumnId", idc.getDisplayColumnId().getDisplayColumnId()).getResultList());
+        }
+        return displayColumns;
+        
+    }
+    
+    
+    
     public List<Description> getDescriptionByItemID(int id){
         if(item==null){
             getItemByID(id);
@@ -162,6 +183,7 @@ public class GetInfo {
         return descriptions;
         
     }
+    
     
     
     
