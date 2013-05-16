@@ -152,6 +152,18 @@ $(document).ready(function() {
         }
     });
 
+    var edit = false;
+    $(".edit_description_div").click(function() {
+        var toEdit = $(this).next();
+        if (edit == false) {
+            var content = toEdit.html();
+            toEdit.html("<textarea class='edit_description_box'>" + content + "</textarea>");
+            edit = true;
+        } else {
+            toEdit.html(toEdit.children().val());
+            edit = false;
+        }
+    });
 });
 
 function popupLogin() {
