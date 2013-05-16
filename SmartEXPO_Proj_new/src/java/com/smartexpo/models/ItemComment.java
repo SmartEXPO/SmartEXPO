@@ -23,40 +23,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author tornado718
  */
 @Entity
-@Table(name = "ITEM_AUTHOR")
+@Table(name = "ITEM_COMMENT")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ItemAuthor.findAll", query = "SELECT i FROM ItemAuthor i"),
-    @NamedQuery(name = "ItemAuthor.findByItemAuthorId", query = "SELECT i FROM ItemAuthor i WHERE i.itemAuthorId = :itemAuthorId"),
-    @NamedQuery(name = "ItemAuthor.findByItemId", query = "SELECT i FROM ItemAuthor i WHERE i.itemId = :itemId")})//WHERE i.itemId.itemId = :itemId
-public class ItemAuthor implements Serializable {
+    @NamedQuery(name = "ItemComment.findAll", query = "SELECT i FROM ItemComment i"),
+    @NamedQuery(name = "ItemComment.findByItemCommentId", query = "SELECT i FROM ItemComment i WHERE i.itemCommentId = :itemCommentId"),
+    @NamedQuery(name = "ItemComment.findByItemId", query = "SELECT i FROM ItemComment i WHERE i.itemId = :itemId")
+})
+public class ItemComment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ITEM_AUTHOR_ID")
-    private Integer itemAuthorId;
+    @Column(name = "ITEM_COMMENT_ID")
+    private Integer itemCommentId;
     @JoinColumn(name = "ITEM_ID", referencedColumnName = "ITEM_ID")
     @OneToOne(optional = false)
     private Item itemId;
-    @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "AUTHOR_ID")
+    @JoinColumn(name = "COMMENT_ID", referencedColumnName = "COMMENT_ID")
     @OneToOne(optional = false)
-    private Author authorId;
+    private Comment commentId;
 
-    public ItemAuthor() {
+    public ItemComment() {
     }
 
-    public ItemAuthor(Integer itemAuthorId) {
-        this.itemAuthorId = itemAuthorId;
+    public ItemComment(Integer itemCommentId) {
+        this.itemCommentId = itemCommentId;
     }
 
-    public Integer getItemAuthorId() {
-        return itemAuthorId;
+    public Integer getItemCommentId() {
+        return itemCommentId;
     }
 
-    public void setItemAuthorId(Integer itemAuthorId) {
-        this.itemAuthorId = itemAuthorId;
+    public void setItemCommentId(Integer itemCommentId) {
+        this.itemCommentId = itemCommentId;
     }
 
     public Item getItemId() {
@@ -67,29 +68,29 @@ public class ItemAuthor implements Serializable {
         this.itemId = itemId;
     }
 
-    public Author getAuthorId() {
-        return authorId;
+    public Comment getCommentId() {
+        return commentId;
     }
 
-    public void setAuthorId(Author authorId) {
-        this.authorId = authorId;
+    public void setCommentId(Comment commentId) {
+        this.commentId = commentId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (itemAuthorId != null ? itemAuthorId.hashCode() : 0);
+        hash += (itemCommentId != null ? itemCommentId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ItemAuthor)) {
+        if (!(object instanceof ItemComment)) {
             return false;
         }
-        ItemAuthor other = (ItemAuthor) object;
-        if ((this.itemAuthorId == null && other.itemAuthorId != null) || (this.itemAuthorId != null && !this.itemAuthorId.equals(other.itemAuthorId))) {
+        ItemComment other = (ItemComment) object;
+        if ((this.itemCommentId == null && other.itemCommentId != null) || (this.itemCommentId != null && !this.itemCommentId.equals(other.itemCommentId))) {
             return false;
         }
         return true;
@@ -97,6 +98,6 @@ public class ItemAuthor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.smartexpo.models.ItemAuthor[ itemAuthorId=" + itemAuthorId + " ]";
+        return "com.smartexpo.models.ItemComment[ itemCommentId=" + itemCommentId + " ]";
     }
 }

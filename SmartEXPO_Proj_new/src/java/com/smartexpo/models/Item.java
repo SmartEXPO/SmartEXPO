@@ -5,7 +5,6 @@
 package com.smartexpo.models;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,13 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,6 +32,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Item.findByItemId", query = "SELECT i FROM Item i WHERE i.itemId = :itemId"),
     @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName")})
 public class Item implements Serializable {
+
+    @OneToOne(mappedBy = "itemId")
+    private ItemComment itemComment;
+
+    public ItemComment getItemComment() {
+        return itemComment;
+    }
+
+    public void setItemComment(ItemComment itemComment) {
+        this.itemComment = itemComment;
+    }
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private ItemVideo itemVideo;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
@@ -124,8 +132,6 @@ public class Item implements Serializable {
         return "com.smartexpo.models.Item[ itemId=" + itemId + " ]";
     }
 
-    
-
     public ItemVideo getItemVideo() {
         return itemVideo;
     }
@@ -141,5 +147,4 @@ public class Item implements Serializable {
     public void setItemAudio(ItemAudio itemAudio) {
         this.itemAudio = itemAudio;
     }
-    
 }

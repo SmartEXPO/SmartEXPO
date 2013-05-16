@@ -90,7 +90,7 @@ public class LoginManagedBean {
     /**
      * Verify the user
      *
-     * @return item.xhtml
+     * @return item.xhtml or error.xhtml
      */
     public String verify() {
         if (true) { // 数据库验证部分

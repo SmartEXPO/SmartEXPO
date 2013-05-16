@@ -263,5 +263,4 @@ public class ItemVideoJpaController implements Serializable {
             em.close();
         }
     }
-    
 }

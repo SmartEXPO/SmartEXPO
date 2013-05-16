@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -32,41 +31,35 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ManagerPermission.findByManagerId", query = "SELECT m FROM ManagerPermission m WHERE m.managerId = :managerId")
 })
 public class ManagerPermission implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "MANAGER_PERMISSION_ID")
     private Integer managerPermissionId;
-    
-    
-    
     @JoinColumn(name = "MANAGER_ID", referencedColumnName = "MANAGER_ID")
     @OneToOne(optional = false)
     private Manager managerId;
-    
-    
     @JoinColumn(name = "PERMISSION_ID", referencedColumnName = "PERMISSION_ID")
     @OneToOne(optional = false)
     private Permission permissionId;
-    
+
     /*
      * 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ITEM_AUDIO_ID")
-    private Integer itemAudioId;
-    @JoinColumn(name = "AUDIO_ID", referencedColumnName = "AUDIO_ID")
-    @OneToOne(optional = false)
-    private Audio audioId;
-    @JoinColumn(name = "ITEM_ID", referencedColumnName = "ITEM_ID")
-    @OneToOne(optional = false)
-    private Item itemId;
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Basic(optional = false)
+     @Column(name = "ITEM_AUDIO_ID")
+     private Integer itemAudioId;
+     @JoinColumn(name = "AUDIO_ID", referencedColumnName = "AUDIO_ID")
+     @OneToOne(optional = false)
+     private Audio audioId;
+     @JoinColumn(name = "ITEM_ID", referencedColumnName = "ITEM_ID")
+     @OneToOne(optional = false)
+     private Item itemId;
      * 
      */
-     
-
     public ManagerPermission() {
     }
 
@@ -122,5 +115,4 @@ public class ManagerPermission implements Serializable {
     public String toString() {
         return "com.smartexpo.models.ManagerPermission[ managerPermissionId=" + managerPermissionId + " ]";
     }
-    
 }

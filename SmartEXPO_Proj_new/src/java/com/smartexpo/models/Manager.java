@@ -5,7 +5,6 @@
 package com.smartexpo.models;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,13 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Manager.findByUsername", query = "SELECT m FROM Manager m WHERE m.username = :username"),
     @NamedQuery(name = "Manager.findByPassword", query = "SELECT m FROM Manager m WHERE m.password = :password")})
 public class Manager implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,18 +50,15 @@ public class Manager implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "PASSWORD")
     private String password;
-    
-    
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "managerId")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "managerId")
     private ManagerPermission managerPermission;
-    
+
     /*
      * 
      * @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
-    private ItemAudio itemAudio;
+     private ItemAudio itemAudio;
      * 
      */
-
     public ManagerPermission getManagerPermission() {
         return managerPermission;
     }
@@ -109,8 +104,6 @@ public class Manager implements Serializable {
         this.password = password;
     }
 
-    
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -135,5 +128,4 @@ public class Manager implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Manager[ managerId=" + managerId + " ]";
     }
-    
 }

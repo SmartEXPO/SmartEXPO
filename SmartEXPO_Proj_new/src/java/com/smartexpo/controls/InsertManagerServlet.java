@@ -8,9 +8,6 @@ import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
 import com.smartexpo.models.Permission;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -58,37 +55,37 @@ public class InsertManagerServlet extends HttpServlet {
             logger.log(Level.WARNING, "in InsertManagerServlet");
 
 
-            Manager manager=new Manager();
+            Manager manager = new Manager();
             manager.setUsername("asdfasd");
             manager.setPassword("owefnwnv");
-            
-            Permission permission=new Permission();
+
+            Permission permission = new Permission();
             permission.setPermissionName("asfe11");
-            
-            Permission permission2=new Permission();
+
+            Permission permission2 = new Permission();
             permission2.setPermissionName("asfe22");
-            
-            ManagerPermission mp=new ManagerPermission();
+
+            ManagerPermission mp = new ManagerPermission();
             mp.setManagerId(manager);
             mp.setPermissionId(permission);
-            
-            ManagerPermission mp2=new ManagerPermission();
+
+            ManagerPermission mp2 = new ManagerPermission();
             mp2.setManagerId(manager);
             mp2.setPermissionId(permission2);
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
             utx.begin();
             em.persist(permission);
             em.persist(manager);
             em.persist(mp);
             em.persist(mp2);
             em.persist(permission2);
-            
+
             utx.commit();
         } catch (NotSupportedException ex) {
             Logger.getLogger(InsertManagerServlet.class.getName()).log(Level.SEVERE, null, ex);

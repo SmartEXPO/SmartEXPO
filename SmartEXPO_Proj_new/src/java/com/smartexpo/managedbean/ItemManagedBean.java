@@ -10,7 +10,6 @@ import com.smartexpo.models.Author;
 import com.smartexpo.models.Item;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -19,8 +18,6 @@ import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
-
-
 
 /**
  *
@@ -34,6 +31,17 @@ public class ItemManagedBean {
     EntityManager em;
     @Resource
     UserTransaction utx;
+    // Fields
+    private GetInfo gi;
+    private int itemId;
+    private String itemName;
+    private String authorNames;
+    private String description;
+    private String videoURL;
+    private Item item;
+    private List<Author> authors;
+    private List<Audio> audios;
+    private String pic;
 
     /**
      * Creates a new instance of ItemManagedBean
@@ -73,22 +81,12 @@ public class ItemManagedBean {
         } else if (itemId == 4) {
             pic = "images/item2_480.png";
         }
-        
+
         setDescription(gi.getDescriptionByItemID(itemId).get(0).getContent());
 //        logger.log(Level.WARNING, "des : {0}", videoURL);
 
 //        logger.log(Level.WARNING, "ItemID:{0}  ItemName:{1}", new Object[]{itemId, itemName});
     }
-    private GetInfo gi;
-    private int itemId;
-    private String itemName;
-    private String authorNames;
-    private String description;
-    private String videoURL;
-    private Item item;
-    private List<Author> authors;
-    private List<Audio> audios;
-    private String pic;
 
     /**
      * @return the itemId

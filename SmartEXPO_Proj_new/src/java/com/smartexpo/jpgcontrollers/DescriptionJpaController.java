@@ -215,5 +215,4 @@ public class DescriptionJpaController implements Serializable {
             em.close();
         }
     }
-    
 }
