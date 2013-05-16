@@ -48,19 +48,19 @@ public class ItemManagedBean {
         Logger logger = Logger.getLogger(ItemManagedBean.class.getName());
 
         itemId = 3;
-        logger.log(Level.WARNING, "Proceeding...");
+//        logger.log(Level.WARNING, "Proceeding...");
 
 //        FacesContext context = FacesContext.getCurrentInstance();
 //        ExternalContext ec = context.getExternalContext();
 //        HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 //        itemId = Integer.parseInt(request.getParameter("id"));
 
-        logger.log(Level.WARNING, "itemID: {0}", itemId);
+//        logger.log(Level.WARNING, "itemID: {0}", itemId);
 
         item = gi.getItemByID(itemId);
         authors = gi.getAuthorsByItemID(itemId);
         if (item == null) {
-            logger.log(Level.WARNING, "item: {0}", item);
+//            logger.log(Level.WARNING, "item: {0}", item);
         }
         itemName = item.getItemName();
         authorNames = "";
@@ -75,9 +75,9 @@ public class ItemManagedBean {
         }
         
         setDescription(gi.getDescriptionByItemID(itemId).get(0).getContent());
-        logger.log(Level.WARNING, "des : {0}", videoURL);
+//        logger.log(Level.WARNING, "des : {0}", videoURL);
 
-        logger.log(Level.WARNING, "ItemID:{0}  ItemName:{1}", new Object[]{itemId, itemName});
+//        logger.log(Level.WARNING, "ItemID:{0}  ItemName:{1}", new Object[]{itemId, itemName});
     }
     private GetInfo gi;
     private int itemId;

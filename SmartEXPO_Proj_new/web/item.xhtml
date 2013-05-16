@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
@@ -12,9 +13,11 @@
         <meta name="description" content="" />
         <meta name="author" content="Ben" />
 
-        <!--<meta name="viewport" content="width=device-width; user-scalable=no, maximun-scale=1.0" />-->
+        <!--        <meta name="viewport" content="width=device-width;
+                      user-scalable=no, maximun-scale=1.0" />-->
 
-        <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+        <!-- Replace favicon.ico & apple-touch-icon.png
+        in the root of your domain and delete these references -->
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
@@ -39,16 +42,31 @@
     <h:body>
         <div>
             <header>
-                <h:graphicImage id="logo" library="theme1" name="images/item_logo.png" />
+                <h:graphicImage id="logo" library="theme1"
+                                name="images/item_logo.png" />
                 <nav>
-                    <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+                    <a class="navi" href="#">Map</a>|
+                    <a class="navi" href="#">Info</a>|
+                    <a class="navi" href="#">Contact</a>
                     <div id="login">
-                        <a class="navi" href="#" onclick="popupLogin();
-                                void(0);">Log in</a>
+                        <div>
+                            #{loginManagedBean.status ? loginManagedBean.username : "guest"}
+                        </div>
+                        <h:outputLink class="navi" value="#" onclick="popupLogin();
+                                void(0);" rendered="#{!loginManagedBean.status}">
+                            <h:outputText value="Log In" />
+                        </h:outputLink>
+                        <h:form>
+                            <h:commandLink class="navi"
+                                           action="#{loginManagedBean.logout}"
+                                           value="Log Out"
+                                           rendered="#{loginManagedBean.status}"/>
+                        </h:form>
                     </div>
                 </nav>
                 <!--seperator-->
-                <div style="height:4px;width:100%;background-color:#464646;position:relative;bottom:6px;"></div>
+                <div style="height:4px;width:100%;background-color:#464646;
+                     position:relative;bottom:6px;"></div>
             </header>
 
             <div id="content">
@@ -81,16 +99,20 @@
 
                     <!--<div id="content_fixed" style="position:relative;width:1024px;">-->
                     <div id="frame" class="content_fixed">
-                        <h:graphicImage id="frame_back" library="theme1" name="images/item_frame.png" />
-                        <h:graphicImage id="frame_image" library="theme1" name="#{itemManagedBean.pic}" />
-                        <h:graphicImage id="frame_highlight" library="theme1" name="images/item_frame_highlight.png" />
+                        <h:graphicImage id="frame_back" library="theme1"
+                                        name="images/item_frame.png" />
+                        <h:graphicImage id="frame_image" library="theme1"
+                                        name="#{itemManagedBean.pic}" />
+                        <h:graphicImage id="frame_highlight" library="theme1"
+                                        name="images/item_frame_highlight.png" />
                     </div>
                     <div class="content_fixed">
 
                         <div id="shade"></div>
                         <div id="title">
                             <h1>#{itemManagedBean.itemName}</h1>
-                            <div class="separator" style="margin-top:-10px;margin-bottom:-15px;"></div>
+                            <div class="separator"
+                                 style="margin-top:-10px;margin-bottom:-15px;"></div>
                             <h3>#{itemManagedBean.authorNames}</h3>
                         </div>
 
@@ -109,14 +131,16 @@
                 <div id="search_result">
                     here we put search results, using ajax
                 </div>
-                <h:graphicImage id="search_img" library="theme1" name="images/item_search_button.png" />
+                <h:graphicImage id="search_img" library="theme1"
+                                name="images/item_search_button.png" />
                 <h:inputText id="search_box" class="func_input_box" value="Search" />
             </div>
             <div id="comment" class="func_button">
                 <div id="users_comment">
                     here we put user comments, using ajax
                 </div>
-                <h:graphicImage id="comment_img" library="theme1" name="images/item_comment_button.png" />
+                <h:graphicImage id="comment_img" library="theme1"
+                                name="images/item_comment_button.png" />
                 <div id="comment_input">
                     <h:inputText id="comment_name_box" class="func_input_box"
                                  value="Name" style="display:inline-block" />
@@ -130,16 +154,22 @@
 
         <div id="login_panel">
             <h:form id="login_form">
-                <input type="text" class="inbox" id="username" name="username" value="#{loginManagedBean.username}" />
-                <input type="text" class="inbox" id="password" name="password" value="#{loginManagedBean.password}" />
-                <h:commandButton class="login_button" type="submit" action="item"
-                                 id="login_button" value="Sign In" />
-                <input type="button" id="close_panel" value="x" onclick="vanishLogin();
+                <h:inputText class="inbox" id="username"
+                             value="#{loginManagedBean.username}" />
+                <h:inputSecret class="inbox" id="password"
+                               value="#{loginManagedBean.password}" />
+                <h:commandButton class="login_button" type="submit"
+                                 id="login_button" value="Sign In"
+                                 action="#{loginManagedBean.verify}" />
+                <input type="button" id="close_panel" value="x"
+                       onclick="vanishLogin();
                                 void(0);" />
             </h:form>
         </div>
 
-        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js" target="head" />
-        <h:outputScript library="theme1" name="scripts/item_effect.js" target="head" />
+        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js"
+                        target="head" />
+        <h:outputScript library="theme1" name="scripts/item_effect.js"
+                        target="head" />
     </h:body>
 </html>
