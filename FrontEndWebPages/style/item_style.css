@@ -323,8 +323,8 @@ footer {
 
 .edit_description_box {
 	width: 395px;
-	height: 400px;
+	height: 300px;
 	border: none;
 	background: #DADAD2;
-	overflow:visible;
+	overflow:auto;
 }
