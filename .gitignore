@@ -1,6 +1,2 @@
 *.DS_Store
 *.project
-/SmartEXPO_Project/nbproject/private/
-/SmartEXPO_Project/build/
-/SmartEXPO_Proj_new/dist/
-SmartEXPO_Proj/build/web/WEB-INF/classes/META-INF/persistence.xml
