@@ -4,8 +4,16 @@
  */
 package com.smartexpo.managedbean.item;
 
+import com.smartexpo.controls.GetInfo;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.UserTransaction;
 
 /**
  *
@@ -15,6 +23,13 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class Description {
 
+    @PersistenceContext(unitName = "SmartEXPO_ProjPU")
+    EntityManager em;
+    @Resource
+    private UserTransaction utx;
+    private GetInfo gi = null;
+    // Description fields
+    private com.smartexpo.models.Description description;
     private int id;
     private String title;
     private String content = "This is item Content.";
@@ -23,6 +38,17 @@ public class Description {
      * Creates a new instance of Description
      */
     public Description() {
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        if (gi == null) {
+            gi = new GetInfo(em, utx);
+        }
+        HttpServletRequest request = (HttpServletRequest) FacesContext
+                .getCurrentInstance().getExternalContext().getRequest();
+        
+        int itemId = Integer.parseInt(request.getParameter("id"));
     }
 
     /**

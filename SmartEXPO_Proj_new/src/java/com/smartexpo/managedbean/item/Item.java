@@ -5,12 +5,16 @@
 package com.smartexpo.managedbean.item;
 
 import com.smartexpo.controls.GetInfo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.UserTransaction;
 
 /**
@@ -24,9 +28,11 @@ public class Item {
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
-    UserTransaction utx;
-    private GetInfo gi;
-    private int id = 3;
+    private UserTransaction utx;
+    private GetInfo gi = null;
+    // Item fields
+    private com.smartexpo.models.Item item;
+    private int id;
     private String name;
 
     /**
@@ -36,10 +42,16 @@ public class Item {
     }
 
     @PostConstruct
-    public void postContruct() {
-        gi = new GetInfo(em, utx);
+    public void postConstruct() {
+        if (gi == null) {
+            gi = new GetInfo(em, utx);
+        }
+        HttpServletRequest request = (HttpServletRequest) FacesContext
+                .getCurrentInstance().getExternalContext().getRequest();
 
-        name = gi.getItemByID(id).getItemName();
+        id = Integer.parseInt(request.getParameter("id"));
+        item = gi.getItemByID(id);
+        name = item.getItemName();
     }
 
     /**
