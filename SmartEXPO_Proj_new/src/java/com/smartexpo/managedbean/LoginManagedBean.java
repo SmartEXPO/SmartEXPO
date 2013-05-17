@@ -4,8 +4,12 @@
  */
 package com.smartexpo.managedbean;
 
+import java.io.Serializable;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -16,34 +20,21 @@ import javax.servlet.http.HttpSession;
  */
 @ManagedBean
 @SessionScoped
-public class LoginManagedBean {
+public class LoginManagedBean implements Serializable {
 
-    /**
-     * @return the logger
-     */
-    public static Logger getLogger() {
-        return logger;
-    }
-
-    /**
-     * @param aLogger the logger to set
-     */
-    public static void setLogger(Logger aLogger) {
-        logger = aLogger;
-    }
+    private static Logger logger = Logger.getLogger(LoginManagedBean.class.getName());
+    @ManagedProperty(value = "Username")
+    private String username;
+    @ManagedProperty(value = "Password")
+    private String password;
+    @ManagedProperty(value = "false")
+    private boolean status;
 
     /**
      * Creates a new instance of LoginManagedBean
      */
     public LoginManagedBean() {
-        username = "Username";
-        password = "Password";
-        status = false;
     }
-    private static Logger logger = Logger.getLogger(LoginManagedBean.class.getName());
-    private String username;
-    private String password;
-    private boolean status;
 
     /**
      * @return the username
@@ -104,6 +95,6 @@ public class LoginManagedBean {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.invalidate();
-        return "item?faces-redirect=true";
+        return "item";
     }
 }
