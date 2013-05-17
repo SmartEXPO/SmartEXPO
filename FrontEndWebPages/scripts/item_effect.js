@@ -153,15 +153,18 @@ $(document).ready(function() {
     });
 
     var edit = false;
+    var toEdit;
     $(".edit_description_div").click(function() {
-        var toEdit = $(this).next();
         if (edit == false) {
+            toEdit = $(this).next();
             var content = toEdit.html();
             toEdit.html("<textarea class='edit_description_box'>" + content + "</textarea>");
             edit = true;
+            $(".edit_description_div").attr("value","Done");
         } else {
             toEdit.html(toEdit.children().val());
             edit = false;
+            $(".edit_description_div").attr("value","Edit");
         }
     });
 });
