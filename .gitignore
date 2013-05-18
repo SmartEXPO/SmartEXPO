@@ -1,2 +1,11 @@
 *.DS_Store
 *.project
+/2013.5.18_JSFProducer/nbproject/private/
+/2013.5.18_JSFProducer/build/
+/2013.5.18_JMS_Receiver/nbproject/private/
+/2013.5.18_JMS_Receiver/build/
+/2013.5.18_JSFProducer/dist/
+/2013.5.18_testHTML5/nbproject/private/
+/2013.5.18_testHTML5/build/
+/2013.5.18_try_websocket/nbproject/private/
+/2013.5.18_try_websocket/build/
