@@ -10,6 +10,7 @@ import com.smartexpo.managedbean.item.Description;
 import com.smartexpo.managedbean.item.Item;
 import com.smartexpo.managedbean.item.Video;
 import java.util.Date;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -33,23 +34,23 @@ public class ItemController {
     private String descriptionContent;
     @ManagedProperty(value = "#{author}")
     private Author authorBean;
-    private int authorID;
-    private String authorName;
-    private Date authorBirthday;
-    private Date authorDeathDate;
-    private String authorIntroduction;
+    private List<Integer> authorIDs;
+    private List<String> authorNames;
+    private List<Date> authorBirthdays;
+    private List<Date> authorDeathDates;
+    private List<String> authorIntroductions;
     @ManagedProperty(value = "#{audio}")
     private Audio audioBean;
-    private int audioID;
-    private String audioTitle;
-    private String audioURL;
-    private String audioDescription;
+    private List<Integer> audioIDs;
+    private List<String> audioTitles;
+    private List<String> audioURLs;
+    private List<String> audioDescriptions;
     @ManagedProperty(value = "#{video}")
     private Video videoBean;
-    private int videoID;
-    private String videoTitle;
-    private String videoURL;
-    private String videoDescription;
+    private List<Integer> videoIDs;
+    private List<String> videoTitles;
+    private List<String> videoURLs;
+    private List<String> videoDescriptions;
 
     /**
      * Creates a new instance of ItemController
@@ -119,43 +120,43 @@ public class ItemController {
     }
 
     /**
-     * @return the authorId
+     * @return the authorIDs
      */
-    public int getAuthorId() {
-        authorID = authorBean.getId();
-        return authorID;
+    public List<Integer> getAuthorIDs() {
+        authorIDs = authorBean.getIds();
+        return authorIDs;
     }
 
     /**
-     * @return the authorName
+     * @return the authorNames
      */
-    public String getAuthorName() {
-        authorName = authorBean.getName();
-        return authorName;
+    public List<String> getAuthorNames() {
+        authorNames = authorBean.getNames();
+        return authorNames;
     }
 
     /**
-     * @return the authorBirthday
+     * @return the authorBirthdays
      */
-    public Date getAuthorBirthday() {
-        authorBirthday = authorBean.getBirthday();
-        return authorBirthday;
+    public List<Date> getAuthorBirthdays() {
+        authorBirthdays = authorBean.getBirthdays();
+        return authorBirthdays;
     }
 
     /**
-     * @return the authorDeathDate
+     * @return the authorDeathDates
      */
-    public Date getAuthorDeathDate() {
-        authorDeathDate = authorBean.getDeathDate();
-        return authorDeathDate;
+    public List<Date> getAuthorDeathDates() {
+        authorDeathDates = authorBean.getDeathDates();
+        return authorDeathDates;
     }
 
     /**
-     * @return the authorIntroduction
+     * @return the authorIntroductions
      */
-    public String getAuthorIntroduction() {
-        authorIntroduction = authorBean.getIntroduction();
-        return authorIntroduction;
+    public List<String> getAuthorIntroductions() {
+        authorIntroductions = authorBean.getIntroductions();
+        return authorIntroductions;
     }
 
     /**
@@ -166,35 +167,35 @@ public class ItemController {
     }
 
     /**
-     * @return the audioID
+     * @return the audioIDs
      */
-    public int getAudioID() {
-        audioID = audioBean.getId();
-        return audioID;
+    public List<Integer> getAudioIDs() {
+        audioIDs = audioBean.getIds();
+        return audioIDs;
     }
 
     /**
-     * @return the audioTitle
+     * @return the audioTitles
      */
-    public String getAudioTitle() {
-        audioTitle = audioBean.getTitle();
-        return audioTitle;
+    public List<String> getAudioTitles() {
+        audioTitles = audioBean.getTitles();
+        return audioTitles;
     }
 
     /**
-     * @return the audioURL
+     * @return the audioURLs
      */
-    public String getAudioURL() {
-        audioURL = audioBean.getUrl();
-        return audioURL;
+    public List<String> getAudioURLs() {
+        audioURLs = audioBean.getURLs();
+        return audioURLs;
     }
 
     /**
-     * @return the audioDescription
+     * @return the audioDescriptions
      */
-    public String getAudioDescription() {
-        audioDescription = audioBean.getDescription();
-        return audioDescription;
+    public List<String> getAudioDescriptions() {
+        audioDescriptions = audioBean.getDescriptions();
+        return audioDescriptions;
     }
 
     /**
@@ -205,34 +206,34 @@ public class ItemController {
     }
 
     /**
-     * @return the videoID
+     * @return the videoIDs
      */
-    public int getVideoID() {
-        videoID = videoBean.getId();
-        return videoID;
+    public List<Integer> getVideoIDs() {
+        videoIDs = videoBean.getIds();
+        return videoIDs;
     }
 
     /**
-     * @return the videoTitle
+     * @return the videoTitles
      */
-    public String getVideoTitle() {
-        videoTitle = videoBean.getTitle();
-        return videoTitle;
+    public List<String> getVideoTitles() {
+        videoTitles = videoBean.getTitles();
+        return videoTitles;
     }
 
     /**
-     * @return the videoURL
+     * @return the videoURLs
      */
-    public String getVideoURL() {
-        videoURL = videoBean.getURL();
-        return videoURL;
+    public List<String> getVideoURLs() {
+        videoURLs = videoBean.getURLs();
+        return videoURLs;
     }
 
     /**
-     * @return the videoDescription
+     * @return the videoDescriptions
      */
-    public String getVideoDescription() {
-        videoDescription = videoBean.getDescription();
-        return videoDescription;
+    public List<String> getVideoDescriptions() {
+        videoDescriptions = videoBean.getDescriptions();
+        return videoDescriptions;
     }
 }
