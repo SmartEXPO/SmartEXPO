@@ -4,9 +4,19 @@
  */
 package com.smartexpo.managedbean.item;
 
+import com.smartexpo.controls.GetInfo;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.UserTransaction;
 
 /**
  *
@@ -16,85 +26,143 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class Author {
 
-    private int id;
-    private String name = "Andy Warhol";
-    private Date birthday;
-    private Date deathDate;
-    private String introduction;
+    @PersistenceContext(unitName = "SmartEXPO_ProjPU")
+    EntityManager em;
+    @Resource
+    private UserTransaction utx;
+    private GetInfo gi = null;
+    // Author fields
+    private List<com.smartexpo.models.Author> authors;
+    private List<Integer> ids;
+    private List<String> names;
+    private List<Date> birthdays;
+    private List<Date> deathDates;
+    private List<String> introductions;
 
     /**
      * Creates a new instance of Author
      */
     public Author() {
+        ids = new ArrayList<Integer>();
+        names = new ArrayList<String>();
+        birthdays = new ArrayList<Date>();
+        deathDates = new ArrayList<Date>();
+        introductions = new ArrayList<String>();
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        if (gi == null) {
+            gi = new GetInfo(em, utx);
+        }
+        HttpServletRequest request = (HttpServletRequest) FacesContext
+                .getCurrentInstance().getExternalContext().getRequest();
+
+        int itemID = Integer.parseInt(request.getParameter("id"));
+        authors = gi.getAuthorsByItemID(itemID);
+
+        setAllAuthorsInfo();
     }
 
     /**
-     * @return the id
+     * @return the ids
      */
-    public int getId() {
-        return id;
+    public List<Integer> getIds() {
+        return ids;
     }
 
     /**
-     * @param id the id to set
+     * @param ids the ids to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
     }
 
     /**
-     * @return the name
+     * @return the names
      */
-    public String getName() {
-        return name;
+    public List<String> getNames() {
+        return names;
     }
 
     /**
-     * @param name the name to set
+     * @param names the names to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setNames(List<String> names) {
+        this.names = names;
     }
 
     /**
-     * @return the birthday
+     * @return the birthdays
      */
-    public Date getBirthday() {
-        return birthday;
+    public List<Date> getBirthdays() {
+        return birthdays;
     }
 
     /**
-     * @param birthday the birthday to set
+     * @param birthdays the birthdays to set
      */
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setBirthdays(List<Date> birthdays) {
+        this.birthdays = birthdays;
     }
 
     /**
-     * @return the deathDate
+     * @return the deathDates
      */
-    public Date getDeathDate() {
-        return deathDate;
+    public List<Date> getDeathDates() {
+        return deathDates;
     }
 
     /**
-     * @param deathDate the deathDate to set
+     * @param deathDates the deathDates to set
      */
-    public void setDeathDate(Date deathDate) {
-        this.deathDate = deathDate;
+    public void setDeathDates(List<Date> deathDates) {
+        this.deathDates = deathDates;
     }
 
     /**
-     * @return the introduction
+     * @return the introductions
      */
-    public String getIntroduction() {
-        return introduction;
+    public List<String> getIntroductions() {
+        return introductions;
     }
 
     /**
-     * @param introduction the introduction to set
+     * @param introductions the introductions to set
      */
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
+    public void setIntroductions(List<String> introductions) {
+        this.introductions = introductions;
+    }
+
+    private void setAllAuthorsInfo() {
+        for (com.smartexpo.models.Author author : authors) {
+            // 以下数据如若在数据库为null时可能还要进一步处理
+            // Video, Audio, Description同样，不作不过标记
+            addAuthorID(author);
+            addAuthorName(author);
+            addAuthorBirthdays(author);
+            addAuthorDeathDates(author);
+            addIntroduction(author);
+        }
+    }
+
+    private void addAuthorID(com.smartexpo.models.Author author) {
+        ids.add(author.getAuthorId());
+    }
+
+    private void addAuthorName(com.smartexpo.models.Author author) {
+        names.add(author.getName());
+    }
+
+    private void addAuthorBirthdays(com.smartexpo.models.Author author) {
+        birthdays.add(author.getBirthday());
+    }
+
+    private void addAuthorDeathDates(com.smartexpo.models.Author author) {
+        deathDates.add(author.getDeathDate());
+    }
+
+    private void addIntroduction(com.smartexpo.models.Author author) {
+        introductions.add(author.getIntroduction());
     }
 }

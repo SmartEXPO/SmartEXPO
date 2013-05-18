@@ -5,6 +5,7 @@
 package com.smartexpo.managedbean.item;
 
 import com.smartexpo.controls.GetInfo;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
@@ -29,7 +30,7 @@ public class Description {
     private UserTransaction utx;
     private GetInfo gi = null;
     // Description fields
-    private com.smartexpo.models.Description description;
+    private List<com.smartexpo.models.Description> descriptions;
     private int id;
     private String title;
     private String content = "This is item Content.";
@@ -47,8 +48,10 @@ public class Description {
         }
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
-        
-        int itemId = Integer.parseInt(request.getParameter("id"));
+
+        int itemID = Integer.parseInt(request.getParameter("id"));
+        descriptions = gi.getDescriptionByItemID(itemID);
+        // ??????????? description = gi.getItembyID(itemID).getDesciption(); 应该用哪个
     }
 
     /**
