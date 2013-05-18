@@ -84,19 +84,15 @@ public class LoginManagedBean implements Serializable {
      *
      * @return item.xhtml or error.xhtml
      */
-    public String verify() {
-        if (true) { // Êï∞ÊçÆÂ∫ìÈ™åËØÅÈÉ®ÂàÜ
-            setStatus(true);
-        }
-
-        return "item";
+    public void verify(ActionEvent event) {
+        // 数据库验证
+        setStatus(true);
     }
 
-    public String logout() {
+    public void logout(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.invalidate();
-
-        return "item";
+        setStatus(false);
     }
 }

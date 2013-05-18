@@ -58,7 +58,8 @@
                         </h:outputLink>
                         <h:form>
                             <h:commandLink class="navi" value="Log Out"
-                                           action="#{loginManagedBean.logout}"
+                                           action="item"
+                                           actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
                                 <f:param name="itemid" value="#{itemController.itemID}" />
                             </h:commandLink>
@@ -153,9 +154,12 @@
                              value="#{loginManagedBean.username}" />
                 <h:inputSecret class="inbox" id="password"
                                value="#{loginManagedBean.password}" />
-                <h:commandButton class="login_button" type="submit"
+                <h:commandLink class="login_button" type="submit"
                                  id="login_button" value="Sign In"
-                                 action="#{loginManagedBean.verify}" />
+                                 action="item"
+                                 actionListener="#{loginManagedBean.verify}">
+                    <f:param name="itemid" value="#{itemController.itemID}" />
+                </h:commandLink>
                 <input type="button" id="close_panel" value="x"
                        onclick="vanishLogin();
                                 void(0);" />
