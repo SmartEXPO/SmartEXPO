@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -27,6 +29,7 @@ public class LoginManagedBean implements Serializable {
     private String password = null;
     @ManagedProperty(value = "false")
     private boolean status;
+    private String iID;
 
     /**
      * Creates a new instance of LoginManagedBean
@@ -82,7 +85,7 @@ public class LoginManagedBean implements Serializable {
      * @return item.xhtml or error.xhtml
      */
     public String verify() {
-        if (true) { // 数据库验证部分
+        if (true) { // Êï∞ÊçÆÂ∫ìÈ™åËØÅÈÉ®ÂàÜ
             setStatus(true);
         }
 

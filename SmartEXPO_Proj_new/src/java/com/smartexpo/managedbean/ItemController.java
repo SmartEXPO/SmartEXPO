@@ -9,6 +9,7 @@ import com.smartexpo.managedbean.item.Author;
 import com.smartexpo.managedbean.item.Description;
 import com.smartexpo.managedbean.item.Item;
 import com.smartexpo.managedbean.item.Video;
+import com.smartexpo.managedbean.item.Comment;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -51,6 +52,12 @@ public class ItemController {
     private List<String> videoTitles;
     private List<String> videoURLs;
     private List<String> videoDescriptions;
+    @ManagedProperty(value = "#{comment}")
+    private Comment commentBean;
+    private List<Integer> commentIDs;
+    private List<String> commentContents;
+    private List<Date> commentTimes;
+    private List<String> commentUsernames;
 
     /**
      * Creates a new instance of ItemController
@@ -235,5 +242,44 @@ public class ItemController {
     public List<String> getVideoDescriptions() {
         videoDescriptions = videoBean.getDescriptions();
         return videoDescriptions;
+    }
+
+    /**
+     * @param commentBean the commentBean to set
+     */
+    public void setCommentBean(Comment commentBean) {
+        this.commentBean = commentBean;
+    }
+
+    /**
+     * @return the commentIDs
+     */
+    public List<Integer> getCommentIDs() {
+        commentIDs = commentBean.getIds();
+        return commentIDs;
+    }
+
+    /**
+     * @return the commentContents
+     */
+    public List<String> getCommentContents() {
+        commentContents = commentBean.getContents();
+        return commentContents;
+    }
+
+    /**
+     * @return the commentTimes
+     */
+    public List<Date> getCommentTimes() {
+        commentTimes = commentBean.getTimes();
+        return commentTimes;
+    }
+
+    /**
+     * @return the commentUsernames
+     */
+    public List<String> getCommentUsernames() {
+        commentUsernames = commentBean.getUsernames();
+        return commentUsernames;
     }
 }

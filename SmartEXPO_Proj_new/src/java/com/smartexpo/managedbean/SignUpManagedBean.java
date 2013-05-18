@@ -5,9 +5,12 @@
 package com.smartexpo.managedbean;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -28,6 +31,8 @@ public class SignUpManagedBean implements Serializable {
      * Creates a new instance of SignUpManagedBean
      */
     public SignUpManagedBean() {
+        Logger logger = Logger.getLogger(SignUpManagedBean.class.getName());
+        logger.log(Level.WARNING, FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath());
     }
 
     /**
@@ -73,6 +78,6 @@ public class SignUpManagedBean implements Serializable {
     }
 
     public String signUpVerify() {
-        return "item?id=1&faces-redirect=true";
+        return "item?itemid=1&faces-redirect=true";
     }
 }
