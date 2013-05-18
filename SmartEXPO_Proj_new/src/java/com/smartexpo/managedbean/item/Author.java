@@ -58,7 +58,7 @@ public class Author {
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
 
-        int itemID = Integer.parseInt(request.getParameter("id"));
+        int itemID = Integer.parseInt(request.getParameter("itemid"));
         authors = gi.getAuthorsByItemID(itemID);
 
         setAllAuthorsInfo();

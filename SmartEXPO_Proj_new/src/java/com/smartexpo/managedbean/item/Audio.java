@@ -24,7 +24,7 @@ import javax.transaction.UserTransaction;
 @ManagedBean
 @RequestScoped
 public class Audio {
-    
+
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
@@ -46,7 +46,7 @@ public class Audio {
         URLs = new ArrayList<String>();
         descriptions = new ArrayList<String>();
     }
-    
+
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
@@ -54,10 +54,10 @@ public class Audio {
         }
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
-        
-        int itemID = Integer.parseInt(request.getParameter("id"));
+
+        int itemID = Integer.parseInt(request.getParameter("itemid"));
         audios = gi.getAudioByItemID(itemID);
-        
+
         setAllAudioInfo();
     }
 
@@ -116,7 +116,7 @@ public class Audio {
     public void setDescriptions(List<String> descriptions) {
         this.descriptions = descriptions;
     }
-    
+
     private void setAllAudioInfo() {
         for (com.smartexpo.models.Audio audio : audios) {
             addAudioID(audio);
@@ -125,19 +125,19 @@ public class Audio {
             addAudioDescription(audio);
         }
     }
-    
+
     private void addAudioID(com.smartexpo.models.Audio audio) {
         ids.add(audio.getAudioId());
     }
-    
+
     private void addAudioURL(com.smartexpo.models.Audio audio) {
         URLs.add(audio.getUrl());
     }
-    
+
     private void addAudioTitle(com.smartexpo.models.Audio audio) {
         titles.add(audio.getTitle());
     }
-    
+
     private void addAudioDescription(com.smartexpo.models.Audio audio) {
         descriptions.add(audio.getDescription());
     }

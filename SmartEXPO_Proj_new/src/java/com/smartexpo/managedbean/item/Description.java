@@ -49,7 +49,7 @@ public class Description {
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
 
-        int itemID = Integer.parseInt(request.getParameter("id"));
+        int itemID = Integer.parseInt(request.getParameter("itemid"));
         descriptions = gi.getDescriptionByItemID(itemID);
         // ??????????? description = gi.getItembyID(itemID).getDesciption(); 应该用哪个
     }

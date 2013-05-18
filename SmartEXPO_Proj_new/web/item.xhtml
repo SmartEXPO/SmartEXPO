@@ -59,7 +59,9 @@
                         <h:form>
                             <h:commandLink class="navi" value="Log Out"
                                            action="#{loginManagedBean.logout}"
-                                           rendered="#{loginManagedBean.status}"/>
+                                           rendered="#{loginManagedBean.status}">
+                                <f:param name="itemID" value="#{itemController.itemID}" />
+                            </h:commandLink>
                         </h:form>
                     </div>
                 </nav>
@@ -153,7 +155,8 @@
                                value="#{loginManagedBean.password}" />
                 <h:commandButton class="login_button" type="submit"
                                  id="login_button" value="Sign In"
-                                 action="#{loginManagedBean.verify}" />
+                                 action="#{loginManagedBean.verify}">
+                </h:commandButton>
                 <input type="button" id="close_panel" value="x"
                        onclick="vanishLogin();
                                 void(0);" />

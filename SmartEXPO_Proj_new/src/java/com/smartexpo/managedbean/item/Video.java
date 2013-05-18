@@ -24,7 +24,7 @@ import javax.transaction.UserTransaction;
 @ManagedBean
 @RequestScoped
 public class Video {
-    
+
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
@@ -46,7 +46,7 @@ public class Video {
         URLs = new ArrayList<String>();
         descriptions = new ArrayList<String>();
     }
-    
+
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
@@ -54,10 +54,10 @@ public class Video {
         }
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
-        
-        int itemID = Integer.parseInt(request.getParameter("id"));
+
+        int itemID = Integer.parseInt(request.getParameter("itemid"));
         videos = gi.getVideoByItemID(itemID);
-        
+
         setAllVideosInfo();
     }
 
@@ -116,7 +116,7 @@ public class Video {
     public void setDescriptions(List<String> descriptions) {
         this.descriptions = descriptions;
     }
-    
+
     private void setAllVideosInfo() {
         for (com.smartexpo.models.Video video : videos) {
             addVideoID(video);
@@ -125,19 +125,19 @@ public class Video {
             addVideoDescription(video);
         }
     }
-    
+
     private void addVideoID(com.smartexpo.models.Video video) {
         ids.add(video.getVideoId());
     }
-    
+
     private void addVideoURL(com.smartexpo.models.Video video) {
         URLs.add(video.getUrl());
     }
-    
+
     private void addVideoTitle(com.smartexpo.models.Video video) {
         titles.add(video.getTitle());
     }
-    
+
     private void addVideoDescription(com.smartexpo.models.Video video) {
         descriptions.add(video.getDescription());
     }

@@ -6,7 +6,7 @@
               xmlns="http://java.sun.com/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
-    <navigation-rule>
+<!--    <navigation-rule>
         <from-view-id>/item.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{loginManagedBean.verify}</from-action>
@@ -19,6 +19,6 @@
             <to-view-id>/item.xhtml</to-view-id>
             <redirect />
         </navigation-case>
-    </navigation-rule>
-        
+    </navigation-rule>-->
+
 </faces-config>

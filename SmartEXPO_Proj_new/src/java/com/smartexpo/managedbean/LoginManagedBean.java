@@ -7,7 +7,6 @@ package com.smartexpo.managedbean;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -25,8 +24,7 @@ public class LoginManagedBean implements Serializable {
     private static Logger logger = Logger.getLogger(LoginManagedBean.class.getName());
     @ManagedProperty(value = "Username")
     private String username;
-    @ManagedProperty(value = "Password")
-    private String password;
+    private String password = null;
     @ManagedProperty(value = "false")
     private boolean status;
 
@@ -95,6 +93,7 @@ public class LoginManagedBean implements Serializable {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.invalidate();
+
         return "item";
     }
 }
