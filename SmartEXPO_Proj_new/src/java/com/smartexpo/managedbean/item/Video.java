@@ -4,8 +4,18 @@
  */
 package com.smartexpo.managedbean.item;
 
+import com.smartexpo.controls.GetInfo;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.UserTransaction;
 
 /**
  *
@@ -15,70 +25,120 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class Video {
 
-    private int id;
-    private String title;
-    private String URL;
-    private String description = "This is video desciption.";
+    @PersistenceContext(unitName = "SmartEXPO_ProjPU")
+    EntityManager em;
+    @Resource
+    private UserTransaction utx;
+    private GetInfo gi = null;
+    // Video fields
+    private List<com.smartexpo.models.Video> videos;
+    private List<Integer> ids;
+    private List<String> titles;
+    private List<String> URLs;
+    private List<String> descriptions;
 
     /**
      * Creates a new instance of Video
      */
     public Video() {
+        ids = new ArrayList<Integer>();
+        titles = new ArrayList<String>();
+        URLs = new ArrayList<String>();
+        descriptions = new ArrayList<String>();
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        if (gi == null) {
+            gi = new GetInfo(em, utx);
+        }
+        HttpServletRequest request = (HttpServletRequest) FacesContext
+                .getCurrentInstance().getExternalContext().getRequest();
+
+        int itemID = Integer.parseInt(request.getParameter("itemid"));
+        videos = gi.getVideoByItemID(itemID);
+
+        setAllVideosInfo();
     }
 
     /**
-     * @return the id
+     * @return the ids
      */
-    public int getId() {
-        return id;
+    public List<Integer> getIds() {
+        return ids;
     }
 
     /**
-     * @param id the id to set
+     * @param ids the ids to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
     }
 
     /**
-     * @return the title
+     * @return the titles
      */
-    public String getTitle() {
-        return title;
+    public List<String> getTitles() {
+        return titles;
     }
 
     /**
-     * @param title the title to set
+     * @param titles the titles to set
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitles(List<String> titles) {
+        this.titles = titles;
     }
 
     /**
-     * @return the URL
+     * @return the URLs
      */
-    public String getURL() {
-        return URL;
+    public List<String> getURLs() {
+        return URLs;
     }
 
     /**
-     * @param URL the URL to set
+     * @param URLs the URLs to set
      */
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setURLs(List<String> URLs) {
+        this.URLs = URLs;
     }
 
     /**
-     * @return the description
+     * @return the descriptions
      */
-    public String getDescription() {
-        return description;
+    public List<String> getDescriptions() {
+        return descriptions;
     }
 
     /**
-     * @param description the description to set
+     * @param descriptions the descriptions to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List<String> descriptions) {
+        this.descriptions = descriptions;
+    }
+
+    private void setAllVideosInfo() {
+        for (com.smartexpo.models.Video video : videos) {
+            addVideoID(video);
+            addVideoTitle(video);
+            addVideoURL(video);
+            addVideoDescription(video);
+        }
+    }
+
+    private void addVideoID(com.smartexpo.models.Video video) {
+        ids.add(video.getVideoId());
+    }
+
+    private void addVideoURL(com.smartexpo.models.Video video) {
+        URLs.add(video.getUrl());
+    }
+
+    private void addVideoTitle(com.smartexpo.models.Video video) {
+        titles.add(video.getTitle());
+    }
+
+    private void addVideoDescription(com.smartexpo.models.Video video) {
+        descriptions.add(video.getDescription());
     }
 }

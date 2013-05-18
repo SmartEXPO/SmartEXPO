@@ -58,8 +58,11 @@
                         </h:outputLink>
                         <h:form>
                             <h:commandLink class="navi" value="Log Out"
-                                           action="#{loginManagedBean.logout}"
-                                           rendered="#{loginManagedBean.status}"/>
+                                           action="item"
+                                           actionListener="#{loginManagedBean.logout}"
+                                           rendered="#{loginManagedBean.status}">
+                                <f:param name="itemid" value="#{itemController.itemID}" />
+                            </h:commandLink>
                         </h:form>
                     </div>
                 </nav>
@@ -75,8 +78,8 @@
                         <h1 class="content_title">Description</h1>
                         <p id="description_content">
                             #{itemController.descriptionContent}
-                            #{itemController.audioDescription}
-                            #{itemController.videoDescription}
+                            #{itemController.audioDescriptions[0]}
+                            #{itemController.videoDescriptions[0]}
                         </p>
                         <h1 class="content_title">video</h1>
                         <p:media value="http://www.w3school.com.cn/i/movie.mp4"
@@ -106,7 +109,7 @@
                             <h1>#{itemController.itemName}</h1>
                             <div class="separator"
                                  style="margin-top:-10px;margin-bottom:-15px;"></div>
-                            <h3>#{itemController.authorName}</h3>
+                            <h3>#{itemController.authorNames[0]}</h3>
                         </div>
 
                     </div>
@@ -151,9 +154,12 @@
                              value="#{loginManagedBean.username}" />
                 <h:inputSecret class="inbox" id="password"
                                value="#{loginManagedBean.password}" />
-                <h:commandButton class="login_button" type="submit"
+                <h:commandLink class="login_button" type="submit"
                                  id="login_button" value="Sign In"
-                                 action="#{loginManagedBean.verify}" />
+                                 action="item"
+                                 actionListener="#{loginManagedBean.verify}">
+                    <f:param name="itemid" value="#{itemController.itemID}" />
+                </h:commandLink>
                 <input type="button" id="close_panel" value="x"
                        onclick="vanishLogin();
                                 void(0);" />

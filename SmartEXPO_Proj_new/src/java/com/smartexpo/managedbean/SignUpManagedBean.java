@@ -11,9 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -21,20 +18,21 @@ import javax.servlet.http.HttpSession;
  */
 @ManagedBean
 @SessionScoped
-public class LoginManagedBean implements Serializable {
+public class SignUpManagedBean implements Serializable {
 
-    private static Logger logger = Logger.getLogger(LoginManagedBean.class.getName());
     @ManagedProperty(value = "Username")
     private String username;
-    private String password = null;
-    @ManagedProperty(value = "false")
-    private boolean status;
-    private String iID;
+    @ManagedProperty(value = "")
+    private String password;
+    @ManagedProperty(value = "")
+    private String confirmPassword;
 
     /**
-     * Creates a new instance of LoginManagedBean
+     * Creates a new instance of SignUpManagedBean
      */
-    public LoginManagedBean() {
+    public SignUpManagedBean() {
+        Logger logger = Logger.getLogger(SignUpManagedBean.class.getName());
+        logger.log(Level.WARNING, FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath());
     }
 
     /**
@@ -66,33 +64,20 @@ public class LoginManagedBean implements Serializable {
     }
 
     /**
-     * @return the status
+     * @return the confirmPassword
      */
-    public boolean isStatus() {
-        return status;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
     /**
-     * @param status the status to set
+     * @param confirmPassword the confirmPassword to set
      */
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
-    /**
-     * Verify the user
-     *
-     * @return item.xhtml or error.xhtml
-     */
-    public void verify(ActionEvent event) {
-        // 数据库验证
-        setStatus(true);
-    }
-
-    public void logout(ActionEvent event) {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
-        session.invalidate();
-        setStatus(false);
+    public String signUpVerify() {
+        return "item?itemid=1&faces-redirect=true";
     }
 }

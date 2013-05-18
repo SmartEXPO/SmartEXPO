@@ -5,8 +5,6 @@
 package com.smartexpo.managedbean.item;
 
 import com.smartexpo.controls.GetInfo;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
@@ -49,7 +47,7 @@ public class Item {
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
 
-        id = Integer.parseInt(request.getParameter("id"));
+        id = Integer.parseInt(request.getParameter("itemid"));
         item = gi.getItemByID(id);
         name = item.getItemName();
     }

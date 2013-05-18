@@ -4,8 +4,18 @@
  */
 package com.smartexpo.managedbean.item;
 
+import com.smartexpo.controls.GetInfo;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.UserTransaction;
 
 /**
  *
@@ -15,70 +25,120 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class Audio {
 
-    private int id;
-    private String title;
-    private String url;
-    private String description = "This should be a audio.";
+    @PersistenceContext(unitName = "SmartEXPO_ProjPU")
+    EntityManager em;
+    @Resource
+    private UserTransaction utx;
+    private GetInfo gi = null;
+    // Audio fields
+    private List<com.smartexpo.models.Audio> audios;
+    private List<Integer> ids;
+    private List<String> titles;
+    private List<String> URLs;
+    private List<String> descriptions;
 
     /**
      * Creates a new instance of Audio
      */
     public Audio() {
+        ids = new ArrayList<Integer>();
+        titles = new ArrayList<String>();
+        URLs = new ArrayList<String>();
+        descriptions = new ArrayList<String>();
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        if (gi == null) {
+            gi = new GetInfo(em, utx);
+        }
+        HttpServletRequest request = (HttpServletRequest) FacesContext
+                .getCurrentInstance().getExternalContext().getRequest();
+
+        int itemID = Integer.parseInt(request.getParameter("itemid"));
+        audios = gi.getAudioByItemID(itemID);
+
+        setAllAudioInfo();
     }
 
     /**
-     * @return the id
+     * @return the ids
      */
-    public int getId() {
-        return id;
+    public List<Integer> getIds() {
+        return ids;
     }
 
     /**
-     * @param id the id to set
+     * @param ids the ids to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
     }
 
     /**
-     * @return the title
+     * @return the titles
      */
-    public String getTitle() {
-        return title;
+    public List<String> getTitles() {
+        return titles;
     }
 
     /**
-     * @param title the title to set
+     * @param titles the titles to set
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitles(List<String> titles) {
+        this.titles = titles;
     }
 
     /**
-     * @return the url
+     * @return the URLs
      */
-    public String getUrl() {
-        return url;
+    public List<String> getURLs() {
+        return URLs;
     }
 
     /**
-     * @param url the url to set
+     * @param URLs the URLs to set
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setURLs(List<String> URLs) {
+        this.URLs = URLs;
     }
 
     /**
-     * @return the description
+     * @return the descriptions
      */
-    public String getDescription() {
-        return description;
+    public List<String> getDescriptions() {
+        return descriptions;
     }
 
     /**
-     * @param description the description to set
+     * @param descriptions the descriptions to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List<String> descriptions) {
+        this.descriptions = descriptions;
+    }
+
+    private void setAllAudioInfo() {
+        for (com.smartexpo.models.Audio audio : audios) {
+            addAudioID(audio);
+            addAudioTitle(audio);
+            addAudioURL(audio);
+            addAudioDescription(audio);
+        }
+    }
+
+    private void addAudioID(com.smartexpo.models.Audio audio) {
+        ids.add(audio.getAudioId());
+    }
+
+    private void addAudioURL(com.smartexpo.models.Audio audio) {
+        URLs.add(audio.getUrl());
+    }
+
+    private void addAudioTitle(com.smartexpo.models.Audio audio) {
+        titles.add(audio.getTitle());
+    }
+
+    private void addAudioDescription(com.smartexpo.models.Audio audio) {
+        descriptions.add(audio.getDescription());
     }
 }
