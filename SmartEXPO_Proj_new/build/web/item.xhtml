@@ -13,8 +13,8 @@
         <meta name="description" content="" />
         <meta name="author" content="Ben" />
 
-        <!--        <meta name="viewport" content="width=device-width;
-                      user-scalable=no, maximun-scale=1.0" />-->
+        <meta name="viewport" content="width=device-width;
+              user-scalable=no, maximun-scale=1.0" />
 
         <!-- Replace favicon.ico & apple-touch-icon.png
         in the root of your domain and delete these references -->
@@ -44,21 +44,23 @@
             <header>
                 <h:graphicImage id="logo" library="theme1"
                                 name="images/item_logo.png" />
-                <nav>
+                <nav id="nav">
                     <a class="navi" href="#">Map</a>|
                     <a class="navi" href="#">Info</a>|
                     <a class="navi" href="#">Contact</a>
                     <div id="login">
-                        <div>
-                            #{loginManagedBean.status ? loginManagedBean.username : "guest"}
-                        </div>
-                        <h:outputLink class="navi" value="#" onclick="popupLogin();
-                                void(0);" rendered="#{!loginManagedBean.status}">
-                            <h:outputText value="Log In" />
-                        </h:outputLink>
-                        <h:form>
-                            <h:commandLink class="navi" value="Log Out"
-                                           action="item"
+                        <h:form id="log_form">
+                            <div>
+                                #{loginManagedBean.status ? loginManagedBean.username : "guest"}
+                            </div>
+                            <h:outputLink id="show_login" class="navi"
+                                          value="#" onclick="popupLogin();
+                                                  void(0);"
+                                          rendered="#{!loginManagedBean.status}">
+                                <h:outputText value="Log In" />
+                            </h:outputLink>
+                            <h:commandLink id="show_logout" class="navi"
+                                           value="Log Out" action="item"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
                                 <f:param name="itemid" value="#{itemController.itemID}" />
@@ -150,19 +152,22 @@
 
         <div id="login_panel">
             <h:form id="login_form">
-                <h:inputText class="inbox" id="username"
+                <h:inputText class="inbox" id="username" required="true"
                              value="#{loginManagedBean.username}" />
-                <h:inputSecret class="inbox" id="password"
+                <h:message id="username_msg" for="username" style="color:red" />
+                <h:inputSecret class="inbox" id="password" required="true"
                                value="#{loginManagedBean.password}" />
+                <h:message id="password_msg" for="password" style="color:red" />
                 <h:commandLink class="login_button" type="submit"
-                                 id="login_button" value="Sign In"
-                                 action="item"
-                                 actionListener="#{loginManagedBean.verify}">
+                               id="login_button" value="Sign In">
                     <f:param name="itemid" value="#{itemController.itemID}" />
+                    <f:ajax listener="#{loginManagedBean.verify}"
+                            execute="username password username_msg password_msg"
+                            render="login_form :log_form" />
                 </h:commandLink>
                 <input type="button" id="close_panel" value="x"
                        onclick="vanishLogin();
-                                void(0);" />
+                                                  void(0);" />
             </h:form>
         </div>
 
