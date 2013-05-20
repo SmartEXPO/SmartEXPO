@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -28,9 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ItemAuthor.findAll", query = "SELECT i FROM ItemAuthor i"),
     @NamedQuery(name = "ItemAuthor.findByItemAuthorId", query = "SELECT i FROM ItemAuthor i WHERE i.itemAuthorId = :itemAuthorId"),
-    @NamedQuery(name = "ItemAuthor.findByItemId", query = "SELECT i FROM ItemAuthor i WHERE i.itemId = :itemId")})//WHERE i.itemId.itemId = :itemId
+    @NamedQuery(name = "ItemAuthor.findByItemId",query = "SELECT i FROM ItemAuthor i WHERE i.itemId = :itemId")})//WHERE i.itemId.itemId = :itemId
 public class ItemAuthor implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,10 @@ public class ItemAuthor implements Serializable {
     @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "AUTHOR_ID")
     @OneToOne(optional = false)
     private Author authorId;
-
+    
+    
+    
+    
     public ItemAuthor() {
     }
 
@@ -99,4 +102,5 @@ public class ItemAuthor implements Serializable {
     public String toString() {
         return "com.smartexpo.models.ItemAuthor[ itemAuthorId=" + itemAuthorId + " ]";
     }
+    
 }

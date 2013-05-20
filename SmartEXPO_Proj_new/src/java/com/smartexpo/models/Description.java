@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Description.findByContent", query = "SELECT d FROM Description d WHERE d.content = :content"),
     @NamedQuery(name = "Description.findByItemId", query = "SELECT d FROM Description d WHERE d.itemId = :itemId")
 })
-public class Description implements Serializable {
 
+public class Description implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -125,4 +125,5 @@ public class Description implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Description[ descriptionId=" + descriptionId + " ]";
     }
+    
 }

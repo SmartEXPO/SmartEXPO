@@ -32,7 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Permission.findByPermissionId", query = "SELECT p FROM Permission p WHERE p.permissionId = :permissionId"),
     @NamedQuery(name = "Permission.findByPermissionName", query = "SELECT p FROM Permission p WHERE p.permissionName = :permissionName")})
 public class Permission implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,13 +43,16 @@ public class Permission implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "PERMISSION_NAME")
     private String permissionName;
+    
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "permissionId")
     private ManagerPermission managerPermission;
-
+    
+    
     /*
      * 
      * @OneToOne(cascade = CascadeType.ALL, mappedBy = "audioId")
-     private ItemAudio itemAudio;
+    private ItemAudio itemAudio;
      * 
      */
     public Permission() {
@@ -113,4 +115,5 @@ public class Permission implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Permission[ permissionId=" + permissionId + " ]";
     }
+    
 }

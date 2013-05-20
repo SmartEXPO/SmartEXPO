@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Audio.findByUrl", query = "SELECT a FROM Audio a WHERE a.url = :url"),
     @NamedQuery(name = "Audio.findByDescription", query = "SELECT a FROM Audio a WHERE a.description = :description")})
 public class Audio implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +53,8 @@ public class Audio implements Serializable {
     @Size(max = 1000)
     @Column(name = "DESCRIPTION")
     private String description;
+    
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "audioId")
     private ItemAudio itemAudio;
 
@@ -134,4 +135,5 @@ public class Audio implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Audio[ audioId=" + audioId + " ]";
     }
+    
 }

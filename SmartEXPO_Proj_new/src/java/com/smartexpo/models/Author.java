@@ -38,7 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Author.findByDeathDate", query = "SELECT a FROM Author a WHERE a.deathDate = :deathDate"),
     @NamedQuery(name = "Author.findByIntroduction", query = "SELECT a FROM Author a WHERE a.introduction = :introduction")})
 public class Author implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +62,7 @@ public class Author implements Serializable {
     private String introduction;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "authorId")
     private ItemAuthor itemAuthor;
+    
 
     public ItemAuthor getItemAuthor() {
         return itemAuthor;
@@ -149,4 +149,5 @@ public class Author implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Author[ authorId=" + authorId + " ]";
     }
+    
 }

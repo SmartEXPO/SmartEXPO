@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -31,7 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ItemComment.findByItemId", query = "SELECT i FROM ItemComment i WHERE i.itemId = :itemId")
 })
 public class ItemComment implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +39,7 @@ public class ItemComment implements Serializable {
     @Column(name = "ITEM_COMMENT_ID")
     private Integer itemCommentId;
     @JoinColumn(name = "ITEM_ID", referencedColumnName = "ITEM_ID")
-    @OneToOne(optional = false)
+    @OneToOne(optional =false)
     private Item itemId;
     @JoinColumn(name = "COMMENT_ID", referencedColumnName = "COMMENT_ID")
     @OneToOne(optional = false)
@@ -100,4 +100,5 @@ public class ItemComment implements Serializable {
     public String toString() {
         return "com.smartexpo.models.ItemComment[ itemCommentId=" + itemCommentId + " ]";
     }
+    
 }

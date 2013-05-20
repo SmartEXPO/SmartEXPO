@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Video.findByUrl", query = "SELECT v FROM Video v WHERE v.url = :url"),
     @NamedQuery(name = "Video.findByVideoId", query = "SELECT v FROM Video v WHERE v.videoId = :videoId")})
 public class Video implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Size(max = 1000)
     @Column(name = "DESCRIPTION")
@@ -134,4 +133,5 @@ public class Video implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Video[ videoId=" + videoId + " ]";
     }
+    
 }
