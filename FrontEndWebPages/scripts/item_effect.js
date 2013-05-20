@@ -48,7 +48,7 @@ $(document).ready(function() {
             $("#search_box").animate({
                 width : '200px',
             }, 500);
-            $("#search_box").val("Search");
+            $("#search_box").val("");
         } else {
             hideSearchPane();
         }
@@ -79,14 +79,6 @@ $(document).ready(function() {
         });
     });
 
-    $("#comment_name_box").focus(function() {
-        $(this).val("");
-    });
-
-    $("#comment_content_box").focus(function() {
-        $(this).val("");
-
-    });
 
     $("#comment_img").click(function() {
         hideSearchPane();
@@ -112,8 +104,8 @@ $(document).ready(function() {
                     $("#users_comment").css("display", "block");
                 });
             });
-            $("#comment_content_box").val("Your Comment");
-            $("#comment_name_box").val("Name");
+            $("#comment_content_box").val("");
+            $("#comment_name_box").val("");
         } else {
             hideCommentPane();
         }
@@ -144,13 +136,13 @@ $(document).ready(function() {
     }
 
 
-    $('.inbox').focus(function() {
-        $(this).val("");
-        $(this).css('color', 'black');
-        if ($(this).attr('name') === "password") {
-            $(this).attr('type', 'password');
-        }
-    });
+    // $('.inbox').focus(function() {
+        // $(this).val("");
+        // $(this).css('color', 'black');
+        // if ($(this).attr('name') === "password") {
+            // $(this).attr('type', 'password');
+        // }
+    // });
 
     var edit = false;
     var toEdit;
@@ -172,6 +164,7 @@ $(document).ready(function() {
 function popupLogin() {
     $('#overall_shade').fadeTo('fast', 0.4);
     $('#login_panel').fadeIn('fast');
+    $('.inbox').val("");
 }
 
 function vanishLogin() {
