@@ -32,7 +32,6 @@ public class LoginManagedBean implements Serializable {
     private String password = null;
     @ManagedProperty(value = "false")
     private boolean status;
-    private String iID;
 
     /**
      * Creates a new instance of LoginManagedBean
@@ -53,7 +52,6 @@ public class LoginManagedBean implements Serializable {
         if (username != null && !username.equals("")
                 && password != null && !password.equals("")) {
             // 数据库验证
-            logger.log(Level.WARNING, "Why nonono");
             setStatus(true);
         }
     }

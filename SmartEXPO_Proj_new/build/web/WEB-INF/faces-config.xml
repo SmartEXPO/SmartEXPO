@@ -20,5 +20,14 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-
+    
+    <managed-bean>
+        <managed-bean-class>com.smartexpo.managedbean.SignUpManagedBean</managed-bean-class>
+        <managed-property>
+            <property-name>permissions</property-name>
+            <value>p1</value>
+            <value>p2</value>
+            <value>p3</value>
+        </managed-property>
+    </managed-bean>
 </faces-config>

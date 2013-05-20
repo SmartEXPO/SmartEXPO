@@ -1,4 +1,5 @@
 *.DS_Store
 *.project
+*.class
 /SmartEXPO_Proj_new/build/*
 /SmartEXPO_Proj_new/dist/*
