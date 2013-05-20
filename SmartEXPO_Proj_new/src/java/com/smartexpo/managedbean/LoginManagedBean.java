@@ -7,13 +7,16 @@ package com.smartexpo.managedbean;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -35,6 +38,24 @@ public class LoginManagedBean implements Serializable {
      * Creates a new instance of LoginManagedBean
      */
     public LoginManagedBean() {
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SignUpManagedBean signUpManagedBean = (SignUpManagedBean) facesContext
+                .getELContext().getELResolver()
+                .getValue(facesContext.getELContext(), null, "signUpManagedBean");
+
+        username = signUpManagedBean.getUsername();
+        password = signUpManagedBean.getPassword();
+
+        if (username != null && !username.equals("")
+                && password != null && !password.equals("")) {
+            // 数据库验证
+            logger.log(Level.WARNING, "Why nonono");
+            setStatus(true);
+        }
     }
 
     /**
@@ -84,9 +105,17 @@ public class LoginManagedBean implements Serializable {
      *
      * @return item.xhtml or error.xhtml
      */
-    public void verify(ActionEvent event) {
-        // 数据库验证
-        setStatus(true);
+    public void verify(AjaxBehaviorEvent event) {
+        boolean check = true;
+
+        if (check) { // 数据库验证
+            setStatus(true);
+            RequestContext.getCurrentInstance()
+                    .execute("vanishLogin();void(0);"); // Close login pannel
+        } else {
+            setUsername("Username");
+            setPassword("Password");
+        }
     }
 
     public void logout(ActionEvent event) {

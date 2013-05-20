@@ -78,6 +78,7 @@ public class SignUpManagedBean implements Serializable {
     }
 
     public String signUpVerify() {
+        // 数据库验证并添加
         return "item?itemid=1&faces-redirect=true";
     }
 }
