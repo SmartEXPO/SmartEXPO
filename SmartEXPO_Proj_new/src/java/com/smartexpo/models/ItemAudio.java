@@ -28,22 +28,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ItemAudio.findAll", query = "SELECT i FROM ItemAudio i"),
     @NamedQuery(name = "ItemAudio.findByItemAudioId", query = "SELECT i FROM ItemAudio i WHERE i.itemAudioId = :itemAudioId"),
-    @NamedQuery(name = "ItemAudio.findByItemId",query = "SELECT i FROM ItemAudio i WHERE i.itemId = :itemId")})
+    @NamedQuery(name = "ItemAudio.findByItemId", query = "SELECT i FROM ItemAudio i WHERE i.itemId = :itemId")})
 public class ItemAudio implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ITEM_AUDIO_ID")
     private Integer itemAudioId;
-    
-    
     @JoinColumn(name = "AUDIO_ID", referencedColumnName = "AUDIO_ID")
     @OneToOne(optional = false)
     private Audio audioId;
-    
-    
-    
     @JoinColumn(name = "ITEM_ID", referencedColumnName = "ITEM_ID")
     @OneToOne(optional = false)
     private Item itemId;
@@ -103,5 +99,4 @@ public class ItemAudio implements Serializable {
     public String toString() {
         return "com.smartexpo.models.ItemAudio[ itemAudioId=" + itemAudioId + " ]";
     }
-    
 }

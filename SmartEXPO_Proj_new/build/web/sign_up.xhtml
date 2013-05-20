@@ -10,13 +10,18 @@
         <div>
             <h:form>
                 <div>
-                    <h:inputText value="#{signUpManagedBean.username}" />
-                    <h:inputSecret value="#{signUpManagedBean.password}" />
-                    <h:inputSecret value="#{signUpManagedBean.confirmPassword}" />
+                    <h:inputText id="username" value="#{signUpManagedBean.username}" />
+                    <h:inputSecret id="password" value="#{signUpManagedBean.password}" />
+                    <h:inputSecret id="confirm_password" value="#{signUpManagedBean.confirmPassword}" />
                 </div>
                 <div>
                     <h:commandButton action="#{signUpManagedBean.signUpVerify}"
-                                     value="Sign Up" />
+                                     value="Sign Up">
+                        <f:ajax listener="#{signUpManagedBean.verify}"
+                                execute="username password confirm_password"
+                                render="msg" />
+                    </h:commandButton>
+                    <h:messages id="msg" />
                 </div>
             </h:form>
         </div>

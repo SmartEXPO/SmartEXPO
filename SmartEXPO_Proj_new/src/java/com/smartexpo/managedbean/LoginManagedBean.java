@@ -8,13 +8,13 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
@@ -123,5 +123,12 @@ public class LoginManagedBean implements Serializable {
                 .getExternalContext().getSession(false);
         session.invalidate();
         setStatus(false);
+    }
+
+    public String logoutAction() {
+        HttpServletRequest request = (HttpServletRequest) FacesContext
+                .getCurrentInstance().getExternalContext().getRequest();
+        String itemID = request.getParameter("itemid");
+        return "item?faces-redirect=true&itemid=" + itemID;
     }
 }

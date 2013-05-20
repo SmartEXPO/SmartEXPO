@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content"),
     @NamedQuery(name = "Comment.findByTime", query = "SELECT c FROM Comment c WHERE c.time = :time")})
 public class Comment implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +59,7 @@ public class Comment implements Serializable {
     @Column(name = "TIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "commentId")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "commentId")
     private ItemComment itemComment;
 
     public Comment() {
@@ -139,5 +140,4 @@ public class Comment implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Comment[ commentId=" + commentId + " ]";
     }
-    
 }

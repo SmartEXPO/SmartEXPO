@@ -60,7 +60,8 @@
                                 <h:outputText value="Log In" />
                             </h:outputLink>
                             <h:commandLink id="show_logout" class="navi"
-                                           value="Log Out" action="item"
+                                           value="Log Out"
+                                           action="#{loginManagedBean.logoutAction}"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
                                 <f:param name="itemid" value="#{itemController.itemID}" />
@@ -100,8 +101,8 @@
                     <div id="frame" class="content_fixed">
                         <h:graphicImage id="frame_back" library="theme1"
                                         name="images/item_frame.png" />
-                        <!--                        <h:graphicImage id="frame_image" library="theme1"
-                                                                name="xxx" />-->
+<!--                        <h:graphicImage id="frame_image" library="theme1"
+                                        name="xxx" />-->
                         <h:graphicImage id="frame_highlight" library="theme1"
                                         name="images/item_frame_highlight.png" />
                     </div>
