@@ -1,2 +1,6 @@
 *.DS_Store
 *.project
+/SmartEXPO_Proj_new/dist/
+/SmartEXPO_Proj_new/build/
+glassfish-resources.xml
+persistence.xml
