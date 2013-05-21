@@ -35,7 +35,7 @@ $(document).ready(function() {
 
     $(".func_button").mouseleave(function() {
         $(this).fadeTo('fast', 0.8);
-    })
+    });
 
     $("#search_img").click(function() {
         hideCommentPane();
@@ -48,7 +48,7 @@ $(document).ready(function() {
             $("#search_box").animate({
                 width: '200px',
             }, 500);
-            $("#search_box").val("Search");
+            $("#search_box").val("");
         } else {
             hideSearchPane();
         }
@@ -79,14 +79,6 @@ $(document).ready(function() {
         });
     });
 
-    $("#comment_name_box").focus(function() {
-        $(this).val("");
-    });
-
-    $("#comment_content_box").focus(function() {
-        $(this).val("");
-
-    });
 
     $("#comment_img").click(function() {
         hideSearchPane();
@@ -112,8 +104,8 @@ $(document).ready(function() {
                     $("#users_comment").css("display", "block");
                 });
             });
-            $("#comment_content_box").val("Your Comment");
-            $("#comment_name_box").val("Name");
+            $("#comment_content_box").val("");
+            $("#comment_name_box").val("");
         } else {
             hideCommentPane();
         }
@@ -144,19 +136,35 @@ $(document).ready(function() {
     }
 
 
-    $('.inbox').focus(function() {
-        $(this).val("");
-        $(this).css('color', 'black');
-        if ($(this).attr('name') === "password") {
-            $(this).attr('type', 'password');
+    // $('.inbox').focus(function() {
+    // $(this).val("");
+    // $(this).css('color', 'black');
+    // if ($(this).attr('name') === "password") {
+    // $(this).attr('type', 'password');
+    // }
+    // });
+
+    var edit = false;
+    var toEdit;
+    $(".edit_description_div").click(function() {
+        if (edit == false) {
+            toEdit = $(this).next();
+            var content = toEdit.html();
+            toEdit.html("<textarea class='edit_description_box'>" + content + "</textarea>");
+            edit = true;
+            $(".edit_description_div").attr("value", "Done");
+        } else {
+            toEdit.html(toEdit.children().val());
+            edit = false;
+            $(".edit_description_div").attr("value", "Edit");
         }
     });
-
 });
 
 function popupLogin() {
     $('#overall_shade').fadeTo('fast', 0.4);
     $('#login_panel').fadeIn('fast');
+    $('.inbox').val("");
 }
 
 function vanishLogin() {

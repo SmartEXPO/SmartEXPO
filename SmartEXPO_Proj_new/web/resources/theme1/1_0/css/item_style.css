@@ -279,12 +279,12 @@ footer {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     display: block;
-    color: #A9A9A9;
+    color: #464646;
     background-color: #DADAD2;
     text-align: center;
 }
 
-.login_button {
+#login_button {
     height: 35px;
     border-radius: 0px;
     -webkit-border-radius: 0px;
@@ -311,4 +311,20 @@ footer {
     background: #000000;
     color: #DADAD2;
     border: none;
+}
+
+.edit_description_div {
+    font-size: 12px;
+    color: white;
+    background: black;
+    border: none;
+    height: 15px;
+}
+
+.edit_description_box {
+    width: 395px;
+    height: 300px;
+    border: none;
+    background: #DADAD2;
+    overflow:auto;
 }

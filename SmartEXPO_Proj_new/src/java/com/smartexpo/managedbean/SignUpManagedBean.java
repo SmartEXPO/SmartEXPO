@@ -15,12 +15,12 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -42,11 +42,8 @@ public class SignUpManagedBean implements Serializable {
     @Resource
     private UserTransaction utx;
     // SignUpManagedBean Field
-    @ManagedProperty(value = "Username")
     private String username;
-    @ManagedProperty(value = "")
     private String password;
-    @ManagedProperty(value = "")
     private String confirmPassword;
     private String[] permissionString = {"p1", "p2", "p3"};
     boolean isVerify;
@@ -133,7 +130,14 @@ public class SignUpManagedBean implements Serializable {
         }
     }
 
-    public void verify(AjaxBehaviorEvent event) {
+    public void verify(ActionEvent event) {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        if (session.isNew()) {
+            logger.log(Level.WARNING, "session has existed.");
+            session.invalidate();
+        }
+
         if (isExist()) { // Username has existed
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage("Username has existed."));

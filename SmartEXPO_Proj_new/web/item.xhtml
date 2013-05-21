@@ -13,8 +13,8 @@
         <meta name="description" content="" />
         <meta name="author" content="Ben" />
 
-        <meta name="viewport" content="width=device-width;
-              user-scalable=no, maximun-scale=1.0" />
+        <!--        <meta name="viewport" content="width=device-width;
+                      user-scalable=no, maximun-scale=1.0" />-->
 
         <!-- Replace favicon.ico & apple-touch-icon.png
         in the root of your domain and delete these references -->
@@ -144,7 +144,8 @@
                     <h:inputText id="comment_name_box" class="func_input_box"
                                  value="Name" style="display:inline-block" />
                     <h:inputText id="comment_content_box" class="func_input_box"
-                                 value="Your Comment" style="display: inline-block" />
+                                 value="Your Comment"
+                                 style="display: inline-block" />
                 </div>
             </div>
         </div>
@@ -153,19 +154,25 @@
 
         <div id="login_panel">
             <h:form id="login_form">
-                <h:inputText class="inbox" id="username" required="true"
-                             value="#{loginManagedBean.username}" />
-                <h:message id="username_msg" for="username" style="color:red" />
-                <h:inputSecret class="inbox" id="password" required="true"
-                               value="#{loginManagedBean.password}" />
-                <h:message id="password_msg" for="password" style="color:red" />
-                <h:commandLink class="login_button" type="submit"
-                               id="login_button" value="Sign In">
+                <p:inputText id="username" required="true"
+                             value="#{loginManagedBean.username}"
+                             styleClass="inbox" />
+                <p:watermark for="username" value="Username" />
+
+                <p:password id="password" required="true"
+                            value="#{loginManagedBean.password}"
+                            styleClass="inbox" />
+                <p:watermark for="password" value="Password" />
+
+                <p:commandLink id="login_button_test" value="Sign In"
+                               ajax="true"
+                               actionListener="#{loginManagedBean.verify}"
+                               update="username password
+                               login_form :log_form msg">
                     <f:param name="itemid" value="#{itemController.itemID}" />
-                    <f:ajax listener="#{loginManagedBean.verify}"
-                            execute="username password username_msg password_msg"
-                            render="login_form :log_form" />
-                </h:commandLink>
+                </p:commandLink>
+                <p:messages id="msg" />
+
                 <input type="button" id="close_panel" value="x"
                        onclick="vanishLogin();
                                                   void(0);" />
