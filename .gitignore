@@ -1,11 +1,7 @@
 *.DS_Store
 *.project
-/SmartEXPO_Proj_new/dist/
-/SmartEXPO_Proj_new/build/
+/SmartEXPO_Proj_new/dist/*
+/SmartEXPO_Proj_new/build/*
 glassfish-resources.xml
 persistence.xml
 *.class
-/SmartEXPO_Proj_new/build/empty/
-/SmartEXPO_Proj_new/build/generated/
-/SmartEXPO_Proj_new/build/generated-sources/
-/SmartEXPO_Proj_new/build/web/
