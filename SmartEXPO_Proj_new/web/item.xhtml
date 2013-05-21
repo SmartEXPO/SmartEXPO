@@ -60,7 +60,8 @@
                                 <h:outputText value="Log In" />
                             </h:outputLink>
                             <h:commandLink id="show_logout" class="navi"
-                                           value="Log Out" action="item"
+                                           value="Log Out"
+                                           action="#{loginManagedBean.logoutAction}"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
                                 <f:param name="itemid" value="#{itemController.itemID}" />

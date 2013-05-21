@@ -30,7 +30,7 @@ public class Description {
     private UserTransaction utx;
     private GetInfo gi = null;
     // Description fields
-    private List<com.smartexpo.models.Description> descriptions;
+    private com.smartexpo.models.Description descriptions;
     private int id;
     private String title;
     private String content = "This is item Content.";
@@ -50,8 +50,7 @@ public class Description {
                 .getCurrentInstance().getExternalContext().getRequest();
 
         int itemID = Integer.parseInt(request.getParameter("itemid"));
-        descriptions = gi.getDescriptionByItemID(itemID);
-        // ??????????? description = gi.getItembyID(itemID).getDesciption(); 应该用哪个
+        descriptions = gi.getDescriptionByItemID(itemID).get(0);
     }
 
     /**

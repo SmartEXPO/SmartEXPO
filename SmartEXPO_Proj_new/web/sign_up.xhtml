@@ -10,13 +10,31 @@
         <div>
             <h:form>
                 <div>
-                    <h:inputText value="#{signUpManagedBean.username}" />
-                    <h:inputSecret value="#{signUpManagedBean.password}" />
-                    <h:inputSecret value="#{signUpManagedBean.confirmPassword}" />
+                    <h:inputText id="username"
+                                 value="#{signUpManagedBean.username}" />
+                    <h:inputSecret id="password"
+                                   value="#{signUpManagedBean.password}" />
+                    <h:inputSecret id="confirm_password"
+                                   value="#{signUpManagedBean.confirmPassword}" />
+                    <h:selectManyCheckbox id="permission_sel"
+                                          value="#{signUpManagedBean.permissionString}">
+                        <f:selectItem itemValue="p1"
+                                      itemLabel="Permission 1" />
+                        <f:selectItem itemValue="p2"
+                                      itemLabel="Permission 2" />
+                        <f:selectItem itemValue="p3"
+                                      itemLabel="Permission 3" />
+                    </h:selectManyCheckbox>
                 </div>
                 <div>
                     <h:commandButton action="#{signUpManagedBean.signUpVerify}"
-                                     value="Sign Up" />
+                                     value="Sign Up">
+                        <f:ajax listener="#{signUpManagedBean.verify}"
+                                execute="username password
+                                confirm_password permission_sel"
+                                render="msg" />
+                    </h:commandButton>
+                    <h:messages id="msg" />
                 </div>
             </h:form>
         </div>
