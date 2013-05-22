@@ -19,18 +19,12 @@ import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
 import com.smartexpo.models.Permission;
 import com.smartexpo.models.Video;
-import java.awt.ItemSelectable;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
@@ -44,7 +38,6 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
-import org.jboss.weld.util.collections.ArraySet;
 
 /**
  *
@@ -242,13 +235,9 @@ public class InsertItemServlet extends HttpServlet {
             for (int i = 0; i < descriptions.size(); i++) {
                 logger.log(Level.WARNING, descriptions.get(i).getTitle());
             }
-<<<<<<< HEAD
 
-            List<Permission> permissions = gi.getPermissionByID(4);
-=======
-            
+
             List<Permission> permissions = gi.getPermissionByID(item.getItemId());
->>>>>>> d1d60af90d463adf10b8ae6735d8492da2072eb3
             for (int i = 0; i < permissions.size(); i++) {
                 logger.log(Level.WARNING, permissions.get(i).getPermissionName());
             }

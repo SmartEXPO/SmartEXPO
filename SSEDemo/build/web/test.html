@@ -8,21 +8,21 @@
             if (typeof(EventSource) !== "undefined")
             {
                 var source = new EventSource("sse");
-                    source.onmessage = function(event)
-                    {
-                        document.getElementById("result").innerHTML += event.data + "<br />";
-                        //alert("ok");
-//                    console.log(event.data);
-                    };
-                }
-                else
+                source.onmessage = function(event)
                 {
-                    document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+                    document.getElementById("result").innerHTML += event.data + "<br />";
+                    //alert("ok");
+//                    console.log(event.data);
+                };
+            }
+            else
+            {
+                document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
 //                console.log("Error");
-                }
+            }
         </script>
-   
-    <div id="result"></div>
-    <a href="sse">a</a>
-</body>
+
+        <div id="result"></div>
+        <a href="sse">a</a>
+    </body>
 </html>

@@ -36,7 +36,7 @@ import javax.transaction.UserTransaction;
 @SessionScoped
 public class SignUpManagedBean implements Serializable {
 
-    private static Logger logger = Logger.getLogger(SignUpManagedBean.class.getName());
+    private static final Logger logger = Logger.getLogger(SignUpManagedBean.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
@@ -119,17 +119,6 @@ public class SignUpManagedBean implements Serializable {
         this.permissionString = permissionString;
     }
 
-    public String signUpVerify() {
-        if (isVerify) {
-            storeManager();
-
-            // Hard code
-            return "item?itemid=1&faces-redirect=true";
-        } else {
-            return null;
-        }
-    }
-
     public void verify(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
@@ -149,6 +138,10 @@ public class SignUpManagedBean implements Serializable {
             logger.log(Level.WARNING, "Password not match");
         } else {
             isVerify = true;
+        }
+
+        if (isVerify) {
+            storeManager();
         }
     }
 

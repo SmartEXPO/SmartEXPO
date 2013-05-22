@@ -17,10 +17,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import org.primefaces.context.RequestContext;
@@ -38,7 +36,7 @@ public class LoginManagedBean implements Serializable {
     @Resource
     private UserTransaction utx;
     // LoginManagedBean Field
-    private static Logger logger = Logger.getLogger(LoginManagedBean.class.getName());
+    private static final Logger logger = Logger.getLogger(LoginManagedBean.class.getName());
     private String username;
     private String password;
     @ManagedProperty(value = "false")

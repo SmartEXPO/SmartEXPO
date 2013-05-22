@@ -48,7 +48,7 @@ public class ItemController implements Serializable {
     private UserTransaction utx;
     private GetInfo gi = null;
     // ItemController Fields
-    Logger logger = Logger.getLogger(ItemController.class.getName());
+    static final Logger logger = Logger.getLogger(ItemController.class.getName());
     @ManagedProperty(value = "#{item}")
     private Item itemBean;
     private int itemID;
@@ -84,8 +84,8 @@ public class ItemController implements Serializable {
     private List<Date> commentTimes;
     private List<String> commentUsernames;
     private List<String> commentShowUsernameAndContent;
-    private String commentuser = "User";
-    private String commentcontent = "Con";
+    private String commentuser;
+    private String commentcontent;
 
     /**
      * Creates a new instance of ItemController
@@ -387,6 +387,12 @@ public class ItemController implements Serializable {
             newIC.setItemId(itemBean.getItem());
             newIC.setCommentId(newComment);
 
+            addCommentID(newComment);
+            addCommentUsername(newComment);
+            addCommentTime(newComment);
+            addCommentContent(newComment);
+            addCommentShowUsernameAndContent(newComment);
+
             utx.begin();
             em.persist(newIC);
             em.persist(newComment);
@@ -410,6 +416,7 @@ public class ItemController implements Serializable {
     }
 
     private void initialCommentsList() {
+        // 获得attribute有问题
         if (FacesContext.getCurrentInstance().getAttributes().get("itemid") == null) {
             logger.log(Level.WARNING, "itemid is null!!!!");
             itemID = 1;
@@ -417,31 +424,31 @@ public class ItemController implements Serializable {
         List<com.smartexpo.models.Comment> allComments = gi.getCommentByItemID(itemID);
         logger.log(Level.WARNING, "itemId = {0}", itemID);
         for (com.smartexpo.models.Comment com : allComments) {
-            initialCommentID(com);
-            initialCommentUsername(com);
-            initialCommentContent(com);
-            initialCommentTime(com);
-            initialCommentShowUsernameAndContent(com);
+            addCommentID(com);
+            addCommentUsername(com);
+            addCommentContent(com);
+            addCommentTime(com);
+            addCommentShowUsernameAndContent(com);
         }
     }
 
-    private void initialCommentID(com.smartexpo.models.Comment com) {
+    private void addCommentID(com.smartexpo.models.Comment com) {
         commentIDs.add(com.getCommentId());
     }
 
-    private void initialCommentUsername(com.smartexpo.models.Comment com) {
+    private void addCommentUsername(com.smartexpo.models.Comment com) {
         commentUsernames.add(com.getUsername());
     }
 
-    private void initialCommentContent(com.smartexpo.models.Comment com) {
+    private void addCommentContent(com.smartexpo.models.Comment com) {
         commentContents.add(com.getContent());
     }
 
-    private void initialCommentTime(com.smartexpo.models.Comment com) {
+    private void addCommentTime(com.smartexpo.models.Comment com) {
         commentTimes.add(com.getTime());
     }
 
-    private void initialCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
+    private void addCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
         getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
     }
 }

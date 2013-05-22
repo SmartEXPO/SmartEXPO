@@ -34,8 +34,7 @@
                     </p:selectManyCheckbox>
                 </div>
                 <div>
-                    <p:commandButton action="#{signUpManagedBean.signUpVerify}"
-                                     actionListener="#{signUpManagedBean.verify}"
+                    <p:commandButton actionListener="#{signUpManagedBean.verify}"
                                      value="Sign Up" ajax="true"
                                      update="username password confirm_password
                                      permission_sel msg"/>
