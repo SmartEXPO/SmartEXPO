@@ -5,12 +5,13 @@
 package com.smartexpo.managedbean.item;
 
 import com.smartexpo.controls.GetInfo;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,9 +23,10 @@ import javax.transaction.UserTransaction;
  * @author Boy
  */
 @ManagedBean
-@RequestScoped
-public class Item {
+@ViewScoped
+public class Item implements Serializable {
 
+    static final Logger logger = Logger.getLogger(Item.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
@@ -39,6 +41,7 @@ public class Item {
      * Creates a new instance of Item
      */
     public Item() {
+        logger.log(Level.WARNING, "ItemBean Construct");
     }
 
     @PostConstruct
@@ -48,12 +51,17 @@ public class Item {
         }
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
+        if (request.getAttribute("itemid") == null) {
+            request.setAttribute("itemid", "1");
+            logger.log(Level.WARNING, "set attribute successfully");
+        } else {
+            logger.log(Level.WARNING, "attribute exist");
+        }
 
-        id = Integer.parseInt(request.getParameter("itemid"));
+        String tmpID = (String) request.getAttribute("itemid");
+        id = Integer.parseInt(tmpID);
         item = gi.getItemByID(id);
         name = item.getItemName();
-//        Logger logger = Logger.getLogger(Item.class.getName());
-//        logger.log(Level.WARNING, name);
     }
 
     /**

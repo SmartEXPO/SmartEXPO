@@ -137,10 +137,7 @@ public class LoginManagedBean implements Serializable {
     }
 
     public String logoutAction() {
-        HttpServletRequest request = (HttpServletRequest) FacesContext
-                .getCurrentInstance().getExternalContext().getRequest();
-        String itemID = request.getParameter("itemid");
-        return "item?faces-redirect=true&itemid=" + itemID;
+        return "item?faces-redirect=true";
     }
 
     private boolean isPass() {
@@ -161,7 +158,6 @@ public class LoginManagedBean implements Serializable {
                 logger.log(Level.WARNING, "Password doesn't match.");
             }
         }
-
         return result;
     }
 }

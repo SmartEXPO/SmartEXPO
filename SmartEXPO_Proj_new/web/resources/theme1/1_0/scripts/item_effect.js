@@ -171,3 +171,10 @@ function vanishLogin() {
     $('#overall_shade').fadeOut('fast');
     $('#login_panel').fadeOut('fast');
 }
+
+function judge() {
+    if (event.keyCode == 13) {
+        return true;
+    }
+    return false;
+}

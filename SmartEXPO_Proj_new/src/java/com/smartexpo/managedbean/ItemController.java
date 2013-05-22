@@ -4,29 +4,51 @@
  */
 package com.smartexpo.managedbean;
 
+import com.smartexpo.controls.GetInfo;
 import com.smartexpo.managedbean.item.Audio;
 import com.smartexpo.managedbean.item.Author;
 import com.smartexpo.managedbean.item.Description;
 import com.smartexpo.managedbean.item.Item;
 import com.smartexpo.managedbean.item.Video;
 import com.smartexpo.managedbean.item.Comment;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Boy
  */
 @ManagedBean
-@RequestScoped
-public class ItemController {
+@ViewScoped
+public class ItemController implements Serializable {
 
+    @PersistenceContext(unitName = "SmartEXPO_ProjPU")
+    EntityManager em;
+    @Resource
+    private UserTransaction utx;
+    private GetInfo gi = null;
+    // ItemController Fields
+    Logger logger = Logger.getLogger(ItemController.class.getName());
     @ManagedProperty(value = "#{item}")
     private Item itemBean;
-    private int itemID;
+    private static int itemID;
     private String itemName;
     @ManagedProperty(value = "#{description}")
     private Description descriptionBean;
@@ -58,11 +80,21 @@ public class ItemController {
     private List<String> commentContents;
     private List<Date> commentTimes;
     private List<String> commentUsernames;
+    private String commentuser = "User";
+    private String commentcontent = "Con";
 
     /**
      * Creates a new instance of ItemController
      */
     public ItemController() {
+        logger.log(Level.WARNING, "Item Controller Construct");
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        if (gi == null) {
+            gi = new GetInfo(em, utx);
+        }
     }
 
     /**
@@ -281,5 +313,62 @@ public class ItemController {
     public List<String> getCommentUsernames() {
         commentUsernames = commentBean.getUsernames();
         return commentUsernames;
+    }
+
+    /**
+     * @return the commentuser
+     */
+    public String getCommentuser() {
+        return commentuser;
+    }
+
+    /**
+     * @param commentuser the commentuser to set
+     */
+    public void setCommentuser(String commentuser) {
+        this.commentuser = commentuser;
+    }
+
+    /**
+     * @return the commentcontent
+     */
+    public String getCommentcontent() {
+        return commentcontent;
+    }
+
+    /**
+     * @param commentcontent the commentcontent to set
+     */
+    public void setCommentcontent(String commentcontent) {
+        this.commentcontent = commentcontent;
+    }
+
+    public void addComment(AjaxBehaviorEvent event) {
+        try {
+            com.smartexpo.models.Comment newComment = new com.smartexpo.models.Comment();
+            newComment.setUsername(commentuser);
+            newComment.setContent(commentcontent);
+            newComment.setTime(new Date());
+
+            utx.begin();
+            em.persist(newComment);
+            utx.commit();
+
+            logger.log(Level.WARNING, "Comment");
+        } catch (RollbackException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeuristicMixedException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeuristicRollbackException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SystemException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

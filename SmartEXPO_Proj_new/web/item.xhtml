@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <meta charset="utf-8" />
         <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
@@ -63,9 +64,7 @@
                                            value="Log Out"
                                            action="#{loginManagedBean.logoutAction}"
                                            actionListener="#{loginManagedBean.logout}"
-                                           rendered="#{loginManagedBean.status}">
-                                <f:param name="itemid" value="#{itemController.itemID}" />
-                            </h:commandLink>
+                                           rendered="#{loginManagedBean.status}" />
                         </h:form>
                     </div>
                 </nav>
@@ -83,6 +82,7 @@
                             #{itemController.descriptionContent}
                             #{itemController.audioDescriptions[0]}
                             #{itemController.videoDescriptions[0]}
+                            #{itemController.commentUsernames[0]}
                         </p>
                         <h1 class="content_title">video</h1>
                         <p:media value="http://www.w3school.com.cn/i/movie.mp4"
@@ -111,10 +111,9 @@
                         <div id="title">
                             <h1>#{itemController.itemName}</h1>
                             <div class="separator"
-                                 style="margin-top:-10px;margin-bottom:-15px;"></div>
+                                 style="margin-top:-10px;margin-bottom:-15px;" />
                             <h3>#{itemController.authorNames[0]}</h3>
                         </div>
-
                     </div>
                     <!--</div>-->
                 </div>
@@ -136,16 +135,28 @@
             </div>
             <div id="comment" class="func_button">
                 <div id="users_comment">
-                    here we put user comments, using ajax
+                    <h:form id="all_comments">
+                        #{itemController.commentUsernames[0]}
+                    </h:form>
                 </div>
                 <h:graphicImage id="comment_img" library="theme1"
                                 name="images/item_comment_button.png" />
                 <div id="comment_input">
-                    <h:inputText id="comment_name_box" class="func_input_box"
-                                 value="Name" style="display:inline-block" />
-                    <h:inputText id="comment_content_box" class="func_input_box"
-                                 value="Your Comment"
-                                 style="display: inline-block" />
+                    <h:form>
+                        <h:inputText id="comment_name_box" required="true"
+                                     class="func_input_box"
+                                     value="#{itemController.commentuser}"
+                                     style="display:inline-block" />
+                        <h:inputText id="comment_content_box" required="true"
+                                     class="func_input_box"
+                                     value="#{itemController.commentcontent}"
+                                     style="display: inline-block"
+                                     onkeydown="return (event.keyCode == 13)">
+                            <f:ajax listener="#{itemController.addComment}"
+                                    event="keydown" execute="@form"
+                                    render="@form :all_comments"/>
+                        </h:inputText>
+                    </h:form>
                 </div>
             </div>
         </div>
@@ -164,13 +175,11 @@
                             styleClass="inbox" />
                 <p:watermark for="password" value="Password" />
 
-                <p:commandLink id="login_button_test" value="Sign In"
+                <p:commandLink id="login_button_test" value="Login In"
                                ajax="true"
                                actionListener="#{loginManagedBean.verify}"
                                update="username password
-                               login_form :log_form msg">
-                    <f:param name="itemid" value="#{itemController.itemID}" />
-                </p:commandLink>
+                               login_form :log_form msg" />
                 <p:messages id="msg" />
 
                 <input type="button" id="close_panel" value="x"

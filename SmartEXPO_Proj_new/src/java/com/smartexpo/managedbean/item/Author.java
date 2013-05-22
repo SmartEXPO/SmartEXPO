@@ -5,13 +5,14 @@
 package com.smartexpo.managedbean.item;
 
 import com.smartexpo.controls.GetInfo;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,8 +24,8 @@ import javax.transaction.UserTransaction;
  * @author Boy
  */
 @ManagedBean
-@RequestScoped
-public class Author {
+@ViewScoped
+public class Author implements Serializable {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
@@ -58,7 +59,7 @@ public class Author {
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
 
-        int itemID = Integer.parseInt(request.getParameter("itemid"));
+        int itemID = Integer.parseInt((String) request.getAttribute("itemid"));
         authors = gi.getAuthorsByItemID(itemID);
 
         setAllAuthorsInfo();
