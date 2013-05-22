@@ -17,6 +17,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
@@ -30,7 +31,7 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @SessionScoped
 public class LoginManagedBean implements Serializable {
-
+    
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
@@ -48,7 +49,7 @@ public class LoginManagedBean implements Serializable {
      */
     public LoginManagedBean() {
     }
-
+    
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
@@ -58,11 +59,11 @@ public class LoginManagedBean implements Serializable {
         SignUpManagedBean signUpManagedBean = (SignUpManagedBean) facesContext
                 .getELContext().getELResolver()
                 .getValue(facesContext.getELContext(), null, "signUpManagedBean");
-
+        
         username = signUpManagedBean.getUsername();
         password = signUpManagedBean.getPassword();
         logger.log(Level.WARNING, "In PostConstruct of LoginMB: username {0}, password {1}", new Object[]{username, password});
-
+        
         if (username != null && !username.equals("")
                 && password != null && !password.equals("")) {
             // 数据库验证
@@ -117,30 +118,32 @@ public class LoginManagedBean implements Serializable {
      *
      * @return item.xhtml or error.xhtml
      */
-    public void verify(ActionEvent event) {
+    public void verify(AjaxBehaviorEvent event) {
         if (isPass()) { // 数据库验证
             logger.log(Level.WARNING, "Pass");
             setStatus(true);
             RequestContext.getCurrentInstance()
                     .execute("vanishLogin();void(0);"); // Close login pannel
         } else {
+            RequestContext.getCurrentInstance()
+                    .execute(("alert('Username or password wrong')"));
         }
     }
-
+    
     public void logout(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.invalidate();
         setStatus(false);
     }
-
+    
     public String logoutAction() {
         return "item?faces-redirect=true";
     }
-
+    
     private boolean isPass() {
         boolean result = false;
-
+        
         List<com.smartexpo.models.Manager> managers = gi.getManagerByName(username);
         if (managers == null) {
             FacesContext.getCurrentInstance()

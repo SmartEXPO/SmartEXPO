@@ -284,7 +284,7 @@ footer {
     text-align: center;
 }
 
-#login_button {
+.login_button {
     height: 35px;
     border-radius: 0px;
     -webkit-border-radius: 0px;
