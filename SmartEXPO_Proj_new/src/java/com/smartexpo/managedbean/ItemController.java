@@ -354,7 +354,9 @@ public class ItemController implements Serializable {
             em.persist(newComment);
             utx.commit();
 
+
             logger.log(Level.WARNING, "Comment");
+
         } catch (RollbackException ex) {
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (HeuristicMixedException ex) {
