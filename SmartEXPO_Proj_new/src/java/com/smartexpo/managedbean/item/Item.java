@@ -60,8 +60,22 @@ public class Item implements Serializable {
 
         String tmpID = (String) request.getAttribute("itemid");
         id = Integer.parseInt(tmpID);
-        item = gi.getItemByID(id);
-        name = item.getItemName();
+        setItem(gi.getItemByID(id));
+        name = getItem().getItemName();
+    }
+
+    /**
+     * @return the item
+     */
+    public com.smartexpo.models.Item getItem() {
+        return item;
+    }
+
+    /**
+     * @param item the item to set
+     */
+    public void setItem(com.smartexpo.models.Item item) {
+        this.item = item;
     }
 
     /**

@@ -11,7 +11,9 @@ import com.smartexpo.managedbean.item.Description;
 import com.smartexpo.managedbean.item.Item;
 import com.smartexpo.managedbean.item.Video;
 import com.smartexpo.managedbean.item.Comment;
+import com.smartexpo.models.ItemComment;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,6 +23,7 @@ import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,7 +51,7 @@ public class ItemController implements Serializable {
     Logger logger = Logger.getLogger(ItemController.class.getName());
     @ManagedProperty(value = "#{item}")
     private Item itemBean;
-    private static int itemID;
+    private int itemID;
     private String itemName;
     @ManagedProperty(value = "#{description}")
     private Description descriptionBean;
@@ -80,6 +83,7 @@ public class ItemController implements Serializable {
     private List<String> commentContents;
     private List<Date> commentTimes;
     private List<String> commentUsernames;
+    private List<String> commentShowUsernameAndContent;
     private String commentuser = "User";
     private String commentcontent = "Con";
 
@@ -87,6 +91,11 @@ public class ItemController implements Serializable {
      * Creates a new instance of ItemController
      */
     public ItemController() {
+        commentIDs = new ArrayList<Integer>();
+        commentContents = new ArrayList<String>();
+        commentTimes = new ArrayList<Date>();
+        commentUsernames = new ArrayList<String>();
+        commentShowUsernameAndContent = new ArrayList<String>();
         logger.log(Level.WARNING, "Item Controller Construct");
     }
 
@@ -95,6 +104,7 @@ public class ItemController implements Serializable {
         if (gi == null) {
             gi = new GetInfo(em, utx);
         }
+        initialCommentsList();
     }
 
     /**
@@ -316,6 +326,21 @@ public class ItemController implements Serializable {
     }
 
     /**
+     * @return the commentShowUsernameAndContent
+     */
+    public List<String> getCommentShowUsernameAndContent() {
+        return commentShowUsernameAndContent;
+    }
+
+    /**
+     * @param commentShowUsernameAndContent the commentShowUsernameAndContent to
+     * set
+     */
+    public void setCommentShowUsernameAndContent(List<String> commentShowUsernameAndContent) {
+        this.commentShowUsernameAndContent = commentShowUsernameAndContent;
+    }
+
+    /**
      * @return the commentuser
      */
     public String getCommentuser() {
@@ -344,18 +369,28 @@ public class ItemController implements Serializable {
     }
 
     public void addComment(AjaxBehaviorEvent event) {
+        storeComment();
+
+        commentuser = "";
+        commentcontent = "";
+        logger.log(Level.WARNING, "Add Comment");
+    }
+
+    private void storeComment() {
         try {
             com.smartexpo.models.Comment newComment = new com.smartexpo.models.Comment();
             newComment.setUsername(commentuser);
             newComment.setContent(commentcontent);
             newComment.setTime(new Date());
 
+            ItemComment newIC = new ItemComment();
+            newIC.setItemId(itemBean.getItem());
+            newIC.setCommentId(newComment);
+
             utx.begin();
+            em.persist(newIC);
             em.persist(newComment);
             utx.commit();
-
-
-            logger.log(Level.WARNING, "Comment");
 
         } catch (RollbackException ex) {
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
@@ -372,5 +407,41 @@ public class ItemController implements Serializable {
         } catch (NotSupportedException ex) {
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void initialCommentsList() {
+        if (FacesContext.getCurrentInstance().getAttributes().get("itemid") == null) {
+            logger.log(Level.WARNING, "itemid is null!!!!");
+            itemID = 1;
+        }
+        List<com.smartexpo.models.Comment> allComments = gi.getCommentByItemID(itemID);
+        logger.log(Level.WARNING, "itemId = {0}", itemID);
+        for (com.smartexpo.models.Comment com : allComments) {
+            initialCommentID(com);
+            initialCommentUsername(com);
+            initialCommentContent(com);
+            initialCommentTime(com);
+            initialCommentShowUsernameAndContent(com);
+        }
+    }
+
+    private void initialCommentID(com.smartexpo.models.Comment com) {
+        commentIDs.add(com.getCommentId());
+    }
+
+    private void initialCommentUsername(com.smartexpo.models.Comment com) {
+        commentUsernames.add(com.getUsername());
+    }
+
+    private void initialCommentContent(com.smartexpo.models.Comment com) {
+        commentContents.add(com.getContent());
+    }
+
+    private void initialCommentTime(com.smartexpo.models.Comment com) {
+        commentTimes.add(com.getTime());
+    }
+
+    private void initialCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
+        getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
     }
 }

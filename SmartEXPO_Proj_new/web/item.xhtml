@@ -82,7 +82,6 @@
                             #{itemController.descriptionContent}
                             #{itemController.audioDescriptions[0]}
                             #{itemController.videoDescriptions[0]}
-                            #{itemController.commentUsernames[0]}
                         </p>
                         <h1 class="content_title">video</h1>
                         <p:media value="http://www.w3school.com.cn/i/movie.mp4"
@@ -136,7 +135,12 @@
             <div id="comment" class="func_button">
                 <div id="users_comment">
                     <h:form id="all_comments">
-                        #{itemController.commentUsernames[0]}
+                        <h:dataTable value="#{itemController.commentShowUsernameAndContent}"
+                                     var="commentUserContentList">
+                            <h:column>
+                                #{commentUserContentList.toString()} <br />
+                            </h:column>
+                        </h:dataTable>
                     </h:form>
                 </div>
                 <h:graphicImage id="comment_img" library="theme1"

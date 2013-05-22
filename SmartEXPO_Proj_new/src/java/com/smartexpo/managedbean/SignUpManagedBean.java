@@ -183,7 +183,6 @@ public class SignUpManagedBean implements Serializable {
                 mp[i].setPermissionId(per[i]);
             }
 
-
             utx.begin();
             em.persist(manager);
             for (int i = 0; i < 3; i++) {
