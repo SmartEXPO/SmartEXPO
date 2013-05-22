@@ -247,7 +247,7 @@ public class InsertItemServlet extends HttpServlet {
                 logger.log(Level.WARNING,descriptions.get(i).getTitle());
             }
             
-            List<Permission> permissions = gi.getPermissionByID(4);
+            List<Permission> permissions = gi.getPermissionByID(item.getItemId());
             for (int i = 0; i < permissions.size(); i++) {
                 logger.log(Level.WARNING,permissions.get(i).getPermissionName());
             }
