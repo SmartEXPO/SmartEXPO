@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Admin</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="150" >
+                <div style="font-family: 'American Typewriter', serif;
+                     text-align: center; font-size: 300%;">
+                    <h:outputLabel value="SmartEXPO" />
+                </div>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="250" collapsible="true">
+                <p:panel header="Item">
+                    <div><p:commandLink value="Insert" /></div>
+                    <div><p:commandLink value="Modify" /></div>
+                    <div><p:commandLink value="Comments" /></div>
+                </p:panel>
+
+                <p:panel header="Manager">
+                    <div><p:commandLink value="Sign Up" /></div>
+                    <div><p:commandLink value="Modify" /></div>
+                </p:panel>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="40">
+                <div style="font-family: 'American Typewriter', serif;
+                     text-align: center">
+                    <h:outputLabel value="Copyright (c); 2013 by SmartEXPO orgnization." />
+                </div>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+
