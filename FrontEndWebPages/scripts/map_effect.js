@@ -19,7 +19,7 @@ function initMapInteraction() {
             });
         });
         area[i].addEventListener("click", function(e) {
-            alert(e.target.id);
+            //alert(e.target.id);
             window.location.href = "index.html?area="+e.target.id;
         });
     }

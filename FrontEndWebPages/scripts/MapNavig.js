@@ -12,8 +12,9 @@ if (loop == null) { loop = false; } this.initialize(mode,startPosition,loop,{});
     this.text.lineHeight = 26;
     this.text.lineWidth = 84;
     this.text.setTransform(519.5,389.1);
+    this.text.set({alpha:0});
 
-    this.timeline.addTween(cjs.Tween.get({}).to({state:[]}).to({state:[{t:this.text}]},29).wait(1));
+    this.timeline.addTween(cjs.Tween.get(this.text).to({alpha:0},23).to({alpha:1},25).wait(1));
 
     // LAYER
     this.shape = new cjs.Shape();
@@ -278,9 +279,10 @@ if (loop == null) { loop = false; } this.initialize(mode,startPosition,loop,{});
     this.shape_61 = new cjs.Shape();
     this.shape_61.graphics.f().s("#000000").ss(5,1,0,3).p("Eg2Egm5MArxAAAIAADwIcHAAIAAOsMAkRAAAMAAAA7XMhesAAAIAA3cItdAAMAAAg2X");
     this.shape_61.setTransform(349.1,251.1);
+    this.shape_61.set({alpha:0});
 
-    this.timeline.addTween(cjs.Tween.get({}).to({state:[]}).to({state:[{t:this.shape_60}]},23).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_60}]},1).wait(1));
-
+    //this.timeline.addTween(cjs.Tween.get({}).to({state:[]}).to({state:[{t:this.shape_60}]},23).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_61}]},1).to({state:[{t:this.shape_60}]},1).wait(1));
+    this.timeline.addTween(cjs.Tween.get(this.shape_61).to({alpha:0}, 23).to({alpha:1}, 5).to({state:[{t:this.shape_60}]},1).wait(1));
 }).prototype = p = new cjs.MovieClip();
 p.nominalBounds = new cjs.Rectangle(0,0,0,0);
 
