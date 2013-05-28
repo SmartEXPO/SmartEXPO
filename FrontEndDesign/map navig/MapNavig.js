@@ -308,18 +308,13 @@ if (loop == null) { loop = false; }	this.initialize(mode,startPosition,loop,{com
 	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.shape_67}]}).wait(30));
 
 	// title
-	this.text_1 = new cjs.Text("Map | Info | Contact", "24px American Typewriter", "#FFFFFF");
-	this.text_1.lineHeight = 26;
-	this.text_1.lineWidth = 236;
-	this.text_1.setTransform(564.1,26);
-
 	this.instance = new lib.title();
 	this.instance.setTransform(521.5,73.6);
 
-	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.instance},{t:this.text_1}]}).to({state:[{t:this.instance},{t:this.text_1}]},29).wait(1));
+	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.instance}]}).to({state:[{t:this.instance}]},29).wait(1));
 
 }).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(-6,26,1373.3,214.1);
+p.nominalBounds = new cjs.Rectangle(-6,73.6,1373.3,166.6);
 
 
 // symbols:
