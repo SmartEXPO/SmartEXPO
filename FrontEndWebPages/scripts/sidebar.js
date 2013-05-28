@@ -22,8 +22,8 @@ $(document).ready(function() {
             }, 500);
         });
     });
-
-    sidebar_appear();
+    
+//    sidebar_appear();
 
 });
 
