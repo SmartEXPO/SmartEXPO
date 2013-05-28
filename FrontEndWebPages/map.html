@@ -22,6 +22,7 @@
         <script src="./scripts/MapNavig.js"></script>
         <script src="./scripts/jquery_1_9_1.js"></script>
         <script src="./scripts/map_effect.js"></script>
+        <script src="./scripts/sidebar.js"></script>
 
         <link rel="stylesheet" type="text/css" href="./style/style.css" />
         <link rel="stylesheet" type="text/css" href="./style/index_style.css" />
@@ -50,6 +51,44 @@
     </head>
 
     <body onload="init();">
-        <canvas id="canvas" width="1366" height="768" style="background-color:#dadad2"></canvas>
+        <header>
+            <nav>
+                <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+            </nav>
+            <img id="logo" src="./images/logo.png">
+            <div id="decologo">
+                <div id="shortbar"></div>
+                <div id="longbar"></div>
+            </div>
+        </header>
+
+        <canvas id="canvas" width="1366" height="768" style="margin-top:-220px;z-index:-1;"></canvas>
+
+        <footer style="margin-top:20px">
+            Copyright &copy; 2013 by SmartEXPO orgnization.
+        </footer>
+        
+        
+        <div id="side_bar">
+            <img id="handler" src="./images/handler.png"/>
+            <div id="expand_sidebar">
+                <div id="sidebar_back"></div>
+                <div id="sidebar_content">
+                    <div style="text-align:center;padding-top:20px;">
+                        <img  src="./images/decobar.png" />
+                        <h2 style="margin-top:-2px;padding-left:40px;">Exhibition Area Map</h2>
+                        <!--这个地方貌似那个图片不是居中做的-->
+                        <img src="./images/map.png" /><br/><br/><img src="./images/decobar.png" />
+                        <h2 style="margin-top:-2px;padding-left:40px;">Items Recommended</h2>
+                        <img src="./images/other_items.png" />
+                        <br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>hello<br/>
+                    </div>
+                </div>
+                <div id="handler_vanish"></div>
+            </div>
+        </div>
+
+
+
     </body>
 </html>
