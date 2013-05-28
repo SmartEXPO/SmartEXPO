@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>
+            <ui:insert name="title">Admin Template</ui:insert>
+        </title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top" style="font-family: 'American Typewriter', serif;
+             text-align: center; font-size: 400%;">
+            <ui:insert name="top">SmartEXPO</ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">
+                    <p:panel header="Item" toggleable="true">
+                        <div><p:commandLink value="Insert" /></div>
+                        <div><p:commandLink value="Modify" /></div>
+                        <div><p:commandLink value="Comments" /></div>
+                    </p:panel>
+
+                    <p:panel header="Manager" toggleable="true">
+                        <div><p:commandLink value="Sign Up" /></div>
+                        <div><p:commandLink value="Modify" /></div>
+                    </p:panel>
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content">
+
+                </ui:insert>
+            </div>
+        </div>
+        <div id="bottom" style="font-family: 'American Typewriter', serif;
+             text-align: center">
+            <ui:insert name="bottom">Copyright (c); 2013 by SmartEXPO orgnization.</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>
