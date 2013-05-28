@@ -32,8 +32,7 @@
 
             function init() {
                 canvas = document.getElementById("canvas");
-                images = images || {};
-                exportRoot = new lib.MapNavig();
+                exportRoot = new lib.mapmain(); // MapNavig
 
                 stage = new createjs.Stage(canvas);
                 stage.addChild(exportRoot);
@@ -62,7 +61,7 @@
             </div>
         </header>
 
-        <canvas id="canvas" width="1366" height="768" style="margin-top:-180px;"></canvas>
+        <canvas id="canvas" width="700" height="520" style="position:relative; left:50%; margin-left:-350px; margin-top:40px;"></canvas>
 
         <footer style="margin-top:20px">
             Copyright &copy; 2013 by SmartEXPO orgnization.
