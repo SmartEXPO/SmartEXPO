@@ -451,4 +451,94 @@ public class ItemController implements Serializable {
     private void addCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
         getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
     }
+
+    public void setItemID(int itemID) {
+        this.itemID = itemID;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public void setDescriptionID(int descriptionID) {
+        this.descriptionID = descriptionID;
+    }
+
+    public void setDescriptionTitle(String descriptionTitle) {
+        this.descriptionTitle = descriptionTitle;
+    }
+
+    public void setDescriptionContent(String descriptionContent) {
+        this.descriptionContent = descriptionContent;
+    }
+
+    public void setAuthorIDs(List<Integer> authorIDs) {
+        this.authorIDs = authorIDs;
+    }
+
+    public void setAuthorNames(List<String> authorNames) {
+        this.authorNames = authorNames;
+    }
+
+    public void setAuthorBirthdays(List<Date> authorBirthdays) {
+        this.authorBirthdays = authorBirthdays;
+    }
+
+    public void setAuthorDeathDates(List<Date> authorDeathDates) {
+        this.authorDeathDates = authorDeathDates;
+    }
+
+    public void setAuthorIntroductions(List<String> authorIntroductions) {
+        this.authorIntroductions = authorIntroductions;
+    }
+
+    public void setAudioIDs(List<Integer> audioIDs) {
+        this.audioIDs = audioIDs;
+    }
+
+    public void setAudioTitles(List<String> audioTitles) {
+        this.audioTitles = audioTitles;
+    }
+
+    public void setAudioURLs(List<String> audioURLs) {
+        this.audioURLs = audioURLs;
+    }
+
+    public void setAudioDescriptions(List<String> audioDescriptions) {
+        this.audioDescriptions = audioDescriptions;
+    }
+
+    public void setVideoIDs(List<Integer> videoIDs) {
+        this.videoIDs = videoIDs;
+    }
+
+    public void setVideoTitles(List<String> videoTitles) {
+        this.videoTitles = videoTitles;
+    }
+
+    public void setVideoURLs(List<String> videoURLs) {
+        this.videoURLs = videoURLs;
+    }
+
+    public void setVideoDescriptions(List<String> videoDescriptions) {
+        this.videoDescriptions = videoDescriptions;
+    }
+
+    public void setCommentIDs(List<Integer> commentIDs) {
+        this.commentIDs = commentIDs;
+    }
+
+    public void setCommentContents(List<String> commentContents) {
+        this.commentContents = commentContents;
+    }
+
+    public void setCommentTimes(List<Date> commentTimes) {
+        this.commentTimes = commentTimes;
+    }
+
+    public void setCommentUsernames(List<String> commentUsernames) {
+        this.commentUsernames = commentUsernames;
+    }
+    
+    
 }
