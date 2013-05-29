@@ -12,11 +12,11 @@ header, section, footer, hgroup{
 	display:block;
 }
 a {
-	color:#35BFFF;
+	color: #464646;
 	text-decoration:none;
 }
 a:hover, a:active{
-	color:#91DCFF;
+	color:#000000;
 }
 
 /* Header */
