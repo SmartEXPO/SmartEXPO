@@ -218,7 +218,7 @@ footer {
     color: white;
 }
 
-#comment_input #comment_name_box {
+#comment_form .name {
     margin-bottom: 7px;
     margin-right: 5px;
     display: inline-block;
@@ -226,7 +226,7 @@ footer {
     width: 100px;
 }
 
-#comment_input #comment_content_box {
+#comment_form .content {
     margin-bottom: 7px;
     display: inline-block;
     /*width: 235px;*/

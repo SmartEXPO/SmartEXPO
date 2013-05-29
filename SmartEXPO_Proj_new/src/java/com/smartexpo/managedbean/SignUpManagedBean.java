@@ -45,7 +45,7 @@ public class SignUpManagedBean implements Serializable {
     private String username;
     private String password;
     private String confirmPassword;
-    private String[] permissionString = {"p1", "p2", "p3"};
+    private String[] permissionString = {"p1", "p2", "p3", "p4", "p5"};
     boolean isVerify;
     private GetInfo gi = null;
 

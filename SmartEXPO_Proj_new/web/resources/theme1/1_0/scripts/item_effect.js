@@ -42,11 +42,11 @@ $(document).ready(function() {
         if (isSearchBarDisplayed == false) {
             isSearchBarDisplayed = true;
             $("#search").animate({
-                "width" : "250px",
+                "width": "250px",
             }, 500);
             $("#search_box").css('display', 'inline');
             $("#search_box").animate({
-                width : '200px',
+                width: '200px',
             }, 500);
             $("#search_box").val("");
         } else {
@@ -54,14 +54,20 @@ $(document).ready(function() {
         }
     });
 
+    $(".inbox.username").attr("placeholder", "Username");
+    $(".inbox.password").attr("placeholder", "Password");
+    $(".func_input_box.name").attr("placeholder", "User");
+    $(".func_input_box.content").attr("placeholder", "Content");
+
+
     function hideSearchPane() {
         isSearchBarDisplayed = false;
         $("#search").animate({
-            "width" : "40px",
-            "height" : "40px",
+            "width": "40px",
+            "height": "40px",
         }, 500);
         $("#search_box").animate({
-            width : '0px',
+            width: '0px',
         }, 500, function() {
             $("#search_box").css('display', 'none');
         });
@@ -72,7 +78,7 @@ $(document).ready(function() {
     $("#search_box").focus(function() {
         $(this).val("");
         $("#search").animate({
-            height : '300px',
+            height: '300px',
         }, 500, function() {
             $("#search_result").css('display', 'block');
 
@@ -86,26 +92,26 @@ $(document).ready(function() {
             isCommentBarDisplayed = true;
             $("#comment_input").css("display", "inline-block");
             $("#comment_input").animate({
-                width : "360px",
+                width: "360px",
             }, 500);
-            $("#comment_name_box").animate({
-                width : "100px",
+            $("#comment_form .name").animate({
+                width: "100px",
             }, 150, function() {
-                $("#comment_content_box").animate({
-                    width : "235px",
+                $("#comment_form .content").animate({
+                    width: "235px",
                 }, 320);
             });
             $("#comment").animate({
-                "width" : "400px",
+                "width": "400px",
             }, 500, function() {
                 $("#comment").animate({
-                    "height" : "400px",
+                    "height": "400px",
                 }, 500, function() {
                     $("#users_comment").css("display", "block");
                 });
             });
-            $("#comment_content_box").val("");
-            $("#comment_name_box").val("");
+            $("#comment_form .content").val("");
+            $("#comment_form .name").val("");
         } else {
             hideCommentPane();
         }
@@ -114,34 +120,34 @@ $(document).ready(function() {
     function hideCommentPane() {
         isCommentBarDisplayed = false;
         $("#comment_input").animate({
-            width : "0px",
+            width: "0px",
         }, 500, function() {
             $("#comment_input").css("display", "none");
         });
 
-        $("#comment_content_box").animate({
-            width : "0px",
+        $("#comment_form .content").animate({
+            width: "0px",
         }, 360, function() {
-            $("#comment_name_box").animate({
-                width : "0px",
+            $("#comment_form .name").animate({
+                width: "0px",
             }, 150);
         });
 
         $("#users_comment").css("display", "none");
 
         $("#comment").animate({
-            "width" : "40px",
-            'height' : '40px',
+            "width": "40px",
+            'height': '40px',
         }, 500);
     }
 
 
     // $('.inbox').focus(function() {
-        // $(this).val("");
-        // $(this).css('color', 'black');
-        // if ($(this).attr('name') === "password") {
-            // $(this).attr('type', 'password');
-        // }
+    // $(this).val("");
+    // $(this).css('color', 'black');
+    // if ($(this).attr('name') === "password") {
+    // $(this).attr('type', 'password');
+    // }
     // });
 
     var edit = false;
@@ -152,11 +158,11 @@ $(document).ready(function() {
             var content = toEdit.html();
             toEdit.html("<textarea class='edit_description_box'>" + content + "</textarea>");
             edit = true;
-            $(".edit_description_div").attr("value","Done");
+            $(".edit_description_div").attr("value", "Done");
         } else {
             toEdit.html(toEdit.children().val());
             edit = false;
-            $(".edit_description_div").attr("value","Edit");
+            $(".edit_description_div").attr("value", "Edit");
         }
     });
 });
