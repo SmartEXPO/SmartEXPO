@@ -48,4 +48,16 @@ $(document).ready(function() {
             });
         }
     });
-}); 
+
+    $("#loading").css({
+        'display' : 'none'
+    });
+    $(window).scroll(function() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            $("#loading").css({'display':'block'});
+            list_conn();
+        }
+    });
+    
+    //list_conn();在程序开始的时候加载
+});
