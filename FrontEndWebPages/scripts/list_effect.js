@@ -4,12 +4,6 @@
 
 $(document).ready(function() {
 
-    $('#footer').css({
-        'bottom' : -15
-    }).delay(1000).animate({
-        'bottom' : 0
-    }, 800);
-
     //blocksit define
     $(window).load(function() {
         $('#container').BlocksIt({
@@ -48,4 +42,10 @@ $(document).ready(function() {
             });
         }
     });
-}); 
+// 
+    // $("#container").click(function() {
+        // $("#container").append('<div class="grid"><div class="imgholder"><img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img27.jpg" /></div><strong>Sunset Lake</strong><p>A peaceful sunset view...</p><div class="meta">by j osborn</div></div>'+'<div class="grid"><div class="imgholder"><img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img26.jpg" /></div><strong>Sunset Lake</strong><p>A peaceful sunset view...</p><div class="meta">by j osborn</div></div>'+'<div class="grid"><div class="imgholder"><img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img16.jpg" /></div><strong>Sunset Lake</strong><p>A peaceful sunset view...</p><div class="meta">by j osborn</div></div>');
+        // $("#container").BlocksIt({});
+    // });
+
+});
