@@ -1,8 +1,6 @@
 /**
  * @author Ben
  */
-
-
 $(document).ready(function() {
 
     $("#item_chooser").html(pointsgen());
@@ -13,40 +11,19 @@ $(document).ready(function() {
         $(this).removeClass("hover");
     });
     $("#item_chooser .idle").click(function() {
-
+        
         t = parseInt($(this).attr("id"));
         t--;
         //setInterval(display,1);
-        if (t == -1)
-            t = 0;
+        if (t == -1) t = 0;
         console.log(t);
         //display();
         //setInterval(display, 10000);
     });
 
-    $('#handler').mouseenter(function() {
-        $(this).attr("src", "./javax.faces.resource/images/handler_hover.png?ln=theme1");
-    });
-    $('#handler').mouseleave(function() {
-        $(this).attr("src", "./javax.faces.resource/images/handler.png?ln=theme1");
-    });
-    $('#handler').click(sidebar_appear);
-
-    $('#handler_vanish').click(function() {
-        $('#expand_sidebar').animate({
-            'left': '-677px',
-        }, 500, function() {
-            $('#handler').animate({
-                'left': '0',
-                'opacity': '1'
-            }, 500);
-        });
-    });
-
     display();
     setInterval(display, 10000);
-
-    sidebar_appear();
+    
 });
 
 var t = 0;
@@ -58,21 +35,21 @@ function display() {
     $("p.detail_content").html(dis.description);
 
     $("h1.detail_content").animate({
-        'right': '0',
-        'opacity': '1',
+        'right' : '0',
+        'opacity' : '1',
     }, 350);
     $("h1.detail_content").queue(function() {
         $("p.detail_content").animate({
-            'right': '0',
-            'opacity': '1',
+            'right' : '0',
+            'opacity' : '1',
         }, 350);
         $("img#display_item").animate({
-            'opacity': '0'
+            'opacity' : '0'
         }, 500, function() {
             $("img#display_item").attr("src", dis.path);
         });
         $("img#display_item").animate({
-            'opacity': '1'
+            'opacity' : '1'
         }, 500);
         $(this).dequeue();
     });
@@ -84,13 +61,13 @@ function display() {
 
 function disappear() {
     $("h1.detail_content").animate({
-        'right': '50px',
-        'opacity': '0',
+        'right' : '50px',
+        'opacity' : '0',
     }, 350);
     $("h1.detail_content").queue(function() {
         $("p.detail_content").animate({
-            'right': '50px',
-            'opacity': '0',
+            'right' : '50px',
+            'opacity' : '0',
         }, 350);
         $(this).dequeue();
     });
@@ -115,15 +92,4 @@ function dechoose() {
 
 function choose(i) {
     $("#item_chooser #" + i).removeClass("idle").addClass("chosen");
-}
-
-function sidebar_appear() {
-    $("#handler").animate({
-        'opacity': '0',
-        'left': '-43px',
-    }, 'fast');
-
-    $('#expand_sidebar').animate({
-        'left': '0px',
-    }, 500);
 }
