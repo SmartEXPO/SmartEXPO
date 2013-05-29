@@ -118,7 +118,7 @@ public class ItemController implements Serializable {
      * @return the itemID
      */
     public int getItemID() {
-        itemID = itemBean.getId();
+        setItemID(itemBean.getId());
         return itemID;
     }
 
@@ -126,7 +126,7 @@ public class ItemController implements Serializable {
      * @return the itemName
      */
     public String getItemName() {
-        itemName = itemBean.getName();
+        setItemName(itemBean.getName());
         return itemName;
     }
 
@@ -141,7 +141,7 @@ public class ItemController implements Serializable {
      * @return the descriptionID
      */
     public int getDescriptionID() {
-        descriptionID = descriptionBean.getId();
+        setDescriptionID(descriptionBean.getId());
         return descriptionID;
     }
 
@@ -149,7 +149,7 @@ public class ItemController implements Serializable {
      * @return the descriptionTitle
      */
     public String getDescriptionTitle() {
-        descriptionTitle = descriptionBean.getTitle();
+        setDescriptionTitle(descriptionBean.getTitle());
         return descriptionTitle;
     }
 
@@ -157,7 +157,7 @@ public class ItemController implements Serializable {
      * @return the descriptionContent
      */
     public String getDescriptionContent() {
-        descriptionContent = descriptionBean.getContent();
+        setDescriptionContent(descriptionBean.getContent());
         return descriptionContent;
     }
 
@@ -172,7 +172,7 @@ public class ItemController implements Serializable {
      * @return the authorIDs
      */
     public List<Integer> getAuthorIDs() {
-        authorIDs = authorBean.getIds();
+        setAuthorIDs(authorBean.getIds());
         return authorIDs;
     }
 
@@ -180,7 +180,7 @@ public class ItemController implements Serializable {
      * @return the authorNames
      */
     public List<String> getAuthorNames() {
-        authorNames = authorBean.getNames();
+        setAuthorNames(authorBean.getNames());
         return authorNames;
     }
 
@@ -188,7 +188,7 @@ public class ItemController implements Serializable {
      * @return the authorBirthdays
      */
     public List<Date> getAuthorBirthdays() {
-        authorBirthdays = authorBean.getBirthdays();
+        setAuthorBirthdays(authorBean.getBirthdays());
         return authorBirthdays;
     }
 
@@ -196,7 +196,7 @@ public class ItemController implements Serializable {
      * @return the authorDeathDates
      */
     public List<Date> getAuthorDeathDates() {
-        authorDeathDates = authorBean.getDeathDates();
+        setAuthorDeathDates(authorBean.getDeathDates());
         return authorDeathDates;
     }
 
@@ -204,7 +204,7 @@ public class ItemController implements Serializable {
      * @return the authorIntroductions
      */
     public List<String> getAuthorIntroductions() {
-        authorIntroductions = authorBean.getIntroductions();
+        setAuthorIntroductions(authorBean.getIntroductions());
         return authorIntroductions;
     }
 
@@ -219,7 +219,7 @@ public class ItemController implements Serializable {
      * @return the audioIDs
      */
     public List<Integer> getAudioIDs() {
-        audioIDs = audioBean.getIds();
+        setAudioIDs(audioBean.getIds());
         return audioIDs;
     }
 
@@ -227,7 +227,7 @@ public class ItemController implements Serializable {
      * @return the audioTitles
      */
     public List<String> getAudioTitles() {
-        audioTitles = audioBean.getTitles();
+        setAudioTitles(audioBean.getTitles());
         return audioTitles;
     }
 
@@ -235,7 +235,7 @@ public class ItemController implements Serializable {
      * @return the audioURLs
      */
     public List<String> getAudioURLs() {
-        audioURLs = audioBean.getURLs();
+        setAudioURLs(audioBean.getURLs());
         return audioURLs;
     }
 
@@ -243,7 +243,7 @@ public class ItemController implements Serializable {
      * @return the audioDescriptions
      */
     public List<String> getAudioDescriptions() {
-        audioDescriptions = audioBean.getDescriptions();
+        setAudioDescriptions(audioBean.getDescriptions());
         return audioDescriptions;
     }
 
@@ -258,7 +258,7 @@ public class ItemController implements Serializable {
      * @return the videoIDs
      */
     public List<Integer> getVideoIDs() {
-        videoIDs = videoBean.getIds();
+        setVideoIDs(videoBean.getIds());
         return videoIDs;
     }
 
@@ -266,7 +266,7 @@ public class ItemController implements Serializable {
      * @return the videoTitles
      */
     public List<String> getVideoTitles() {
-        videoTitles = videoBean.getTitles();
+        setVideoTitles(videoBean.getTitles());
         return videoTitles;
     }
 
@@ -274,7 +274,7 @@ public class ItemController implements Serializable {
      * @return the videoURLs
      */
     public List<String> getVideoURLs() {
-        videoURLs = videoBean.getURLs();
+        setVideoURLs(videoBean.getURLs());
         return videoURLs;
     }
 
@@ -282,7 +282,7 @@ public class ItemController implements Serializable {
      * @return the videoDescriptions
      */
     public List<String> getVideoDescriptions() {
-        videoDescriptions = videoBean.getDescriptions();
+        setVideoDescriptions(videoBean.getDescriptions());
         return videoDescriptions;
     }
 
@@ -297,7 +297,7 @@ public class ItemController implements Serializable {
      * @return the commentIDs
      */
     public List<Integer> getCommentIDs() {
-        commentIDs = commentBean.getIds();
+        setCommentIDs(commentBean.getIds());
         return commentIDs;
     }
 
@@ -305,7 +305,7 @@ public class ItemController implements Serializable {
      * @return the commentContents
      */
     public List<String> getCommentContents() {
-        commentContents = commentBean.getContents();
+        setCommentContents(commentBean.getContents());
         return commentContents;
     }
 
@@ -313,7 +313,7 @@ public class ItemController implements Serializable {
      * @return the commentTimes
      */
     public List<Date> getCommentTimes() {
-        commentTimes = commentBean.getTimes();
+        setCommentTimes(commentBean.getTimes());
         return commentTimes;
     }
 
@@ -321,7 +321,7 @@ public class ItemController implements Serializable {
      * @return the commentUsernames
      */
     public List<String> getCommentUsernames() {
-        commentUsernames = commentBean.getUsernames();
+        setCommentUsernames(commentBean.getUsernames());
         return commentUsernames;
     }
 
@@ -371,8 +371,8 @@ public class ItemController implements Serializable {
     public void addComment(AjaxBehaviorEvent event) {
         storeComment();
 
-        commentuser = "";
-        commentcontent = "";
+        setCommentuser("");
+        setCommentcontent("");
         logger.log(Level.WARNING, "Add Comment");
     }
 
@@ -416,10 +416,10 @@ public class ItemController implements Serializable {
     }
 
     private void initialCommentsList() {
-        // 获得attribute有问题
+        // 获得attribute
         if (FacesContext.getCurrentInstance().getAttributes().get("itemid") == null) {
             logger.log(Level.WARNING, "itemid is null!!!!");
-            itemID = 1;
+            setItemID(1);
         }
         List<com.smartexpo.models.Comment> allComments = gi.getCommentByItemID(itemID);
         logger.log(Level.WARNING, "itemId = {0}", itemID);

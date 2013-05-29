@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -11,10 +12,10 @@
         <ui:define name="content">
             <h:form>
                 <p:growl id="msg" />
-                <p:panelGrid style="position: relative; left: 30%">
+                <p:panelGrid style="position: relative; left: 30%; width: 50%;">
                     <f:facet name="header">
                         <p:row>
-                            <p:column colspan="2" style="font-size: 150%">
+                            <p:column colspan="3" style="font-size: 150%">
                                 Input Item Info
                             </p:column>
                         </p:row>
@@ -24,13 +25,22 @@
                         <p:column>
                             <h:outputLabel for="item_name" value="Item Name" />
                         </p:column>
+                        <p:column colspan="2">
+                            <p:inputText id="item_name" required="true" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
                         <p:column>
-                            <p:inputText id="item_name" required="true" label="itemName" />
+                            <h:outputLabel for="item_pic" value="Picture URL" />
+                        </p:column>
+                        <p:column colspan="2">
+                            <p:inputText id="item_pic" value="将改为上传" />
                         </p:column>
                     </p:row>
 
                     <p:row>
-                        <p:column colspan="2" styleClass="ui-widget-header">
+                        <p:column colspan="3" styleClass="ui-widget-header">
                             Description
                         </p:column>
                     </p:row>
@@ -39,7 +49,7 @@
                         <p:column>
                             <h:outputLabel for="des_title" value="Description Title" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:inputText id="des_title" required="true" />
                         </p:column>
                     </p:row>
@@ -48,13 +58,13 @@
                         <p:column>
                             <h:outputLabel for="des_content" value="Description Content" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:inputTextarea id="des_content" autoResize="false" />
                         </p:column>
                     </p:row>
 
                     <p:row>
-                        <p:column colspan="2" styleClass="ui-widget-header">
+                        <p:column colspan="3" styleClass="ui-widget-header">
                             Author
                         </p:column>
                     </p:row>
@@ -63,7 +73,7 @@
                         <p:column>
                             <h:outputLabel for="author_name" value="Author Name" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:inputText id="author_name" />
                         </p:column>
                     </p:row>
@@ -72,7 +82,7 @@
                         <p:column>
                             <h:outputLabel for="author_birth" value="Author Birthday" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:calendar id="author_birth" />
                         </p:column>
                     </p:row>
@@ -81,7 +91,7 @@
                         <p:column>
                             <h:outputLabel for="author_death" value="Author Death Date" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:calendar id="author_death" />
                         </p:column>
                     </p:row>
@@ -90,13 +100,13 @@
                         <p:column>
                             <h:outputLabel for="author_intro" value="Author Introduction" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:inputTextarea id="author_intro" autoResize="false" />
                         </p:column>
                     </p:row>
 
                     <p:row>
-                        <p:column colspan="2" styleClass="ui-widget-header">
+                        <p:column colspan="3" styleClass="ui-widget-header">
                             Audio
                         </p:column>
                     </p:row>
@@ -105,7 +115,7 @@
                         <p:column>
                             <h:outputLabel for="audio_title" value="Audio Title" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:inputText id="audio_title" />
                         </p:column>
                     </p:row>
@@ -114,8 +124,8 @@
                         <p:column>
                             <h:outputLabel for="audio_url" value="Audio URL" />
                         </p:column>
-                        <p:column>
-                            <p:inputText id="audio_url" />
+                        <p:column colspan="2">
+                            <p:inputText id="audio_url" value="将改为上传" />
                         </p:column>
                     </p:row>
 
@@ -123,13 +133,13 @@
                         <p:column>
                             <h:outputLabel for="audio_des" value="Audio Description" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:inputTextarea id="audio_des" autoResize="false" />
                         </p:column>
                     </p:row>
 
                     <p:row>
-                        <p:column colspan="2" styleClass="ui-widget-header">
+                        <p:column colspan="3" styleClass="ui-widget-header">
                             Video
                         </p:column>
                     </p:row>
@@ -138,7 +148,7 @@
                         <p:column>
                             <h:outputLabel for="video_title" value="Video Title" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:inputText id="video_title" />
                         </p:column>
                     </p:row>
@@ -147,8 +157,8 @@
                         <p:column>
                             <h:outputLabel for="video_url" value="Video URL" />
                         </p:column>
-                        <p:column>
-                            <p:inputText id="video_url" />
+                        <p:column colspan="2">
+                            <p:inputText id="video_url" value="将改为上传" />
                         </p:column>
                     </p:row>
 
@@ -156,13 +166,17 @@
                         <p:column>
                             <h:outputLabel for="video_des" value="Video Description" />
                         </p:column>
-                        <p:column>
+                        <p:column colspan="2">
                             <p:inputTextarea id="video_des" autoResize="false"  />
                         </p:column>
                     </p:row>
-                    
+
                     <f:facet name="footer">
                         <p:row>
+                            <p:column>
+                                <p:commandButton value="Reset" update="@form"
+                                                 icon="ui-icon-reset" />
+                            </p:column>
                             <p:column>
                                 <p:commandButton value="Save" update="msg"
                                                  icon="ui-icon-check" ajax="true" />
@@ -178,4 +192,3 @@
         </ui:define>
     </ui:composition>
 </html>
-

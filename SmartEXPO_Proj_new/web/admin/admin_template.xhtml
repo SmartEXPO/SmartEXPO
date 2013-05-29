@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?> 
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -24,14 +25,34 @@
             <div id="left">
                 <ui:insert name="left">
                     <p:panel header="Item" toggleable="true">
-                        <div><p:commandLink value="Insert" /></div>
-                        <div><p:commandLink value="Modify" /></div>
-                        <div><p:commandLink value="Comments" /></div>
+                        <div>
+                            <h:outputLink value="item_insert.xhtml">
+                                Input Item
+                            </h:outputLink>
+                        </div>
+                        <div>
+                            <h:outputLink>
+                                View And Modify
+                            </h:outputLink>
+                        </div>
+                        <div>
+                            <h:outputLink>
+                                Comments
+                            </h:outputLink>
+                        </div>
                     </p:panel>
 
                     <p:panel header="Manager" toggleable="true">
-                        <div><p:commandLink value="Sign Up" /></div>
-                        <div><p:commandLink value="Modify" /></div>
+                        <div>
+                            <h:outputLink value="sign_up.xhtml">
+                                Sign Up
+                            </h:outputLink>
+                        </div>
+                        <div>
+                            <h:outputLink>
+                                View And Modify
+                            </h:outputLink>
+                        </div>
                     </p:panel>
                 </ui:insert>
             </div>
