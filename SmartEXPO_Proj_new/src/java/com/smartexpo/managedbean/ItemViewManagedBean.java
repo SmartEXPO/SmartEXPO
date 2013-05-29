@@ -25,7 +25,7 @@ public class ItemViewManagedBean {
      */
     public ItemViewManagedBean() {
         items = new ArrayList<Item>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 20; i++) {
             Item item = new Item("item " + i, "pic Url " + i, "author " + i, "des " + i, "audio " + i, "video " + i);
             items.add(item);
         }

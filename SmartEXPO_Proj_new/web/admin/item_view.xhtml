@@ -7,14 +7,16 @@
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | View</ui:define>
         <ui:define name="content">
-            <p:carousel value="#{itemViewManagedBean.items}" var="show_item">
-                <h:panelGrid columns="1" cellpadding="5"
-                             style="width: 100px; height: 130px">
-                    <h:graphicImage value="#{show_item.picURL}" />
-                    <h:outputText value="#{show_item.name}" />
-                    <h:outputText value="#{show_item.author_name}" />
-                </h:panelGrid>
-            </p:carousel>
+            <div>
+                <p:carousel value="#{itemViewManagedBean.items}" var="show_item">
+                    <h:panelGrid columns="1" cellpadding="3"
+                                 style="width: 150px; height: 120px; text-align: center">
+                        <h:graphicImage value="#{show_item.picURL}" />
+                        <h:outputText value="#{show_item.name}" />
+                        <h:outputText value="#{show_item.author_name}" />
+                    </h:panelGrid>
+                </p:carousel>
+            </div>
         </ui:define>
     </ui:composition>
 </html>
