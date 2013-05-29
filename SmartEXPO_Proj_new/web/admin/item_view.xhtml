@@ -3,18 +3,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | View</ui:define>
         <ui:define name="content">
-            <p:carousel value="#{itemViewManagedBean.items}" var="show_item">
-                <h:panelGrid columns="1" cellpadding="5"
-                             style="width: 100px; height: 130px">
-                    <h:graphicImage value="#{show_item.picURL}" />
-                    <h:outputText value="#{show_item.name}" />
-                    <h:outputText value="#{show_item.author_name}" />
-                </h:panelGrid>
-            </p:carousel>
+            <h:form>
+                <p:carousel rows="8" value="#{itemViewManagedBean.items}" var="show_item">
+                    <f:facet name="header">
+                        All Items
+                    </f:facet>
+
+                    <h:panelGrid columns="1" cellpadding="3"
+                                 style="width: 144px; height: 120px; text-align: center">
+                        <h:graphicImage value="#{show_item.picURL}" />
+                        <h:outputText value="#{show_item.id}" />
+                        <h:outputText value="#{show_item.name}" />
+                        <h:outputText value="#{show_item.authorName}" />
+                        <h:outputText value="#{show_item.authorBirthday} -- #{show_item.authorDeathDate}" />
+                        <h:outputText value="#{show_item.authorIntro}" />
+                        <h:outputText value="#{show_item.audioTitle}" />
+                        <h:outputText value="#{show_item.videoTitle}" />
+                        <p:commandLink value="Details" />
+                        <p:commandLink value="Edit" />
+                        <p:commandButton value="Destroy" icon="ui-icon-notice" />
+                    </h:panelGrid>
+                    <br />
+
+                    <f:facet name="footer">
+                        Total #{itemViewManagedBean.count} items.
+                    </f:facet>
+                </p:carousel>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>
