@@ -9,102 +9,113 @@
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">User | View</ui:define>
         <ui:define name="content">
-            <h:form id="user_form">
-                <p:growl id="msg" showDetail="true"/>  
+            <h:form id="form">
+                <p:growl id="messages" showDetail="true" />
 
-                <p:dataTable value="#{userViewManagedBean.users}" var="user"
-                             editable="true">
+                <p:dataTable var="user" value="#{userViewManagedBean.users}"
+                             editable="true" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             rowsPerPageTemplate="10,20,50,100"
+                             >
                     <f:facet name="header">
-                        Users
+                        User
                     </f:facet>
 
-                    <p:ajax event="rowEdit" update=":user_form:msg"
-                            listener="#{userViewManagedBean.onEdit}" />  
-                    <p:ajax event="rowEditCancel" update=":user_form:msg"
+                    <p:ajax event="rowEdit" update=":form:messages"
+                            listener="#{userViewManagedBean.onEdit}" />
+                    <p:ajax event="rowEditCancel" update=":form:messages"
                             listener="#{userViewManagedBean.onCancel}" />
 
                     <p:column headerText="Username">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:outputText value="#{user.username}" />
+                                <h:outputText value="#{user.username}"/>
                             </f:facet>
                             <f:facet name="input">
                                 <h:inputText value="#{user.username}" />
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+
                     <p:column headerText="Password">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:outputText value="#{user.password}" />
+                                <h:outputText value="#{user.passowrd}" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:inputText value="#{user.password}" />
+                                <h:inputText value="#{user.passowrd}" />
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+
                     <p:column headerText="Permission 1">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permission[0]}"
+                                <h:selectBooleanCheckbox value="#{user.permissions[0]}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permission[0]}" />
+                                <h:selectBooleanCheckbox value="#{user.permissions[0]}"
+                                                         disabled="false" />
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+
                     <p:column headerText="Permission 2">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permission[1]}"
+                                <h:selectBooleanCheckbox value="#{user.permissions[1]}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permission[1]}" />
+                                <h:selectBooleanCheckbox value="#{user.permissions[1]}"
+                                                         disabled="false" />
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+
                     <p:column headerText="Permission 3">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permission[2]}"
+                                <h:selectBooleanCheckbox value="#{user.permissions[2]}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permission[2]}" />
+                                <h:selectBooleanCheckbox value="#{user.permissions[2]}"
+                                                         disabled="false" />
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+
                     <p:column headerText="Permission 4">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permission[3]}"
+                                <h:selectBooleanCheckbox value="#{user.permissions[3]}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permission[3]}" />
+                                <h:selectBooleanCheckbox value="#{user.permissions[3]}"
+                                                         disabled="false" />
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+
                     <p:column headerText="Permission 5">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permission[4]}"
+                                <h:selectBooleanCheckbox value="#{user.permissions[4]}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permission[4]}" />
+                                <h:selectBooleanCheckbox value="#{user.permissions[4]}"
+                                                         disabled="false" />
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+
                     <p:column>
                         <p:rowEditor />
                     </p:column>
-
-                    <f:facet name="footer">
-                        Total #{userViewManagedBean.count} users.
-                    </f:facet>
                 </p:dataTable>
             </h:form>
         </ui:define>

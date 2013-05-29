@@ -4,6 +4,8 @@
  */
 package com.smartexpo.temp;
 
+import java.util.List;
+
 /**
  *
  * @author Boy
@@ -11,14 +13,14 @@ package com.smartexpo.temp;
 public class User {
 
     private String username;
-    private String password;
-    private boolean[] permission;
-    static int permissionCount = 5;
+    private String passowrd;
+    private List<Boolean> permissions;
+    static final int Count = 5;
 
-    public User(String username, String password, boolean[] permission) {
+    public User(String username, String passowrd, List<Boolean> permissions) {
         this.username = username;
-        this.password = password;
-        this.permission = permission;
+        this.passowrd = passowrd;
+        this.permissions = permissions;
     }
 
     /**
@@ -36,30 +38,30 @@ public class User {
     }
 
     /**
-     * @return the password
+     * @return the passowrd
      */
-    public String getPassword() {
-        return password;
+    public String getPassowrd() {
+        return passowrd;
     }
 
     /**
-     * @param password the password to set
+     * @param passowrd the passowrd to set
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassowrd(String passowrd) {
+        this.passowrd = passowrd;
     }
 
     /**
-     * @return the permission
+     * @return the permissions
      */
-    public boolean[] getPermission() {
-        return permission;
+    public List<Boolean> getPermissions() {
+        return permissions;
     }
 
     /**
-     * @param permission the permission to set
+     * @param permissions the permissions to set
      */
-    public void setPermission(boolean[] permission) {
-        this.permission = permission;
+    public void setPermissions(List<Boolean> permissions) {
+        this.permissions = permissions;
     }
 }

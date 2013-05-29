@@ -3,7 +3,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <meta charset="utf-8" />
@@ -147,11 +146,11 @@
                                 name="images/item_comment_button.png" />
                 <div id="comment_input">
                     <h:form id="comment_form">
-                        <h:inputText id="comment_name_box" required="true"
+                        <h:inputText required="true"
                                      class="func_input_box name"
                                      value="#{itemController.commentuser}"
                                      style="display:inline-block" />
-                        <h:inputText id="comment_content_box" required="true"
+                        <h:inputText required="true"
                                      class="func_input_box content"
                                      value="#{itemController.commentcontent}"
                                      style="display: inline-block"
