@@ -1,6 +1,7 @@
 /**
  * @author Ben
  */
+
 $(document).ready(function() {
 
     $("#item_chooser").html(pointsgen());
@@ -11,11 +12,12 @@ $(document).ready(function() {
         $(this).removeClass("hover");
     });
     $("#item_chooser .idle").click(function() {
-        
+
         t = parseInt($(this).attr("id"));
         t--;
         //setInterval(display,1);
-        if (t == -1) t = 0;
+        if (t == -1)
+            t = 0;
         console.log(t);
         //display();
         //setInterval(display, 10000);
@@ -23,7 +25,7 @@ $(document).ready(function() {
 
     display();
     setInterval(display, 10000);
-    
+
 });
 
 var t = 0;
@@ -35,21 +37,21 @@ function display() {
     $("p.detail_content").html(dis.description);
 
     $("h1.detail_content").animate({
-        'right' : '0',
-        'opacity' : '1',
+        'right': '0',
+        'opacity': '1',
     }, 350);
     $("h1.detail_content").queue(function() {
         $("p.detail_content").animate({
-            'right' : '0',
-            'opacity' : '1',
+            'right': '0',
+            'opacity': '1',
         }, 350);
         $("img#display_item").animate({
-            'opacity' : '0'
+            'opacity': '0'
         }, 500, function() {
             $("img#display_item").attr("src", dis.path);
         });
         $("img#display_item").animate({
-            'opacity' : '1'
+            'opacity': '1'
         }, 500);
         $(this).dequeue();
     });
@@ -61,13 +63,13 @@ function display() {
 
 function disappear() {
     $("h1.detail_content").animate({
-        'right' : '50px',
-        'opacity' : '0',
+        'right': '50px',
+        'opacity': '0',
     }, 350);
     $("h1.detail_content").queue(function() {
         $("p.detail_content").animate({
-            'right' : '50px',
-            'opacity' : '0',
+            'right': '50px',
+            'opacity': '0',
         }, 350);
         $(this).dequeue();
     });

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta charset="UTF-8" />
+        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+        Remove this if you use the .htaccess -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="description" content="" />
+        <meta name="author" content="Ben" />
+
+        <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+        <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+        <title>SmartEXPO</title>
+
+        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js" target="head" />
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <h:outputScript library="theme1" name="scripts/blocksit.js" target="head" />
+        <h:outputScript library="theme1" name="scripts/list_effect.js" target="head" />
+        <h:outputStylesheet library="theme1" name="css/style.css" />
+        <h:outputStylesheet library="theme1" name="css/list_style.css" />
+<!--
+        <link rel='stylesheet' href='./style/list_style.css' media='screen' />
+        <link rel="stylesheet" href="./style/style.css" />-->
+
+    </h:head>
+    <h:body>
+
+        <!-- Header -->
+        <header id="header">
+                <h:graphicImage id="logo" library="theme1"
+                                name="images/item_logo.png" />
+            <nav>
+                <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+                <div id="login">
+                    <a class="navi" href="#" onclick="popupLogin();
+                                void(0);">Log in</a>
+                </div>
+            </nav>
+            <!--seperator-->
+            <div style="height:4px;width:100%;background-color:#464646;position:relative;bottom:6px;"></div>
+        </header>
+
+        <!-- Content -->
+        <section id="wrapper">
+            <hgroup>
+                <h2>MASTERPIECES IN THIS AREA</h2>
+                <h3>Theme: Postmodernism in Photography</h3>
+            </hgroup>
+            <div id="container">
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img27.jpg" />
+                    </div>
+                    <strong>Sunset Lake</strong>
+                    <p>
+                        A peaceful sunset view...
+                    </p>
+                    <div class="meta">
+                        by j osborn
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img26.jpg" />
+                    </div>
+                    <strong>Bridge to Heaven</strong>
+                    <p>
+                        Where is the bridge lead to?
+                    </p>
+                    <div class="meta">
+                        by SigitEko
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img15.jpg" />
+                    </div>
+                    <strong>Autumn</strong>
+                    <p>
+                        The fall of the tree...
+                    </p>
+                    <div class="meta">
+                        by Lars van de Goor
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img23.jpg" />
+                    </div>
+                    <strong>Winter Whisper</strong>
+                    <p>
+                        Winter feel...
+                    </p>
+                    <div class="meta">
+                        by Andrea Andrade
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img17.jpg" />
+                    </div>
+                    <strong>Light</strong>
+                    <p>
+                        The only shinning light...
+                    </p>
+                    <div class="meta">
+                        by Lars van de Goor
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img22.jpg" />
+                    </div>
+                    <strong>Rooster's Ranch</strong>
+                    <p>
+                        Rooster's ranch landscape...
+                    </p>
+                    <div class="meta">
+                        by Andrea Andrade
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img16.jpg" />
+                    </div>
+                    <strong>Autumn Light</strong>
+                    <p>
+                        Sun shinning into forest...
+                    </p>
+                    <div class="meta">
+                        by Lars van de Goor
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img21.jpg" />
+                    </div>
+                    <strong>Yellow cloudy</strong>
+                    <p>
+                        It is yellow cloudy...
+                    </p>
+                    <div class="meta">
+                        by Zsolt Zsigmond
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img28.jpg" />
+                    </div>
+                    <strong>Herringfleet Mill</strong>
+                    <p>
+                        Just a herringfleet mill...
+                    </p>
+                    <div class="meta">
+                        by Ian Flindt
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img2.jpg" />
+                    </div>
+                    <strong>Battle Field</strong>
+                    <p>
+                        Battle Field for you...
+                    </p>
+                    <div class="meta">
+                        by Andrea Andrade
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img24.jpg" />
+                    </div>
+                    <strong>Sundays Sunset</strong>
+                    <p>
+                        Beach view sunset...
+                    </p>
+                    <div class="meta">
+                        by Robert Strachan
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img19.jpg" />
+                    </div>
+                    <strong>Sun Flower</strong>
+                    <p>
+                        Good Morning Sun flower...
+                    </p>
+                    <div class="meta">
+                        by Zsolt Zsigmond
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img5.jpg" />
+                    </div>
+                    <strong>Beach</strong>
+                    <p>
+                        Something on beach...
+                    </p>
+                    <div class="meta">
+                        by unknown
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img25.jpg" />
+                    </div>
+                    <strong>Flowers</strong>
+                    <p>
+                        Hello flowers...
+                    </p>
+                    <div class="meta">
+                        by R A Stanley
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img20.jpg" />
+                    </div>
+                    <strong>Alone</strong>
+                    <p>
+                        Lonely plant...
+                    </p>
+                    <div class="meta">
+                        by Zsolt Zsigmond
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img27.jpg" />
+                    </div>
+                    <strong>Sunset Lake</strong>
+                    <p>
+                        A peaceful sunset view...
+                    </p>
+                    <div class="meta">
+                        by j osborn
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img26.jpg" />
+                    </div>
+                    <strong>Bridge to Heaven</strong>
+                    <p>
+                        Where is the bridge lead to?
+                    </p>
+                    <div class="meta">
+                        by SigitEko
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img15.jpg" />
+                    </div>
+                    <strong>Autumn</strong>
+                    <p>
+                        The fall of the tree...
+                    </p>
+                    <div class="meta">
+                        by Lars van de Goor
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img23.jpg" />
+                    </div>
+                    <strong>Winter Whisper</strong>
+                    <p>
+                        Winter feel...
+                    </p>
+                    <div class="meta">
+                        by Andrea Andrade
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img17.jpg" />
+                    </div>
+                    <strong>Light</strong>
+                    <p>
+                        The only shinning light...
+                    </p>
+                    <div class="meta">
+                        by Lars van de Goor
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img22.jpg" />
+                    </div>
+                    <strong>Rooster's Ranch</strong>
+                    <p>
+                        Rooster's ranch landscape...
+                    </p>
+                    <div class="meta">
+                        by Andrea Andrade
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img16.jpg" />
+                    </div>
+                    <strong>Autumn Light</strong>
+                    <p>
+                        Sun shinning into forest...
+                    </p>
+                    <div class="meta">
+                        by Lars van de Goor
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img21.jpg" />
+                    </div>
+                    <strong>Yellow cloudy</strong>
+                    <p>
+                        It is yellow cloudy...
+                    </p>
+                    <div class="meta">
+                        by Zsolt Zsigmond
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img28.jpg" />
+                    </div>
+                    <strong>Herringfleet Mill</strong>
+                    <p>
+                        Just a herringfleet mill...
+                    </p>
+                    <div class="meta">
+                        by Ian Flindt
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img2.jpg" />
+                    </div>
+                    <strong>Battle Field</strong>
+                    <p>
+                        Battle Field for you...
+                    </p>
+                    <div class="meta">
+                        by Andrea Andrade
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img24.jpg" />
+                    </div>
+                    <strong>Sundays Sunset</strong>
+                    <p>
+                        Beach view sunset...
+                    </p>
+                    <div class="meta">
+                        by Robert Strachan
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img19.jpg" />
+                    </div>
+                    <strong>Sun Flower</strong>
+                    <p>
+                        Good Morning Sun flower...
+                    </p>
+                    <div class="meta">
+                        by Zsolt Zsigmond
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img5.jpg" />
+                    </div>
+                    <strong>Beach</strong>
+                    <p>
+                        Something on beach...
+                    </p>
+                    <div class="meta">
+                        by unknown
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img25.jpg" />
+                    </div>
+                    <strong>Flowers</strong>
+                    <p>
+                        Hello flowers...
+                    </p>
+                    <div class="meta">
+                        by R A Stanley
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="imgholder">
+                        <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img20.jpg" />
+                    </div>
+                    <strong>Alone</strong>
+                    <p>
+                        Lonely plant...
+                    </p>
+                    <div class="meta">
+                        by Zsolt Zsigmond
+                    </div>
+                </div>
+                <!---->
+            </div>
+            <br/>
+        </section>
+        <!-- Footer -->
+        <footer>
+            Copyright \u00A9 2013 by SmartEXPO orgnization.
+        </footer>
+
+    </h:body>
+</html>
+
