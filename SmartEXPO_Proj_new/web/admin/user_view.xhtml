@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/admin/admin_template.xhtml">
+        <ui:define name="title">User | View</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <p:dataTable value="#{userViewManagedBean.users}" var="user"
+                             editable="true" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport}
+                             {FirstPageLink} {PreviousPageLink} {PageLinks}
+                             {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,20,30,50"
+                             style="text-align: center">
+                    <f:facet name="header">
+                        Users
+                    </f:facet>
+
+                    <p:column sortBy="username" headerText="Username">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.username}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.username}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column sortBy="password" headerText="Password">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.password}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.password}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Permission 1">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission[0]}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission[0]}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Permission 2">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission[1]}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission[1]}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Permission 3">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission[2]}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission[2]}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Permission 4">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission[3]}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission[3]}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Permission 5">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission[4]}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission[4]}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column>
+                        <p:rowEditor />
+                    </p:column>
+
+                    <f:facet name="footer">
+                        Total #{userViewManagedBean.count} users.
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

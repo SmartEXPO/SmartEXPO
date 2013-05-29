@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.smartexpo.managedbean;
+package com.smartexpo.temp;
 
-import com.tmp.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -26,12 +25,15 @@ public class ItemViewManagedBean {
     public ItemViewManagedBean() {
         items = new ArrayList<Item>();
         for (int i = 0; i < 20; i++) {
-            Item item = new Item("item " + i, "pic Url " + i, "author " + i, "des " + i, "audio " + i, "video " + i);
-            items.add(item);
+            items.add(new Item("name " + i, "pic " + i, "author name " + i, "199" + i, "200" + i, "author introduction " + i, "description title + i", "description content " + i, "audio title " + i, "video title " + i));
         }
     }
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public int getCount() {
+        return items.size();
     }
 }
