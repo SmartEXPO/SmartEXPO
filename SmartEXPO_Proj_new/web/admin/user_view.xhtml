@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -8,19 +9,21 @@
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">User | View</ui:define>
         <ui:define name="content">
-            <h:form>
+            <h:form id="user_form">
+                <p:growl id="msg" showDetail="true"/>  
+
                 <p:dataTable value="#{userViewManagedBean.users}" var="user"
-                             editable="true" paginator="true" rows="10"
-                             paginatorTemplate="{CurrentPageReport}
-                             {FirstPageLink} {PreviousPageLink} {PageLinks}
-                             {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="10,20,30,50"
-                             style="text-align: center">
+                             editable="true">
                     <f:facet name="header">
                         Users
                     </f:facet>
 
-                    <p:column sortBy="username" headerText="Username">
+                    <p:ajax event="rowEdit" update=":user_form:msg"
+                            listener="#{userViewManagedBean.onEdit}" />  
+                    <p:ajax event="rowEditCancel" update=":user_form:msg"
+                            listener="#{userViewManagedBean.onCancel}" />
+
+                    <p:column headerText="Username">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{user.username}" />
@@ -30,7 +33,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column sortBy="password" headerText="Password">
+                    <p:column headerText="Password">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{user.password}" />
