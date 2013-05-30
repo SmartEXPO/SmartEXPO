@@ -75,7 +75,7 @@ public class listItemServlet extends HttpServlet {
         System.out.println("########### FROM: " + 15 * (Integer.parseInt(phase) - 1) + 1);
 
         List<Item> items = getInfo.getItemsFrom(
-                getInfo.getItemByArea("Area " + area),
+                getInfo.getItemByArea("Area 2" + area),
                 15 * (Integer.parseInt(phase) - 1),
                 15 * (Integer.parseInt(phase)));
 
@@ -93,13 +93,13 @@ public class listItemServlet extends HttpServlet {
     private List<String> parseJson(List<Item> items) {
         List<String> jsons = new ArrayList<String>();
 
-        for (Item item : items) {            
+        for (Item item : items) {
             String link = "item.xhtml?id=" + item.getItemId(); //TODO 具体网址怎么跳转
             String des = item.getDescription().getContent() + "this is long long long longlonglong long long longlonglong";
             if (des.length() > 20) {
                 des = des.substring(0, 27) + "...";
             }
-            
+
             String json = "{\"title\":\"" + item.getItemName()
                     + "\",\"img\":\"" + "http://www.inwebson.com/demo/blocksit-js/demo2/images/img27.jpg"
                     + "\",\"description\":\"" + des
@@ -113,10 +113,14 @@ public class listItemServlet extends HttpServlet {
 
     private String wrapper(List<String> jsons, String status) {
         String tmp = "{\"status\":\"" + status + "\",\"count\":" + jsons.size() + ",\"list\":[";
+        boolean flag = false;
         for (String json : jsons) {
             tmp = tmp + json + ",";
+            flag = true;
         }
-        tmp = tmp.substring(0, tmp.length() - 1);
+        if (flag) {
+            tmp = tmp.substring(0, tmp.length() - 1);
+        }
         tmp = tmp + "]}";
         return tmp;
     }
