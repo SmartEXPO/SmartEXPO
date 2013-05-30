@@ -138,11 +138,14 @@ public class SignUpManagedBean implements Serializable {
             logger.log(Level.WARNING, "Password not match");
         } else {
             isVerify = true;
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage("Sign Up Successfully!"));
         }
 
         if (isVerify) {
             storeManager();
         }
+        username = password = confirmPassword = "";
     }
 
     private boolean isExist() {

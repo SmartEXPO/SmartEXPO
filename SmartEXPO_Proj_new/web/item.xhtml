@@ -155,6 +155,7 @@
                                      value="#{itemController.commentcontent}"
                                      style="display: inline-block"
                                      onkeydown="return (event.keyCode == 13)">
+                            <f:validateLength maximum="10" />
                             <f:ajax listener="#{itemController.addComment}"
                                     event="keydown" execute="@form"
                                     render="@form :all_comments"/>
