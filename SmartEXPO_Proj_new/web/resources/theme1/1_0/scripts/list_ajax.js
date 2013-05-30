@@ -19,7 +19,7 @@ function list_conn() {
         });
     } else {
         $("#loading").css({display:'block'});
-        $("#loading").html("<p>NO MORE ITEMS</p>");
+        $("#loading").html("<p>ALL ARTWORKS ARE LISTED ABOVE</p><br/><br/>");
     }
 }
 
@@ -28,7 +28,7 @@ function trans(obj) {
     var tmp;
     if (obj && (obj.status == "0" || obj.status == "1")) { //正常接受
         for (var i = 0; i < obj.count; i++) {
-            tmp = "<div class=\"grid\"><div class=\"imgholder\"><a href=\""+obj.list[i].link+"\"><img src=\""+obj.list[i].img+"\" /></a></div><a href=\""+obj.list[i].link+"\"><strong>"+obj.list[i].title+"</strong></a><p>"+obj.list[i].descriptiom+"</p><div class=\"meta\">"+obj.list[i].author+"</div></div>";
+            tmp = "<div class=\"grid\"><div class=\"imgholder\"><a href=\""+obj.list[i].link+"\"><img src=\""+obj.list[i].img+"\" /></a></div><a href=\""+obj.list[i].link+"\"><strong>"+obj.list[i].title+"</strong></a><p>"+obj.list[i].description+"</p><div class=\"meta\">"+obj.list[i].author+"</div></div>";
             rtrn.push(tmp);
         }
         if (obj.status == "1") finished = true;
