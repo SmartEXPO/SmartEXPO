@@ -172,76 +172,72 @@ public class GetInfo {
         List<Description> descriptions = em.createNamedQuery("Description.findByItemId").setParameter("itemId", item).getResultList();
         return descriptions;
     }
-    
-    
     private List<Item> items;
     private int itemNum;
-    public List<Item> getAllItems(){
-        List<Item> items=em.createNamedQuery("Item.findAll").getResultList();
-        
-        this.itemNum=items.size();
-        this.items=items;
+
+    public List<Item> getAllItems() {
+        List<Item> items = em.createNamedQuery("Item.findAll").getResultList();
+
+        this.itemNum = items.size();
+        this.items = items;
         return items;
     }
-    
-    
-    public List<Item> getSomeItems2(int from,int to){
-        List<Item> items=em.createNamedQuery("Item.findAll").setFirstResult(from).setMaxResults(to).getResultList();
-        
+
+    public List<Item> getSomeItems2(int from, int to) {
+        List<Item> items = em.createNamedQuery("Item.findAll").setFirstResult(from).setMaxResults(to).getResultList();
+
         //this.itemNum=items.size();
-        this.items=items;
+        this.items = items;
         return items;
     }
-    
-    
-    public List<Item> getItemByArea(String area){
+
+    public List<Item> getItemByArea(String area) {
         List<Item> items = em.createNamedQuery("Item.findByItemArea").setParameter("itemArea", area).getResultList();
         return items;
     }
-    
-    public List<Item> getItemsFrom(List<Item> items, int from, int to){
-        if(items == null){
+
+    public List<Item> getItemsFrom(List<Item> items, int from, int to) {
+        if (items == null) {
             return null;
         }
-        List<Item> someItems =new ArrayList<Item>();
-        int itemNum=items.size();
-        if(from>itemNum){
+        List<Item> someItems = new ArrayList<Item>();
+        int itemNum = items.size();
+        if (from > itemNum) {
             return null;
         }
-        if(to>itemNum){
-            for(int i=from;i<itemNum;i++){
+        if (to > itemNum) {
+            for (int i = from; i < itemNum; i++) {
                 someItems.add(items.get(i));
             }
         }
-        if(to<itemNum){
-            for(int i=from;i<to;i++){
+        if (to < itemNum) {
+            for (int i = from; i < to; i++) {
                 someItems.add(items.get(i));
             }
         }
         return someItems;
     }
-    
-    public List<Item> getSomeItems(int from, int to){
-        if(items==null){
+
+    public List<Item> getSomeItems(int from, int to) {
+        if (items == null) {
             getAllItems();
         }
-        List<Item> someItems=new ArrayList<Item>();
-        if(from>itemNum){
+        List<Item> someItems = new ArrayList<Item>();
+        if (from > itemNum) {
             return null;
         }
-        if(to>itemNum){
-            for(int i=from;i<itemNum;i++){
+        if (to > itemNum) {
+            for (int i = from; i < itemNum; i++) {
                 someItems.add(items.get(i));
             }
         }
-        if(to<itemNum){
-            for(int i=from;i<to;i++){
+        if (to < itemNum) {
+            for (int i = from; i < to; i++) {
                 someItems.add(items.get(i));
             }
         }
-        
+
         return someItems;
-        
+
     }
-    
 }
