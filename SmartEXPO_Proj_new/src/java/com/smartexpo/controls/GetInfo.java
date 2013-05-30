@@ -195,6 +195,34 @@ public class GetInfo {
         return items;
     }
     
+    
+    public List<Item> getItemByArea(String area){
+        List<Item> items = em.createNamedQuery("Item.findByItemArea").setParameter("itemArea", area).getResultList();
+        return items;
+    }
+    
+    public List<Item> getItemsFrom(List<Item> items, int from, int to){
+        if(items == null){
+            return null;
+        }
+        List<Item> someItems =new ArrayList<Item>();
+        int itemNum=items.size();
+        if(from>itemNum){
+            return null;
+        }
+        if(to>itemNum){
+            for(int i=from;i<itemNum;i++){
+                someItems.add(items.get(i));
+            }
+        }
+        if(to<itemNum){
+            for(int i=from;i<to;i++){
+                someItems.add(items.get(i));
+            }
+        }
+        return someItems;
+    }
+    
     public List<Item> getSomeItems(int from, int to){
         if(items==null){
             getAllItems();

@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,7 +31,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
     @NamedQuery(name = "Item.findByItemId", query = "SELECT i FROM Item i WHERE i.itemId = :itemId"),
-    @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName")})
+    @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName"),
+    @NamedQuery(name = "Item.findByItemArea", query = "SELECT i FROM Item i WHERE i.area = :itemArea")
+})
 public class Item implements Serializable {
 
     @OneToOne(mappedBy = "itemId")
@@ -70,6 +73,19 @@ public class Item implements Serializable {
     private String itemName;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private Description description;
+    
+    @Size(min=1, max = 200)
+    @Column(name="ITEM_AREA")
+    private String area;
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+    
 
     public Item() {
     }

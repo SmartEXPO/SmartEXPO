@@ -71,6 +71,7 @@ public class InsertItemServlet extends HttpServlet {
 
 
             Item item = new Item();
+            item.setArea("Area 1");
             item.setItemName(request.getParameter("item_name"));
             Description des = new Description();
             des.setContent(request.getParameter("des_content"));
@@ -253,6 +254,12 @@ public class InsertItemServlet extends HttpServlet {
             for (int i = 0; i < displayColumns.size(); i++) {
                 logger.log(Level.WARNING, displayColumns.get(i).getDisplayContent());
             }
+            
+            
+            List<Item> someItems= gi.getItemsFrom(gi.getItemByArea("Area 1"),0, 2);
+            for (int i = 0; i < someItems.size(); i++) {
+                logger.log(Level.WARNING, someItems.get(i).getItemName());
+            }
 
 
             request.setAttribute("item_name", gi.getItemByID(item.getItemId()).getItemName());
@@ -269,6 +276,7 @@ public class InsertItemServlet extends HttpServlet {
 
 
             request.getRequestDispatcher("itemPages/itemInserted.jsp").forward(request, response);
+            
         } catch (NotSupportedException ex) {
             Logger.getLogger(InsertItemServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SystemException ex) {
