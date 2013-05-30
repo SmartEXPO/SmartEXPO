@@ -1,9 +1,15 @@
 /**
  * @author Ben
  */
-
+var area;
 $(document).ready(function() {
 
+    area = $("#area").html();
+    if (!(parseInt(area) < 6)){
+        area = "1";
+        $("#area").html("1");
+    }
+        
     $('#footer').css({
         'bottom': -15
     }).delay(1000).animate({

@@ -2,7 +2,7 @@
  * @author Ben
  */
 
-var area = 1;
+
 var phase = 1;
 var finished = false;
 
