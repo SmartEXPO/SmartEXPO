@@ -26,7 +26,7 @@
                             <h:outputLabel for="item_name" value="Item Name" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputText id="item_name" required="true" />
+                            <p:inputText id="item_name" required="true" value="#{itemInsertMB.itemName}" />
                         </p:column>
                     </p:row>
                     
@@ -35,7 +35,7 @@
                             <h:outputLabel for="item_pic" value="Picture URL" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputText id="item_pic" value="将改为上传" />
+                            <p:inputText id="item_pic" value="#{itemInsertMB.imageurl}" />
                         </p:column>
                     </p:row>
 
@@ -50,7 +50,7 @@
                             <h:outputLabel for="des_title" value="Description Title" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputText id="des_title" required="true" />
+                            <p:inputText id="des_title" required="true" value="#{itemInsertMB.desTitle}" />
                         </p:column>
                     </p:row>
 
@@ -59,7 +59,7 @@
                             <h:outputLabel for="des_content" value="Description Content" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputTextarea id="des_content" autoResize="false" />
+                            <p:inputTextarea id="des_content" autoResize="false" value="#{itemInsertMB.desContent}" />
                         </p:column>
                     </p:row>
 
@@ -74,7 +74,7 @@
                             <h:outputLabel for="author_name" value="Author Name" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputText id="author_name" />
+                            <p:inputText id="author_name" value="#{itemInsertMB.authorName}" />
                         </p:column>
                     </p:row>
 
@@ -83,7 +83,7 @@
                             <h:outputLabel for="author_birth" value="Author Birthday" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:calendar id="author_birth" />
+                            <p:calendar id="author_birth" value="#{itemInsertMB.authorBirth}" />
                         </p:column>
                     </p:row>
 
@@ -92,7 +92,7 @@
                             <h:outputLabel for="author_death" value="Author Death Date" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:calendar id="author_death" />
+                            <p:calendar id="author_death" value="#{itemInsertMB.authorDeath}" />
                         </p:column>
                     </p:row>
 
@@ -101,7 +101,7 @@
                             <h:outputLabel for="author_intro" value="Author Introduction" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputTextarea id="author_intro" autoResize="false" />
+                            <p:inputTextarea id="author_intro" autoResize="false" value="#{itemInsertMB.authorIntro}" />
                         </p:column>
                     </p:row>
 
@@ -116,7 +116,7 @@
                             <h:outputLabel for="audio_title" value="Audio Title" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputText id="audio_title" />
+                            <p:inputText id="audio_title" value="#{itemInsertMB.audioTitle}" />
                         </p:column>
                     </p:row>
 
@@ -125,7 +125,7 @@
                             <h:outputLabel for="audio_url" value="Audio URL" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputText id="audio_url" value="将改为上传" />
+                            <p:inputText id="audio_url" value="#{itemInsertMB.audioURL}" />
                         </p:column>
                     </p:row>
 
@@ -134,7 +134,7 @@
                             <h:outputLabel for="audio_des" value="Audio Description" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputTextarea id="audio_des" autoResize="false" />
+                            <p:inputTextarea id="audio_des" autoResize="false" value="#{itemInsertMB.audioDes}" />
                         </p:column>
                     </p:row>
 
@@ -149,7 +149,7 @@
                             <h:outputLabel for="video_title" value="Video Title" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputText id="video_title" />
+                            <p:inputText id="video_title" value="#{itemInsertMB.videoTitle}" />
                         </p:column>
                     </p:row>
 
@@ -158,7 +158,7 @@
                             <h:outputLabel for="video_url" value="Video URL" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputText id="video_url" value="将改为上传" />
+                            <p:inputText id="video_url" value="#{itemInsertMB.videoURL}" />
                         </p:column>
                     </p:row>
 
@@ -167,7 +167,7 @@
                             <h:outputLabel for="video_des" value="Video Description" />
                         </p:column>
                         <p:column colspan="2">
-                            <p:inputTextarea id="video_des" autoResize="false"  />
+                            <p:inputTextarea id="video_des" autoResize="false" value ="#{itemInsertMB.videoDes}"  />
                         </p:column>
                     </p:row>
 
@@ -178,7 +178,7 @@
                             </p:column>
                             <p:column>
                                 <p:commandButton value="Save" update="msg"
-                                                 icon="ui-icon-check" ajax="true" />
+                                                 icon="ui-icon-check" ajax="true" action="#{itemInsertMB.persist}"/>
                             </p:column>
                             <p:column>
                                 <p:commandButton value="Cancel"
