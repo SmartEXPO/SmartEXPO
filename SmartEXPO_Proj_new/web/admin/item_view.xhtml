@@ -8,9 +8,10 @@
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | View</ui:define>
         <ui:define name="content">
-            <!-- DataPanel -->
+            <!-- DataGrid -->
             <h:form>
-                <p:carousel rows="8" value="#{itemViewManagedBean.items}" var="show_item">
+                <p:carousel rows="8" value="#{itemViewManagedBean.items}"
+                            var="show_item">
                     <f:facet name="header">
                         All Items
                     </f:facet>

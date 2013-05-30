@@ -52,6 +52,7 @@ public class Item implements Serializable {
     private ItemAudio itemAudio;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private ItemAuthor itemAuthor;
+    
 
     public ItemAuthor getItemAuthor() {
         return itemAuthor;
@@ -77,6 +78,19 @@ public class Item implements Serializable {
     @Size(min=1, max = 200)
     @Column(name="ITEM_AREA")
     private String area;
+    
+    @Size(min=1,max =300)
+    @Column(name="IMAGE_URL")
+    private String imageurl;
+    
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
 
     public String getArea() {
         return area;
