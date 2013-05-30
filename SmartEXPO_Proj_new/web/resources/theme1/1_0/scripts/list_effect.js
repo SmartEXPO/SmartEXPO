@@ -1,21 +1,27 @@
 /**
  * @author Ben
  */
-
+var area;
 $(document).ready(function() {
 
+    area = $("#area").html();
+    if (!(parseInt(area) < 6)){
+        area = "1";
+        $("#area").html("1");
+    }
+        
     $('#footer').css({
-        'bottom' : -15
+        'bottom': -15
     }).delay(1000).animate({
-        'bottom' : 0
+        'bottom': 0
     }, 800);
 
     //blocksit define
     $(window).load(function() {
         $('#container').BlocksIt({
-            numOfCol : 5,
-            offsetX : 8,
-            offsetY : 8
+            numOfCol: 5,
+            offsetX: 8,
+            offsetY: 8
         });
     });
 
@@ -42,22 +48,26 @@ $(document).ready(function() {
             currentWidth = conWidth;
             $('#container').width(conWidth);
             $('#container').BlocksIt({
-                numOfCol : col,
-                offsetX : 8,
-                offsetY : 8
+                numOfCol: col,
+                offsetX: 8,
+                offsetY: 8
             });
         }
     });
 
     $("#loading").css({
-        'display' : 'none'
+        'display': 'none'
     });
     $(window).scroll(function() {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            $("#loading").css({'display':'block'});
-            list_conn();
-        }
+        if (!isWaiting)
+            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                isWaiting = true;
+                $("#loading").css({'display': 'block'});
+                list_conn();
+            }
     });
-    
+
     //list_conn();在程序开始的时候加载
 });
+
+var isWaiting = false;

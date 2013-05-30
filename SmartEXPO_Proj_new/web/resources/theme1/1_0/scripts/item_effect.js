@@ -30,10 +30,12 @@ $(document).ready(function() {
     });
 
     $(".func_button").mouseenter(function() {
+        if ($(this).data("display") === "on") return;
         $(this).fadeTo('fast', 1);
     });
 
     $(".func_button").mouseleave(function() {
+        if ($(this).data("display") === "on") return;
         $(this).fadeTo('fast', 0.8);
     })
 
@@ -44,6 +46,7 @@ $(document).ready(function() {
             $("#search").animate({
                 "width": "250px",
             }, 500);
+            $("#search").data("display", "on");
             $("#search_box").css('display', 'inline');
             $("#search_box").animate({
                 width: '200px',
@@ -72,6 +75,8 @@ $(document).ready(function() {
             $("#search_box").css('display', 'none');
         });
         $("#search_result").css('display', 'none');
+        $("#search").data("display", "off");
+        $("#search").css({opacity:'0.8'});
     }
 
 
@@ -103,13 +108,15 @@ $(document).ready(function() {
             });
             $("#comment").animate({
                 "width": "400px",
+                height: "400px",
             }, 500, function() {
-                $("#comment").animate({
-                    "height": "400px",
-                }, 500, function() {
-                    $("#users_comment").css("display", "block");
-                });
+//                $("#comment").animate({
+//                    "height": "400px",
+//                }, 500, function() {
+                $("#users_comment").css("display", "block");
+//                });
             });
+            $("#comment").data("display", "on");
             $("#comment_form .content").val("");
             $("#comment_form .name").val("");
         } else {
@@ -139,6 +146,8 @@ $(document).ready(function() {
             "width": "40px",
             'height': '40px',
         }, 500);
+        $("#comment").data("display", "off");
+        $("#comment").css({opacity:'0.8'});
     }
 
 

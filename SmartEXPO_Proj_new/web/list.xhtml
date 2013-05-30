@@ -51,8 +51,9 @@
         <!-- Content -->
         <section id="wrapper">
             <hgroup>
-                <h2>MASTERPIECES IN THIS AREA</h2>
+                <h2>MASTERPIECES IN AREA NO.<span id="area">#{param.area!=null?param.area:"1"}</span></h2>
                 <h3>Theme: Postmodernism in Photography</h3>
+                <!--这个地方我觉得能不能建一个能够保存全局信息的bean @applicationScoped-->
             </hgroup>
             <!--这里考虑将下面的div全部删除，然后在程序开始的时候用ajax加载-->
             <div id="container">
