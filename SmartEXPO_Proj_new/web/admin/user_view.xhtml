@@ -14,9 +14,8 @@
 
                 <p:dataTable var="user" value="#{userViewManagedBean.users}"
                              editable="true" paginator="true" rows="10"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                             rowsPerPageTemplate="10,20,50,100"
-                             >
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,20,50,100">
                     <f:facet name="header">
                         User
                     </f:facet>
@@ -27,14 +26,7 @@
                             listener="#{userViewManagedBean.onCancel}" />
 
                     <p:column headerText="Username">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{user.username}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <h:inputText value="#{user.username}" />
-                            </f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{user.username}" />
                     </p:column>
 
                     <p:column headerText="Password">
@@ -55,7 +47,7 @@
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permissions[0]}"
+                                  <h:selectBooleanCheckbox value="#{user.permissions[0]}"
                                                          disabled="false" />
                             </f:facet>
                         </p:cellEditor>
