@@ -19,9 +19,11 @@ import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
 import com.smartexpo.models.Permission;
 import com.smartexpo.models.Video;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.From;
 import javax.transaction.UserTransaction;
 
 /**
@@ -172,4 +174,48 @@ public class GetInfo {
         List<Description> descriptions = em.createNamedQuery("Description.findByItemId").setParameter("itemId", item).getResultList();
         return descriptions;
     }
+    
+    
+    private List<Item> items;
+    private int itemNum;
+    public List<Item> getAllItems(){
+        List<Item> items=em.createNamedQuery("Item.findAll").getResultList();
+        
+        this.itemNum=items.size();
+        this.items=items;
+        return items;
+    }
+    
+    
+    public List<Item> getSomeItems2(int from,int to){
+        List<Item> items=em.createNamedQuery("Item.findAll").setFirstResult(from).setMaxResults(to).getResultList();
+        
+        //this.itemNum=items.size();
+        this.items=items;
+        return items;
+    }
+    
+    public List<Item> getSomeItems(int from, int to){
+        if(items==null){
+            getAllItems();
+        }
+        List<Item> someItems=new ArrayList<Item>();
+        if(from>itemNum){
+            return null;
+        }
+        if(to>itemNum){
+            for(int i=from;i<itemNum;i++){
+                someItems.add(items.get(i));
+            }
+        }
+        if(to<itemNum){
+            for(int i=from;i<to;i++){
+                someItems.add(items.get(i));
+            }
+        }
+        
+        return someItems;
+        
+    }
+    
 }
