@@ -69,20 +69,20 @@ public class listItemServlet extends HttpServlet {
 
         GetInfo getInfo = new GetInfo(em, utx);
 
-        System.out.println("*********" + getInfo.getAllItems().get(0).getItemVideo());
+        System.out.println("*********" + getInfo.getAllItems().get(0).getItemName());
 
         System.out.println("########### Area: " + area);
         System.out.println("########### FROM: " + 15 * (Integer.parseInt(phase) - 1) + 1);
 
         List<Item> items = getInfo.getItemsFrom(
                 getInfo.getItemByArea("Area " + area),
-                15 * (Integer.parseInt(phase) - 1) + 1,
+                15 * (Integer.parseInt(phase) - 1),
                 15 * (Integer.parseInt(phase)));
 
         List<String> jsons = parseJson(items);
 
         String status;
-        if (items.size() > 15) {
+        if (items.size() == 15) {
             status = "0";
         } else {
             status = "1";
@@ -93,7 +93,7 @@ public class listItemServlet extends HttpServlet {
     private List<String> parseJson(List<Item> items) {
         List<String> jsons = new ArrayList<String>();
 
-        for (Item item : items) {
+        for (Item item : items) {            
             String link = "item.xhtml?id=" + item.getItemId(); //TODO 具体网址怎么跳转
             String des = item.getDescription().getContent() + "this is long long long longlonglong long long longlonglong";
             if (des.length() > 20) {
