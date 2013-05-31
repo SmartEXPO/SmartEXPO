@@ -161,6 +161,8 @@ $(document).ready(function() {
 
     $(".func_input_box.name").attr("placeholder", "User");
     $(".func_input_box.content").attr("placeholder", "Content");
+    $(".func_input_box.search").attr("placeholder", "Search");
+
 
 
     var edit = false;
