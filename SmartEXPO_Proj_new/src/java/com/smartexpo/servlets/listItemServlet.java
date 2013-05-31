@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,6 +32,13 @@ public class listItemServlet extends HttpServlet {
     private EntityManager em;
     @Resource
     private UserTransaction utx;
+    private GetInfo getInfo;
+
+    @PostConstruct
+    private void postConstruct() {
+        System.out.println("@@@@@@@@@@@" + em.toString() +"@@@@@@@@@@@");
+        getInfo = new GetInfo(em, utx);
+    }
 
     /**
      * Processes requests for both HTTP
@@ -67,7 +75,6 @@ public class listItemServlet extends HttpServlet {
          * 目前的设想是一次查询15个item出来
          */
 
-        GetInfo getInfo = new GetInfo(em, utx);
 
         System.out.println("*********" + getInfo.getAllItems().get(0).getItemName());
 
@@ -95,15 +102,16 @@ public class listItemServlet extends HttpServlet {
 
         for (Item item : items) {
             String link = "item.xhtml?id=" + item.getItemId(); //TODO 具体网址怎么跳转
-            String des = item.getDescription().getContent() + "this is long long long longlonglong long long longlonglong";
+            String des = item.getDescription().getContent();
+            String author = item.getItemAuthor().getAuthorId().getName();
             if (des.length() > 20) {
                 des = des.substring(0, 27) + "...";
             }
 
             String json = "{\"title\":\"" + item.getItemName()
-                    + "\",\"img\":\"" + "http://www.inwebson.com/demo/blocksit-js/demo2/images/img27.jpg"
+                    + "\",\"img\":\"" + item.getImageurl()
                     + "\",\"description\":\"" + des
-                    + "\",\"author\":\"by " + "Famous Wellknown"
+                    + "\",\"author\":\"by " + author
                     + "\",\"link\":\"" + link
                     + "\"}";
             jsons.add(json);
