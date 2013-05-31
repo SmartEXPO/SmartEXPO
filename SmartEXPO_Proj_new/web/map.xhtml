@@ -54,7 +54,8 @@
     <h:body onload="init();">
         <header>
             <nav>
-                <h:outputLink class="navi">Map</h:outputLink>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+                <h:outputLink class="navi">Map</h:outputLink>|
+                <a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
             </nav>
             <h:graphicImage id="logo" library="theme1" name="images/logo.png" alt="SmartEXPO" />
             <div id="decologo">
@@ -79,7 +80,9 @@
                         <h:graphicImage library="theme1" name="images/decobar.png" />
                         <h2 style="margin-top:-2px;padding-left:40px;">Exhibition Area Map</h2>
                         <!--这个地方貌似那个图片不是居中做的-->
-                        <h:graphicImage library="theme1" name="images/map.png" />
+                        <h:outputLink value="map.xhtml">
+                            <h:graphicImage library="theme1" name="images/map.png" />
+                        </h:outputLink>
                         <br /><br />
                         <h:graphicImage library="theme1" name="images/decobar.png" />
                         <h2 style="margin-top:-2px;padding-left:40px;">Items Recommended</h2>

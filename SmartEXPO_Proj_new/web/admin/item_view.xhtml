@@ -8,34 +8,71 @@
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | View</ui:define>
         <ui:define name="content">
-            <!-- DataGrid -->
-            <h:form>
-                <p:carousel rows="8" value="#{itemViewManagedBean.items}"
-                            var="show_item">
-                    <f:facet name="header">
-                        All Items
-                    </f:facet>
+            <h:form id="form">
+                <p:dataGrid id="all_item" var="show_item" value="#{itemViewManagedBean.items}"
+                            columns="6" rows="18" paginator="true"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                            rowsPerPageTemplate="18,36,72">
+                    <p:panel header="#{show_item.id}" style="text-align: center">
+                        <h:panelGrid columns="1" style="width: 100%;">
+                            <h:graphicImage value="#{show_item.picURL}" />
+                            <h:outputText value="#{show_item.id}" />
+                            <h:outputText value="#{show_item.name}" />
+                            <h:outputText value="#{show_item.authorName}" />
+                            <p:commandLink value="Detail" update=":form:item_detail"
+                                           oncomplete="itemDialog.show()"
+                                           title="View Detail">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+                            <p:commandLink value="Edit" />
+                            <p:commandButton value="Destroy" icon="ui-icon-notice"
+                                             action="#{itemViewManagedBean.destroyItem}"
+                                             update=":form:all_item">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:dataGrid>
 
-                    <h:panelGrid columns="1" cellpadding="3"
-                                 style="width: 144px; height: 120px; text-align: center">
-                        <h:graphicImage value="#{show_item.picURL}" />
-                        <h:outputText value="#{show_item.id}" />
-                        <h:outputText value="#{show_item.name}" />
-                        <h:outputText value="#{show_item.authorName}" />
-                        <h:outputText value="#{show_item.authorBirthday} -- #{show_item.authorDeathDate}" />
-                        <h:outputText value="#{show_item.authorIntro}" />
-                        <h:outputText value="#{show_item.audioTitle}" />
-                        <h:outputText value="#{show_item.videoTitle}" />
-                        <p:commandLink value="Details" />
-                        <p:commandLink value="Edit" />
-                        <p:commandButton value="Destroy" icon="ui-icon-notice" />
-                    </h:panelGrid>
-                    <br />
+                <p:dialog header="Item Detail" widgetVar="itemDialog"
+                          resizable="false" modal="true">
+                    <p:outputPanel id="item_detail" style="text-align: center;"
+                                   layout="block">
+                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.picURL}" />
 
-                    <f:facet name="footer">
-                        Total #{itemViewManagedBean.count} items.
-                    </f:facet>
-                </p:carousel>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="view_item_id" value="ID: " />
+                            <h:outputText id="view_item_id"
+                                          value="#{itemViewManagedBean.selectedItem.id}" />
+
+                            <h:outputLabel for="view_item_name" value="Name: " />
+                            <h:outputText id="view_item_name"
+                                          value="#{itemViewManagedBean.selectedItem.name}" />
+
+                            <h:outputLabel for="view_author" value="Author: " />
+                            <h:outputText id="view_author"
+                                          value="#{itemViewManagedBean.selectedItem.authorName}" />
+
+                            <h:outputLabel for="view_author_date" value="Author Date: " />
+                            <h:outputText id="view_author_date"
+                                          value="#{itemViewManagedBean.selectedItem.authorBirthday} -- #{show_item.authorDeathDate}" />
+
+                            <h:outputLabel for="view_author_intro" value="Author Introduction: " />
+                            <h:outputText id="view_author_intro"
+                                          value="#{itemViewManagedBean.selectedItem.authorIntro}" />
+
+                            <h:outputLabel for="view_audio_title" value="Audio Title: " />
+                            <h:outputText id="view_audio_title"
+                                          value="#{itemViewManagedBean.selectedItem.audioTitle}" />
+
+                            <h:outputLabel for="view_video_title" value="Video Title: " />
+                            <h:outputText id="view_video_title"
+                                          value="#{itemViewManagedBean.selectedItem.videoTitle}" />
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>
