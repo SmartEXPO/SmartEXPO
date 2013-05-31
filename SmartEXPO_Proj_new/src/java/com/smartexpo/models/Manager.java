@@ -128,4 +128,67 @@ public class Manager implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Manager[ managerId=" + managerId + " ]";
     }
+
+    
+    
+    
+    @NotNull
+    @Column(name = "PERMISSION_1")
+    private boolean permission1;
+
+    public boolean isPermission1() {
+        return permission1;
+    }
+
+    public void setPermission1(boolean permission1) {
+        this.permission1 = permission1;
+    }
+
+    public boolean isPermission2() {
+        return permission2;
+    }
+
+    public void setPermission2(boolean permission2) {
+        this.permission2 = permission2;
+    }
+
+    public boolean isPermission3() {
+        return permission3;
+    }
+
+    public void setPermission3(boolean permission3) {
+        this.permission3 = permission3;
+    }
+
+    public boolean isPermission4() {
+        return permission4;
+    }
+
+    public void setPermission4(boolean permission4) {
+        this.permission4 = permission4;
+    }
+
+    public boolean isPermission5() {
+        return permission5;
+    }
+
+    public void setPermission5(boolean permission5) {
+        this.permission5 = permission5;
+    }
+    
+    @NotNull
+    @Column(name = "PERMISSION_2")
+    private boolean permission2;
+    
+    @NotNull
+    @Column(name = "PERMISSION_3")
+    private boolean permission3;
+    
+    @NotNull
+    @Column(name = "PERMISSION_4")
+    private boolean permission4;
+    
+    @NotNull
+    @Column(name = "PERMISSION_5")
+    private boolean permission5;
 }
