@@ -7,9 +7,9 @@ var isSearchBarDisplayed = false;
 var isCommentBarDisplayed = false;
 
 $(document).ready(function() {
-    $("#frame").click(function() {
-        console.log(document.getElementsByTagName("header")[0].getBoundingClientRect().top);
-    });
+//    $("#frame").click(function() {
+//        console.log(document.getElementsByTagName("header")[0].getBoundingClientRect().top);
+//    });
 
     $(window).scroll(function() {
         if (document.getElementsByTagName("header")[0].getBoundingClientRect().top <= -60) {
@@ -30,16 +30,21 @@ $(document).ready(function() {
     });
 
     $(".func_button").mouseenter(function() {
-        if ($(this).data("display") === "on") return;
+        if ($(this).data("display") === "on")
+            return;
+//        if (!$(this).is(":animated"))
         $(this).fadeTo('fast', 1);
     });
 
     $(".func_button").mouseleave(function() {
-        if ($(this).data("display") === "on") return;
+        if ($(this).data("display") === "on")
+            return;
+//        if (!$(this).is(":animated"))
         $(this).fadeTo('fast', 0.8);
     })
 
     $("#search_img").click(function() {
+        $(this).clearQueue();
         hideCommentPane();
         if (isSearchBarDisplayed == false) {
             isSearchBarDisplayed = true;
@@ -76,7 +81,7 @@ $(document).ready(function() {
         });
         $("#search_result").css('display', 'none');
         $("#search").data("display", "off");
-        $("#search").css({opacity:'0.8'});
+        $("#search").css({opacity: '0.8'});
     }
 
 
@@ -92,6 +97,7 @@ $(document).ready(function() {
 
 
     $("#comment_img").click(function() {
+        $(this).clearQueue();
         hideSearchPane();
         if (isCommentBarDisplayed == false) {
             isCommentBarDisplayed = true;
@@ -147,7 +153,7 @@ $(document).ready(function() {
             'height': '40px',
         }, 500);
         $("#comment").data("display", "off");
-        $("#comment").css({opacity:'0.8'});
+        $("#comment").css({opacity: '0.8'});
     }
 
 
@@ -185,4 +191,12 @@ function popupLogin() {
 function vanishLogin() {
     $('#overall_shade').fadeOut('fast');
     $('#login_panel').fadeOut('fast');
+}
+
+function finish(e) {
+    $(".func_input_box.content").css({width: "235px"});
+    $(".func_input_box.name").attr("placeholder", "User");
+    $(".func_input_box.content").attr("placeholder", "Content");
+
+    console.log(e);
 }
