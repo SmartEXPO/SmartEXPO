@@ -15,7 +15,7 @@ function list_conn() {
             var obj = JSON.parse(data);
             $("#container").append(trans(obj));
             $("#container").BlocksIt({});
-            setTimeout("isWaiting = false", 1000);
+            setTimeout("isWaiting = false", 500);
         });
     } else {
         $("#loading").css({display:'block'});

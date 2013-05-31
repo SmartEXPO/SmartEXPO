@@ -215,3 +215,39 @@ footer {
     margin-bottom: 5px; 
     color:#464646;
 }
+
+
+#instant_comment {
+	position: fixed;
+	bottom: 100px;
+	right: 3%;
+	height:100px;
+	width: 250px;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    background-color: #464646;
+    z-index: 10;
+    box-shadow: 0 0 10px;
+    -webkit-box-shadow: 0 0 10px;
+    -moz-box-sadow: 0 0 10px;
+    opacity: 0.8;
+}
+
+#instant_comment_username {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    padding-left: 7px; 
+    font-family: Verdana, sans-serif;
+    font-size: 1em;
+    border-bottom: 2px solid gray;
+}
+
+#instant_comment_content {
+    height: 60px;
+    width: 236px;
+    overflow: hidden;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 6px 3px 6px;
+}
