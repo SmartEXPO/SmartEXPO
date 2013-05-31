@@ -75,7 +75,7 @@ public class listItemServlet extends HttpServlet {
         System.out.println("########### FROM: " + 15 * (Integer.parseInt(phase) - 1) + 1);
 
         List<Item> items = getInfo.getItemsFrom(
-                getInfo.getItemByArea("Area 2" + area),
+                getInfo.getItemByArea("Area " + area),
                 15 * (Integer.parseInt(phase) - 1),
                 15 * (Integer.parseInt(phase)));
 

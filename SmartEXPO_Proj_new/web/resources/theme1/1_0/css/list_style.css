@@ -11,11 +11,11 @@
 header, section, footer, hgroup{
 	display:block;
 }
-a {
+a,a:active {
 	color: #464646;
 	text-decoration:none;
 }
-a:hover, a:active{
+a:hover{
 	color:#000000;
 }
 
@@ -134,6 +134,7 @@ footer {
 	display:block;
 	padding:0 0 5px;
 	font-size:17px;
+    text-decoration: none;
 }
 .grid .meta{
 	text-align:right;
