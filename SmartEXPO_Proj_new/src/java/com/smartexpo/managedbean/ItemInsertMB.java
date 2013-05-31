@@ -12,6 +12,7 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +20,8 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.HeuristicMixedException;
@@ -33,8 +36,8 @@ import javax.transaction.UserTransaction;
  * @author tornado718
  */
 @ManagedBean
-@RequestScoped
-public class ItemInsertMB {
+@SessionScoped
+public class ItemInsertMB implements Serializable{
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
