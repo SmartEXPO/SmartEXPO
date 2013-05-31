@@ -4,6 +4,10 @@
  */
 package com.smartexpo.controls;
 
+import com.smartexpo.jpgcontrollers.CommentJpaController;
+import com.smartexpo.jpgcontrollers.ItemCommentJpaController;
+import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
+import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
 import com.smartexpo.models.Comment;
@@ -26,7 +30,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,6 +54,10 @@ public class InsertItemServlet extends HttpServlet {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
+    
+    @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
+    EntityManagerFactory emf;
+    
     @Resource
     private UserTransaction utx;
 
@@ -148,7 +158,7 @@ public class InsertItemServlet extends HttpServlet {
 
             // Item Comment Part
             Comment comment = new Comment();
-            comment.setContent("heiehei");
+            comment.setContent("heieheihahaha");
             comment.setUsername("max");
             comment.setTime(new Date());
 
@@ -215,7 +225,7 @@ public class InsertItemServlet extends HttpServlet {
 
             utx.commit();
 
-            GetInfo gi = new GetInfo(em, utx);
+            GetInfo gi = new GetInfo(emf, utx);
             logger.log(Level.WARNING, item.getItemName());
             List<Author> authors = gi.getAuthorsByItemID(item.getItemId());
             for (int i = 0; i < authors.size(); i++) {
@@ -261,6 +271,32 @@ public class InsertItemServlet extends HttpServlet {
             for (int i = 0; i < someItems.size(); i++) {
                 logger.log(Level.WARNING, someItems.get(i).getItemName());
             }
+            
+            ItemComment itemComment = gi.getItemComment(item.getItemId(), comment.getCommentId());
+            logger.log(Level.WARNING, itemComment.getCommentId().getContent());
+            
+            List<ItemComment> itemComments = gi.getItemCommentsByCommentID(comment.getCommentId());
+            if(itemComments==null){
+                logger.log(Level.WARNING,"null");
+            }else{
+                for(int i=0;i<itemComments.size();i++){
+                    logger.log(Level.WARNING, "comment content:"+itemComment.getCommentId().getContent());
+                }
+            }
+            
+            
+            ItemCommentJpaController icjc=new ItemCommentJpaController(utx, emf);
+            icjc.destroy(itemComment.getItemCommentId());
+            CommentJpaController cjc=new CommentJpaController(utx, emf);
+            cjc.destroy(comment.getCommentId());
+            
+            
+            
+            
+            
+            
+            
+            
 
 
             request.setAttribute("item_name", gi.getItemByID(item.getItemId()).getItemName());
@@ -291,6 +327,12 @@ public class InsertItemServlet extends HttpServlet {
         } catch (SecurityException ex) {
             Logger.getLogger(InsertItemServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalStateException ex) {
+            Logger.getLogger(InsertItemServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(InsertItemServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(InsertItemServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(InsertItemServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

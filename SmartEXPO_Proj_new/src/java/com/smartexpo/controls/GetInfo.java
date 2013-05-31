@@ -4,6 +4,7 @@
  */
 package com.smartexpo.controls;
 
+import com.smartexpo.jpgcontrollers.CommentJpaController;
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
 import com.smartexpo.models.Comment;
@@ -22,6 +23,7 @@ import com.smartexpo.models.Video;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
 /**
@@ -32,12 +34,20 @@ public class GetInfo {
 
     private EntityManager em = null;
     private UserTransaction utx = null;
+    private EntityManagerFactory emf=null;
     private Item item;
     private Manager manager;
 
+    @Deprecated
     public GetInfo(EntityManager _em, UserTransaction _utx) {
         this.em = _em;
         this.utx = _utx;
+    }
+    
+    public GetInfo(EntityManagerFactory _emf, UserTransaction _utx){
+        this.emf= _emf;
+        this.utx= _utx;
+        this.em=emf.createEntityManager();
     }
 
     public Item getItemByID(int id) {
@@ -240,4 +250,31 @@ public class GetInfo {
         return someItems;
 
     }
+    
+    public ItemComment getItemComment(Integer itemId,Integer commentId){
+        List<ItemComment> itemComments=em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+        for(int i=0;i<itemComments.size();i++){
+            ItemComment ic=itemComments.get(i);
+            if(ic.getCommentId().getCommentId()!=commentId){
+                itemComments.remove(ic);
+            }
+        }
+        if(itemComments.size()==0){
+            return null;
+        }
+        return itemComments.get(0);
+    }
+    
+    
+    
+    public List<ItemComment> getItemCommentsByCommentID(Integer commentId){
+        if(emf==null){
+            return null;
+        }
+        List<ItemComment> itemComments = em.createNamedQuery("ItemComment.findByCommentId").setParameter("commentId", new CommentJpaController(utx, emf).findComment(commentId)).getResultList();
+        
+        return itemComments;
+    }
+    
+    
 }

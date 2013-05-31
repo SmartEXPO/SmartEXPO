@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ItemComment.findAll", query = "SELECT i FROM ItemComment i"),
     @NamedQuery(name = "ItemComment.findByItemCommentId", query = "SELECT i FROM ItemComment i WHERE i.itemCommentId = :itemCommentId"),
-    @NamedQuery(name = "ItemComment.findByItemId", query = "SELECT i FROM ItemComment i WHERE i.itemId = :itemId")
+    @NamedQuery(name = "ItemComment.findByItemId", query = "SELECT i FROM ItemComment i WHERE i.itemId = :itemId"),
+    @NamedQuery(name = "ItemComment.findByCommentId", query = "SELECT i FROM ItemComment i WHERE i.commentId = :commentId")
 })
 public class ItemComment implements Serializable {
 
