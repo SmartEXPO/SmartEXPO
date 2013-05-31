@@ -15,7 +15,9 @@ import com.smartexpo.models.ItemComment;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -42,7 +44,7 @@ import javax.transaction.UserTransaction;
 @ManagedBean
 @ViewScoped
 public class ItemController implements Serializable {
-
+    
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
@@ -84,9 +86,49 @@ public class ItemController implements Serializable {
     private List<String> commentContents;
     private List<Date> commentTimes;
     private List<String> commentUsernames;
+    private List<UsernameContentPair> usernameContentPairs;
     private List<String> commentShowUsernameAndContent;
     private String commentuser;
     private String commentcontent;
+    
+    public class UsernameContentPair {
+        
+        private String username;
+        private String content;
+        
+        public UsernameContentPair(String username, String content) {
+            this.username = username;
+            this.content = content;
+        }
+
+        /**
+         * @return the username
+         */
+        public String getUsername() {
+            return username;
+        }
+
+        /**
+         * @param username the username to set
+         */
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        /**
+         * @return the content
+         */
+        public String getContent() {
+            return content;
+        }
+
+        /**
+         * @param content the content to set
+         */
+        public void setContent(String content) {
+            this.content = content;
+        }
+    };
 
     /**
      * Creates a new instance of ItemController
@@ -97,8 +139,9 @@ public class ItemController implements Serializable {
         commentTimes = new ArrayList<Date>();
         commentUsernames = new ArrayList<String>();
         commentShowUsernameAndContent = new ArrayList<String>();
+        usernameContentPairs = new ArrayList<UsernameContentPair>();
     }
-
+    
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
@@ -324,6 +367,14 @@ public class ItemController implements Serializable {
         setCommentUsernames(commentBean.getUsernames());
         return commentUsernames;
     }
+    
+    public List<UsernameContentPair> getUsernameContentPairs() {
+        return usernameContentPairs;
+    }
+    
+    public void setUsernameContentPairs(UsernameContentPair usernameContentPair) {
+        this.usernameContentPairs = usernameContentPairs;
+    }
 
     /**
      * @return the commentShowUsernameAndContent
@@ -367,124 +418,124 @@ public class ItemController implements Serializable {
     public void setCommentcontent(String commentcontent) {
         this.commentcontent = commentcontent;
     }
-
+    
     public void setItemID(int itemID) {
         this.itemID = itemID;
     }
-
+    
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
-
+    
     public void setDescriptionID(int descriptionID) {
         this.descriptionID = descriptionID;
     }
-
+    
     public void setDescriptionTitle(String descriptionTitle) {
         this.descriptionTitle = descriptionTitle;
     }
-
+    
     public void setDescriptionContent(String descriptionContent) {
         this.descriptionContent = descriptionContent;
     }
-
+    
     public void setAuthorIDs(List<Integer> authorIDs) {
         this.authorIDs = authorIDs;
     }
-
+    
     public void setAuthorNames(List<String> authorNames) {
         this.authorNames = authorNames;
     }
-
+    
     public void setAuthorBirthdays(List<Date> authorBirthdays) {
         this.authorBirthdays = authorBirthdays;
     }
-
+    
     public void setAuthorDeathDates(List<Date> authorDeathDates) {
         this.authorDeathDates = authorDeathDates;
     }
-
+    
     public void setAuthorIntroductions(List<String> authorIntroductions) {
         this.authorIntroductions = authorIntroductions;
     }
-
+    
     public void setAudioIDs(List<Integer> audioIDs) {
         this.audioIDs = audioIDs;
     }
-
+    
     public void setAudioTitles(List<String> audioTitles) {
         this.audioTitles = audioTitles;
     }
-
+    
     public void setAudioURLs(List<String> audioURLs) {
         this.audioURLs = audioURLs;
     }
-
+    
     public void setAudioDescriptions(List<String> audioDescriptions) {
         this.audioDescriptions = audioDescriptions;
     }
-
+    
     public void setVideoIDs(List<Integer> videoIDs) {
         this.videoIDs = videoIDs;
     }
-
+    
     public void setVideoTitles(List<String> videoTitles) {
         this.videoTitles = videoTitles;
     }
-
+    
     public void setVideoURLs(List<String> videoURLs) {
         this.videoURLs = videoURLs;
     }
-
+    
     public void setVideoDescriptions(List<String> videoDescriptions) {
         this.videoDescriptions = videoDescriptions;
     }
-
+    
     public void setCommentIDs(List<Integer> commentIDs) {
         this.commentIDs = commentIDs;
     }
-
+    
     public void setCommentContents(List<String> commentContents) {
         this.commentContents = commentContents;
     }
-
+    
     public void setCommentTimes(List<Date> commentTimes) {
         this.commentTimes = commentTimes;
     }
-
+    
     public void setCommentUsernames(List<String> commentUsernames) {
         this.commentUsernames = commentUsernames;
     }
-
+    
     public void addComment(AjaxBehaviorEvent event) {
         storeComment();
-
+        
         setCommentuser("");
         setCommentcontent("");
     }
-
+    
     private void storeComment() {
         try {
             com.smartexpo.models.Comment newComment = new com.smartexpo.models.Comment();
             newComment.setUsername(commentuser);
             newComment.setContent(commentcontent);
             newComment.setTime(new Date());
-
+            
             ItemComment newIC = new ItemComment();
             newIC.setItemId(itemBean.getItem());
             newIC.setCommentId(newComment);
-
+            
             addCommentID(newComment);
             addCommentUsername(newComment);
             addCommentTime(newComment);
             addCommentContent(newComment);
             addCommentShowUsernameAndContent(newComment);
-
+            
             utx.begin();
             em.persist(newIC);
             em.persist(newComment);
             utx.commit();
-
+            
         } catch (RollbackException ex) {
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (HeuristicMixedException ex) {
@@ -501,13 +552,13 @@ public class ItemController implements Serializable {
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void initialCommentsList() {
         // 获得attribute
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
         String requestID = request.getParameter("id");
-
+        
         List<com.smartexpo.models.Comment> allComments = gi
                 .getCommentByItemID(Integer.parseInt(requestID));
         for (com.smartexpo.models.Comment com : allComments) {
@@ -518,24 +569,49 @@ public class ItemController implements Serializable {
             addCommentShowUsernameAndContent(com);
         }
     }
-
+    
     private void addCommentID(com.smartexpo.models.Comment com) {
         commentIDs.add(com.getCommentId());
     }
-
+    
     private void addCommentUsername(com.smartexpo.models.Comment com) {
         commentUsernames.add(com.getUsername());
     }
-
+    
     private void addCommentContent(com.smartexpo.models.Comment com) {
         commentContents.add(com.getContent());
     }
-
+    
     private void addCommentTime(com.smartexpo.models.Comment com) {
         commentTimes.add(com.getTime());
     }
-
+    
     private void addCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
-        getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
+        usernameContentPairs.add(new UsernameContentPair(com.getUsername(), com.getContent()));
+//        getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
+    }
+    
+    public Item getItemBean() {
+        return itemBean;
+    }
+    
+    public Description getDescriptionBean() {
+        return descriptionBean;
+    }
+    
+    public Author getAuthorBean() {
+        return authorBean;
+    }
+    
+    public Audio getAudioBean() {
+        return audioBean;
+    }
+    
+    public Video getVideoBean() {
+        return videoBean;
+    }
+    
+    public Comment getCommentBean() {
+        return commentBean;
     }
 }

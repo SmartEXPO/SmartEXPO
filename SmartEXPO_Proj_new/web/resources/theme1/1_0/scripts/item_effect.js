@@ -7,11 +7,13 @@ var isSearchBarDisplayed = false;
 var isCommentBarDisplayed = false;
 
 $(document).ready(function() {
-//    $("#frame").click(function() {
-//        console.log(document.getElementsByTagName("header")[0].getBoundingClientRect().top);
-//    });
+    $('#users_comment').perfectScrollbar();
 
-    $(window).scroll(function() {
+    $(window).scroll(function(e) {
+        if (isCommentBarDisplayed) {
+            e.preventDefault();
+            //console.log("Scroll");
+        }
         if (document.getElementsByTagName("header")[0].getBoundingClientRect().top <= -60) {
             $(".content_fixed").css("position", "fixed");
             $(".content_fixed").css("top", "40px");
@@ -29,6 +31,52 @@ $(document).ready(function() {
         }
     });
 
+    function hideSearchPane() {
+        isSearchBarDisplayed = false;
+        $("#search").animate({
+            "width": "40px",
+            "height": "40px",
+        }, 500);
+        $("#search_box").animate({
+            width: '0px',
+        }, 500, function() {
+            $("#search_box").css('display', 'none');
+        });
+        $("#search_result").css('display', 'none');
+        $("#search").data("display", "off");
+        $("#search").css({
+            opacity: '0.8'
+        });
+    }
+
+    function hideCommentPane() {
+        isCommentBarDisplayed = false;
+        $("#comment_input").animate({
+            width: "0px",
+        }, 500, function() {
+            $("#comment_input").css("display", "none");
+        });
+
+        $("#comment_form .content").animate({
+            width: "0px",
+        }, 360, function() {
+            $("#comment_form .name").animate({
+                width: "0px",
+            }, 150);
+        });
+
+        $("#users_comment").css("display", "none");
+
+        $("#comment").animate({
+            "width": "40px",
+            'height': '40px',
+        }, 500);
+        $("#comment").data("display", "off");
+        $("#comment").css({
+            opacity: '0.8'
+        });
+    }
+
     $(".func_button").mouseenter(function() {
         if ($(this).data("display") === "on")
             return;
@@ -37,6 +85,7 @@ $(document).ready(function() {
     });
 
     $(".func_button").mouseleave(function() {
+        $(this).clearQueue();
         if ($(this).data("display") === "on")
             return;
 //        if (!$(this).is(":animated"))
@@ -61,23 +110,6 @@ $(document).ready(function() {
             hideSearchPane();
         }
     });
-
-    function hideSearchPane() {
-        isSearchBarDisplayed = false;
-        $("#search").animate({
-            "width": "40px",
-            "height": "40px",
-        }, 500);
-        $("#search_box").animate({
-            width: '0px',
-        }, 500, function() {
-            $("#search_box").css('display', 'none');
-        });
-        $("#search_result").css('display', 'none');
-        $("#search").data("display", "off");
-        $("#search").css({opacity: '0.8'});
-    }
-
 
     $("#search_box").focus(function() {
         $(this).val("");
@@ -114,6 +146,9 @@ $(document).ready(function() {
 //                    "height": "400px",
 //                }, 500, function() {
                 $("#users_comment").css("display", "block");
+//                console.log($("#all_comments").height()-340);
+                $("#users_comment").scrollTop($("#all_comments").height() - 340);
+                $("#users_comment").perfectScrollbar('update');
 //                });
             });
             $("#comment").data("display", "on");
@@ -127,40 +162,6 @@ $(document).ready(function() {
     $(".func_input_box.name").attr("placeholder", "User");
     $(".func_input_box.content").attr("placeholder", "Content");
 
-    function hideCommentPane() {
-        isCommentBarDisplayed = false;
-        $("#comment_input").animate({
-            width: "0px",
-        }, 500, function() {
-            $("#comment_input").css("display", "none");
-        });
-
-        $("#comment_form .content").animate({
-            width: "0px",
-        }, 360, function() {
-            $("#comment_form .name").animate({
-                width: "0px",
-            }, 150);
-        });
-
-        $("#users_comment").css("display", "none");
-
-        $("#comment").animate({
-            "width": "40px",
-            'height': '40px',
-        }, 500);
-        $("#comment").data("display", "off");
-        $("#comment").css({opacity: '0.8'});
-    }
-
-
-    // $('.inbox').focus(function() {
-    // $(this).val("");
-    // $(this).css('color', 'black');
-    // if ($(this).attr('name') === "password") {
-    // $(this).attr('type', 'password');
-    // }
-    // });
 
     var edit = false;
     var toEdit;
@@ -183,6 +184,9 @@ function finish(e) {
     $(".func_input_box.content").css({width: "235px"});
     $(".func_input_box.name").attr("placeholder", "User");
     $(".func_input_box.content").attr("placeholder", "Content");
+
+    $("#users_comment").scrollTop($("#all_comments").height() - 340);
+    $("#users_comment").perfectScrollbar('update');
 
     console.log(e);
 }
