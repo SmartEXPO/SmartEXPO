@@ -143,29 +143,19 @@
             </div>
             <div id="comment" class="func_button">
                 <div id="users_comment">
-                    <div style="min-height:340px;">
-                        <table class="user_comment_content">
-                            <tr>
-                                <td style="width:90px;">Username</td>
-                                <td>This is comment; this is comment; this is comment; this is comment;</td>
-                            </tr>
-                        </table>
-                        <table class="user_comment_content">
-                            <tr>
-                                <td style="width:90px;">Username</td>
-                                <td >This is comment; this is comment; this is comment; this is comment;</td>
-                            </tr>
-                        </table>
+                    <div style="min-height: 340px;">
                         <h:form id="all_comments">
-                            <c:forEach items="#{itemController.usernameContentPairs}"
-                                       var="usernameContentPair">
-                                <table class="user_comment_content">
-                                    <tr>
-                                        <td style="word-break: break-all; width: 90px;">#{usernameContentPair.username}</td>
-                                        <td style="word-break: break-all; width: 280px; word-wrap: break-word; overflow: hidden">#{usernameContentPair.content}</td>
-                                    </tr>
-                                </table>
-                            </c:forEach>
+                            <h:dataTable value="#{itemController.usernameContentPairs}"
+                                         var="usernameContentPair">
+                                <h:column>
+                                    <table class="user_comment_content">
+                                        <tr>
+                                            <td style="word-break: break-all; width: 90px;">#{usernameContentPair.username}</td>
+                                            <td style="word-break: break-all; width: 280px; word-wrap: break-word; overflow: hidden">#{usernameContentPair.content}</td>
+                                        </tr>
+                                    </table>
+                                </h:column>
+                            </h:dataTable>
                         </h:form>
                     </div>
                 </div>
