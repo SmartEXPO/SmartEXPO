@@ -250,6 +250,7 @@ public class GetInfo {
         return someItems;
 
     }
+<<<<<<< HEAD
     
     public ItemComment getItemComment(Integer itemId,Integer commentId){
         List<ItemComment> itemComments=em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();

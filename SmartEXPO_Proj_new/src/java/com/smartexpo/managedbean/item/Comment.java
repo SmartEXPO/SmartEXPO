@@ -57,7 +57,7 @@ public class Comment implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
 
-        int itemID = Integer.parseInt((String) request.getAttribute("itemid"));
+        int itemID = Integer.parseInt((String) request.getAttribute("id"));
         comments = gi.getCommentByItemID(itemID);
 
         setAllCommentsInfo();

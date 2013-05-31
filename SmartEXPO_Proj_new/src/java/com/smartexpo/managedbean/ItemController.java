@@ -27,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -96,7 +97,6 @@ public class ItemController implements Serializable {
         commentTimes = new ArrayList<Date>();
         commentUsernames = new ArrayList<String>();
         commentShowUsernameAndContent = new ArrayList<String>();
-        logger.log(Level.WARNING, "Item Controller Construct");
     }
 
     @PostConstruct
@@ -368,90 +368,6 @@ public class ItemController implements Serializable {
         this.commentcontent = commentcontent;
     }
 
-    public void addComment(AjaxBehaviorEvent event) {
-        storeComment();
-
-        setCommentuser("");
-        setCommentcontent("");
-        logger.log(Level.WARNING, "Add Comment");
-    }
-
-    private void storeComment() {
-        try {
-            com.smartexpo.models.Comment newComment = new com.smartexpo.models.Comment();
-            newComment.setUsername(commentuser);
-            newComment.setContent(commentcontent);
-            newComment.setTime(new Date());
-
-            ItemComment newIC = new ItemComment();
-            newIC.setItemId(itemBean.getItem());
-            newIC.setCommentId(newComment);
-
-            addCommentID(newComment);
-            addCommentUsername(newComment);
-            addCommentTime(newComment);
-            addCommentContent(newComment);
-            addCommentShowUsernameAndContent(newComment);
-
-            utx.begin();
-            em.persist(newIC);
-            em.persist(newComment);
-            utx.commit();
-
-        } catch (RollbackException ex) {
-            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (HeuristicMixedException ex) {
-            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (HeuristicRollbackException ex) {
-            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalStateException ex) {
-            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SystemException ex) {
-            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotSupportedException ex) {
-            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void initialCommentsList() {
-        // 获得attribute
-        if (FacesContext.getCurrentInstance().getAttributes().get("itemid") == null) {
-            logger.log(Level.WARNING, "itemid is null!!!!");
-            setItemID(1);
-        }
-        List<com.smartexpo.models.Comment> allComments = gi.getCommentByItemID(itemID);
-        logger.log(Level.WARNING, "itemId = {0}", itemID);
-        for (com.smartexpo.models.Comment com : allComments) {
-            addCommentID(com);
-            addCommentUsername(com);
-            addCommentContent(com);
-            addCommentTime(com);
-            addCommentShowUsernameAndContent(com);
-        }
-    }
-
-    private void addCommentID(com.smartexpo.models.Comment com) {
-        commentIDs.add(com.getCommentId());
-    }
-
-    private void addCommentUsername(com.smartexpo.models.Comment com) {
-        commentUsernames.add(com.getUsername());
-    }
-
-    private void addCommentContent(com.smartexpo.models.Comment com) {
-        commentContents.add(com.getContent());
-    }
-
-    private void addCommentTime(com.smartexpo.models.Comment com) {
-        commentTimes.add(com.getTime());
-    }
-
-    private void addCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
-        getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
-    }
-
     public void setItemID(int itemID) {
         this.itemID = itemID;
     }
@@ -539,6 +455,87 @@ public class ItemController implements Serializable {
     public void setCommentUsernames(List<String> commentUsernames) {
         this.commentUsernames = commentUsernames;
     }
-    
-    
+
+    public void addComment(AjaxBehaviorEvent event) {
+        storeComment();
+
+        setCommentuser("");
+        setCommentcontent("");
+    }
+
+    private void storeComment() {
+        try {
+            com.smartexpo.models.Comment newComment = new com.smartexpo.models.Comment();
+            newComment.setUsername(commentuser);
+            newComment.setContent(commentcontent);
+            newComment.setTime(new Date());
+
+            ItemComment newIC = new ItemComment();
+            newIC.setItemId(itemBean.getItem());
+            newIC.setCommentId(newComment);
+
+            addCommentID(newComment);
+            addCommentUsername(newComment);
+            addCommentTime(newComment);
+            addCommentContent(newComment);
+            addCommentShowUsernameAndContent(newComment);
+
+            utx.begin();
+            em.persist(newIC);
+            em.persist(newComment);
+            utx.commit();
+
+        } catch (RollbackException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeuristicMixedException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeuristicRollbackException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SystemException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void initialCommentsList() {
+        // 获得attribute
+        HttpServletRequest request = (HttpServletRequest) FacesContext
+                .getCurrentInstance().getExternalContext().getRequest();
+        String requestID = request.getParameter("id");
+
+        List<com.smartexpo.models.Comment> allComments = gi
+                .getCommentByItemID(Integer.parseInt(requestID));
+        for (com.smartexpo.models.Comment com : allComments) {
+            addCommentID(com);
+            addCommentUsername(com);
+            addCommentContent(com);
+            addCommentTime(com);
+            addCommentShowUsernameAndContent(com);
+        }
+    }
+
+    private void addCommentID(com.smartexpo.models.Comment com) {
+        commentIDs.add(com.getCommentId());
+    }
+
+    private void addCommentUsername(com.smartexpo.models.Comment com) {
+        commentUsernames.add(com.getUsername());
+    }
+
+    private void addCommentContent(com.smartexpo.models.Comment com) {
+        commentContents.add(com.getContent());
+    }
+
+    private void addCommentTime(com.smartexpo.models.Comment com) {
+        commentTimes.add(com.getTime());
+    }
+
+    private void addCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
+        getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
+    }
 }

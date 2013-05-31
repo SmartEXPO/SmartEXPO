@@ -22,7 +22,7 @@
 
         <h:outputStylesheet library="theme1" name="css/style.css" />
         <h:outputStylesheet library="theme1" name="css/item_style.css" />
-        <h:outputStylesheet library="theme1" name="css/perfect-scrollbar.css" />
+        <h:outputStylesheet library="theme1" name="css/header_style.css" />
 
         <title>SmartEXPO</title>
 
@@ -41,7 +41,7 @@
     </h:head>
     <h:body>
         <div>
-            <header>
+            <header id="header">
                 <h:graphicImage id="logo" library="theme1"
                                 name="images/item_logo.png" />
                 <nav id="nav">
@@ -61,9 +61,10 @@
                             </h:outputLink>
                             <h:commandLink id="show_logout" class="navi"
                                            value="Log Out"
-                                           action="#{loginManagedBean.logoutAction}"
                                            actionListener="#{loginManagedBean.logout}"
-                                           rendered="#{loginManagedBean.status}" />
+                                           rendered="#{loginManagedBean.status}">
+                                <f:ajax execute="@form" render="@form" />
+                            </h:commandLink>
                         </h:form>
                     </div>
                 </nav>
@@ -84,8 +85,10 @@
                         </p>
                         <h1 class="content_title">video</h1>
                         <video width="320" height="240" controls="controls">
-                            <source src="http://www.w3school.com.cn/i/movie.ogg" type="video/ogg" />
-                            <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4" />
+                            <source src="http://www.w3school.com.cn/i/movie.ogg"
+                                    type="video/ogg" />
+                            <source src="http://www.w3school.com.cn/i/movie.mp4"
+                                    type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                         <h1 class="content_title">See Also</h1>
@@ -134,27 +137,14 @@
             </div>
             <div id="comment" class="func_button">
                 <div id="users_comment">
-
-                    <div style="min-height:340px;">
-                        <table class="user_comment_content">
-                            <tr>
-                                <td style="width:90px;">Username</td>
-                                <td>This is comment; this is comment; this is comment; this is comment;</td>
-                            </tr>
-                        </table>
-                        
-                        <h:form id="all_comments">
-                            <h:dataTable value="#{itemController.commentShowUsernameAndContent}"
-                                         var="commentUserContentList">
-                                <h:column>
-                                    #{commentUserContentList.toString()} <br />
-                                </h:column>
-                            </h:dataTable>
-                        </h:form>
-
-                    </div>
-
-
+                    <h:form id="all_comments">
+                        <h:dataTable value="#{itemController.commentShowUsernameAndContent}"
+                                     var="commentUserContentList">
+                            <h:column>
+                                #{commentUserContentList.toString()} <br />
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
                 </div>
                 <h:graphicImage id="comment_img" library="theme1"
                                 name="images/item_comment_button.png" />
@@ -203,12 +193,9 @@
 
         <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/jquery.mousewheel.js"
-                        target="head" />
-        <h:outputScript library="theme1" name="scripts/perfect-scrollbar.js"
-                        target="head" />
-
         <h:outputScript library="theme1" name="scripts/item_effect.js"
+                        target="head" />
+        <h:outputScript library="theme1" name="scripts/login_effect.js"
                         target="head" />
     </h:body>
 </html>

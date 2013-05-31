@@ -56,7 +56,7 @@ public class Audio implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
 
-        int itemID = Integer.parseInt((String) request.getAttribute("itemid"));
+        int itemID = Integer.parseInt((String) request.getAttribute("id"));
         audios = gi.getAudioByItemID(itemID);
 
         setAllAudioInfo();
