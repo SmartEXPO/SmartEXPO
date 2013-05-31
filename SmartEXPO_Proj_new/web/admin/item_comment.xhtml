@@ -21,21 +21,25 @@
                     <p:column headerText="ID">
                         <h:outputText value="#{com.id}" />
                     </p:column>
-                    
+
                     <p:column headerText="Username">
                         <h:outputText value="#{com.username}" />
                     </p:column>
-                    
+
                     <p:column headerText="Time">
                         <h:outputText value="#{com.time}" />
                     </p:column>
-                    
+
                     <p:column headerText="Content">
                         <h:outputText value="#{com.content}" />
                     </p:column>
-                    
-                    <p:column headerText="Destroy">
-                        <p:commandButton value="Destroy" />
+
+                    <p:column headerText="Operation" style="width: 15%; text-align: center">
+                        <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
+                                         action="#{commentViewManagedBean.destroyComment}">
+                            <f:setPropertyActionListener value="#{com}"
+                                                         target="#{commentViewManagedBean.selectedComment}" />
+                        </p:commandButton>
                     </p:column>
 
                     <f:facet name="footer">

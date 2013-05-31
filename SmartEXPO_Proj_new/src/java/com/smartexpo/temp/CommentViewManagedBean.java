@@ -68,7 +68,6 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public String destroyComment() {
-        LOG.log(Level.WARNING, "Removeeeeeeeee {0}", selectedComment);
         comments.remove(selectedComment);
         // 从数据库中删除
         return null;
