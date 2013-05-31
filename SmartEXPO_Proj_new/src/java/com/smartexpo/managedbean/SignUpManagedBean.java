@@ -5,6 +5,8 @@
 package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
+import com.smartexpo.jpgcontrollers.ManagerJpaController;
+import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
 import com.smartexpo.models.Permission;
@@ -19,7 +21,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -39,13 +43,16 @@ public class SignUpManagedBean implements Serializable {
     private static final Logger logger = Logger.getLogger(SignUpManagedBean.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
+    @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
+    EntityManagerFactory emf;
+    
     @Resource
     private UserTransaction utx;
     // SignUpManagedBean Field
     private String username;
     private String password;
     private String confirmPassword;
-    private String[] permissionString = {"p1", "p2", "p3", "p4", "p5"};
+    private Boolean[] permissions;
     boolean isVerify;
     private GetInfo gi = null;
 
@@ -54,6 +61,10 @@ public class SignUpManagedBean implements Serializable {
      */
     public SignUpManagedBean() {
         isVerify = false;
+        permissions=new Boolean[5];
+        for(int i=0;i<5;i++){
+            permissions[i]=new Boolean(true);
+        }
     }
 
     @PostConstruct
@@ -84,6 +95,14 @@ public class SignUpManagedBean implements Serializable {
         return password;
     }
 
+    public Boolean[] getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Boolean[] permissions) {
+        this.permissions = permissions;
+    }
+
     /**
      * @param password the password to set
      */
@@ -105,19 +124,7 @@ public class SignUpManagedBean implements Serializable {
         this.confirmPassword = confirmPassword;
     }
 
-    /**
-     * @return the permissionString
-     */
-    public String[] getPermissionString() {
-        return permissionString;
-    }
-
-    /**
-     * @param permissionString the permissionString to set
-     */
-    public void setPermissionString(String[] permissionString) {
-        this.permissionString = permissionString;
-    }
+    
 
     public void verify(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -160,32 +167,42 @@ public class SignUpManagedBean implements Serializable {
     }
 
     private void storeManager() {
+       
         try {
             Manager manager = new Manager();
             manager.setUsername(username);
             manager.setPassword(password);
-
-            Permission[] per = new Permission[3];
-            for (int i = 0; i < 3; i++) {
-                per[i] = new Permission();
-                per[i].setPermissionName(permissionString[i]);
+            
+            
+            
+            if(permissions[0]){
+                manager.setPermission1(true);
+            }else{
+                manager.setPermission1(false);
             }
-
-            // Establish mapping between manager and permissions 
-            ManagerPermission[] mp = new ManagerPermission[3];
-            for (int i = 0; i < 3; i++) {
-                mp[i] = new ManagerPermission();
-                mp[i].setManagerId(manager);
-                mp[i].setPermissionId(per[i]);
+            if(permissions[1]){
+                manager.setPermission2(true);
+            }else{
+                manager.setPermission2(false);
             }
-
-            utx.begin();
-            em.persist(manager);
-            for (int i = 0; i < 3; i++) {
-                em.persist(per[i]);
-                em.persist(mp[i]);
+            if(permissions[2]){
+                manager.setPermission3(true);
+            }else{
+                manager.setPermission3(false);
             }
-            utx.commit();
+            if(permissions[3]){
+                manager.setPermission4(true);
+            }else{
+                manager.setPermission4(false);
+            }
+            if(permissions[4]){
+                manager.setPermission5(true);
+            }else{
+                manager.setPermission5(false);
+            }
+            
+            ManagerJpaController mjc= new ManagerJpaController(utx, emf);
+            mjc.create(manager);
 
         } catch (NotSupportedException ex) {
             Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -201,6 +218,11 @@ public class SignUpManagedBean implements Serializable {
             Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SystemException ex) {
             Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 }

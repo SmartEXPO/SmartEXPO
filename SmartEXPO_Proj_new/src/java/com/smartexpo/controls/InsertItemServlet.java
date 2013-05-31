@@ -141,6 +141,14 @@ public class InsertItemServlet extends HttpServlet {
             Manager manager = new Manager();
             manager.setUsername("asdfasd");
             manager.setPassword("owefnwnv");
+            
+            manager.setPermission1(true);
+            manager.setPermission2(true);
+            manager.setPermission3(false);
+            manager.setPermission4(false);
+            manager.setPermission5(false);
+            
+            
 
             Permission permission = new Permission();
             permission.setPermissionName("asfe11");

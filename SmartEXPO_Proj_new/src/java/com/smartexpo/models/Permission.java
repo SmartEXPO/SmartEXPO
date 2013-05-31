@@ -47,6 +47,10 @@ public class Permission implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "permissionId")
     private ManagerPermission managerPermission;
 
+    
+    
+    
+    
     /*
      * 
      * @OneToOne(cascade = CascadeType.ALL, mappedBy = "audioId")

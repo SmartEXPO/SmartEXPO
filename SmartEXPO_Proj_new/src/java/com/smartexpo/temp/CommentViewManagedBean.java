@@ -57,16 +57,6 @@ public class CommentViewManagedBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(CommentViewManagedBean.class.getName());
     private List<Comment> comments;
     private Comment selectedComment;
-    private int itemId;
-
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
     
     
     /**
@@ -84,7 +74,6 @@ public class CommentViewManagedBean implements Serializable {
      */
     public List<Comment> getComments() {
         if(comments==null){
-            itemId=6;
             gi=new GetInfo(emf, utx);
             CommentJpaController cjc=new CommentJpaController(utx, emf);
             comments=cjc.findCommentEntities();
@@ -126,7 +115,6 @@ public class CommentViewManagedBean implements Serializable {
             gi=new GetInfo(emf, utx);
             //ItemComment ic=gi.getItemComment(itemId, selectedComment.getCommentId());
             Comment c= selectedComment;
-            
             
             List<ItemComment> itemComments= gi.getItemCommentsByCommentID(selectedComment.getCommentId());
             ItemCommentJpaController icjc=new ItemCommentJpaController(utx, emf);
