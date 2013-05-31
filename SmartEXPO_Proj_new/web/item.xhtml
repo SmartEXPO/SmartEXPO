@@ -153,7 +153,7 @@
                         <table class="user_comment_content">
                             <tr>
                                 <td style="width:90px;">Username</td>
-                                <td>This is comment; this is comment; this is comment; this is comment;</td>
+                                <td >This is comment; this is comment; this is comment; this is comment;</td>
                             </tr>
                         </table>
                         <h:form id="all_comments">
@@ -161,8 +161,8 @@
                                        var="usernameContentPair">
                                 <table class="user_comment_content">
                                     <tr>
-                                        <td style="width: 90px;">#{usernameContentPair.username}</td>
-                                        <td style="width: 280px">#{usernameContentPair.content}</td>
+                                        <td style="word-break: break-all; width: 90px;">#{usernameContentPair.username}</td>
+                                        <td style="word-break: break-all; width: 280px; word-wrap: break-word; overflow: hidden">#{usernameContentPair.content}</td>
                                     </tr>
                                 </table>
                             </c:forEach>
