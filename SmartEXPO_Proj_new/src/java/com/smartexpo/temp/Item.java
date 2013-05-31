@@ -4,11 +4,13 @@
  */
 package com.smartexpo.temp;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Boy
  */
-public class Item {
+public class Item implements Serializable {
 
     private String id;
     private String name;

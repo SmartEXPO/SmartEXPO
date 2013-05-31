@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -19,13 +20,20 @@
                             <h:outputText value="#{show_item.id}" />
                             <h:outputText value="#{show_item.name}" />
                             <h:outputText value="#{show_item.authorName}" />
+
                             <p:commandLink value="Detail" update=":form:item_detail"
                                            oncomplete="itemDialog.show()"
                                            title="View Detail">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
-                            <p:commandLink value="Edit" />
+
+                            <p:commandLink value="Edit" update=":edit_item"
+                                           oncomplete="editDialog.show()">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+
                             <p:commandButton value="Destroy" icon="ui-icon-notice"
                                              action="#{itemViewManagedBean.destroyItem}"
                                              update=":form:all_item">
@@ -57,7 +65,7 @@
 
                             <h:outputLabel for="view_author_date" value="Author Date: " />
                             <h:outputText id="view_author_date"
-                                          value="#{itemViewManagedBean.selectedItem.authorBirthday} -- #{show_item.authorDeathDate}" />
+                                          value="#{itemViewManagedBean.selectedItem.authorBirthday} -- #{itemViewManagedBean.selectedItem.authorDeathDate}" />
 
                             <h:outputLabel for="view_author_intro" value="Author Introduction: " />
                             <h:outputText id="view_author_intro"
@@ -74,6 +82,52 @@
                     </p:outputPanel>
                 </p:dialog>
             </h:form>
+
+            <p:dialog header="Edit Item" widgetVar="editDialog"
+                      resizable="false" modal="true">
+                <p:outputPanel id="edit_item" style="text-align: center;"
+                               layout="block">
+                    <h:graphicImage value="#{itemViewManagedBean.picURL}" />
+
+                    <h:form id="edit_form">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="edit_item_id" value="ID: " />
+                            <p:inputText id="edit_item_id"
+                                         value="#{itemViewManagedBean.id}" />
+
+                            <h:outputLabel for="edit_item_name" value="Name: " />
+                            <p:inputText id="edit_item_name"
+                                         value="#{itemViewManagedBean.name}" />
+
+                            <h:outputLabel for="edit_author" value="Author: " />
+                            <p:inputText id="edit_author"
+                                         value="#{itemViewManagedBean.authorName}" />
+
+                            <h:outputLabel for="edit_author_date" value="Author Date: " />
+                            <p:inputText id="edit_author_date"
+                                         value="#{itemViewManagedBean.authorBirthday} -- #{itemViewManagedBean.authorDeathDate}" />
+
+                            <h:outputLabel for="edit_author_intro" value="Author Introduction: " />
+                            <p:inputText id="edit_author_intro"
+                                         value="#{itemViewManagedBean.authorIntro}" />
+
+                            <h:outputLabel for="edit_audio_title" value="Audio Title: " />
+                            <p:inputText id="edit_audio_title"
+                                         value="#{itemViewManagedBean.audioTitle}" />
+
+                            <h:outputLabel for="edit_video_title" value="Video Title: " />
+                            <p:inputText id="edit_video_title"
+                                         value="#{itemViewManagedBean.videoTitle}" />
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Confirm" actionListener="#{itemViewManagedBean.storeEditedData}"
+                                                 update=":form:all_item" ajax="true" />
+                                <p:commandButton value="Cancel" oncomplete="editDialog.hide();" />
+                            </f:facet>
+                        </h:panelGrid>
+                    </h:form>
+                </p:outputPanel>
+            </p:dialog>
         </ui:define>
     </ui:composition>
 </html>

@@ -21,7 +21,8 @@
                     </f:facet>
 
                     <p:ajax event="rowEdit" update=":form:messages"
-                            listener="#{userViewManagedBean.onEdit}" />
+                            listener="#{userViewManagedBean.onEdit}">
+                    </p:ajax>
                     <p:ajax event="rowEditCancel" update=":form:messages"
                             listener="#{userViewManagedBean.onCancel}" />
 
@@ -47,7 +48,7 @@
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                  <h:selectBooleanCheckbox value="#{user.permissions[0]}"
+                                <h:selectBooleanCheckbox value="#{user.permissions[0]}"
                                                          disabled="false" />
                             </f:facet>
                         </p:cellEditor>
@@ -106,7 +107,9 @@
                     </p:column>
 
                     <p:column>
-                        <p:rowEditor />
+                        <p:commandLink action="#{userViewManagedBean.test}">
+                            <p:rowEditor />
+                        </p:commandLink>
                     </p:column>
                 </p:dataTable>
             </h:form>
