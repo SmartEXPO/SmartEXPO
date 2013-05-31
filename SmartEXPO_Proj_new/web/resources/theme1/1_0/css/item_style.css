@@ -168,11 +168,13 @@ footer {
     left: 10px;
     right: 10px;
     bottom: 5px;
-    overflow-x: hidden;
-    overflow-y: auto;
+/*    overflow-x: hidden;
+    overflow-y: auto;*/
     display: none;
     height: 340px;
+    /*width: 360px;*/
     color: white;
+    overflow: hidden;
 }
 
 #comment_form .name {
@@ -205,4 +207,11 @@ footer {
     border: none;
     background: #DADAD2;
     overflow:auto;
+}
+
+.user_comment_content {
+    background:#dadad2;
+    border-radius: 10px;
+    margin-bottom: 5px; 
+    color:#464646;
 }
