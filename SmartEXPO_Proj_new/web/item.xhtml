@@ -28,8 +28,12 @@
 
         <style>
             h1.content_title {
-                text-decoration: underline;
+                /*text-decoration: underline;*/
                 text-transform: uppercase;
+                border-bottom-width: 2px;
+                border-bottom-color: #464646;
+                border-bottom-style: solid;
+                width: 170px;
             }
             .video_s {
                 border: 4px solid #464646;
@@ -142,7 +146,7 @@
                                 <td>This is comment; this is comment; this is comment; this is comment;</td>
                             </tr>
                         </table>
-                        
+
                         <h:form id="all_comments">
                             <h:dataTable value="#{itemController.commentShowUsernameAndContent}"
                                          var="commentUserContentList">
