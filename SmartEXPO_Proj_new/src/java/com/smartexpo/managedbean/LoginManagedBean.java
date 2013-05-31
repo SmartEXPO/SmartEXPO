@@ -31,7 +31,7 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @SessionScoped
 public class LoginManagedBean implements Serializable {
-    
+
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
@@ -49,7 +49,7 @@ public class LoginManagedBean implements Serializable {
      */
     public LoginManagedBean() {
     }
-    
+
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
@@ -59,11 +59,10 @@ public class LoginManagedBean implements Serializable {
         SignUpManagedBean signUpManagedBean = (SignUpManagedBean) facesContext
                 .getELContext().getELResolver()
                 .getValue(facesContext.getELContext(), null, "signUpManagedBean");
-        
+
         username = signUpManagedBean.getUsername();
         password = signUpManagedBean.getPassword();
-        logger.log(Level.WARNING, "In PostConstruct of LoginMB: username {0}, password {1}", new Object[]{username, password});
-        
+
         if (username != null && !username.equals("")
                 && password != null && !password.equals("")) {
             // 数据库验证
@@ -120,7 +119,6 @@ public class LoginManagedBean implements Serializable {
      */
     public void verify(AjaxBehaviorEvent event) {
         if (isPass()) { // 数据库验证
-            logger.log(Level.WARNING, "Pass");
             setStatus(true);
             RequestContext.getCurrentInstance()
                     .execute("vanishLogin();void(0);"); // Close login pannel
@@ -129,21 +127,17 @@ public class LoginManagedBean implements Serializable {
                     .execute(("alert('Username or password wrong')"));
         }
     }
-    
+
     public void logout(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.invalidate();
         setStatus(false);
     }
-    
-    public String logoutAction() {
-        return "item?faces-redirect=true";
-    }
-    
+
     private boolean isPass() {
         boolean result = false;
-        
+
         List<com.smartexpo.models.Manager> managers = gi.getManagerByName(username);
         if (managers == null) {
             FacesContext.getCurrentInstance()
@@ -152,11 +146,9 @@ public class LoginManagedBean implements Serializable {
             com.smartexpo.models.Manager manager = managers.get(0);
             if (manager.getPassword().equals(password)) {
                 result = true;
-                logger.log(Level.WARNING, "Log in successfully.");
             } else {
                 FacesContext.getCurrentInstance()
                         .addMessage(null, new FacesMessage("Password doesn't match."));
-                logger.log(Level.WARNING, "Password doesn't match.");
             }
         }
         return result;

@@ -41,7 +41,6 @@ public class Item implements Serializable {
      * Creates a new instance of Item
      */
     public Item() {
-        logger.log(Level.WARNING, "ItemBean Construct");
     }
 
     @PostConstruct
@@ -51,14 +50,10 @@ public class Item implements Serializable {
         }
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
-        if (request.getAttribute("itemid") == null) {
-            request.setAttribute("itemid", "1");
-            logger.log(Level.WARNING, "set attribute successfully");
-        } else {
-            logger.log(Level.WARNING, "attribute exist");
-        }
 
-        String tmpID = (String) request.getAttribute("itemid");
+        String tmpID = (String) request.getParameter("id");
+        request.setAttribute("id", tmpID);
+
         id = Integer.parseInt(tmpID);
         setItem(gi.getItemByID(id));
         name = getItem().getItemName();

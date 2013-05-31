@@ -49,7 +49,7 @@ public class Description implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
 
-        int itemID = Integer.parseInt((String) request.getAttribute("itemid"));
+        int itemID = Integer.parseInt((String) request.getAttribute("id"));
         descriptions = gi.getDescriptionByItemID(itemID).get(0);
     }
 

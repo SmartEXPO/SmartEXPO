@@ -62,12 +62,6 @@ $(document).ready(function() {
         }
     });
 
-    $(".inbox.username").attr("placeholder", "Username");
-    $(".inbox.password").attr("placeholder", "Password");
-    $(".func_input_box.name").attr("placeholder", "User");
-    $(".func_input_box.content").attr("placeholder", "Content");
-
-
     function hideSearchPane() {
         isSearchBarDisplayed = false;
         $("#search").animate({
@@ -130,6 +124,9 @@ $(document).ready(function() {
         }
     });
 
+    $(".func_input_box.name").attr("placeholder", "User");
+    $(".func_input_box.content").attr("placeholder", "Content");
+
     function hideCommentPane() {
         isCommentBarDisplayed = false;
         $("#comment_input").animate({
@@ -181,17 +178,6 @@ $(document).ready(function() {
         }
     });
 });
-
-function popupLogin() {
-    $('#overall_shade').fadeTo('fast', 0.4);
-    $('#login_panel').fadeIn('fast');
-    $('.inbox').val("");
-}
-
-function vanishLogin() {
-    $('#overall_shade').fadeOut('fast');
-    $('#login_panel').fadeOut('fast');
-}
 
 function finish(e) {
     $(".func_input_box.content").css({width: "235px"});
