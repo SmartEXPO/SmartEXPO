@@ -157,7 +157,7 @@
                                      onkeydown="return (event.keyCode == 13)">
                             <f:ajax listener="#{itemController.addComment}"
                                     event="keydown" execute="@form"
-                                    render="@form :all_comments"/>
+                                    render="@form :all_comments" onevent="finish"/>
                         </h:inputText>
                     </h:form>
                 </div>

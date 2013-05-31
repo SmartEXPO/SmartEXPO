@@ -12,7 +12,7 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
-import com.sun.tools.internal.xjc.model.AutoClassNameAllocator;
+//import com.sun.tools.internal.xjc.model.AutoClassNameAllocator;//这个包是怎么回事
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
