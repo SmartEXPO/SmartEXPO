@@ -24,24 +24,41 @@
         <h:outputScript library="theme1" name="scripts/blocksit.js" target="head" />
         <h:outputScript library="theme1" name="scripts/list_effect.js" target="head" />
         <h:outputScript library="theme1" name="scripts/list_ajax.js" target="head" />
+        <h:outputScript library="theme1" name="scripts/item_effect.js" target="head" />
         <h:outputStylesheet library="theme1" name="css/style.css" />
         <h:outputStylesheet library="theme1" name="css/list_style.css" />
+        <h:outputStylesheet library="theme1" name="css/item_style.css" />
         <!--
                 <link rel='stylesheet' href='./style/list_style.css' media='screen' />
                 <link rel="stylesheet" href="./style/style.css" />-->
 
     </h:head>
     <h:body>
-
         <!-- Header -->
         <header id="header">
             <h:graphicImage id="logo" library="theme1"
                             name="images/item_logo.png" />
-            <nav>
-                <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+            <nav id="nav">
+                <h:outputLink value="map.xhtml">Map</h:outputLink>|
+                <a class="navi" href="#">Info</a>|
+                <a class="navi" href="#">Contact</a>
                 <div id="login">
-                    <a class="navi" href="#" onclick="popupLogin();
-                            void(0);">Log in</a>
+                    <h:form id="log_form">
+                        <div>
+                            #{loginManagedBean.status ? loginManagedBean.username : "guest"}
+                        </div>
+                        <h:outputLink id="show_login" class="navi"
+                                      value="#" onclick="popupLogin();
+                                              void(0);"
+                                      rendered="#{!loginManagedBean.status}">
+                            <h:outputText value="Log In" />
+                        </h:outputLink>
+                        <h:commandLink id="show_logout" class="navi"
+                                       value="Log Out"
+                                       action="#{loginManagedBean.logoutAction}"
+                                       actionListener="#{loginManagedBean.logout}"
+                                       rendered="#{loginManagedBean.status}" />
+                    </h:form>
                 </div>
             </nav>
             <!--seperator-->

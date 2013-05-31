@@ -12,7 +12,6 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
-//import com.sun.tools.internal.xjc.model.AutoClassNameAllocator;//这个包是怎么回事
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,11 +28,6 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
-
-
-    
-
-
 /**
  *
  * @author tornado718
@@ -41,13 +35,11 @@ import javax.transaction.UserTransaction;
 @ManagedBean
 @RequestScoped
 public class ItemInsertMB {
-    
+
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
     private UserTransaction utx;
-    
-    
     private String itemName;
 
     public String getItemName() {
@@ -168,11 +160,8 @@ public class ItemInsertMB {
     private Date authorBirth;
     private Date authorDeath;
     private String authorIntro;
-    
     private List<Audio> audios;
-    
     private List<Video> videos;
-    
     private Video video;
     private Audio audio;
     private Author author;
@@ -204,8 +193,6 @@ public class ItemInsertMB {
     }
     private String audioURL;
     private String audioDes;
-    
-    
     private String videoTitle;
 
     public String getVideoTitle() {
@@ -233,59 +220,57 @@ public class ItemInsertMB {
     }
     private String videoURL;
     private String videoDes;
-    
 
     /**
      * Creates a new instance of ItemInsertMB
      */
     public ItemInsertMB() {
-        
     }
-    
-    public void persist(){
+
+    public void persist() {
         try {
-            Item item=new Item();
+            Item item = new Item();
             item.setItemName(itemName);
             item.setImageurl(imageurl);
-            
-            Description description= new Description();
+
+            Description description = new Description();
             description.setTitle(desTitle);
             description.setContent(desContent);
             description.setItemId(item);
-            
-            
-            Author author=new Author();
+
+
+            Author author = new Author();
             author.setName(authorName);
             author.setBirthday(authorBirth);
             author.setDeathDate(authorDeath);
             author.setIntroduction(authorIntro);
-            
-            ItemAuthor itemAuthor=new ItemAuthor();
+
+            ItemAuthor itemAuthor = new ItemAuthor();
             itemAuthor.setItemId(item);
             itemAuthor.setAuthorId(author);
-            
-            Video video=new Video();
+
+            Video video = new Video();
             video.setTitle(videoTitle);
             video.setUrl(videoURL);
             video.setDescription(videoDes);
-            
+
             ItemVideo itemVideo = new ItemVideo();
             itemVideo.setItemId(item);
             itemVideo.setVideoId(video);
-            
-            Audio audio=new Audio();
+
+            Audio audio = new Audio();
             audio.setTitle(audioTitle);
             audio.setDescription(audioDes);
             audio.setUrl(audioURL);
-            
-            ItemAudio itemAudio=new ItemAudio();
+
+            ItemAudio itemAudio = new ItemAudio();
             itemAudio.setAudioId(audio);
             itemAudio.setItemId(item);
-            
-            
+
+
             utx.begin();
-            
-            
+
+
             em.persist(item);
             em.persist(audio);
             em.persist(author);
@@ -294,8 +279,8 @@ public class ItemInsertMB {
             em.persist(itemAuthor);
             em.persist(itemVideo);
             em.persist(description);
-            
-            
+
+
             utx.commit();
         } catch (NotSupportedException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
@@ -312,8 +297,5 @@ public class ItemInsertMB {
         } catch (IllegalStateException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
-                
-        
-        
     }
 }
