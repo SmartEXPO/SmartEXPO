@@ -251,6 +251,27 @@ public class GetInfo {
 
     }
     
+    public List<ItemVideo> getItemVideosByItemID(int itemId){
+        List<ItemVideo> itemVideos=em.createNamedQuery("ItemVideo.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+        return itemVideos;
+    }
+    
+    public List<ItemAudio> getItemAudiosByItemID(int itemId){
+        List<ItemAudio> itemAudios = em.createNamedQuery("ItemAudio.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+        return itemAudios;
+    }
+    
+    public List<ItemAuthor> getItemAuthorsByItemID(int itemId){
+        List<ItemAuthor> itemAuthors =em.createNamedQuery("ItemAuthor.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+        return itemAuthors;
+    }
+    
+    public List<ItemComment> getItemCommentsByItemID(int itemId){
+        List<ItemComment> itemComments= em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+        return itemComments;
+    }
+    
+    
     public ItemComment getItemComment(Integer itemId,Integer commentId){
         List<ItemComment> itemComments=em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
         for(int i=0;i<itemComments.size();i++){

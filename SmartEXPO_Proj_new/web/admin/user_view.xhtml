@@ -21,8 +21,7 @@
                     </f:facet>
 
                     <p:ajax event="rowEdit" update=":form:messages"
-                            listener="#{userViewManagedBean.onEdit}">
-                    </p:ajax>
+                            listener="#{userViewManagedBean.onEdit}" />
                     <p:ajax event="rowEditCancel" update=":form:messages"
                             listener="#{userViewManagedBean.onCancel}" />
 
@@ -33,10 +32,10 @@
                     <p:column headerText="Password">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:outputText value="#{user.passowrd}" />
+                                <h:outputText value="#{user.password}" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:inputText value="#{user.passowrd}" />
+                                <h:inputText value="#{user.password}" />
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
@@ -44,11 +43,11 @@
                     <p:column headerText="Permission 1">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permissions[0]}"
+                                <h:selectBooleanCheckbox value="#{user.permission1}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permissions[0]}"
+                                  <h:selectBooleanCheckbox value="#{user.permission1}"
                                                          disabled="false" />
                             </f:facet>
                         </p:cellEditor>
@@ -57,11 +56,11 @@
                     <p:column headerText="Permission 2">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permissions[1]}"
+                                <h:selectBooleanCheckbox value="#{user.permission2}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permissions[1]}"
+                                <h:selectBooleanCheckbox value="#{user.permission2}"
                                                          disabled="false" />
                             </f:facet>
                         </p:cellEditor>
@@ -70,11 +69,11 @@
                     <p:column headerText="Permission 3">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permissions[2]}"
+                                <h:selectBooleanCheckbox value="#{user.permission3}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permissions[2]}"
+                                <h:selectBooleanCheckbox value="#{user.permission3}"
                                                          disabled="false" />
                             </f:facet>
                         </p:cellEditor>
@@ -83,11 +82,11 @@
                     <p:column headerText="Permission 4">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permissions[3]}"
+                                <h:selectBooleanCheckbox value="#{user.permission4}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permissions[3]}"
+                                <h:selectBooleanCheckbox value="#{user.permission4}"
                                                          disabled="false" />
                             </f:facet>
                         </p:cellEditor>
@@ -96,11 +95,11 @@
                     <p:column headerText="Permission 5">
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:selectBooleanCheckbox value="#{user.permissions[4]}"
+                                <h:selectBooleanCheckbox value="#{user.permission5}"
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectBooleanCheckbox value="#{user.permissions[4]}"
+                                <h:selectBooleanCheckbox value="#{user.permission5}"
                                                          disabled="false" />
                             </f:facet>
                         </p:cellEditor>
@@ -108,7 +107,8 @@
 
                     <p:column>
                         <p:commandLink action="#{userViewManagedBean.test}">
-                            <p:rowEditor />
+                        <p:rowEditor />
+                        <f:setPropertyActionListener value="#{user}" target="#{userViewManagedBean.selectedUser}"/>
                         </p:commandLink>
                     </p:column>
                 </p:dataTable>

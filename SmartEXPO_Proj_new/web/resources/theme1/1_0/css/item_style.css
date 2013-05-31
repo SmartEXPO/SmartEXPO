@@ -102,7 +102,7 @@ footer {
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
     background-color: #464646;
-    z-index: 2;
+    z-index: 10;
     display: inline-block;
     margin-right: 10px;
     box-shadow: 0 0 10px;

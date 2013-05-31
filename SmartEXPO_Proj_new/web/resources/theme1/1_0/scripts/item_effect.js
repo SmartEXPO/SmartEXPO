@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     $(window).scroll(function(e) {
         if (isCommentBarDisplayed) {
-            e.preventDefault(); //‰∏∫FF‰ºòÂåñÔºå‰ΩÜÊòØ‰æùÁÑ∂ÊúâÈóÆÈ¢ò
+            e.preventDefault();
             //console.log("Scroll");
         }
         if (document.getElementsByTagName("header")[0].getBoundingClientRect().top <= -60) {
@@ -146,6 +146,9 @@ $(document).ready(function() {
 //                    "height": "400px",
 //                }, 500, function() {
                 $("#users_comment").css("display", "block");
+//                console.log($("#all_comments").height()-340);
+                $("#users_comment").scrollTop($("#all_comments").height() - 340);
+                $("#users_comment").perfectScrollbar('update');
 //                });
             });
             $("#comment").data("display", "on");
@@ -181,6 +184,9 @@ function finish(e) {
     $(".func_input_box.content").css({width: "235px"});
     $(".func_input_box.name").attr("placeholder", "User");
     $(".func_input_box.content").attr("placeholder", "Content");
+
+    $("#users_comment").scrollTop($("#all_comments").height() - 340);
+    $("#users_comment").perfectScrollbar('update');
 
     console.log(e);
 }

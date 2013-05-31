@@ -25,16 +25,16 @@
                     <p:watermark for="confirm_password" value="Confirm Password" />
 
                     <p:selectManyCheckbox id="permission_sel"
-                                          value="#{signUpManagedBean.permissionString}">
-                        <f:selectItem itemValue="p1"
+                                          value="#{signUpManagedBean.permissions}">
+                        <f:selectItem itemValue="#{signUpManagedBean.permissions[0]}"
                                       itemLabel="Permission 1" />
-                        <f:selectItem itemValue="p2"
+                        <f:selectItem itemValue="#{signUpManagedBean.permissions[1]}"
                                       itemLabel="Permission 2" />
-                        <f:selectItem itemValue="p3"
+                        <f:selectItem itemValue="#{signUpManagedBean.permissions[2]}"
                                       itemLabel="Permission 3" />
-                        <f:selectItem itemValue="p4"
+                        <f:selectItem itemValue="#{signUpManagedBean.permissions[3]}"
                                       itemLabel="Permission 4" />
-                        <f:selectItem itemValue="p5"
+                        <f:selectItem itemValue="#{signUpManagedBean.permissions[4]}"
                                       itemLabel="Permission 5" />
                     </p:selectManyCheckbox>
                 </h:panelGrid>
