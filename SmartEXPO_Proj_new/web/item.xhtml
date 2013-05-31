@@ -22,6 +22,7 @@
 
         <h:outputStylesheet library="theme1" name="css/style.css" />
         <h:outputStylesheet library="theme1" name="css/item_style.css" />
+        <h:outputStylesheet library="theme1" name="css/perfect-scrollbar.css" />
 
         <title>SmartEXPO</title>
 
@@ -133,14 +134,27 @@
             </div>
             <div id="comment" class="func_button">
                 <div id="users_comment">
-                    <h:form id="all_comments">
-                        <h:dataTable value="#{itemController.commentShowUsernameAndContent}"
-                                     var="commentUserContentList">
-                            <h:column>
-                                #{commentUserContentList.toString()} <br />
-                            </h:column>
-                        </h:dataTable>
-                    </h:form>
+
+                    <div style="min-height:340px;">
+                        <table class="user_comment_content">
+                            <tr>
+                                <td style="width:90px;">Username</td>
+                                <td>This is comment; this is comment; this is comment; this is comment;</td>
+                            </tr>
+                        </table>
+                        
+                        <h:form id="all_comments">
+                            <h:dataTable value="#{itemController.commentShowUsernameAndContent}"
+                                         var="commentUserContentList">
+                                <h:column>
+                                    #{commentUserContentList.toString()} <br />
+                                </h:column>
+                            </h:dataTable>
+                        </h:form>
+
+                    </div>
+
+
                 </div>
                 <h:graphicImage id="comment_img" library="theme1"
                                 name="images/item_comment_button.png" />
@@ -189,6 +203,11 @@
 
         <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js"
                         target="head" />
+        <h:outputScript library="theme1" name="scripts/jquery.mousewheel.js"
+                        target="head" />
+        <h:outputScript library="theme1" name="scripts/perfect-scrollbar.js"
+                        target="head" />
+
         <h:outputScript library="theme1" name="scripts/item_effect.js"
                         target="head" />
     </h:body>
