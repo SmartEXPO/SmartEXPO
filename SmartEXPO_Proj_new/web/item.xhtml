@@ -25,6 +25,7 @@
         <h:outputStylesheet library="theme1" name="css/style.css" />
         <h:outputStylesheet library="theme1" name="css/item_style.css" />
         <h:outputStylesheet library="theme1" name="css/header_style.css" />
+        <h:outputStylesheet library="theme1" name="css/perfect-scrollbar.css" />
 
         <title>SmartEXPO</title>
 
@@ -143,7 +144,8 @@
             </div>
             <div id="comment" class="func_button">
                 <div id="users_comment">
-                    <div style="min-height: 340px;">
+                    <div style="min-height: 340px; overflow: hidden;">
+
                         <h:form id="all_comments">
                             <h:dataTable value="#{itemController.usernameContentPairs}"
                                          var="usernameContentPair">
