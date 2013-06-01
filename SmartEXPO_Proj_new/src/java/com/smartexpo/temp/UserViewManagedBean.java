@@ -45,6 +45,7 @@ public class UserViewManagedBean implements Serializable {
     private GetInfo gi;
     private static final Logger LOG = Logger.getLogger(CommentViewManagedBean.class.getName());
     private List<Manager> managers;
+    private Manager selectedUser;
 
     /**
      * Creates a new instance of UserViewManagedBean
@@ -97,7 +98,6 @@ public class UserViewManagedBean implements Serializable {
 
     public void test() {
     }
-    private Manager selectedUser;
 
     public Manager getSelectedUser() {
         return selectedUser;
