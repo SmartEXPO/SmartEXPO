@@ -35,8 +35,7 @@ import org.primefaces.event.RowEditEvent;
 @ManagedBean
 @SessionScoped
 public class UserViewManagedBean implements Serializable {
-    
-    
+
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
@@ -45,27 +44,26 @@ public class UserViewManagedBean implements Serializable {
     private UserTransaction utx;
     private GetInfo gi;
     private static final Logger LOG = Logger.getLogger(CommentViewManagedBean.class.getName());
-    
-    
     private List<Manager> managers;
+    private Manager selectedUser;
+
     /**
      * Creates a new instance of UserViewManagedBean
      */
     public UserViewManagedBean() {
-        
     }
 
     /**
      * @return the users
      */
     public List<Manager> getUsers() {
-        if(managers==null){
-            gi=new GetInfo(emf, utx);
-            ManagerJpaController mjc=new ManagerJpaController(utx, emf);
-            managers=mjc.findManagerEntities();
-            
+        if (managers == null) {
+            gi = new GetInfo(emf, utx);
+            ManagerJpaController mjc = new ManagerJpaController(utx, emf);
+            managers = mjc.findManagerEntities();
+
         }
-        
+
         return managers;
     }
 
@@ -75,10 +73,10 @@ public class UserViewManagedBean implements Serializable {
     public void setUsers(List<Manager> users) {
         this.managers = users;
     }
-    
+
     public void onEdit(RowEditEvent event) {
         try {
-            ManagerJpaController mjc=new ManagerJpaController(utx, emf);
+            ManagerJpaController mjc = new ManagerJpaController(utx, emf);
             mjc.edit(selectedUser);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(UserViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,16 +88,16 @@ public class UserViewManagedBean implements Serializable {
             Logger.getLogger(UserViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void onCancel(RowEditEvent event) {
-        
     }
-    
-    public void test(){
-        
+
+    public void destroyUser() {
+        managers.remove(selectedUser);
     }
-    
-    private Manager selectedUser;
+
+    public void test() {
+    }
 
     public Manager getSelectedUser() {
         return selectedUser;

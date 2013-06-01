@@ -9,44 +9,158 @@
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | Comment</ui:define>
         <ui:define name="content">
-            <h:form id="form">
-                <p:dataTable value="#{commentViewManagedBean.comments}"
-                             var="com" paginator="true" rows="10"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                             rowsPerPageTemplate="10,20,30,50,100">
-                    <f:facet name="header">
-                        Comments
-                    </f:facet>
+            <p:accordionPanel multiple="true">
+                <p:tab title="All Items">
+                    <p:dataGrid id="all_item" var="show_item" value="#{itemViewManagedBean.items}"
+                                columns="6" rows="18" paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                rowsPerPageTemplate="18,36,72">
+                        <p:panel header="#{show_item.id}" style="text-align: center">
+                            <h:form id="form">
+                                <h:panelGrid columns="1" style="width: 100%;">
 
-                    <p:column headerText="ID">
-                        <h:outputText value="#{com.commentId}" />
-                    </p:column>
+                                    <h:graphicImage value="#{show_item.picURL}" />
+                                    <h:outputText value="#{show_item.id}" />
+                                    <h:outputText value="#{show_item.name}" />
+                                    <h:outputText value="#{show_item.authorName}" />
 
-                    <p:column headerText="Username">
-                        <h:outputText value="#{com.username}" />
-                    </p:column>
+                                    <p:commandLink value="Detail Comments"
+                                                   oncomplete="itemDialog.show()"
+                                                   title="View Detail">
+                                        <f:setPropertyActionListener value="#{show_item}"
+                                                                     target="#{itemViewManagedBean.selectedItem}" />
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </h:form>
+                        </p:panel>
+                    </p:dataGrid>
 
-                    <p:column headerText="Time">
-                        <h:outputText value="#{com.time}" />
-                    </p:column>
+                    <p:dialog header="Item Detail" widgetVar="itemDialog"
+                              resizable="false" modal="true">
+                        <h:form id="item_comments_form">
+                        <p:dataTable value="#{commentViewManagedBean.comments}"
+                                     var="com" paginator="true" rows="10"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                     rowsPerPageTemplate="10,20,30,50">
+                            <f:facet name="header">
+                                Comments
+                            </f:facet>
 
-                    <p:column headerText="Content">
-                        <h:outputText value="#{com.content}" />
-                    </p:column>
+                            <p:column headerText="ID">
+                                <h:outputText value="#{com.commentId}" />
+                            </p:column>
 
-                    <p:column headerText="Operation" style="width: 15%; text-align: center">
-                        <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
-                                         action="#{commentViewManagedBean.destroyComment}">
-                            <f:setPropertyActionListener value="#{com}"
-                                                         target="#{commentViewManagedBean.selectedComment}" />
-                        </p:commandButton>
-                    </p:column>
+                            <p:column headerText="Username">
+                                <h:outputText value="#{com.username}" />
+                            </p:column>
 
-                    <f:facet name="footer">
-                        Total #{commentViewManagedBean.count} comments
-                    </f:facet>
-                </p:dataTable>
-            </h:form>
+                            <p:column headerText="Time">
+                                <h:outputText value="#{com.time}" />
+                            </p:column>
+
+                            <p:column headerText="Content">
+                                <h:outputText value="#{com.content}" />
+                            </p:column>
+
+                            <p:column headerText="Operation" style="width: 15%; text-align: center">
+                                <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
+                                                 action="#{commentViewManagedBean.destroyComment}">
+                                    <f:setPropertyActionListener value="#{com}"
+                                                                 target="#{commentViewManagedBean.selectedComment}" />
+                                </p:commandButton>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                Total #{commentViewManagedBean.count} comments
+                            </f:facet>
+                        </p:dataTable>
+                    </h:form>
+                    </p:dialog>
+                </p:tab>
+                <p:tab title="All Comments">
+                    <h:form id="all_comments_form">
+                        <p:dataTable value="#{commentViewManagedBean.comments}"
+                                     var="com" paginator="true" rows="10"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                     rowsPerPageTemplate="10,20,30,50,100">
+                            <f:facet name="header">
+                                Comments
+                            </f:facet>
+
+                            <p:column headerText="ID">
+                                <h:outputText value="#{com.commentId}" />
+                            </p:column>
+
+                            <!--  这部分column为新添加的，用于查看comment对应的item -->
+                            <p:column headerText="Item">
+                                <p:commandLink id="view_detail_link"
+                                               value="item name + Detail">
+                                    <f:setPropertyActionListener value="#{com}"
+                                                                 target="#{commentViewManagedBean.selectedComment}" />
+                                </p:commandLink>
+
+                                <p:tooltip id="item_detail" for="view_detail_link" showEvent="click">
+                                    <h:graphicImage value="#{itemViewManagedBean.selectedItem.picURL}" />
+
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputLabel for="view_item_id" value="ID: " />
+                                        <h:outputText id="view_item_id"
+                                                      value="#{itemViewManagedBean.selectedItem.id}" />
+
+                                        <h:outputLabel for="view_item_name" value="Name: " />
+                                        <h:outputText id="view_item_name"
+                                                      value="#{itemViewManagedBean.selectedItem.name}" />
+
+                                        <h:outputLabel for="view_author" value="Author: " />
+                                        <h:outputText id="view_author"
+                                                      value="#{itemViewManagedBean.selectedItem.authorName}" />
+
+                                        <h:outputLabel for="view_author_date" value="Author Date: " />
+                                        <h:outputText id="view_author_date"
+                                                      value="#{itemViewManagedBean.selectedItem.authorBirthday} -- #{itemViewManagedBean.selectedItem.authorDeathDate}" />
+
+                                        <h:outputLabel for="view_author_intro" value="Author Introduction: " />
+                                        <h:outputText id="view_author_intro"
+                                                      value="#{itemViewManagedBean.selectedItem.authorIntro}" />
+
+                                        <h:outputLabel for="view_audio_title" value="Audio Title: " />
+                                        <h:outputText id="view_audio_title"
+                                                      value="#{itemViewManagedBean.selectedItem.audioTitle}" />
+
+                                        <h:outputLabel for="view_video_title" value="Video Title: " />
+                                        <h:outputText id="view_video_title"
+                                                      value="#{itemViewManagedBean.selectedItem.videoTitle}" />
+                                    </h:panelGrid>
+                                </p:tooltip>
+                            </p:column>
+
+                            <p:column headerText="Username">
+                                <h:outputText value="#{com.username}" />
+                            </p:column>
+
+                            <p:column headerText="Time">
+                                <h:outputText value="#{com.time}" />
+                            </p:column>
+
+                            <p:column headerText="Content">
+                                <h:outputText value="#{com.content}" />
+                            </p:column>
+
+                            <p:column headerText="Operation" style="width: 15%; text-align: center">
+                                <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
+                                                 action="#{commentViewManagedBean.destroyComment}">
+                                    <f:setPropertyActionListener value="#{com}"
+                                                                 target="#{commentViewManagedBean.selectedComment}" />
+                                </p:commandButton>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                Total #{commentViewManagedBean.count} comments
+                            </f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </p:tab>
+            </p:accordionPanel>
         </ui:define>
     </ui:composition>
 </html>

@@ -47,7 +47,7 @@
                                                          disabled="true" />
                             </f:facet>
                             <f:facet name="input">
-                                  <h:selectBooleanCheckbox value="#{user.permission1}"
+                                <h:selectBooleanCheckbox value="#{user.permission1}"
                                                          disabled="false" />
                             </f:facet>
                         </p:cellEditor>
@@ -105,11 +105,19 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column>
+                    <p:column headerText="Edit" style="text-align: center">
                         <p:commandLink action="#{userViewManagedBean.test}">
-                        <p:rowEditor />
-                        <f:setPropertyActionListener value="#{user}" target="#{userViewManagedBean.selectedUser}"/>
+                            <p:rowEditor />
+                            <f:setPropertyActionListener value="#{user}" target="#{userViewManagedBean.selectedUser}"/>
                         </p:commandLink>
+                    </p:column>
+                    
+                    <p:column headerText="Destroy" style="text-align: center">
+                        <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
+                                         action="#{userViewManagedBean.destroyUser}">
+                            <f:setPropertyActionListener value="#{user}"
+                                                         target="#{userViewManagedBean.selectedUser}" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>
