@@ -95,6 +95,10 @@ public class UserViewManagedBean implements Serializable {
         
     }
     
+    public void destroyUser() {
+        managers.remove(selectedUser);
+    }
+    
     public void test(){
         
     }
