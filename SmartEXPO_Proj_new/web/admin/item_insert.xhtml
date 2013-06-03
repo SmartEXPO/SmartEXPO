@@ -4,189 +4,110 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | Insert</ui:define>
         <ui:define name="content">
             <h:form>
-                <p:growl id="msg" />
-                <p:panelGrid>
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column colspan="3" style="font-size: 150%">
-                                Input Item Info
-                            </p:column>
-                        </p:row>
-                    </f:facet>
+                <p:growl id="msg" sticky="true" showDetail="true" />
+                <p:wizard widgetVar="wiz"
+                          flowListener="#{itemInsertMB.onFlowProcess}">
+                    <p:tab id="basic_info" title="Basic Info">
+                        <p:panel header="Basic Infomation">
+                            <h:messages errorClass="error" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="item_name" value="Item Name" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputText id="item_name" required="true" value="#{itemInsertMB.itemName}" />
-                        </p:column>
-                    </p:row>
+                            <h:panelGrid columns="2" columnClasses="label,value"
+                                         styleClass="grid">
+                                <h:outputLabel for="item_name" value="Item Name" />
+                                <p:inputText id="item_name" required="true"
+                                             value="#{itemInsertMB.itemName}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="item_pic" value="Picture URL" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputText id="item_pic" value="#{itemInsertMB.imageurl}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="item_pic" value="Picture URL" />
+                                <p:inputText id="item_pic"
+                                             value="#{itemInsertMB.imageurl}" />
 
-                    <p:row>
-                        <p:column colspan="3" styleClass="ui-widget-header">
-                            Description
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="des_title" value="Description Title" />
+                                <p:inputText id="des_title" required="true"
+                                             value="#{itemInsertMB.desTitle}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="des_title" value="Description Title" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputText id="des_title" required="true" value="#{itemInsertMB.desTitle}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="des_content" value="Description Content" />
+                                <p:inputTextarea id="des_content" autoResize="false"
+                                                 value="#{itemInsertMB.desContent}" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="des_content" value="Description Content" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputTextarea id="des_content" autoResize="false" value="#{itemInsertMB.desContent}" />
-                        </p:column>
-                    </p:row>
+                    <p:tab id="author_info" title="Author Info">
+                        <p:panel header="Author Infomation">
+                            <h:messages errorClass="error" />
 
-                    <p:row>
-                        <p:column colspan="3" styleClass="ui-widget-header">
-                            Author
-                        </p:column>
-                    </p:row>
+                            <h:panelGrid columns="2" columnClasses="label,value">
+                                <h:outputLabel for="author_name" value="Author Name" />
+                                <p:inputText id="author_name"
+                                             value="#{itemInsertMB.authorName}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="author_name" value="Author Name" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputText id="author_name" value="#{itemInsertMB.authorName}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="author_birth" value="Author Birthday" />
+                                <p:calendar id="author_birth"
+                                            value="#{itemInsertMB.authorBirth}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="author_birth" value="Author Birthday" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:calendar id="author_birth" value="#{itemInsertMB.authorBirth}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="author_death" value="Author Death Date" />
+                                <p:calendar id="author_death"
+                                            value="#{itemInsertMB.authorDeath}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="author_death" value="Author Death Date" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:calendar id="author_death" value="#{itemInsertMB.authorDeath}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="author_intro" value="Author Introduction" />
+                                <p:inputTextarea id="author_intro" autoResize="false"
+                                                 value="#{itemInsertMB.authorIntro}" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="author_intro" value="Author Introduction" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputTextarea id="author_intro" autoResize="false" value="#{itemInsertMB.authorIntro}" />
-                        </p:column>
-                    </p:row>
+                    <p:tab id="audio_info" title="Audio Info">
+                        <p:panel header="Audio Information">
+                            <h:messages errorClass="error" />
 
-                    <p:row>
-                        <p:column colspan="3" styleClass="ui-widget-header">
-                            Audio
-                        </p:column>
-                    </p:row>
+                            <h:panelGrid columns="2" columnClasses="label,value">
+                                <h:outputLabel for="audio_title" value="Audio Title" />
+                                <p:inputText id="audio_title"
+                                             value="#{itemInsertMB.audioTitle}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="audio_title" value="Audio Title" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputText id="audio_title" value="#{itemInsertMB.audioTitle}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="audio_url" value="Audio URL" />
+                                <p:inputText id="audio_url"
+                                             value="#{itemInsertMB.audioURL}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="audio_url" value="Audio URL" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputText id="audio_url" value="#{itemInsertMB.audioURL}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="audio_des" value="Audio Description" />
+                                <p:inputTextarea id="audio_des" autoResize="false"
+                                                 value="#{itemInsertMB.audioDes}" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="audio_des" value="Audio Description" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputTextarea id="audio_des" autoResize="false" value="#{itemInsertMB.audioDes}" />
-                        </p:column>
-                    </p:row>
+                    <p:tab id="video_info" title="Video Info">
+                        <p:panel header="Video Information">
+                            <h:messages errorClass="error" />
 
-                    <p:row>
-                        <p:column colspan="3" styleClass="ui-widget-header">
-                            Video
-                        </p:column>
-                    </p:row>
+                            <h:panelGrid columns="2" columnClasses="label,value">
+                                <h:outputLabel for="video_title" value="Video Title" />
+                                <p:inputText id="video_title"
+                                             value="#{itemInsertMB.videoTitle}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="video_title" value="Video Title" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputText id="video_title" value="#{itemInsertMB.videoTitle}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="video_url" value="Video URL" />
+                                <p:inputText id="video_url"
+                                             value="#{itemInsertMB.videoURL}" />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="video_url" value="Video URL" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputText id="video_url" value="#{itemInsertMB.videoURL}" />
-                        </p:column>
-                    </p:row>
+                                <h:outputLabel for="video_des" value="Video Description" />
+                                <p:inputTextarea id="video_des" autoResize="false"
+                                                 value ="#{itemInsertMB.videoDes}"  />
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel for="video_des" value="Video Description" />
-                        </p:column>
-                        <p:column colspan="2">
-                            <p:inputTextarea id="video_des" autoResize="false" value ="#{itemInsertMB.videoDes}"  />
-                        </p:column>
-                    </p:row>
-
-                    <f:facet name="footer">
-                        <p:row>
-                            <p:column>
-                                <p:commandButton value="Reset" update="@form" />
-                            </p:column>
-                            <p:column>
                                 <p:commandButton value="Save" update="msg"
-                                                 icon="ui-icon-check" ajax="true" action="#{itemInsertMB.persist}"/>
-                            </p:column>
-                            <p:column>
+                                                 icon="ui-icon-check" ajax="true"
+                                                 action="#{itemInsertMB.persist}"/> 
                                 <p:commandButton value="Cancel"
                                                  icon="ui-icon-cancel"/>
-                            </p:column>
-                        </p:row>
-                    </f:facet>
-                </p:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
             </h:form>
         </ui:define>
     </ui:composition>

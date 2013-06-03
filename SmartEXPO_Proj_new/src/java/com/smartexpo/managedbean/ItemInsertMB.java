@@ -30,6 +30,7 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+import org.primefaces.event.FlowEvent;
 
 /**
  *
@@ -300,5 +301,9 @@ public class ItemInsertMB implements Serializable{
         } catch (IllegalStateException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public String onFlowProcess(FlowEvent event) {
+        return event.getNewStep();
     }
 }
