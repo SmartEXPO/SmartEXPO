@@ -24,14 +24,16 @@
 
                             <p:commandLink value="Detail" update=":show_item_form"
                                            oncomplete="itemDialog.show()"
+                                           action="#{itemViewManagedBean.editItem}"
                                            title="View Detail">
                                 <f:setPropertyActionListener value="#{show_item}"
-                                                             target="#{itemViewManagedBean.selectedItem}" 
-                                                             />
+                                                             target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
 
                             <p:commandLink value="Edit" update=":edit_item_form"
-                                           oncomplete="editDialog.show()">
+                                           oncomplete="editDialog.show()"
+                                           action="#{itemViewManagedBean.viewDetail}"
+                                           title="Edit Item">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
@@ -81,8 +83,6 @@
                             <h:outputLabel for="view_video_title" value="Video Title: " />
                             <h:outputText id="view_video_title"
                                           value="#{itemViewManagedBean.videoTitle}" />
-
-
                         </h:panelGrid>
                     </h:form>
                 </p:outputPanel>
@@ -103,8 +103,6 @@
                             <h:outputLabel for="edit_item_name" value="Name: " />
                             <p:inputText id="edit_item_name"
                                          value="#{itemViewManagedBean.selectedItem.itemName}" />
-
-
 
                             <h:outputLabel for="edit_author" value="Author: " />
                             <p:inputText id="edit_author"
@@ -130,14 +128,10 @@
                             <p:inputText id="edit_video_title"
                                          value="#{itemViewManagedBean.videoTitle}" />
 
-
-
                             <f:facet name="footer">
                                 <p:commandButton value="Confirm" update=":all_item"
                                                  oncomplete="editDialog.hide()"
                                                  action="#{itemViewManagedBean.storeEditedData}"/>
-
-
                             </f:facet>
                         </h:panelGrid>
                     </h:form>

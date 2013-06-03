@@ -20,7 +20,6 @@ import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
-import com.smartexpo.models.Description;
 import com.smartexpo.models.DisplayColumn;
 import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemAudio;
@@ -51,45 +50,34 @@ import javax.transaction.UserTransaction;
 @SessionScoped
 public class ItemViewManagedBean implements Serializable {
 
-    
-    
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
-    
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
     EntityManagerFactory emf;
-    
     @Resource
     private UserTransaction utx;
-    
     private GetInfo gi;
-    
-    
-    
     private static final Logger LOG = Logger.getLogger(ItemViewManagedBean.class.getName());
     private List<Item> items;
     private Item selectedItem;
-    
-    
     private String authorName;
     private Date authorBirthDate;
     private Date authorDeathDate;
     private String authorIntro;
     private String audioTitle;
-    
-    
+
     public String getAuthorName() {
-        
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
-        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
-        if(authors!=null&&authors.size()!=0){
-            this.authorName=authors.get(0).getName();
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors != null && authors.size() != 0) {
+            this.authorName = authors.get(0).getName();
             return authorName;
-        }else{
+        } else {
             return "";
         }
     }
@@ -99,16 +87,16 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public Date getAuthorBirthDate() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return null;
         }
-        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
-        if(authors.size()!=0){
-            this.authorBirthDate=authors.get(0).getBirthday();
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors.size() != 0) {
+            this.authorBirthDate = authors.get(0).getBirthday();
             return authorBirthDate;
-        }else{
+        } else {
             return null;
         }
     }
@@ -118,16 +106,16 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public Date getAuthorDeathDate() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return null;
         }
-        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
-        if(authors.size()!=0){
-            this.authorDeathDate=authors.get(0).getDeathDate();
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors.size() != 0) {
+            this.authorDeathDate = authors.get(0).getDeathDate();
             return authorDeathDate;
-        }else{
+        } else {
             return null;
         }
     }
@@ -137,16 +125,16 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public String getAuthorIntro() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
-        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
-        if(authors.size()!=0){
-            this.authorIntro=authors.get(0).getIntroduction();
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors.size() != 0) {
+            this.authorIntro = authors.get(0).getIntroduction();
             return authorIntro;
-        }else{
+        } else {
             return "";
         }
     }
@@ -156,17 +144,17 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public String getAudioTitle() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
-        List<Audio> audios=gi.getAudioByItemID(selectedItem.getItemId());
-        if(audios.size()!=0){
-            this.audioTitle=audios.get(0).getTitle();
+        List<Audio> audios = gi.getAudioByItemID(selectedItem.getItemId());
+        if (audios.size() != 0) {
+            this.audioTitle = audios.get(0).getTitle();
             return audioTitle;
         }
-        
+
         return "";
     }
 
@@ -175,14 +163,14 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public String getVideoTitle() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
-        List<Video> videos=gi.getVideoByItemID(selectedItem.getItemId());
-        if(videos.size()!=0){
-            this.VideoTitle=videos.get(0).getTitle();
+        List<Video> videos = gi.getVideoByItemID(selectedItem.getItemId());
+        if (videos.size() != 0) {
+            this.VideoTitle = videos.get(0).getTitle();
             return VideoTitle;
         }
         return "";
@@ -192,14 +180,11 @@ public class ItemViewManagedBean implements Serializable {
         this.VideoTitle = VideoTitle;
     }
     private String VideoTitle;
-    
 
     /**
      * Creates a new instance of ItemViewManagedBean
      */
     public ItemViewManagedBean() {
-          
-        
 //        items = new ArrayList<Item>();
 //        for (int i = 0; i < 88; i++) {
 //            items.add(new Item("name " + i, "pic " + i, "author name " + i, "199" + i, "200" + i, "author introduction " + i, "description title + i", "description content " + i, "audio title " + i, "video title " + i));
@@ -210,12 +195,12 @@ public class ItemViewManagedBean implements Serializable {
      * @return the items
      */
     public List<Item> getItems() {
-        if(items==null||items.size()==0){
-              gi=new GetInfo(emf, utx);
-              ItemJpaController ijc=new ItemJpaController(utx, emf);
-              items=ijc.findItemEntities();
+        if (items == null || items.size() == 0) {
+            gi = new GetInfo(emf, utx);
+            ItemJpaController ijc = new ItemJpaController(utx, emf);
+            items = ijc.findItemEntities();
         }
-        
+
         return items;
     }
 
@@ -246,32 +231,32 @@ public class ItemViewManagedBean implements Serializable {
 
     public void storeEditedData() {
         try {
-            gi=new GetInfo(emf, utx);
-            ItemJpaController ijc=new ItemJpaController(utx, emf);
+            gi = new GetInfo(emf, utx);
+            ItemJpaController ijc = new ItemJpaController(utx, emf);
             ijc.edit(selectedItem);
-            Author author=gi.getAuthorsByItemID(selectedItem.getItemId()).get(0);
-            Video video=gi.getVideoByItemID(selectedItem.getItemId()).get(0);
-            Audio audio=gi.getAudioByItemID(selectedItem.getItemId()).get(0);
-            
+            Author author = gi.getAuthorsByItemID(selectedItem.getItemId()).get(0);
+            Video video = gi.getVideoByItemID(selectedItem.getItemId()).get(0);
+            Audio audio = gi.getAudioByItemID(selectedItem.getItemId()).get(0);
+
             //author.setBirthday(authorBirthDate);
             //author.setDeathDate(authorDeathDate);
             author.setName(authorName);
             author.setIntroduction(authorIntro);
-            
+
             video.setTitle(audioTitle);
-            
-            
+
+
             audio.setTitle(audioTitle);
-            
-            
-            AudioJpaController ajc=new AudioJpaController(utx, emf);
+
+
+            AudioJpaController ajc = new AudioJpaController(utx, emf);
             ajc.edit(audio);
-            AuthorJpaController authorjc=new AuthorJpaController(utx, emf);
+            AuthorJpaController authorjc = new AuthorJpaController(utx, emf);
             authorjc.edit(author);
-            VideoJpaController vjc=new VideoJpaController(utx, emf);
+            VideoJpaController vjc = new VideoJpaController(utx, emf);
             vjc.edit(video);
-            
-            
+
+
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
@@ -281,89 +266,75 @@ public class ItemViewManagedBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
     }
-    
-    
-    
+
+    // edit接口，selectedItem为目标item
     public void editItem() {
-        
     }
-    public void viewDetail(){
-        
+
+    // view接口，selectedItem为目标item
+    public void viewDetail() {
     }
 
     public void destroyItem() throws NonexistentEntityException {
         try {
             getItems().remove(getSelectedItem());
-            gi=new GetInfo(emf, utx);
-            ItemJpaController ijc=new ItemJpaController(utx, emf);
-            
-            
-            
-            ItemAuthorJpaController iauthorjc=new ItemAuthorJpaController(utx, emf);
-            List<ItemAuthor> itemAuthors=gi.getItemAuthorsByItemID(selectedItem.getItemId());
-            for(int i=0;i<itemAuthors.size();i++){
-             
-                    iauthorjc.destroy(itemAuthors.get(i).getItemAuthorId());
-                
+            gi = new GetInfo(emf, utx);
+            ItemJpaController ijc = new ItemJpaController(utx, emf);
+
+            ItemAuthorJpaController iauthorjc = new ItemAuthorJpaController(utx, emf);
+            List<ItemAuthor> itemAuthors = gi.getItemAuthorsByItemID(selectedItem.getItemId());
+            for (int i = 0; i < itemAuthors.size(); i++) {
+
+                iauthorjc.destroy(itemAuthors.get(i).getItemAuthorId());
+
             }
-            
-            
-            ItemVideoJpaController ivjc=new ItemVideoJpaController(utx, emf);
-            List<ItemVideo> itemVideos=gi.getItemVideosByItemID(selectedItem.getItemId());
-            for(int i=0;i<itemVideos.size();i++){
-     
-                    ivjc.destroy(itemVideos.get(i).getItemVideoId());
-               
+
+            ItemVideoJpaController ivjc = new ItemVideoJpaController(utx, emf);
+            List<ItemVideo> itemVideos = gi.getItemVideosByItemID(selectedItem.getItemId());
+            for (int i = 0; i < itemVideos.size(); i++) {
+
+                ivjc.destroy(itemVideos.get(i).getItemVideoId());
+
             }
-            
-            
-            ItemAudioJpaController iaudiojc=new ItemAudioJpaController(utx, emf);
-            List<ItemAudio> itemAudios=gi.getItemAudiosByItemID(selectedItem.getItemId());
-            for(int i=0;i<itemAudios.size();i++){
-       
-                    iaudiojc.destroy(itemAudios.get(i).getItemAudioId());
-                
+
+            ItemAudioJpaController iaudiojc = new ItemAudioJpaController(utx, emf);
+            List<ItemAudio> itemAudios = gi.getItemAudiosByItemID(selectedItem.getItemId());
+            for (int i = 0; i < itemAudios.size(); i++) {
+
+                iaudiojc.destroy(itemAudios.get(i).getItemAudioId());
+
             }
-            
-            
-            ItemCommentJpaController icjc=new ItemCommentJpaController(utx, emf);
-            List<ItemComment> itemComments=gi.getItemCommentsByItemID(selectedItem.getItemId());
-            for(int i=0;i<itemComments.size();i++){
-   
-                    icjc.destroy(itemComments.get(i).getItemCommentId());
-                
+
+            ItemCommentJpaController icjc = new ItemCommentJpaController(utx, emf);
+            List<ItemComment> itemComments = gi.getItemCommentsByItemID(selectedItem.getItemId());
+            for (int i = 0; i < itemComments.size(); i++) {
+
+                icjc.destroy(itemComments.get(i).getItemCommentId());
+
             }
-            
-            
-            DescriptionJpaController djc=new DescriptionJpaController(utx, emf);
+
+            DescriptionJpaController djc = new DescriptionJpaController(utx, emf);
 
             djc.destroy(selectedItem.getDescription().getDescriptionId());
-       
-            
-            ItemDisplayColumnJpaController idcjc=new ItemDisplayColumnJpaController(utx, emf);
-            List<DisplayColumn> displayColumns=gi.getDisplayColumnsByItemID(selectedItem.getItemId());
-            for(int i=0;i<displayColumns.size();i++){
+
+            ItemDisplayColumnJpaController idcjc = new ItemDisplayColumnJpaController(utx, emf);
+            List<DisplayColumn> displayColumns = gi.getDisplayColumnsByItemID(selectedItem.getItemId());
+            for (int i = 0; i < displayColumns.size(); i++) {
                 idcjc.destroy(displayColumns.get(i).getDisplayColumnId());
             }
-            
+
             ijc.destroy(selectedItem.getItemId());
-            
-            
+
         } catch (RollbackFailureException ex) {
             Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-            
-            
-            if(items.size()==0){
-                items=null;
-            }
-            
-            
-        
+
+        if (items.size() == 0) {
+            items = null;
+        }
     }
 }
