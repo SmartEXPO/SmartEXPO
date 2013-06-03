@@ -38,7 +38,7 @@ import org.primefaces.event.FlowEvent;
  */
 @ManagedBean
 @SessionScoped
-public class ItemInsertMB implements Serializable{
+public class ItemInsertMB implements Serializable {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
@@ -242,7 +242,6 @@ public class ItemInsertMB implements Serializable{
             description.setContent(desContent);
             description.setItemId(item);
 
-
             Author author = new Author();
             author.setName(authorName);
             author.setBirthday(authorBirth);
@@ -271,9 +270,7 @@ public class ItemInsertMB implements Serializable{
             itemAudio.setAudioId(audio);
             itemAudio.setItemId(item);
 
-
             utx.begin();
-
 
             em.persist(item);
             em.persist(audio);
@@ -283,7 +280,6 @@ public class ItemInsertMB implements Serializable{
             em.persist(itemAuthor);
             em.persist(itemVideo);
             em.persist(description);
-
 
             utx.commit();
         } catch (NotSupportedException ex) {
@@ -302,7 +298,7 @@ public class ItemInsertMB implements Serializable{
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
     }
