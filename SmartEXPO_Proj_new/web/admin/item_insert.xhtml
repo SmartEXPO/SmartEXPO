@@ -12,10 +12,11 @@
             <h:form>
                 <p:growl id="msg" sticky="true" showDetail="true" />
                 <p:wizard widgetVar="wiz"
-                          flowListener="#{itemInsertMB.onFlowProcess}">
+                          flowListener="#{itemInsertMB.onFlowProcess}"
+                          style="font-size: 150%;">
                     <p:tab id="basic_info" title="Basic Info">
                         <p:panel header="Basic Infomation">
-                            <h:messages errorClass="error" />
+                            <h:messages />
 
                             <h:panelGrid columns="2" columnClasses="label,value"
                                          styleClass="grid">
@@ -40,7 +41,7 @@
 
                     <p:tab id="author_info" title="Author Info">
                         <p:panel header="Author Infomation">
-                            <h:messages errorClass="error" />
+                            <h:messages />
 
                             <h:panelGrid columns="2" columnClasses="label,value">
                                 <h:outputLabel for="author_name" value="Author Name" />
@@ -64,7 +65,7 @@
 
                     <p:tab id="audio_info" title="Audio Info">
                         <p:panel header="Audio Information">
-                            <h:messages errorClass="error" />
+                            <h:messages />
 
                             <h:panelGrid columns="2" columnClasses="label,value">
                                 <h:outputLabel for="audio_title" value="Audio Title" />
@@ -84,26 +85,26 @@
 
                     <p:tab id="video_info" title="Video Info">
                         <p:panel header="Video Information">
-                            <h:messages errorClass="error" />
+                            <h:messages />
 
                             <h:panelGrid columns="2" columnClasses="label,value">
-                                <h:outputLabel for="video_title" value="Video Title" />
-                                <p:inputText id="video_title"
-                                             value="#{itemInsertMB.videoTitle}" />
+                                    <h:outputLabel for="video_title" value="Video Title" />
+                                    <p:inputText id="video_title"
+                                                 value="#{itemInsertMB.videoTitle}" />
 
-                                <h:outputLabel for="video_url" value="Video URL" />
-                                <p:inputText id="video_url"
-                                             value="#{itemInsertMB.videoURL}" />
+                                    <h:outputLabel for="video_url" value="Video URL" />
+                                    <p:inputText id="video_url"
+                                                 value="#{itemInsertMB.videoURL}" />
 
-                                <h:outputLabel for="video_des" value="Video Description" />
-                                <p:inputTextarea id="video_des" autoResize="false"
-                                                 value ="#{itemInsertMB.videoDes}"  />
+                                    <h:outputLabel for="video_des" value="Video Description" />
+                                    <p:inputTextarea id="video_des" autoResize="false"
+                                                     value ="#{itemInsertMB.videoDes}"  />
 
-                                <p:commandButton value="Save" update="msg"
-                                                 icon="ui-icon-check" ajax="true"
-                                                 action="#{itemInsertMB.persist}"/> 
-                                <p:commandButton value="Cancel"
-                                                 icon="ui-icon-cancel"/>
+                                    <p:commandButton value="Save" update=":msg"
+                                                     icon="ui-icon-check" ajax="true"
+                                                     action="#{itemInsertMB.persist}"/> 
+                                    <p:commandButton value="Cancel"
+                                                     icon="ui-icon-cancel"/>
                             </h:panelGrid>
                         </p:panel>
                     </p:tab>

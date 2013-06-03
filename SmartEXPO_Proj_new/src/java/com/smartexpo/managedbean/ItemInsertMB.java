@@ -19,9 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.HeuristicMixedException;
@@ -45,6 +43,20 @@ public class ItemInsertMB implements Serializable {
     @Resource
     private UserTransaction utx;
     private String itemName;
+    private String desTitle;
+    private String desContent;
+    private List<Author> authors;
+    private String authorName;
+    private Date authorBirth;
+    private Date authorDeath;
+    private String authorIntro;
+    private List<Audio> audios;
+    private List<Video> videos;
+    private Video video;
+    private Audio audio;
+    private Author author;
+    private String imageurl;
+    private String audioTitle;
 
     public String getItemName() {
         return itemName;
@@ -157,20 +169,6 @@ public class ItemInsertMB implements Serializable {
     public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
     }
-    private String desTitle;
-    private String desContent;
-    private List<Author> authors;
-    private String authorName;
-    private Date authorBirth;
-    private Date authorDeath;
-    private String authorIntro;
-    private List<Audio> audios;
-    private List<Video> videos;
-    private Video video;
-    private Audio audio;
-    private Author author;
-    private String imageurl;
-    private String audioTitle;
 
     public String getAudioTitle() {
         return audioTitle;
