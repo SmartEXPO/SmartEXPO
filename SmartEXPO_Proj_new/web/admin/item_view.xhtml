@@ -13,20 +13,21 @@
                         columns="6" rows="18" paginator="true"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                         rowsPerPageTemplate="18,36,72">
-                <p:panel header="#{show_item.id}" style="text-align: center">
+                <p:panel header="#{show_item.itemId}" style="text-align: center">
                     <h:form id="form">
                         <h:panelGrid columns="1" style="width: 100%;">
 
-                            <h:graphicImage value="#{show_item.picURL}" />
-                            <h:outputText value="#{show_item.id}" />
-                            <h:outputText value="#{show_item.name}" />
-                            <h:outputText value="#{show_item.authorName}" />
+                            <h:graphicImage value="#{show_item.imageurl}" />
+                            <h:outputText value="#{show_item.itemId}" />
+                            <h:outputText value="#{show_item.itemName}" />
+
 
                             <p:commandLink value="Detail" update=":show_item_form"
                                            oncomplete="itemDialog.show()"
                                            title="View Detail">
                                 <f:setPropertyActionListener value="#{show_item}"
-                                                             target="#{itemViewManagedBean.selectedItem}" />
+                                                             target="#{itemViewManagedBean.selectedItem}" 
+                                                             />
                             </p:commandLink>
 
                             <p:commandLink value="Edit" update=":edit_item_form"
@@ -51,36 +52,36 @@
                 <p:outputPanel id="item_detail" style="text-align: center;"
                                layout="block">
                     <h:form id="show_item_form">
-                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.picURL}" />
+                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}" />
 
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="view_item_id" value="ID: " />
                             <h:outputText id="view_item_id"
-                                          value="#{itemViewManagedBean.selectedItem.id}" />
+                                          value="#{itemViewManagedBean.selectedItem.itemId}" />
 
                             <h:outputLabel for="view_item_name" value="Name: " />
                             <h:outputText id="view_item_name"
-                                          value="#{itemViewManagedBean.selectedItem.name}" />
-
+                                          value="#{itemViewManagedBean.selectedItem.itemName}" />
                             <h:outputLabel for="view_author" value="Author: " />
                             <h:outputText id="view_author"
-                                          value="#{itemViewManagedBean.selectedItem.authorName}" />
+                                          value="#{itemViewManagedBean.authorName}" />
 
                             <h:outputLabel for="view_author_date" value="Author Date: " />
                             <h:outputText id="view_author_date"
-                                          value="#{itemViewManagedBean.selectedItem.authorBirthday} -- #{itemViewManagedBean.selectedItem.authorDeathDate}" />
+                                          value="#{itemViewManagedBean.authorBirthDate} -- #{itemViewManagedBean.authorDeathDate}" />
 
                             <h:outputLabel for="view_author_intro" value="Author Introduction: " />
                             <h:outputText id="view_author_intro"
-                                          value="#{itemViewManagedBean.selectedItem.authorIntro}" />
+                                          value="#{itemViewManagedBean.authorIntro}" />
 
                             <h:outputLabel for="view_audio_title" value="Audio Title: " />
                             <h:outputText id="view_audio_title"
-                                          value="#{itemViewManagedBean.selectedItem.audioTitle}" />
+                                          value="#{itemViewManagedBean.audioTitle}" />
 
                             <h:outputLabel for="view_video_title" value="Video Title: " />
                             <h:outputText id="view_video_title"
-                                          value="#{itemViewManagedBean.selectedItem.videoTitle}" />
+                                          value="#{itemViewManagedBean.videoTitle}" />
+
 
                         </h:panelGrid>
                     </h:form>
@@ -92,45 +93,51 @@
                 <p:outputPanel id="edit_item" style="text-align: center;"
                                layout="block">
                     <h:form id="edit_item_form">
-                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.picURL}" />
+                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}" />
 
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="edit_item_id" value="ID: " />
                             <p:inputText id="edit_item_id"
-                                         value="#{itemViewManagedBean.selectedItem.id}" />
+                                         value="#{itemViewManagedBean.selectedItem.itemId}" />
 
                             <h:outputLabel for="edit_item_name" value="Name: " />
                             <p:inputText id="edit_item_name"
-                                         value="#{itemViewManagedBean.selectedItem.name}" />
+                                         value="#{itemViewManagedBean.selectedItem.itemName}" />
+
+
 
                             <h:outputLabel for="edit_author" value="Author: " />
                             <p:inputText id="edit_author"
-                                         value="#{itemViewManagedBean.selectedItem.authorName}" />
+                                         value="#{itemViewManagedBean.authorName}" />
 
                             <h:outputLabel for="edit_author_birthday" value="Author Birthday: " />
                             <p:inputText id="edit_author_birthday"
-                                         value="#{itemViewManagedBean.selectedItem.authorBirthday}" />
+                                         value="#{itemViewManagedBean.authorBirthDate}" />
 
                             <h:outputLabel for="edit_author_death_date" value="Author Death Date: " />
                             <p:inputText id="edit_author_death_date"
-                                         value="#{itemViewManagedBean.selectedItem.authorDeathDate}" />
+                                         value="#{itemViewManagedBean.authorDeathDate}" />
 
                             <h:outputLabel for="edit_author_intro" value="Author Introduction: " />
                             <p:inputText id="edit_author_intro"
-                                         value="#{itemViewManagedBean.selectedItem.authorIntro}" />
+                                         value="#{itemViewManagedBean.authorIntro}" />
 
                             <h:outputLabel for="edit_audio_title" value="Audio Title: " />
                             <p:inputText id="edit_audio_title"
-                                         value="#{itemViewManagedBean.selectedItem.audioTitle}" />
+                                         value="#{itemViewManagedBean.audioTitle}" />
 
                             <h:outputLabel for="edit_video_title" value="Video Title: " />
                             <p:inputText id="edit_video_title"
-                                         value="#{itemViewManagedBean.selectedItem.videoTitle}" />
+                                         value="#{itemViewManagedBean.videoTitle}" />
+
+
 
                             <f:facet name="footer">
                                 <p:commandButton value="Confirm" update=":all_item"
                                                  oncomplete="editDialog.hide()"
                                                  action="#{itemViewManagedBean.storeEditedData}"/>
+
+
                             </f:facet>
                         </h:panelGrid>
                     </h:form>

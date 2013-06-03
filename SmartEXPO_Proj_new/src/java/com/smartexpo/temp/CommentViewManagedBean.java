@@ -10,8 +10,12 @@ import com.smartexpo.jpgcontrollers.ItemCommentJpaController;
 import com.smartexpo.jpgcontrollers.exceptions.IllegalOrphanException;
 import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
+import com.smartexpo.models.Audio;
+import com.smartexpo.models.Author;
 import com.smartexpo.models.Comment;
+import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemComment;
+import com.smartexpo.models.Video;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +36,7 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+import org.primefaces.event.ItemSelectEvent;
 
 /**
  *
@@ -57,6 +62,141 @@ public class CommentViewManagedBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(CommentViewManagedBean.class.getName());
     private List<Comment> comments;
     private Comment selectedComment;
+    private Item selectedItem;
+
+    public Item getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(Item selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+    
+    
+    
+    private String authorName;
+    private Date authorBirthDate;
+    private Date authorDeathDate;
+    private String authorIntro;
+    private String audioTitle;
+    
+    
+    public String getAuthorName() {
+        
+        gi=new GetInfo(emf, utx);
+        if(selectedItem==null){
+            LOG.log(Level.WARNING,"selectedItem null");
+            return "";
+        }
+        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
+        if(authors!=null&&authors.size()!=0){
+            this.authorName=authors.get(0).getName();
+            return authorName;
+        }else{
+            return "";
+        }
+    }
+
+    public void setAuthorName(String AuthorName) {
+        this.authorName = AuthorName;
+    }
+
+    public Date getAuthorBirthDate() {
+        gi=new GetInfo(emf, utx);
+        if(selectedItem==null){
+            LOG.log(Level.WARNING,"selectedItem null");
+            return null;
+        }
+        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
+        if(authors.size()!=0){
+            this.authorBirthDate=authors.get(0).getBirthday();
+            return authorBirthDate;
+        }else{
+            return null;
+        }
+    }
+
+    public void setAuthorBirthDate(Date AuthorBirthDate) {
+        this.authorBirthDate = AuthorBirthDate;
+    }
+
+    public Date getAuthorDeathDate() {
+        gi=new GetInfo(emf, utx);
+        if(selectedItem==null){
+            LOG.log(Level.WARNING,"selectedItem null");
+            return null;
+        }
+        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
+        if(authors.size()!=0){
+            this.authorDeathDate=authors.get(0).getDeathDate();
+            return authorDeathDate;
+        }else{
+            return null;
+        }
+    }
+
+    public void setAuthorDeathDate(Date AuthorDeathDate) {
+        this.authorDeathDate = AuthorDeathDate;
+    }
+
+    public String getAuthorIntro() {
+        gi=new GetInfo(emf, utx);
+        if(selectedItem==null){
+            LOG.log(Level.WARNING,"selectedItem null");
+            return "";
+        }
+        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
+        if(authors.size()!=0){
+            this.authorIntro=authors.get(0).getIntroduction();
+            return authorIntro;
+        }else{
+            return "";
+        }
+    }
+
+    public void setAuthorIntro(String AuthorIntro) {
+        this.authorIntro = AuthorIntro;
+    }
+
+    public String getAudioTitle() {
+        gi=new GetInfo(emf, utx);
+        if(selectedItem==null){
+            LOG.log(Level.WARNING,"selectedItem null");
+            return "";
+        }
+        List<Audio> audios=gi.getAudioByItemID(selectedItem.getItemId());
+        if(audios.size()!=0){
+            this.audioTitle=audios.get(0).getTitle();
+            return audioTitle;
+        }
+        
+        return "";
+    }
+
+    public void setAudioTitle(String AudioTitle) {
+        this.audioTitle = AudioTitle;
+    }
+
+    public String getVideoTitle() {
+        gi=new GetInfo(emf, utx);
+        if(selectedItem==null){
+            LOG.log(Level.WARNING,"selectedItem null");
+            return "";
+        }
+        List<Video> videos=gi.getVideoByItemID(selectedItem.getItemId());
+        if(videos.size()!=0){
+            this.VideoTitle=videos.get(0).getTitle();
+            return VideoTitle;
+        }
+        return "";
+    }
+
+    public void setVideoTitle(String VideoTitle) {
+        this.VideoTitle = VideoTitle;
+    }
+    private String VideoTitle;
+    
+    
     
     
     /**
@@ -77,10 +217,14 @@ public class CommentViewManagedBean implements Serializable {
             gi=new GetInfo(emf, utx);
             CommentJpaController cjc=new CommentJpaController(utx, emf);
             comments=cjc.findCommentEntities();
-            //comments= gi.getCommentByItemID(itemId);
+            /*if(selectedItem!=null){
+                comments= gi.getCommentByItemID(selectedItem.getItemId());
+            }else{
+                LOG.log(Level.WARNING, "selectedItem  = null");
+            }*/
             
         }
-        LOG.log(Level.WARNING,"comment num:"+comments.size());
+        //LOG.log(Level.WARNING,"comment num:"+comments.size());
         return comments;
     }
 
