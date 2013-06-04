@@ -7,7 +7,6 @@ package com.smartexpo.temp;
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.jpgcontrollers.CommentJpaController;
 import com.smartexpo.jpgcontrollers.ItemCommentJpaController;
-import com.smartexpo.jpgcontrollers.exceptions.IllegalOrphanException;
 import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Audio;
@@ -17,7 +16,6 @@ import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.Video;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,16 +25,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
-import org.primefaces.event.ItemSelectEvent;
 
 /**
  *
@@ -45,20 +36,14 @@ import org.primefaces.event.ItemSelectEvent;
 @ManagedBean
 @SessionScoped
 public class CommentViewManagedBean implements Serializable {
-    
-    
+
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
-    
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
     EntityManagerFactory emf;
-    
     @Resource
     private UserTransaction utx;
-    
     private GetInfo gi;
-    
-
     private static final Logger LOG = Logger.getLogger(CommentViewManagedBean.class.getName());
     private List<Comment> comments;
     private Comment selectedComment;
@@ -71,28 +56,24 @@ public class CommentViewManagedBean implements Serializable {
     public void setSelectedItem(Item selectedItem) {
         this.selectedItem = selectedItem;
     }
-    
-    
-    
     private String authorName;
     private Date authorBirthDate;
     private Date authorDeathDate;
     private String authorIntro;
     private String audioTitle;
-    
-    
+
     public String getAuthorName() {
-        
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
-        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
-        if(authors!=null&&authors.size()!=0){
-            this.authorName=authors.get(0).getName();
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors != null && authors.size() != 0) {
+            this.authorName = authors.get(0).getName();
             return authorName;
-        }else{
+        } else {
             return "";
         }
     }
@@ -102,16 +83,16 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public Date getAuthorBirthDate() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return null;
         }
-        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
-        if(authors.size()!=0){
-            this.authorBirthDate=authors.get(0).getBirthday();
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors.size() != 0) {
+            this.authorBirthDate = authors.get(0).getBirthday();
             return authorBirthDate;
-        }else{
+        } else {
             return null;
         }
     }
@@ -121,16 +102,16 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public Date getAuthorDeathDate() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return null;
         }
-        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
-        if(authors.size()!=0){
-            this.authorDeathDate=authors.get(0).getDeathDate();
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors.size() != 0) {
+            this.authorDeathDate = authors.get(0).getDeathDate();
             return authorDeathDate;
-        }else{
+        } else {
             return null;
         }
     }
@@ -140,16 +121,16 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public String getAuthorIntro() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
-        List<Author> authors=gi.getAuthorsByItemID(selectedItem.getItemId());
-        if(authors.size()!=0){
-            this.authorIntro=authors.get(0).getIntroduction();
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors.size() != 0) {
+            this.authorIntro = authors.get(0).getIntroduction();
             return authorIntro;
-        }else{
+        } else {
             return "";
         }
     }
@@ -159,17 +140,17 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public String getAudioTitle() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
-        List<Audio> audios=gi.getAudioByItemID(selectedItem.getItemId());
-        if(audios.size()!=0){
-            this.audioTitle=audios.get(0).getTitle();
+        List<Audio> audios = gi.getAudioByItemID(selectedItem.getItemId());
+        if (audios.size() != 0) {
+            this.audioTitle = audios.get(0).getTitle();
             return audioTitle;
         }
-        
+
         return "";
     }
 
@@ -178,14 +159,14 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public String getVideoTitle() {
-        gi=new GetInfo(emf, utx);
-        if(selectedItem==null){
-            LOG.log(Level.WARNING,"selectedItem null");
+        gi = new GetInfo(emf, utx);
+        if (selectedItem == null) {
+            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
-        List<Video> videos=gi.getVideoByItemID(selectedItem.getItemId());
-        if(videos.size()!=0){
-            this.VideoTitle=videos.get(0).getTitle();
+        List<Video> videos = gi.getVideoByItemID(selectedItem.getItemId());
+        if (videos.size() != 0) {
+            this.VideoTitle = videos.get(0).getTitle();
             return VideoTitle;
         }
         return "";
@@ -195,34 +176,27 @@ public class CommentViewManagedBean implements Serializable {
         this.VideoTitle = VideoTitle;
     }
     private String VideoTitle;
-    
-    
-    
-    
+
     /**
      * Creates a new instance of CommentViewManagedBean
      */
     public CommentViewManagedBean() {
-        
-        
-        
-        
     }
 
     /**
      * @return the comments
      */
     public List<Comment> getComments() {
-        if(comments==null){
-            gi=new GetInfo(emf, utx);
-            CommentJpaController cjc=new CommentJpaController(utx, emf);
-            comments=cjc.findCommentEntities();
+        if (comments == null) {
+            gi = new GetInfo(emf, utx);
+            CommentJpaController cjc = new CommentJpaController(utx, emf);
+            comments = cjc.findCommentEntities();
             /*if(selectedItem!=null){
-                comments= gi.getCommentByItemID(selectedItem.getItemId());
-            }else{
-                LOG.log(Level.WARNING, "selectedItem  = null");
-            }*/
-            
+             comments= gi.getCommentByItemID(selectedItem.getItemId());
+             }else{
+             LOG.log(Level.WARNING, "selectedItem  = null");
+             }*/
+
         }
         //LOG.log(Level.WARNING,"comment num:"+comments.size());
         return comments;
@@ -255,23 +229,23 @@ public class CommentViewManagedBean implements Serializable {
 
     public void destroyComment() {
         try {
-            
-            gi=new GetInfo(emf, utx);
+
+            gi = new GetInfo(emf, utx);
             //ItemComment ic=gi.getItemComment(itemId, selectedComment.getCommentId());
-            Comment c= selectedComment;
-            
-            List<ItemComment> itemComments= gi.getItemCommentsByCommentID(selectedComment.getCommentId());
-            ItemCommentJpaController icjc=new ItemCommentJpaController(utx, emf);
-            for(int i=0;i<itemComments.size();i++){
+            Comment c = selectedComment;
+
+            List<ItemComment> itemComments = gi.getItemCommentsByCommentID(selectedComment.getCommentId());
+            ItemCommentJpaController icjc = new ItemCommentJpaController(utx, emf);
+            for (int i = 0; i < itemComments.size(); i++) {
                 icjc.destroy(itemComments.get(i).getItemCommentId());
             }
             comments.remove(c);
-            
+
             //icjc.destroy(ic.getItemCommentId());
-            CommentJpaController cjc=new CommentJpaController(utx, emf);
+            CommentJpaController cjc = new CommentJpaController(utx, emf);
             cjc.destroy(c.getCommentId());
-            
-            
+
+
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(CommentViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RollbackFailureException ex) {
@@ -279,11 +253,13 @@ public class CommentViewManagedBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(CommentViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-            
-            
-        
-      
+    }
+
+    // All Comments中的detail选项，根据selectdComment找到相应item并显示出来
+    public void showItemDetail() {
+    }
+
+    // All Items中的detail comments选项，根据selectedItem找到相应的comment，并加入到一个新的list中
+    public void showDetialComments() {
     }
 }

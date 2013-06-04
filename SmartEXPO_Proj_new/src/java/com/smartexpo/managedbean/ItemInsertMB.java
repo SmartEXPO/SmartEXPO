@@ -13,6 +13,7 @@ import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -227,6 +228,14 @@ public class ItemInsertMB implements Serializable {
      * Creates a new instance of ItemInsertMB
      */
     public ItemInsertMB() {
+        audios = new ArrayList<Audio>();
+        for (int i = 0; i < 20; i++) {
+            Audio audio = new Audio();
+            audio.setTitle("WAWAWA " + i);
+            audio.setUrl("httppppppppppp://" + i * i);
+            audio.setDescription("deeeeeescrippppppptionnnnnnn" + i * i * i);
+            audios.add(audio);
+        }
     }
 
     public void persist() {
@@ -299,5 +308,9 @@ public class ItemInsertMB implements Serializable {
 
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
+    }
+    
+    public int getAudioSize() {
+        return audios.size();
     }
 }
