@@ -12,6 +12,7 @@
         <ui:define name="content">
             <h:form>
                 <p:growl id="msg" sticky="true" showDetail="true" />
+
                 <p:wizard widgetVar="wiz"
                           flowListener="#{itemInsertMB.onFlowProcess}">
                     <p:tab id="basic_info" title="Basic Info">
@@ -43,23 +44,62 @@
                         <p:panel header="Author Infomation">
                             <h:messages />
 
-                            <h:panelGrid columns="2" columnClasses="label,value">
-                                <h:outputLabel for="author_name" value="Author Name" />
-                                <p:inputText id="author_name"
-                                             value="#{itemInsertMB.authorName}" />
+                            <p:dataTable id="author_list" var="authorList"
+                                         value="#{itemInsertMB.authors}"
+                                         style="text-align: center;">
+                                <p:column>
+                                    <p:commandButton icon="ui-icon-minusthick"
+                                                     update="author_list"
+                                                     action="#{itemInsertMB.removeAuthor}">
+                                        <f:setPropertyActionListener value="#{authorList}"
+                                                                     target="#{itemInsertMB.selectedAuthor}" />
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column headerText="Author Name">
+                                    <h:outputText value="#{authorList.name}" />
+                                </p:column>
+                                <p:column headerText="Author Birthday">
+                                    <h:outputText value="#{authorList.birthday}" />
+                                </p:column>
+                                <p:column headerText="Author Death Date">
+                                    <h:outputText value="#{authorList.deathDate}" />
+                                </p:column>
+                                <p:column headerText="Author Introduction">
+                                    <h:outputText value="#{authorList.introduction}" />
+                                </p:column>
+                                <f:facet name="footer">
+                                    Total #{itemInsertMB.authorSize} authors.
+                                </f:facet>
+                            </p:dataTable>
 
-                                <h:outputLabel for="author_birth" value="Author Birthday" />
-                                <p:calendar id="author_birth"
-                                            value="#{itemInsertMB.authorBirth}" />
+                            <p:commandButton icon="ui-icon-plusthick"
+                                             oncomplete="authorVar.show()" />
 
-                                <h:outputLabel for="author_death" value="Author Death Date" />
-                                <p:calendar id="author_death"
-                                            value="#{itemInsertMB.authorDeath}" />
+                            <p:dialog id="author_add_dialog" header="Enter Author Info"
+                                      widgetVar="authorVar" resizable="false" modal="true">
+                                <h:panelGrid columns="2" columnClasses="label,value">
+                                    <h:outputLabel for="author_name" value="Author Name" />
+                                    <p:inputText id="author_name"
+                                                 value="#{itemInsertMB.authorName}" />
 
-                                <h:outputLabel for="author_intro" value="Author Introduction" />
-                                <p:inputTextarea id="author_intro" autoResize="false"
-                                                 value="#{itemInsertMB.authorIntro}" />
-                            </h:panelGrid>
+                                    <h:outputLabel for="author_birth" value="Author Birthday" />
+                                    <p:calendar id="author_birth"
+                                                value="#{itemInsertMB.authorBirth}" />
+
+                                    <h:outputLabel for="author_death" value="Author Death Date" />
+                                    <p:calendar id="author_death"
+                                                value="#{itemInsertMB.authorDeath}" />
+
+                                    <h:outputLabel for="author_intro" value="Author Introduction" />
+                                    <p:inputTextarea id="author_intro" autoResize="false"
+                                                     value="#{itemInsertMB.authorIntro}" />
+
+                                    <p:commandButton value="Add" icon="ui-icon-check"
+                                                     ajax="true" update="author_list author_add_dialog"
+                                                     action="#{itemInsertMB.addAuthor}"
+                                                     oncomplete="authorVar.hide()" />
+                                </h:panelGrid>
+                            </p:dialog>
                         </p:panel>
                     </p:tab>
 
@@ -150,6 +190,7 @@
 
                             <p:commandButton icon="ui-icon-plusthick"
                                              oncomplete="videoVar.show()" />
+
                             <p:dialog id="video_add_dialog" header="Enter Video Info"
                                       widgetVar="videoVar" resizable="false" modal="true">
                                 <h:panelGrid columns="2" columnClasses="label,value">

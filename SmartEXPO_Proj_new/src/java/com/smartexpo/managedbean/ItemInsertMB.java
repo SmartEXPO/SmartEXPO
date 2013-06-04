@@ -48,24 +48,31 @@ public class ItemInsertMB implements Serializable {
     private String desTitle;
     private String desContent;
     private List<Author> authors;
-    private String authorName;
-    private Date authorBirth;
-    private Date authorDeath;
-    private String authorIntro;
     private List<Audio> audios;
     private List<Video> videos;
     private Video selectedVideo;
     private Video video;
     private Audio selectedAudio;
     private Audio audio;
+    private Author selectedAuthor;
     private Author author;
+    private String authorName;
+    private Date authorBirth;
+    private Date authorDeath;
+    private String authorIntro;
     private String imageurl;
     private String audioTitle;
+    private String audioURL;
+    private String audioDes;
+    private String videoTitle;
+    private String videoURL;
+    private String videoDes;
 
     /**
      * Creates a new instance of ItemInsertMB
      */
     public ItemInsertMB() {
+        authors = new ArrayList<Author>();
         audios = new ArrayList<Audio>();
         videos = new ArrayList<Video>();
     }
@@ -205,9 +212,6 @@ public class ItemInsertMB implements Serializable {
     public void setAudioDes(String audioDes) {
         this.audioDes = audioDes;
     }
-    private String audioURL;
-    private String audioDes;
-    private String videoTitle;
 
     public String getVideoTitle() {
         return videoTitle;
@@ -232,8 +236,6 @@ public class ItemInsertMB implements Serializable {
     public void setVideoDes(String videoDes) {
         this.videoDes = videoDes;
     }
-    private String videoURL;
-    private String videoDes;
 
     public void persist() {
         try {
@@ -307,12 +309,31 @@ public class ItemInsertMB implements Serializable {
         return event.getNewStep();
     }
 
+    public int getAuthorSize() {
+        return authors.size();
+    }
+
     public int getAudioSize() {
         return audios.size();
     }
 
     public int getVideoSize() {
         return videos.size();
+    }
+
+    public void addAuthor() {
+        Author author = new Author();
+        author.setName(authorName);
+        author.setBirthday(authorBirth);
+        author.setDeathDate(authorDeath);
+        author.setIntroduction(authorIntro);
+        authors.add(author);
+        authorName = authorIntro = null;
+        authorBirth = authorDeath = null;
+    }
+
+    public void removeAuthor() {
+        authors.remove(selectedAuthor);
     }
 
     // Audio多值添加处，结果暂存储于audios列表中
@@ -369,5 +390,19 @@ public class ItemInsertMB implements Serializable {
      */
     public void setSelectedVideo(Video selectedVideo) {
         this.selectedVideo = selectedVideo;
+    }
+
+    /**
+     * @return the selectedAuthor
+     */
+    public Author getSelectedAuthor() {
+        return selectedAuthor;
+    }
+
+    /**
+     * @param selectedAuthor the selectedAuthor to set
+     */
+    public void setSelectedAuthor(Author selectedAuthor) {
+        this.selectedAuthor = selectedAuthor;
     }
 }
