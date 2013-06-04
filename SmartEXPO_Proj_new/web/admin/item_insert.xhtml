@@ -66,8 +66,9 @@
                     <p:tab id="audio_info" title="Audio Info">
                         <p:panel header="Audio Information">
                             <h:messages />
-                            
-                            <p:dataTable var="audioList" value="#{itemInsertMB.audios}"
+
+                            <p:dataTable id="audio_list" var="audioList"
+                                         value="#{itemInsertMB.audios}"
                                          style="text-align: center;">
                                 <p:column>
                                     <p:commandButton icon="ui-icon-minusthick" />
@@ -86,22 +87,28 @@
                                 </f:facet>
                             </p:dataTable>
 
-                            <p:commandButton icon="ui-icon-plusthick" />
-                            <p:dialog header="Enter Audio Info" widgetVar="audioVar"
-                                      resizable="false" modal="true">
-                            <h:panelGrid columns="2" columnClasses="label,value">
-                                <h:outputLabel for="audio_title" value="Audio Title" />
-                                <p:inputText id="audio_title"
-                                             value="#{itemInsertMB.audioTitle}" />
+                            <p:commandButton icon="ui-icon-plusthick"
+                                             oncomplete="audioVar.show()" />
+                            <p:dialog id="audio_add_dialog" header="Enter Audio Info"
+                                      widgetVar="audioVar" resizable="false" modal="true">
+                                <h:panelGrid columns="2" columnClasses="label,value">
+                                    <h:outputLabel for="audio_title" value="Audio Title" />
+                                    <p:inputText id="audio_title"
+                                                 value="#{itemInsertMB.audioTitle}" />
 
-                                <h:outputLabel for="audio_url" value="Audio URL" />
-                                <p:inputText id="audio_url"
-                                             value="#{itemInsertMB.audioURL}" />
+                                    <h:outputLabel for="audio_url" value="Audio URL" />
+                                    <p:inputText id="audio_url"
+                                                 value="#{itemInsertMB.audioURL}" />
 
-                                <h:outputLabel for="audio_des" value="Audio Description" />
-                                <p:inputTextarea id="audio_des" autoResize="false"
-                                                 value="#{itemInsertMB.audioDes}" />
-                            </h:panelGrid>
+                                    <h:outputLabel for="audio_des" value="Audio Description" />
+                                    <p:inputTextarea id="audio_des" autoResize="true"
+                                                     value="#{itemInsertMB.audioDes}" />
+
+                                    <p:commandButton value="Add" icon="ui-icon-check"
+                                                     ajax="true" update="audio_list audio_add_dialog"
+                                                     actionListener="#{itemInsertMB.addAudio}"
+                                                     oncomplete="audioVar.hide()"/>
+                                </h:panelGrid>
                             </p:dialog>
                         </p:panel>
                     </p:tab>
@@ -111,23 +118,23 @@
                             <h:messages />
 
                             <h:panelGrid columns="2" columnClasses="label,value">
-                                    <h:outputLabel for="video_title" value="Video Title" />
-                                    <p:inputText id="video_title"
-                                                 value="#{itemInsertMB.videoTitle}" />
+                                <h:outputLabel for="video_title" value="Video Title" />
+                                <p:inputText id="video_title"
+                                             value="#{itemInsertMB.videoTitle}" />
 
-                                    <h:outputLabel for="video_url" value="Video URL" />
-                                    <p:inputText id="video_url"
-                                                 value="#{itemInsertMB.videoURL}" />
+                                <h:outputLabel for="video_url" value="Video URL" />
+                                <p:inputText id="video_url"
+                                             value="#{itemInsertMB.videoURL}" />
 
-                                    <h:outputLabel for="video_des" value="Video Description" />
-                                    <p:inputTextarea id="video_des" autoResize="false"
-                                                     value ="#{itemInsertMB.videoDes}"  />
+                                <h:outputLabel for="video_des" value="Video Description" />
+                                <p:inputTextarea id="video_des" autoResize="false"
+                                                 value ="#{itemInsertMB.videoDes}"  />
 
-                                    <p:commandButton value="Save" update=":msg"
-                                                     icon="ui-icon-check" ajax="true"
-                                                     action="#{itemInsertMB.persist}"/> 
-                                    <p:commandButton value="Cancel"
-                                                     icon="ui-icon-cancel"/>
+                                <p:commandButton value="Save" update=":msg"
+                                                 icon="ui-icon-check" ajax="true"
+                                                 action="#{itemInsertMB.persist}"/> 
+                                <p:commandButton value="Cancel"
+                                                 icon="ui-icon-cancel"/>
                             </h:panelGrid>
                         </p:panel>
                     </p:tab>
