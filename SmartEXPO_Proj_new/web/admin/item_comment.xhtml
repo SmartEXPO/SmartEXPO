@@ -9,14 +9,14 @@
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | Comment</ui:define>
         <ui:define name="content">
-            <p:accordionPanel multiple="true">
-                <p:tab title="All Items">
-                    <p:dataGrid id="all_item" var="show_item" value="#{itemViewManagedBean.items}"
-                                columns="6" rows="18" paginator="true"
-                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                rowsPerPageTemplate="18,36,72">
-                        <p:panel header="#{show_item.itemId}" style="text-align: center">
-                            <h:form id="form">
+            <h:form id="form">
+                <p:accordionPanel multiple="true">
+                    <p:tab title="All Items">
+                        <p:dataGrid id="all_item" var="show_item" value="#{itemViewManagedBean.items}"
+                                    columns="6" rows="18" paginator="true"
+                                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="18,36,72">
+                            <p:panel header="#{show_item.itemId}" style="text-align: center">
                                 <h:panelGrid columns="1" style="width: 100%;">
 
                                     <h:graphicImage value="#{show_item.imageurl}" />
@@ -26,19 +26,17 @@
                                     <p:commandLink value="Detail Comments"
                                                    oncomplete="itemDialog.show()"
                                                    title="View Detail"
-                                                   update=":item_comments_form:item_comments_list"
+                                                   update="@form"
                                                    action="#{commentViewManagedBean.showDetialComments}">
                                         <f:setPropertyActionListener value="#{show_item}"
                                                                      target="#{commentViewManagedBean.selectedItem}" />
                                     </p:commandLink>
                                 </h:panelGrid>
-                            </h:form>
-                        </p:panel>
-                    </p:dataGrid>
+                            </p:panel>
+                        </p:dataGrid>
 
-                    <p:dialog header="Item Detail" widgetVar="itemDialog"
-                              resizable="false" modal="true">
-                        <h:form id="item_comments_form">
+                        <p:dialog header="Item Detail" widgetVar="itemDialog"
+                                  resizable="false" modal="true">
                             <p:dataTable id="item_comments_list"
                                          value="#{commentViewManagedBean.selectedItemComments}"
                                          var="com" paginator="true" rows="10"
@@ -65,7 +63,8 @@
                                 </p:column>
 
                                 <p:column headerText="Operation" style="width: 15%; text-align: center">
-                                    <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
+                                    <p:commandButton value="Destroy" update="item_comments_list"
+                                                     icon="ui-icon-notice"
                                                      action="#{commentViewManagedBean.destroyComment}">
                                         <f:setPropertyActionListener value="#{com}"
                                                                      target="#{commentViewManagedBean.selectedComment}" />
@@ -76,12 +75,10 @@
                                     Total #{commentViewManagedBean.count} comments
                                 </f:facet>
                             </p:dataTable>
-                        </h:form>
-                    </p:dialog>
-                </p:tab>
-                <p:tab title="All Comments">
-                    <h:form id="all_comments_form">
-                        <p:dataTable value="#{commentViewManagedBean.allComments}"
+                        </p:dialog>
+                    </p:tab>
+                    <p:tab title="All Comments">
+                        <p:dataTable id="all_item_list" value="#{commentViewManagedBean.allComments}"
                                      var="com" paginator="true" rows="10"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                                      rowsPerPageTemplate="10,20,30,50,100">
@@ -97,7 +94,7 @@
                             <p:column headerText="Item">
                                 <p:commandLink id="view_detail_link"
                                                value="item name + Detail"
-                                               update="item_detail"
+                                               update="@form"
                                                action="#{commentViewManagedBean.showItemDetail}">
                                     <f:setPropertyActionListener value="#{com}"
                                                                  target="#{commentViewManagedBean.selectedComment}" />
@@ -150,8 +147,8 @@
                                 <h:outputText value="#{com.content}" />
                             </p:column>
 
-                            <p:column headerText="Operation" style="width: 15%; text-align: center">
-                                <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
+                            <p:column headerText="Operation">
+                                <p:commandButton value="Destroy" update="all_item_list" icon="ui-icon-notice"
                                                  action="#{commentViewManagedBean.destroyComment}">
                                     <f:setPropertyActionListener value="#{com}"
                                                                  target="#{commentViewManagedBean.selectedComment}" />
@@ -162,9 +159,9 @@
                                 Total #{commentViewManagedBean.count} comments
                             </f:facet>
                         </p:dataTable>
-                    </h:form>
-                </p:tab>
-            </p:accordionPanel>
+                    </p:tab>
+                </p:accordionPanel>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>
