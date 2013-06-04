@@ -83,6 +83,7 @@ public class InsertItemServlet extends HttpServlet {
             Item item = new Item();
             item.setArea("Area 1");
             item.setImageurl("http:///");
+            item.setHtml("asdfhoashdfasopfhsahdofhasohfphaspfhapsdhfhasdiofhsaoipdhfopashdofiha");
             item.setItemName(request.getParameter("item_name"));
             Description des = new Description();
             des.setContent(request.getParameter("des_content"));

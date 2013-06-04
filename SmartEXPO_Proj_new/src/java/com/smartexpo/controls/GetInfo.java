@@ -298,4 +298,28 @@ public class GetInfo {
     }
     
     
+    public List<Item> getItemsByItemName(String name){
+        List<Item> items=em.createNamedQuery("Item.findByItemName").setParameter("itemName", name).getResultList();
+        return items;
+    }
+    
+    
+    public Comment getLastComment(int itemId){
+        List<Comment> comments = getCommentByItemID(itemId);
+        Comment c= comments.get(0);
+        for(int i=0;i<comments.size();i++){
+            Comment c2=comments.get(i);
+            if(c2.getTime().after(c.getTime())){
+                c=c2;
+            }
+        }
+        return c;
+    }
+    
+    
+    
+    
+    
+    
+    
 }

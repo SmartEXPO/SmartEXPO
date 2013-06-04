@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
     @NamedQuery(name = "Item.findByItemId", query = "SELECT i FROM Item i WHERE i.itemId = :itemId"),
     @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName"),
-    @NamedQuery(name = "Item.findByItemArea", query = "SELECT i FROM Item i WHERE i.area = :itemArea")
+    @NamedQuery(name = "Item.findByItemArea", query = "SELECT i FROM Item i WHERE i.area = :itemArea"),
+    @NamedQuery(name = "Item.findByItemHTML", query = "SELECT i FROM Item i WHERE i.html = :html")
 })
 public class Item implements Serializable {
 
@@ -74,6 +75,19 @@ public class Item implements Serializable {
     private String itemName;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private Description description;
+    
+    
+    @Size(min=1, max=2000)
+    @Column(name="HTML")
+    private String html;
+
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
+    }
     
     @Size(min=1, max = 200)
     @Column(name="ITEM_AREA")
