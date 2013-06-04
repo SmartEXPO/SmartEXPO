@@ -16,13 +16,13 @@ import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.Video;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -35,7 +35,7 @@ import javax.transaction.UserTransaction;
  * @author Boy
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class CommentViewManagedBean implements Serializable {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
@@ -46,9 +46,17 @@ public class CommentViewManagedBean implements Serializable {
     private UserTransaction utx;
     private GetInfo gi;
     private static final Logger LOG = Logger.getLogger(CommentViewManagedBean.class.getName());
-    private List<Comment> comments;
+    private List<Comment> allComments;
+    private List<Comment> selectedItemComments;
     private Comment selectedComment;
     private Item selectedItem;
+
+    /**
+     * Creates a new instance of CommentViewManagedBean
+     */
+    public CommentViewManagedBean() {
+        selectedItemComments = new ArrayList<Comment>();
+    }
 
     public Item getSelectedItem() {
         return selectedItem;
@@ -179,35 +187,29 @@ public class CommentViewManagedBean implements Serializable {
     private String VideoTitle;
 
     /**
-     * Creates a new instance of CommentViewManagedBean
+     * @return the allComments
      */
-    public CommentViewManagedBean() {
-    }
-
-    /**
-     * @return the comments
-     */
-    public List<Comment> getComments() {
-        if (comments == null) {
+    public List<Comment> getAllComments() {
+        if (allComments == null) {
             gi = new GetInfo(emf, utx);
             CommentJpaController cjc = new CommentJpaController(utx, emf);
-            comments = cjc.findCommentEntities();
+            allComments = cjc.findCommentEntities();
             /*if(selectedItem!=null){
-             comments= gi.getCommentByItemID(selectedItem.getItemId());
+             allComments= gi.getCommentByItemID(selectedItem.getItemId());
              }else{
              LOG.log(Level.WARNING, "selectedItem  = null");
              }*/
 
         }
-        //LOG.log(Level.WARNING,"comment num:"+comments.size());
-        return comments;
+        //LOG.log(Level.WARNING,"comment num:"+allComments.size());
+        return allComments;
     }
 
     /**
-     * @param comments the comments to set
+     * @param allComments the allComments to set
      */
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setAllComments(List<Comment> allComments) {
+        this.allComments = allComments;
     }
 
     /**
@@ -225,7 +227,7 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public int getCount() {
-        return getComments().size();
+        return getAllComments().size();
     }
 
     public void destroyComment() {
@@ -240,7 +242,7 @@ public class CommentViewManagedBean implements Serializable {
             for (int i = 0; i < itemComments.size(); i++) {
                 icjc.destroy(itemComments.get(i).getItemCommentId());
             }
-            comments.remove(c);
+            allComments.remove(c);
 
             //icjc.destroy(ic.getItemCommentId());
             CommentJpaController cjc = new CommentJpaController(utx, emf);
@@ -256,15 +258,29 @@ public class CommentViewManagedBean implements Serializable {
         }
     }
 
-    // All Comments中的detail选项，根据selectdComment找到相应item并显示出来
+    // All Comments中的detail选项，根据selectdComment找到相应item并将其属性设置为selectedItem的属性
     public void showItemDetail() {
     }
 
-    // All Items中的detail comments选项，根据selectedItem找到相应的comment，并加入到一个新的list中
+    // All Items中的detail comments选项，根据selectedItem找到相应的comment，并加入到selectedItemComments这个list中
     public void showDetialComments() {
         gi = new GetInfo(emf, utx);
         List<Comment> comments = gi.getCommentByItemID(selectedItem.getItemId());
         LOG.log(Level.WARNING, "comments size:{0}", comments.size());
-        this.comments = comments;
+        this.allComments = comments;
+    }
+
+    /**
+     * @return the selectedItemComments
+     */
+    public List<Comment> getSelectedItemComments() {
+        return selectedItemComments;
+    }
+
+    /**
+     * @param selectedItemComments the selectedItemComments to set
+     */
+    public void setSelectedItemComments(List<Comment> selectedItemComments) {
+        this.selectedItemComments = selectedItemComments;
     }
 }

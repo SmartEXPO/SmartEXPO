@@ -26,6 +26,7 @@
                                     <p:commandLink value="Detail Comments"
                                                    oncomplete="itemDialog.show()"
                                                    title="View Detail"
+                                                   update=":item_comments_form:item_comments_list"
                                                    action="#{commentViewManagedBean.showDetialComments}">
                                         <f:setPropertyActionListener value="#{show_item}"
                                                                      target="#{commentViewManagedBean.selectedItem}" />
@@ -38,7 +39,8 @@
                     <p:dialog header="Item Detail" widgetVar="itemDialog"
                               resizable="false" modal="true">
                         <h:form id="item_comments_form">
-                            <p:dataTable value="#{commentViewManagedBean.comments}"
+                            <p:dataTable id="item_comments_list"
+                                         value="#{commentViewManagedBean.selectedItemComments}"
                                          var="com" paginator="true" rows="10"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                                          rowsPerPageTemplate="10,20,30,50">
@@ -79,7 +81,7 @@
                 </p:tab>
                 <p:tab title="All Comments">
                     <h:form id="all_comments_form">
-                        <p:dataTable value="#{commentViewManagedBean.comments}"
+                        <p:dataTable value="#{commentViewManagedBean.allComments}"
                                      var="com" paginator="true" rows="10"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                                      rowsPerPageTemplate="10,20,30,50,100">
@@ -95,42 +97,43 @@
                             <p:column headerText="Item">
                                 <p:commandLink id="view_detail_link"
                                                value="item name + Detail"
+                                               update="item_detail"
                                                action="#{commentViewManagedBean.showItemDetail}">
                                     <f:setPropertyActionListener value="#{com}"
                                                                  target="#{commentViewManagedBean.selectedComment}" />
                                 </p:commandLink>
 
                                 <p:tooltip id="item_detail" for="view_detail_link" showEvent="click">
-                                    <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}" />
+                                    <h:graphicImage value="#{commentViewManagedBean.selectedItem.imageurl}" />
 
                                     <h:panelGrid columns="2" cellpadding="5">
                                         <h:outputLabel for="view_item_id" value="ID: " />
                                         <h:outputText id="view_item_id"
-                                                      value="#{itemViewManagedBean.selectedItem.itemId}" />
+                                                      value="#{commentViewManagedBean.selectedItem.itemId}" />
 
                                         <h:outputLabel for="view_item_name" value="Name: " />
                                         <h:outputText id="view_item_name"
-                                                      value="#{itemViewManagedBean.selectedItem.itemName}" />
+                                                      value="#{commentViewManagedBean.selectedItem.itemName}" />
 
                                         <h:outputLabel for="view_author" value="Author: " />
                                         <h:outputText id="view_author"
-                                                      value="#{itemViewManagedBean.authorName}" />
+                                                      value="#{commentViewManagedBean.authorName}" />
 
                                         <h:outputLabel for="view_author_date" value="Author Date: " />
                                         <h:outputText id="view_author_date"
-                                                      value="#{itemViewManagedBean.authorBirthDate} -- #{itemViewManagedBean.authorDeathDate}" />
+                                                      value="#{commentViewManagedBean.authorBirthDate} -- #{commentViewManagedBean.authorDeathDate}" />
 
                                         <h:outputLabel for="view_author_intro" value="Author Introduction: " />
                                         <h:outputText id="view_author_intro"
-                                                      value="#{itemViewManagedBean.authorIntro}" />
+                                                      value="#{commentViewManagedBean.authorIntro}" />
 
                                         <h:outputLabel for="view_audio_title" value="Audio Title: " />
                                         <h:outputText id="view_audio_title"
-                                                      value="#{itemViewManagedBean.audioTitle}" />
+                                                      value="#{commentViewManagedBean.audioTitle}" />
 
                                         <h:outputLabel for="view_video_title" value="Video Title: " />
                                         <h:outputText id="view_video_title"
-                                                      value="#{itemViewManagedBean.videoTitle}" />
+                                                      value="#{commentViewManagedBean.videoTitle}" />
                                     </h:panelGrid>
                                 </p:tooltip>
                             </p:column>
