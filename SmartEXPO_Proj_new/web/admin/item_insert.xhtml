@@ -71,7 +71,12 @@
                                          value="#{itemInsertMB.audios}"
                                          style="text-align: center;">
                                 <p:column>
-                                    <p:commandButton icon="ui-icon-minusthick" />
+                                    <p:commandButton icon="ui-icon-minusthick"
+                                                     update="audio_list"
+                                                     action="#{itemInsertMB.removeAudio}">
+                                        <f:setPropertyActionListener value="#{audioList}"
+                                                                     target="#{itemInsertMB.selectedAudio}" />
+                                    </p:commandButton>
                                 </p:column>
                                 <p:column headerText="Audio Title">
                                     <h:outputText value="#{audioList.title}" />
@@ -89,6 +94,7 @@
 
                             <p:commandButton icon="ui-icon-plusthick"
                                              oncomplete="audioVar.show()" />
+
                             <p:dialog id="audio_add_dialog" header="Enter Audio Info"
                                       widgetVar="audioVar" resizable="false" modal="true">
                                 <h:panelGrid columns="2" columnClasses="label,value">
@@ -106,7 +112,7 @@
 
                                     <p:commandButton value="Add" icon="ui-icon-check"
                                                      ajax="true" update="audio_list audio_add_dialog"
-                                                     actionListener="#{itemInsertMB.addAudio}"
+                                                     action="#{itemInsertMB.addAudio}"
                                                      oncomplete="audioVar.hide()"/>
                                 </h:panelGrid>
                             </p:dialog>
@@ -117,25 +123,53 @@
                         <p:panel header="Video Information">
                             <h:messages />
 
-                            <h:panelGrid columns="2" columnClasses="label,value">
-                                <h:outputLabel for="video_title" value="Video Title" />
-                                <p:inputText id="video_title"
-                                             value="#{itemInsertMB.videoTitle}" />
+                            <p:dataTable id="video_list" var="videoList"
+                                         value="#{itemInsertMB.videos}"
+                                         style="text-align: center;">
+                                <p:column>
+                                    <p:commandButton icon="ui-icon-minusthick"
+                                                     update="video_list"
+                                                     action="#{itemInsertMB.removeVideo}">
+                                        <f:setPropertyActionListener value="#{videoList}"
+                                                                     target="#{itemInsertMB.selectedVideo}" />
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column headerText="Video Title">
+                                    <h:outputText value="#{videoList.title}" />
+                                </p:column>
+                                <p:column headerText="Video URL">
+                                    <h:outputText value="#{videoList.url}" />
+                                </p:column>
+                                <p:column headerText="Video Description">
+                                    <h:outputText value="#{videoList.description}" />
+                                </p:column>
+                                <f:facet name="footer">
+                                    Total #{itemInsertMB.videoSize} videos.
+                                </f:facet>
+                            </p:dataTable>
 
-                                <h:outputLabel for="video_url" value="Video URL" />
-                                <p:inputText id="video_url"
-                                             value="#{itemInsertMB.videoURL}" />
+                            <p:commandButton icon="ui-icon-plusthick"
+                                             oncomplete="videoVar.show()" />
+                            <p:dialog id="video_add_dialog" header="Enter Video Info"
+                                      widgetVar="videoVar" resizable="false" modal="true">
+                                <h:panelGrid columns="2" columnClasses="label,value">
+                                    <h:outputLabel for="video_title" value="Video Title" />
+                                    <p:inputText id="video_title"
+                                                 value="#{itemInsertMB.videoTitle}" />
 
-                                <h:outputLabel for="video_des" value="Video Description" />
-                                <p:inputTextarea id="video_des" autoResize="false"
-                                                 value ="#{itemInsertMB.videoDes}"  />
+                                    <h:outputLabel for="video_url" value="Video URL" />
+                                    <p:inputText id="video_url"
+                                                 value="#{itemInsertMB.videoURL}" />
 
-                                <p:commandButton value="Save" update=":msg"
-                                                 icon="ui-icon-check" ajax="true"
-                                                 action="#{itemInsertMB.persist}"/> 
-                                <p:commandButton value="Cancel"
-                                                 icon="ui-icon-cancel"/>
-                            </h:panelGrid>
+                                    <h:outputLabel for="video_des" value="Video Description" />
+                                    <p:inputTextarea id="video_des" autoResize="false"
+                                                     value ="#{itemInsertMB.videoDes}"  />
+                                    <p:commandButton value="Add" icon="ui-icon-check"
+                                                     ajax="true" update="video_list video_add_dialog"
+                                                     action="#{itemInsertMB.addVideo}"
+                                                     oncomplete="videoVar.hide()" />
+                                </h:panelGrid>                                
+                            </p:dialog>
                         </p:panel>
                     </p:tab>
                 </p:wizard>

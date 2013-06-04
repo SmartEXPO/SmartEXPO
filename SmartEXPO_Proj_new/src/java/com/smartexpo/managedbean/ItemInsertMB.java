@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.HeuristicMixedException;
@@ -39,7 +38,8 @@ import org.primefaces.event.FlowEvent;
 @ManagedBean
 @SessionScoped
 public class ItemInsertMB implements Serializable {
-    
+
+    private static final Logger LOG = Logger.getLogger(ItemInsertMB.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
@@ -54,232 +54,228 @@ public class ItemInsertMB implements Serializable {
     private String authorIntro;
     private List<Audio> audios;
     private List<Video> videos;
+    private Video selectedVideo;
     private Video video;
+    private Audio selectedAudio;
     private Audio audio;
     private Author author;
     private String imageurl;
     private String audioTitle;
-    
-    public String getItemName() {
-        return itemName;
-    }
-    
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-    
-    public String getDesTitle() {
-        return desTitle;
-    }
-    
-    public void setDesTitle(String desTitle) {
-        this.desTitle = desTitle;
-    }
-    
-    public String getDesContent() {
-        return desContent;
-    }
-    
-    public void setDesContent(String desContent) {
-        this.desContent = desContent;
-    }
-    
-    public List<Author> getAuthors() {
-        return authors;
-    }
-    
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
-    }
-    
-    public String getAuthorName() {
-        return authorName;
-    }
-    
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-    
-    public Date getAuthorBirth() {
-        return authorBirth;
-    }
-    
-    public void setAuthorBirth(Date authorBirth) {
-        this.authorBirth = authorBirth;
-    }
-    
-    public Date getAuthorDeath() {
-        return authorDeath;
-    }
-    
-    public void setAuthorDeath(Date authorDeath) {
-        this.authorDeath = authorDeath;
-    }
-    
-    public String getAuthorIntro() {
-        return authorIntro;
-    }
-    
-    public void setAuthorIntro(String authorIntro) {
-        this.authorIntro = authorIntro;
-    }
-    
-    public List<Audio> getAudios() {
-        return audios;
-    }
-    
-    public void setAudios(List<Audio> audios) {
-        this.audios = audios;
-    }
-    
-    public List<Video> getVideos() {
-        return videos;
-    }
-    
-    public void setVideos(List<Video> videos) {
-        this.videos = videos;
-    }
-    
-    public Video getVideo() {
-        return video;
-    }
-    
-    public void setVideo(Video video) {
-        this.video = video;
-    }
-    
-    public Audio getAudio() {
-        return audio;
-    }
-    
-    public void setAudio(Audio audio) {
-        this.audio = audio;
-    }
-    
-    public Author getAuthor() {
-        return author;
-    }
-    
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-    
-    public String getImageurl() {
-        return imageurl;
-    }
-    
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
-    }
-    
-    public String getAudioTitle() {
-        return audioTitle;
-    }
-    
-    public void setAudioTitle(String audioTitle) {
-        this.audioTitle = audioTitle;
-    }
-    
-    public String getAudioURL() {
-        return audioURL;
-    }
-    
-    public void setAudioURL(String audioURL) {
-        this.audioURL = audioURL;
-    }
-    
-    public String getAudioDes() {
-        return audioDes;
-    }
-    
-    public void setAudioDes(String audioDes) {
-        this.audioDes = audioDes;
-    }
-    private String audioURL;
-    private String audioDes;
-    private String videoTitle;
-    
-    public String getVideoTitle() {
-        return videoTitle;
-    }
-    
-    public void setVideoTitle(String videoTitle) {
-        this.videoTitle = videoTitle;
-    }
-    
-    public String getVideoURL() {
-        return videoURL;
-    }
-    
-    public void setVideoURL(String videoURL) {
-        this.videoURL = videoURL;
-    }
-    
-    public String getVideoDes() {
-        return videoDes;
-    }
-    
-    public void setVideoDes(String videoDes) {
-        this.videoDes = videoDes;
-    }
-    private String videoURL;
-    private String videoDes;
 
     /**
      * Creates a new instance of ItemInsertMB
      */
     public ItemInsertMB() {
         audios = new ArrayList<Audio>();
-        for (int i = 0; i < 20; i++) {
-            Audio audio = new Audio();
-            audio.setTitle("WAWAWA " + i);
-            audio.setUrl("httppppppppppp://" + i * i);
-            audio.setDescription("deeeeeescrippppppptionnnnnnn" + i * i * i);
-            audios.add(audio);
-        }
+        videos = new ArrayList<Video>();
     }
-    
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getDesTitle() {
+        return desTitle;
+    }
+
+    public void setDesTitle(String desTitle) {
+        this.desTitle = desTitle;
+    }
+
+    public String getDesContent() {
+        return desContent;
+    }
+
+    public void setDesContent(String desContent) {
+        this.desContent = desContent;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public Date getAuthorBirth() {
+        return authorBirth;
+    }
+
+    public void setAuthorBirth(Date authorBirth) {
+        this.authorBirth = authorBirth;
+    }
+
+    public Date getAuthorDeath() {
+        return authorDeath;
+    }
+
+    public void setAuthorDeath(Date authorDeath) {
+        this.authorDeath = authorDeath;
+    }
+
+    public String getAuthorIntro() {
+        return authorIntro;
+    }
+
+    public void setAuthorIntro(String authorIntro) {
+        this.authorIntro = authorIntro;
+    }
+
+    public List<Audio> getAudios() {
+        return audios;
+    }
+
+    public void setAudios(List<Audio> audios) {
+        this.audios = audios;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
+    }
+
+    public Audio getAudio() {
+        return audio;
+    }
+
+    public void setAudio(Audio audio) {
+        this.audio = audio;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
+
+    public String getAudioTitle() {
+        return audioTitle;
+    }
+
+    public void setAudioTitle(String audioTitle) {
+        this.audioTitle = audioTitle;
+    }
+
+    public String getAudioURL() {
+        return audioURL;
+    }
+
+    public void setAudioURL(String audioURL) {
+        this.audioURL = audioURL;
+    }
+
+    public String getAudioDes() {
+        return audioDes;
+    }
+
+    public void setAudioDes(String audioDes) {
+        this.audioDes = audioDes;
+    }
+    private String audioURL;
+    private String audioDes;
+    private String videoTitle;
+
+    public String getVideoTitle() {
+        return videoTitle;
+    }
+
+    public void setVideoTitle(String videoTitle) {
+        this.videoTitle = videoTitle;
+    }
+
+    public String getVideoURL() {
+        return videoURL;
+    }
+
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
+    }
+
+    public String getVideoDes() {
+        return videoDes;
+    }
+
+    public void setVideoDes(String videoDes) {
+        this.videoDes = videoDes;
+    }
+    private String videoURL;
+    private String videoDes;
+
     public void persist() {
         try {
             Item item = new Item();
             item.setItemName(itemName);
             item.setImageurl(imageurl);
-            
+
             Description description = new Description();
             description.setTitle(desTitle);
             description.setContent(desContent);
             description.setItemId(item);
-            
+
             Author author = new Author();
             author.setName(authorName);
             author.setBirthday(authorBirth);
             author.setDeathDate(authorDeath);
             author.setIntroduction(authorIntro);
-            
+
             ItemAuthor itemAuthor = new ItemAuthor();
             itemAuthor.setItemId(item);
             itemAuthor.setAuthorId(author);
-            
+
             Video video = new Video();
             video.setTitle(videoTitle);
             video.setUrl(videoURL);
             video.setDescription(videoDes);
-            
+
             ItemVideo itemVideo = new ItemVideo();
             itemVideo.setItemId(item);
             itemVideo.setVideoId(video);
-            
+
             Audio audio = new Audio();
             audio.setTitle(audioTitle);
             audio.setDescription(audioDes);
             audio.setUrl(audioURL);
-            
+
             ItemAudio itemAudio = new ItemAudio();
             itemAudio.setAudioId(audio);
             itemAudio.setItemId(item);
-            
+
             utx.begin();
-            
+
             em.persist(item);
             em.persist(audio);
             em.persist(author);
@@ -288,7 +284,7 @@ public class ItemInsertMB implements Serializable {
             em.persist(itemAuthor);
             em.persist(itemVideo);
             em.persist(description);
-            
+
             utx.commit();
         } catch (NotSupportedException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
@@ -306,22 +302,72 @@ public class ItemInsertMB implements Serializable {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
     }
-    
+
     public int getAudioSize() {
         return audios.size();
     }
-    
+
+    public int getVideoSize() {
+        return videos.size();
+    }
+
     // Audio多值添加处，结果暂存储于audios列表中
-    public void addAudio(ActionEvent event) {
+    public void addAudio() {
         Audio audio = new Audio();
         audio.setTitle(audioTitle);
         audio.setUrl(audioURL);
         audio.setDescription(audioDes);
         audios.add(audio);
         audioTitle = audioURL = audioDes = null;
+    }
+
+    public void removeAudio() {
+        audios.remove(selectedAudio);
+    }
+
+    // Video多值添加处，结果暂存于videos列表中
+    public void addVideo() {
+        Video video = new Video();
+        video.setTitle(videoTitle);
+        video.setUrl(videoURL);
+        video.setDescription(videoDes);
+        videos.add(video);
+        videoTitle = videoURL = videoDes = null;
+    }
+
+    public void removeVideo() {
+        videos.remove(selectedVideo);
+    }
+
+    /**
+     * @return the selectedAudio
+     */
+    public Audio getSelectedAudio() {
+        return selectedAudio;
+    }
+
+    /**
+     * @param selectedAudio the selectedAudio to set
+     */
+    public void setSelectedAudio(Audio selectedAudio) {
+        this.selectedAudio = selectedAudio;
+    }
+
+    /**
+     * @return the selectedVideo
+     */
+    public Video getSelectedVideo() {
+        return selectedVideo;
+    }
+
+    /**
+     * @param selectedVideo the selectedVideo to set
+     */
+    public void setSelectedVideo(Video selectedVideo) {
+        this.selectedVideo = selectedVideo;
     }
 }
