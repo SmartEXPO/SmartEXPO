@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -34,7 +35,7 @@ import javax.transaction.UserTransaction;
  * @author Boy
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class CommentViewManagedBean implements Serializable {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
@@ -257,9 +258,14 @@ public class CommentViewManagedBean implements Serializable {
 
     // All Comments中的detail选项，根据selectdComment找到相应item并显示出来
     public void showItemDetail() {
+        
     }
 
     // All Items中的detail comments选项，根据selectedItem找到相应的comment，并加入到一个新的list中
     public void showDetialComments() {
+        gi = new GetInfo(emf, utx);
+        List<Comment> comments=gi.getCommentByItemID(selectedItem.getItemId());
+        LOG.log(Level.WARNING,"comments size:"+comments.size());
+        this.comments=comments;
     }
 }
