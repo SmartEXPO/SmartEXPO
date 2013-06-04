@@ -25,9 +25,10 @@
 
                                     <p:commandLink value="Detail Comments"
                                                    oncomplete="itemDialog.show()"
-                                                   title="View Detail">
+                                                   title="View Detail"
+                                                   action="#{commentViewManagedBean.showDetialComments}">
                                         <f:setPropertyActionListener value="#{show_item}"
-                                                                     target="#{itemViewManagedBean.selectedItem}" />
+                                                                     target="#{commentViewManagedBean.selectedItem}" />
                                     </p:commandLink>
                                 </h:panelGrid>
                             </h:form>
@@ -37,43 +38,43 @@
                     <p:dialog header="Item Detail" widgetVar="itemDialog"
                               resizable="false" modal="true">
                         <h:form id="item_comments_form">
-                        <p:dataTable value="#{commentViewManagedBean.comments}"
-                                     var="com" paginator="true" rows="10"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                     rowsPerPageTemplate="10,20,30,50">
-                            <f:facet name="header">
-                                Comments
-                            </f:facet>
+                            <p:dataTable value="#{commentViewManagedBean.comments}"
+                                         var="com" paginator="true" rows="10"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                         rowsPerPageTemplate="10,20,30,50">
+                                <f:facet name="header">
+                                    Comments
+                                </f:facet>
 
-                            <p:column headerText="ID">
-                                <h:outputText value="#{com.commentId}" />
-                            </p:column>
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{com.commentId}" />
+                                </p:column>
 
-                            <p:column headerText="Username">
-                                <h:outputText value="#{com.username}" />
-                            </p:column>
+                                <p:column headerText="Username">
+                                    <h:outputText value="#{com.username}" />
+                                </p:column>
 
-                            <p:column headerText="Time">
-                                <h:outputText value="#{com.time}" />
-                            </p:column>
+                                <p:column headerText="Time">
+                                    <h:outputText value="#{com.time}" />
+                                </p:column>
 
-                            <p:column headerText="Content">
-                                <h:outputText value="#{com.content}" />
-                            </p:column>
+                                <p:column headerText="Content">
+                                    <h:outputText value="#{com.content}" />
+                                </p:column>
 
-                            <p:column headerText="Operation" style="width: 15%; text-align: center">
-                                <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
-                                                 action="#{commentViewManagedBean.destroyComment}">
-                                    <f:setPropertyActionListener value="#{com}"
-                                                                 target="#{commentViewManagedBean.selectedComment}" />
-                                </p:commandButton>
-                            </p:column>
+                                <p:column headerText="Operation" style="width: 15%; text-align: center">
+                                    <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
+                                                     action="#{commentViewManagedBean.destroyComment}">
+                                        <f:setPropertyActionListener value="#{com}"
+                                                                     target="#{commentViewManagedBean.selectedComment}" />
+                                    </p:commandButton>
+                                </p:column>
 
-                            <f:facet name="footer">
-                                Total #{commentViewManagedBean.count} comments
-                            </f:facet>
-                        </p:dataTable>
-                    </h:form>
+                                <f:facet name="footer">
+                                    Total #{commentViewManagedBean.count} comments
+                                </f:facet>
+                            </p:dataTable>
+                        </h:form>
                     </p:dialog>
                 </p:tab>
                 <p:tab title="All Comments">
@@ -93,7 +94,8 @@
                             <!--  这部分column为新添加的，用于查看comment对应的item -->
                             <p:column headerText="Item">
                                 <p:commandLink id="view_detail_link"
-                                               value="item name + Detail">
+                                               value="item name + Detail"
+                                               action="#{commentViewManagedBean.showItemDetail}">
                                     <f:setPropertyActionListener value="#{com}"
                                                                  target="#{commentViewManagedBean.selectedComment}" />
                                 </p:commandLink>

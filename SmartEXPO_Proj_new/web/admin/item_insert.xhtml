@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | Insert</ui:define>
@@ -12,8 +13,7 @@
             <h:form>
                 <p:growl id="msg" sticky="true" showDetail="true" />
                 <p:wizard widgetVar="wiz"
-                          flowListener="#{itemInsertMB.onFlowProcess}"
-                          style="font-size: 150%;">
+                          flowListener="#{itemInsertMB.onFlowProcess}">
                     <p:tab id="basic_info" title="Basic Info">
                         <p:panel header="Basic Infomation">
                             <h:messages />
@@ -66,7 +66,29 @@
                     <p:tab id="audio_info" title="Audio Info">
                         <p:panel header="Audio Information">
                             <h:messages />
+                            
+                            <p:dataTable var="audioList" value="#{itemInsertMB.audios}"
+                                         style="text-align: center;">
+                                <p:column>
+                                    <p:commandButton icon="ui-icon-minusthick" />
+                                </p:column>
+                                <p:column headerText="Audio Title">
+                                    <h:outputText value="#{audioList.title}" />
+                                </p:column>
+                                <p:column headerText="Audio URL">
+                                    <h:outputText value="#{audioList.url}" />
+                                </p:column>
+                                <p:column headerText="Audio Description">
+                                    <h:outputText value="#{audioList.description}" />
+                                </p:column>
+                                <f:facet name="footer">
+                                    Total #{itemInsertMB.audioSize} audios.
+                                </f:facet>
+                            </p:dataTable>
 
+                            <p:commandButton icon="ui-icon-plusthick" />
+                            <p:dialog header="Enter Audio Info" widgetVar="audioVar"
+                                      resizable="false" modal="true">
                             <h:panelGrid columns="2" columnClasses="label,value">
                                 <h:outputLabel for="audio_title" value="Audio Title" />
                                 <p:inputText id="audio_title"
@@ -80,6 +102,7 @@
                                 <p:inputTextarea id="audio_des" autoResize="false"
                                                  value="#{itemInsertMB.audioDes}" />
                             </h:panelGrid>
+                            </p:dialog>
                         </p:panel>
                     </p:tab>
 
