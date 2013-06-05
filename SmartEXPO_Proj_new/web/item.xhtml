@@ -50,7 +50,7 @@
         <div>
             <header id="header">
                 <h:graphicImage id="logo" library="theme1"
-                                name="images/item_logo.png" />
+                                name="images/item_logo.png" onclick="configureInstantComment('a', 'b', 'c', showInstantComment)"/>
                 <nav id="nav">
                     <h:outputLink class="navi" value="map.xhtml">Map</h:outputLink>|
                     <a class="navi" href="#">Info</a>|
@@ -62,7 +62,7 @@
                             </div>
                             <h:outputLink id="show_login" class="navi"
                                           value="#" onclick="popupLogin();
-                                                  void(0);"
+                                        void(0);"
                                           rendered="#{!loginManagedBean.status}">
                                 <h:outputText value="Log In" />
                             </h:outputLink>
@@ -202,14 +202,16 @@
 
                 <input type="button" id="close_panel" value="x"
                        onclick="vanishLogin();
-                                                  void(0);" />
+                                        void(0);" />
             </h:form>
         </div>
-        
+
         <div id="instant_comment">
-            <div id="instant_comment_username" style="color: whitesmoke;">Codinfox says: </div>
-            <div id="instant_comment_content" style="color: whitesmoke;">
-                <p style="text-align: center;color: #dadad2;word-break: break-all;">asdasdfasdfasddsfsad</p>
+            <div id="instant_comment_confine">
+                <div id="instant_comment_username">Codinfox</div>|
+                <div id="instant_comment_time">2013.4.30 15:30</div>
+                <p id="instant_comment_content">asdasdfasdfasddsfsad. asdfsfsafsdfasfssafasdf</p>
+
             </div>
         </div>
 
@@ -219,9 +221,12 @@
                         target="head" />
         <h:outputScript library="theme1" name="scripts/perfect-scrollbar.js"
                         target="head" />
+        <h:outputScript library="theme1" name="scripts/instant_comment.js"
+                        target="head" />
         <h:outputScript library="theme1" name="scripts/item_effect.js"
                         target="head" />
         <h:outputScript library="theme1" name="scripts/login_effect.js"
                         target="head" />
+
     </h:body>
 </html>

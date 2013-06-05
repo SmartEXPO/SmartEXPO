@@ -11,6 +11,7 @@ import com.smartexpo.managedbean.item.Description;
 import com.smartexpo.managedbean.item.Item;
 import com.smartexpo.managedbean.item.Video;
 import com.smartexpo.managedbean.item.Comment;
+import com.smartexpo.models.CommentInfo;
 import com.smartexpo.models.ItemComment;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -90,6 +91,17 @@ public class ItemController implements Serializable {
     private List<String> commentShowUsernameAndContent;
     private String commentuser;
     private String commentcontent;
+    
+    @ManagedProperty(value = "#{overallInfo}")
+    private OverallInfo overallInfo;
+
+    public OverallInfo getOverallInfo() {
+        return overallInfo;
+    }
+
+    public void setOverallInfo(OverallInfo overallInfo) {
+        this.overallInfo = overallInfo;
+    }
     
     public class UsernameContentPair {
         
@@ -520,6 +532,10 @@ public class ItemController implements Serializable {
             newComment.setUsername(commentuser);
             newComment.setContent(commentcontent);
             newComment.setTime(new Date());
+            
+            //itemID 为什么是0
+            overallInfo.updateComment(new CommentInfo(itemBean.getItem().getItemId(), commentuser, new Date(), commentcontent));
+            logger.log(Level.WARNING, "ItemController overall itemId: " + itemID);
             
             ItemComment newIC = new ItemComment();
             newIC.setItemId(itemBean.getItem());

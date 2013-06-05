@@ -8,6 +8,7 @@ var isCommentBarDisplayed = false;
 
 $(document).ready(function() {
     $('#users_comment').perfectScrollbar();
+    initInstantComment();
 
     $(window).scroll(function(e) {
         if (isCommentBarDisplayed) {
