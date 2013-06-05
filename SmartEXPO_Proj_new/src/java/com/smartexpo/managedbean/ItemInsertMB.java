@@ -22,18 +22,20 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
-import sun.net.www.content.image.gif;
 
 /**
  *
@@ -46,16 +48,11 @@ public class ItemInsertMB implements Serializable {
     private static final Logger LOG = Logger.getLogger(ItemInsertMB.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
-    @PersistenceUnit(unitName="SmartEXPO_ProjPU")
+    @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
     EntityManagerFactory emf;
-    
-    
     @Resource
     private UserTransaction utx;
-    
     private GetInfo gi;
-    
-    
     private String itemName;
     private String desTitle;
     private String desContent;
@@ -79,7 +76,7 @@ public class ItemInsertMB implements Serializable {
     private String videoTitle;
     private String videoURL;
     private String videoDes;
-    
+
     /**
      * Creates a new instance of ItemInsertMB
      */
@@ -252,11 +249,11 @@ public class ItemInsertMB implements Serializable {
     public void persist() {
         try {
             utx.begin();
-            
+
             Item item = new Item();
             item.setItemName(itemName);
             item.setImageurl(imageurl);
-            
+
             em.persist(item);
 
             Description description = new Description();
@@ -265,36 +262,36 @@ public class ItemInsertMB implements Serializable {
             description.setItemId(item);
 
             em.persist(description);
-            
-            for(int i=0;i<authors.size();i++){
-                Author a=authors.get(i);
-                ItemAuthor itemAuthor=new ItemAuthor();
+
+            for (int i = 0; i < authors.size(); i++) {
+                Author a = authors.get(i);
+                ItemAuthor itemAuthor = new ItemAuthor();
                 itemAuthor.setItemId(item);
                 itemAuthor.setAuthorId(a);
                 em.persist(a);
                 em.persist(itemAuthor);
             }
-            
-            for(int i=0;i<videos.size();i++){
-                Video v=videos.get(i);
-                ItemVideo iv=new ItemVideo();
+
+            for (int i = 0; i < videos.size(); i++) {
+                Video v = videos.get(i);
+                ItemVideo iv = new ItemVideo();
                 iv.setItemId(item);
                 iv.setVideoId(v);
                 em.persist(v);
                 em.persist(iv);
             }
-            
-            for(int i=0;i<audios.size();i++){
-                Audio a=audios.get(i);
-                ItemAudio ia=new ItemAudio();
+
+            for (int i = 0; i < audios.size(); i++) {
+                Audio a = audios.get(i);
+                ItemAudio ia = new ItemAudio();
                 ia.setItemId(item);
                 ia.setAudioId(a);
                 em.persist(a);
                 em.persist(ia);
             }
 
-
             utx.commit();
+
         } catch (NotSupportedException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SystemException ex) {
@@ -310,6 +307,13 @@ public class ItemInsertMB implements Serializable {
         } catch (IllegalStateException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        session.invalidate();
+
+        RequestContext.getCurrentInstance()
+                .execute(("alert('Insert Successfully!');location.reload(true)"));
     }
 
     public String onFlowProcess(FlowEvent event) {
@@ -335,8 +339,8 @@ public class ItemInsertMB implements Serializable {
         author.setDeathDate(authorDeath);
         author.setIntroduction(authorIntro);
         authors.add(author);
-        
-        
+
+
         authorName = authorIntro = null;
         authorBirth = authorDeath = null;
     }

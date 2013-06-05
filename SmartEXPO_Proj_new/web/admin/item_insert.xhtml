@@ -190,6 +190,10 @@
 
                             <p:commandButton icon="ui-icon-plusthick"
                                              oncomplete="videoVar.show()" />
+                            <p:commandButton icon="ui-icon-check" update="msg"
+                                             value="Submit"
+                                             action="#{itemInsertMB.persist}"
+                                             style="position: relative; left: 150px;"/>
 
                             <p:dialog id="video_add_dialog" header="Enter Video Info"
                                       widgetVar="videoVar" resizable="false" modal="true">
@@ -209,10 +213,26 @@
                                                      ajax="true" update="video_list video_add_dialog"
                                                      action="#{itemInsertMB.addVideo}"
                                                      oncomplete="videoVar.hide()" />
-                                </h:panelGrid>                                
+                                </h:panelGrid>
                             </p:dialog>
                         </p:panel>
                     </p:tab>
+
+                    <p:dialog id="check_and_submit" header="Check and Submit"
+                              widgetVar="submitVar" resizable="false" modal="true">
+                        <h:graphicImage value="#{itemInsertMB.imageurl}" />
+                        
+                        <h:panelGrid columns="2">
+                            
+                        </h:panelGrid>
+                        <h:outputText value="#{itemInsertMB.itemName}" />
+
+                        <h:outputText value="#{itemInsertMB.desTitle}" />
+                        <h:outputText value="#{itemInsertMB.desContent}" />
+
+                        <p:commandButton value="Submit" update="msg"
+                                         action="#{itemInsertMB.persist}" />
+                    </p:dialog>
                 </p:wizard>
             </h:form>
         </ui:define>
