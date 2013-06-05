@@ -263,6 +263,9 @@ public class CommentViewManagedBean implements Serializable {
 
     // All Items中的detail comments选项，根据selectedItem找到相应的comment，并加入到selectedItemComments这个list中
     public void showDetialComments() {
+        gi=new GetInfo(emf, utx);
+        List<Comment> comments=gi.getCommentByItemID(selectedItem.getItemId());
+        this.selectedItemComments=comments;
     }
 
     /**
