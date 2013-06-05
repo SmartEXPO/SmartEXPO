@@ -28,9 +28,9 @@
             var description1 = "#{indexManagedBean.showItemsDescriptions[0].content}";
             var description2 = "#{indexManagedBean.showItemsDescriptions[1].content}";
             var description3 = "#{indexManagedBean.showItemsDescriptions[2].content}";
-            info[0] = new infotemplate("#{indexManagedBean.showItems[0].itemName}", "./javax.faces.resource/images/item.png?ln=theme1&v=1_0", description1);
-            info[1] = new infotemplate("#{indexManagedBean.showItems[1].itemName}", "./javax.faces.resource/images/item1.png?ln=theme1&v=1_0", description2);
-            info[2] = new infotemplate("#{indexManagedBean.showItems[2].itemName}", "./javax.faces.resource/images/item2.png?ln=theme1&v=1_0", description3);
+            info[0] = new infotemplate("#{indexManagedBean.showItems[0].itemName}", "#{indexManagedBean.showItems[0].imageurl}", description1);
+            info[1] = new infotemplate("#{indexManagedBean.showItems[1].itemName}", "#{indexManagedBean.showItems[1].imageurl}", description2);
+            info[2] = new infotemplate("#{indexManagedBean.showItems[2].itemName}", "#{indexManagedBean.showItems[2].imageurl}", description3);
             //]]>
         </script>
         <title>SmartEXPO</title>
@@ -56,7 +56,7 @@
                 </div>
                 <div id="frame">
                     <h:graphicImage class="frame_content" library="theme1" name="images/frame.png" />
-                    <h:graphicImage id="display_item" library="theme1" name="images/item.png" />
+                    <h:graphicImage id="display_item" value="#{indexManagedBean.showItems[0].imageurl}" />
                     <h:graphicImage class="frame_content" library="theme1" name="images/framehl.png" />
                 </div>
                 <div id="detail">
@@ -110,13 +110,21 @@
                                 </tr>
                                 <tr>
                                     <td style="width:11px;height:80px;"></td>
-                                    <td style="width:120px;height:80px;">120*80px</td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:graphicImage value="#{indexManagedBean.recommendItems[0].imageurl}" />
+                                    </td>
                                     <td style="width:15px;height:80px;"></td>
-                                    <td style="width:120px;height:80px;">120*80px</td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:graphicImage value="#{indexManagedBean.recommendItems[1].imageurl}" />
+                                    </td>
                                     <td style="width:15px;height:80px;"></td>
-                                    <td style="width:120px;height:80px;">120*80px</td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:graphicImage value="#{indexManagedBean.recommendItems[2].imageurl}" />
+                                    </td>
                                     <td style="width:15px;height:80px;"></td>
-                                    <td style="width:120px;height:80px;">120*80px</td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:graphicImage value="#{indexManagedBean.recommendItems[3].imageurl}" />
+                                    </td>
                                     <td style="width:11px;height:80px;"></td>
                                 </tr>
                                 <tr>

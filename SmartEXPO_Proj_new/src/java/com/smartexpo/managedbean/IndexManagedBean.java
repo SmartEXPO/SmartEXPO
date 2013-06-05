@@ -71,7 +71,12 @@ public class IndexManagedBean {
 
         // Recommended Items
         for (int i = 0; i < 4; i++) {
-            recommendItems.add(allItems.get((int) Math.random() * allItems.size()));
+            int randomNum = (int) (Math.random() * allItems.size());
+            LOG.log(Level.WARNING, "Recommend Item Number = " + randomNum);
+            Item tmpItem = allItems.get(randomNum);
+            int itemID = tmpItem.getItemId();
+            
+            getRecommendItems().add(tmpItem);
         }
     }
 
