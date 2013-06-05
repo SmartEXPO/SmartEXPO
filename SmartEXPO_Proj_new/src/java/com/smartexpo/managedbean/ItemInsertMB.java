@@ -73,6 +73,11 @@ public class ItemInsertMB implements Serializable {
      */
     public ItemInsertMB() {
         authors = new ArrayList<Author>();
+        for (int i = 0; i < 20; i++) {
+            Author author = new Author();
+            author.setName("Author " + i);
+            authors.add(author);
+        }
         audios = new ArrayList<Audio>();
         videos = new ArrayList<Video>();
     }
@@ -333,7 +338,13 @@ public class ItemInsertMB implements Serializable {
     }
 
     public void removeAuthor() {
-        authors.remove(selectedAuthor);
+        for (int i = 0; i < authors.size(); i++) {
+            Author tmpAuthor = authors.get(i);
+            if (tmpAuthor.getName().equals(selectedAuthor.getName())) {
+                authors.remove(i);
+            }
+        }
+//        authors.remove(selectedAuthor);
     }
 
     // Audio多值添加处，结果暂存储于audios列表中
