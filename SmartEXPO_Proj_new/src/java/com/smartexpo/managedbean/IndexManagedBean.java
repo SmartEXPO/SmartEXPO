@@ -60,7 +60,7 @@ public class IndexManagedBean {
         // 主页用于切换的Items
         for (int i = 0; i < 3; i++) {
             int randomNum = (int) (Math.random() * allItems.size());
-            LOG.log(Level.WARNING, "Item Number = " + randomNum);
+            LOG.log(Level.WARNING, "Item Number = {0}", randomNum);
             Item tmpItem = allItems.get(randomNum);
             int itemID = tmpItem.getItemId();
             Description des = gi.getDescriptionByItemID(itemID).get(0);
@@ -72,10 +72,10 @@ public class IndexManagedBean {
         // Recommended Items
         for (int i = 0; i < 4; i++) {
             int randomNum = (int) (Math.random() * allItems.size());
-            LOG.log(Level.WARNING, "Recommend Item Number = " + randomNum);
+            LOG.log(Level.WARNING, "Recommend Item Number = {0}", randomNum);
             Item tmpItem = allItems.get(randomNum);
             int itemID = tmpItem.getItemId();
-            
+
             getRecommendItems().add(tmpItem);
         }
     }

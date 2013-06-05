@@ -20,12 +20,18 @@
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-        <h:outputStylesheet library="theme1" name="css/style.css" />
-        <h:outputStylesheet library="theme1" name="css/item_style.css" />
-        <h:outputStylesheet library="theme1" name="css/header_style.css" />
-        <h:outputStylesheet library="theme1" name="css/perfect-scrollbar.css" />
+        <f:loadBundle basename="com.smartexpo.bundle.Item" var="itemBundle" />
 
-        <title>SmartEXPO</title>
+        <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/item_style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/header_style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/perfect-scrollbar.css" />
+
+        <title>
+            <h:outputFormat value="#{itemBundle.title}">
+                <f:param value="#{itemController.itemName}" />
+            </h:outputFormat>
+        </title>
 
         <style>
             h1.content_title {
@@ -47,12 +53,12 @@
     <h:body>
         <div>
             <header id="header">
-                <h:graphicImage id="logo" library="theme1"
+                <h:graphicImage id="logo" library="#{info.lib}"
                                 name="images/item_logo.png" />
                 <nav id="nav">
-                    <h:outputLink class="navi" value="map.xhtml">Map</h:outputLink>|
-                    <a class="navi" href="#">Info</a>|
-                    <a class="navi" href="#">Contact</a>
+                    <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
+                    <a class="navi" href="#">#{info['navigator.info']}</a>|
+                    <a class="navi" href="#">#{info['navigator.contact']}</a>
                     <div id="login">
                         <h:form id="log_form">
                             <div>
@@ -82,21 +88,21 @@
                 <div id="contentwrapper">
                     <div id="description">
                         <br/>
-                        <h1 class="content_title">Description</h1>
+                        <h1 class="content_title">#{itemBundle.description}</h1>
                         <p id="description_content">
                             #{itemController.descriptionBean.content}
                             #{itemController.audioBean.descriptions[0]}
                             #{itemController.videoBean.descriptions[0]}
                         </p>
-                        <h1 class="content_title">video</h1>
+                        <h1 class="content_title">#{itemBundle.video}</h1>
                         <video width="320" height="240" controls="controls">
                             <source src="http://www.w3school.com.cn/i/movie.ogg"
                                     type="video/ogg" />
                             <source src="http://www.w3school.com.cn/i/movie.mp4"
                                     type="video/mp4" />
-                            Your browser does not support the video tag.
+                            #{itemBundle.videoSupportErrorMsg}
                         </video>
-                        <h1 class="content_title">See Also</h1>
+                        <h1 class="content_title">#{itemBundle.seeAlso}</h1>
                         <p>This is the content of see also</p>
                         <br/>
                         <br/>
@@ -106,11 +112,11 @@
 
                     <!--<div id="content_fixed" style="position:relative;width:1024px;">-->
                     <div id="frame" class="content_fixed">
-                        <h:graphicImage id="frame_back" library="theme1"
+                        <h:graphicImage id="frame_back" library="#{info.lib}"
                                         name="images/item_frame.png" />
-                        <!--                        <h:graphicImage id="frame_image" library="theme1"
+                        <!--                        <h:graphicImage id="frame_image" library="#{info.lib}"
                                                                 name="xxx" />-->
-                        <h:graphicImage id="frame_highlight" library="theme1"
+                        <h:graphicImage id="frame_highlight" library="#{info.lib}"
                                         name="images/item_frame_highlight.png" />
                     </div>
                     <div class="content_fixed">
@@ -127,7 +133,7 @@
             </div>
 
             <footer>
-                Copyright &#169; 2013 by SmartEXPO orgnization.
+                <h:outputText value="#{info.footer}" escape="false"/>
             </footer>
         </div>
 
@@ -136,7 +142,7 @@
                 <div id="search_result">
                     here we put search results, using ajax
                 </div>
-                <h:graphicImage id="search_img" library="theme1"
+                <h:graphicImage id="search_img" library="#{info.lib}"
                                 name="images/item_search_button.png" />
                 <h:inputText id="search_box" class="func_input_box search" />
             </div>
@@ -159,7 +165,7 @@
                         </h:form>
                     </div>
                 </div>
-                <h:graphicImage id="comment_img" library="theme1"
+                <h:graphicImage id="comment_img" library="#{info.lib}"
                                 name="images/item_comment_button.png" />
                 <div id="comment_input">
                     <h:form id="comment_form">
@@ -211,15 +217,15 @@
             </div>
         </div>
 
-        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js"
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/jquery.mousewheel.js"
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.mousewheel.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/perfect-scrollbar.js"
+        <h:outputScript library="#{info.lib}" name="scripts/perfect-scrollbar.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/item_effect.js"
+        <h:outputScript library="#{info.lib}" name="scripts/item_effect.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/login_effect.js"
+        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
                         target="head" />
     </h:body>
 </html>
