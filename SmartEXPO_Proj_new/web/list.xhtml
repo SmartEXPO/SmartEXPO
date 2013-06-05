@@ -44,8 +44,10 @@
         <!-- Header -->
         <div>
             <header id="header">
-                <h:graphicImage id="logo" library="theme1"
-                                name="images/item_logo.png" />
+                <h:outputLink value="index.xhtml">
+                    <h:graphicImage id="logo" library="theme1"
+                                    name="images/item_logo.png" />
+                </h:outputLink>
                 <nav id="nav">
                     <h:outputLink class="navi" value="map.xhtml">Map</h:outputLink>|
                     <a class="navi" href="#">Info</a>|
@@ -274,7 +276,7 @@
             </section>
             <!-- Footer -->
             <footer>
-                Copyright &#169; 2013 by SmartEXPO orgnization.
+                <h:outputText value="#{info.footer}" escape="false"/>
             </footer>
         </div>
 

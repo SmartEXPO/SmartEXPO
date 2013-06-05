@@ -57,7 +57,10 @@
                 <h:outputLink class="navi">Map</h:outputLink>|
                 <a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
             </nav>
-            <h:graphicImage id="logo" library="theme1" name="images/logo.png" alt="SmartEXPO" />
+            <h:outputLink value="index.xhtml">
+                <h:graphicImage id="logo" library="theme1"
+                                name="images/logo.png" alt="SmartEXPO" />
+            </h:outputLink>
             <div id="decologo">
                 <div id="shortbar"></div>
                 <div id="longbar"></div>
@@ -67,7 +70,7 @@
         <canvas id="canvas" width="700" height="520" style="position:relative; left:50%; margin-left:-350px; margin-top:40px;"></canvas>
 
         <footer style="margin-top:20px">
-            Copyright &#169; 2013 by SmartEXPO orgnization.
+            <h:outputText value="#{info.footer}" escape="false"/>
         </footer>
 
 

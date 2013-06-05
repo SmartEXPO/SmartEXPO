@@ -16,7 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -53,7 +52,6 @@ public class Item implements Serializable {
     private ItemAudio itemAudio;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private ItemAuthor itemAuthor;
-    
 
     public ItemAuthor getItemAuthor() {
         return itemAuthor;
@@ -75,10 +73,8 @@ public class Item implements Serializable {
     private String itemName;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private Description description;
-    
-    
-    @Size(min=1, max=2000)
-    @Column(name="HTML")
+    @Size(min = 1, max = 2000)
+    @Column(name = "HTML")
     private String html;
 
     public String getHtml() {
@@ -88,15 +84,12 @@ public class Item implements Serializable {
     public void setHtml(String html) {
         this.html = html;
     }
-    
-    @Size(min=1, max = 200)
-    @Column(name="ITEM_AREA")
+    @Size(min = 1, max = 200)
+    @Column(name = "ITEM_AREA")
     private String area;
-    
-    @Size(min=1,max =300)
-    @Column(name="IMAGE_URL")
+    @Size(min = 1, max = 300)
+    @Column(name = "IMAGE_URL")
     private String imageurl;
-    
 
     public String getImageurl() {
         return imageurl;
@@ -113,7 +106,6 @@ public class Item implements Serializable {
     public void setArea(String area) {
         this.area = area;
     }
-    
 
     public Item() {
     }

@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <meta charset="UTF-8" />
         <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
@@ -13,35 +14,42 @@
 
         <!--<meta name="viewport" content="width=device-width; initial-scale=1.0" />-->
 
-        <h:outputStylesheet library="theme1" name="css/style.css" />
-        <h:outputStylesheet library="theme1" name="css/index_style.css" />
+        <f:loadBundle basename="com.smartexpo.bundle.Index" var="indexBundle" />
+
+        <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/index_style.css" />
 
         <script>
             //<![CDATA[
-            function infotemplate(title, path, description) {
+            function infotemplate(id, title, path, description) {
+                this.id = id;
                 this.title = title;
                 this.path = path;
                 this.description = description;
             }
             // 此处数据由数据库获取
             var info = new Array();
-            var description1 = "This is an item. <br/>Here we put some description of the item. We include servral lines in the description part of the item. This is only a test of theis part. More detailed information will come soon.";
-            var description2 = "This is another item description";
-            var description3 = "This is a third item description";
-            info[0] = new infotemplate("Title1", "./javax.faces.resource/images/item.png?ln=theme1&v=1_0", description1);
-            info[1] = new infotemplate("Title2", "./javax.faces.resource/images/item1.png?ln=theme1&v=1_0", description2);
-            info[2] = new infotemplate("Title3", "./javax.faces.resource/images/item2.png?ln=theme1&v=1_0", description3);
+            var description1 = "#{indexManagedBean.showItemsDescriptions[0].content}";
+            var description2 = "#{indexManagedBean.showItemsDescriptions[1].content}";
+            var description3 = "#{indexManagedBean.showItemsDescriptions[2].content}";
+            info[0] = new infotemplate("#{indexManagedBean.showItems[0].itemId}", "#{indexManagedBean.showItems[0].itemName}", "#{indexManagedBean.showItems[0].imageurl}", description1);
+            info[1] = new infotemplate("#{indexManagedBean.showItems[1].itemId}", "#{indexManagedBean.showItems[1].itemName}", "#{indexManagedBean.showItems[1].imageurl}", description2);
+            info[2] = new infotemplate("#{indexManagedBean.showItems[2].itemId}", "#{indexManagedBean.showItems[2].itemName}", "#{indexManagedBean.showItems[2].imageurl}", description3);
             //]]>
         </script>
-        <title>SmartEXPO</title>
+        <title>#{indexBundle.title}</title>
     </h:head>
     <h:body onload="sidebar_appear();">
         <!--This part should be implemented by a standalone file.-->
         <header>
             <nav>
-                <h:outputLink class="navi" value="map.xhtml">Map</h:outputLink>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+                <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>
+                |<a class="navi" href="#">#{info['navigator.info']}</a>
+                |<a class="navi" href="#">#{info['navigator.contact']}</a>
             </nav>
-            <h:graphicImage id="logo" library="theme1" name="images/logo.png" alt="SmartEXPO" />
+            <h:outputLink value="index.xhtml">
+                <h:graphicImage id="logo" library="#{info.lib}" name="images/logo.png" alt="SmartEXPO" />
+            </h:outputLink>
             <div id="decologo">
                 <div id="shortbar"></div>
                 <div id="longbar"></div>
@@ -55,27 +63,18 @@
                     <div id="1" class="chosen"></div>
                 </div>
                 <div id="frame">
-                    <h:graphicImage class="frame_content" library="theme1" name="images/frame.png" />
-                    <h:graphicImage id="display_item" library="theme1" name="images/item.png" />
-                    <h:graphicImage class="frame_content" library="theme1" name="images/framehl.png" />
+                    <h:graphicImage class="frame_content" library="#{info.lib}" name="images/frame.png" />
+                    <h:graphicImage id="display_item" value="#{indexManagedBean.showItems[0].imageurl}" />
+                    <h:outputLink id="display_item_id" value="item.xhtml">
+                        <h:graphicImage class="frame_content" library="#{info.lib}" name="images/framehl.png" />
+                        <f:param name="id" value="#{indexManagedBean.showItems[0].itemId}" />
+                    </h:outputLink>
                 </div>
                 <div id="detail">
-                    <h1 class="detail_content">Title</h1>
+                    <h1 class="detail_content"></h1>
                     <div class="separator" style="  margin-right:0px;margin-left:auto;"></div>
                     <!--seperator-->
-                    <p class="detail_content">
-                        This is an item.
-                        <br/>
-                        Here we put some description of the item.
-                        <br/>
-                        We include several lines in the description part of the item.
-                        <br/>
-                        This is only a test of this part. More detailed information will come soon.
-                        <br/>
-                        This is an additional line.should not be displayed for the height constrain
-                        <br/>
-                        more?
-                    </p>
+                    <p class="detail_content"></p>
                 </div>
             </div>
             <div id="backbar"></div><!-- this is the background of content part-->
@@ -83,40 +82,64 @@
 
         <!--This part should be implemented by a standalone file.-->
         <footer>
-            Copyright &#169; 2013 by SmartEXPO orgnization.
+            <h:outputText value="#{info.footer}" escape="false"/>
         </footer>
 
         <div id="side_bar">
-            <h:graphicImage id="handler" library="theme1" name="images/handler.png" />
+            <h:graphicImage id="handler" library="#{info.lib}" name="images/handler.png" />
             <div id="expand_sidebar">
                 <div id="sidebar_back"></div>
                 <div id="sidebar_content">
                     <div style="text-align:center;padding-top:20px;">
-                        <h:graphicImage library="theme1" name="images/decobar.png" />
-                        <h2 style="margin-top:-2px;padding-left:40px;">Exhibition Area Map</h2>
+                        <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
+                        <h2 style="margin-top:-2px;padding-left:40px;">
+                            <h:outputText value="#{indexBundle.exhibitionAreaMap}" 
+                                          escape="false" />
+                        </h2>
                         <!--这个地方貌似那个图片不是居中做的-->
                         <h:outputLink value="map.xhtml">
-                            <h:graphicImage library="theme1" name="images/map.png" />
+                            <h:graphicImage library="#{info.lib}" name="images/map.png" />
                         </h:outputLink>
                         <br /><br />
-                        <h:graphicImage library="theme1" name="images/decobar.png" />
-                        <h2 style="margin-top:-2px;padding-left:40px;">Items Recommended</h2>
+                        <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
+                        <h2 style="margin-top:-2px;padding-left:40px;">
+                            <h:outputText value="#{indexBundle.recommendItem}"
+                                          escape="false" />
+                        </h2>
                         <div style="text-align: center;">
                             <table id="sidebar_rect" width="547" height="101" border="0" cellpadding="0" cellspacing="0" 
-                                   background="/SmartEXPO_Proj_new/faces/javax.faces.resource/images/sidebar_rect.png?ln=theme1"
+                                   background="/SmartEXPO_Proj_new/faces/javax.faces.resource/images/sidebar_rect.png?ln=#{info.lib}"
                                    style="margin:0 auto;">
                                 <tr>
                                     <td colspan="9" style="width:547px;height:3px;"></td>
                                 </tr>
                                 <tr>
                                     <td style="width:11px;height:80px;"></td>
-                                    <td style="width:120px;height:80px;">120*80px</td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item.xhtml">
+                                            <f:param name="id" value="#{indexManagedBean.recommendItems[0].itemId}" />
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[0].imageurl}" />
+                                        </h:outputLink>
+                                    </td>
                                     <td style="width:15px;height:80px;"></td>
-                                    <td style="width:120px;height:80px;">120*80px</td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item.xhtml">
+                                            <f:param name="id" value="#{indexManagedBean.recommendItems[1].itemId}" />
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[1].imageurl}" />
+                                        </h:outputLink>
+                                    </td>
                                     <td style="width:15px;height:80px;"></td>
-                                    <td style="width:120px;height:80px;">120*80px</td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item.xhtml">
+                                            <f:param name="id" value="#{indexManagedBean.recommendItems[2].itemId}" />
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[2].imageurl}" />
+                                        </h:outputLink>                                    </td>
                                     <td style="width:15px;height:80px;"></td>
-                                    <td style="width:120px;height:80px;">120*80px</td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item.xhtml">
+                                            <f:param name="id" value="#{indexManagedBean.recommendItems[3].itemId}" />
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[3].imageurl}" />
+                                        </h:outputLink>                                    </td>
                                     <td style="width:11px;height:80px;"></td>
                                 </tr>
                                 <tr>
@@ -132,9 +155,9 @@
             </div>
         </div>
 
-        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js" target="head" />
-        <h:outputScript library="theme1" name="scripts/index_effect.js" target="head" />
-        <h:outputScript library="theme1" name="scripts/sidebar.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/index_effect.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/sidebar.js" target="head" />
 
         <br/>
     </h:body>

@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -58,6 +59,11 @@ public class CommentViewManagedBean implements Serializable {
         selectedItemComments = new ArrayList<Comment>();
     }
 
+    @PostConstruct
+    public void postConstruct() {
+        gi = new GetInfo(emf, utx);
+    }
+
     public Item getSelectedItem() {
         return selectedItem;
     }
@@ -73,7 +79,6 @@ public class CommentViewManagedBean implements Serializable {
 
     public String getAuthorName() {
 
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return "";
@@ -92,7 +97,6 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public Date getAuthorBirthDate() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return null;
@@ -111,7 +115,6 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public Date getAuthorDeathDate() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return null;
@@ -130,7 +133,6 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public String getAuthorIntro() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return "";
@@ -149,7 +151,6 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public String getAudioTitle() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return "";
@@ -168,7 +169,6 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public String getVideoTitle() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return "";
@@ -191,7 +191,6 @@ public class CommentViewManagedBean implements Serializable {
      */
     public List<Comment> getAllComments() {
         if (allComments == null) {
-            gi = new GetInfo(emf, utx);
             CommentJpaController cjc = new CommentJpaController(utx, emf);
             allComments = cjc.findCommentEntities();
             /*if(selectedItem!=null){
@@ -232,7 +231,6 @@ public class CommentViewManagedBean implements Serializable {
 
     public void destroyComment() {
         try {
-            gi = new GetInfo(emf, utx);
             //ItemComment ic=gi.getItemComment(itemId, selectedComment.getCommentId());
             Comment c = selectedComment;
 
@@ -263,6 +261,8 @@ public class CommentViewManagedBean implements Serializable {
 
     // All Items中的detail comments选项，根据selectedItem找到相应的comment，并加入到selectedItemComments这个list中
     public void showDetialComments() {
+        List<Comment> comments = gi.getCommentByItemID(selectedItem.getItemId());
+        this.selectedItemComments = comments;
     }
 
     /**

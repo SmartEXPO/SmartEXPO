@@ -34,7 +34,7 @@ public class GetInfo {
 
     private EntityManager em = null;
     private UserTransaction utx = null;
-    private EntityManagerFactory emf=null;
+    private EntityManagerFactory emf = null;
     private Item item;
     private Manager manager;
 
@@ -43,11 +43,11 @@ public class GetInfo {
         this.em = _em;
         this.utx = _utx;
     }
-    
-    public GetInfo(EntityManagerFactory _emf, UserTransaction _utx){
-        this.emf= _emf;
-        this.utx= _utx;
-        this.em=emf.createEntityManager();
+
+    public GetInfo(EntityManagerFactory _emf, UserTransaction _utx) {
+        this.emf = _emf;
+        this.utx = _utx;
+        this.em = emf.createEntityManager();
     }
 
     public Item getItemByID(int id) {
@@ -250,76 +250,64 @@ public class GetInfo {
         return someItems;
 
     }
-    
-    public List<ItemVideo> getItemVideosByItemID(int itemId){
-        List<ItemVideo> itemVideos=em.createNamedQuery("ItemVideo.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+
+    public List<ItemVideo> getItemVideosByItemID(int itemId) {
+        List<ItemVideo> itemVideos = em.createNamedQuery("ItemVideo.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
         return itemVideos;
     }
-    
-    public List<ItemAudio> getItemAudiosByItemID(int itemId){
+
+    public List<ItemAudio> getItemAudiosByItemID(int itemId) {
         List<ItemAudio> itemAudios = em.createNamedQuery("ItemAudio.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
         return itemAudios;
     }
-    
-    public List<ItemAuthor> getItemAuthorsByItemID(int itemId){
-        List<ItemAuthor> itemAuthors =em.createNamedQuery("ItemAuthor.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+
+    public List<ItemAuthor> getItemAuthorsByItemID(int itemId) {
+        List<ItemAuthor> itemAuthors = em.createNamedQuery("ItemAuthor.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
         return itemAuthors;
     }
-    
-    public List<ItemComment> getItemCommentsByItemID(int itemId){
-        List<ItemComment> itemComments= em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+
+    public List<ItemComment> getItemCommentsByItemID(int itemId) {
+        List<ItemComment> itemComments = em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
         return itemComments;
     }
-    
-    
-    public ItemComment getItemComment(Integer itemId,Integer commentId){
-        List<ItemComment> itemComments=em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
-        for(int i=0;i<itemComments.size();i++){
-            ItemComment ic=itemComments.get(i);
-            if(ic.getCommentId().getCommentId()!=commentId){
+
+    public ItemComment getItemComment(Integer itemId, Integer commentId) {
+        List<ItemComment> itemComments = em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", getItemByID(itemId)).getResultList();
+        for (int i = 0; i < itemComments.size(); i++) {
+            ItemComment ic = itemComments.get(i);
+            if (ic.getCommentId().getCommentId() != commentId) {
                 itemComments.remove(ic);
             }
         }
-        if(itemComments.size()==0){
+        if (itemComments.size() == 0) {
             return null;
         }
         return itemComments.get(0);
     }
-    
-    
-    
-    public List<ItemComment> getItemCommentsByCommentID(Integer commentId){
-        if(emf==null){
+
+    public List<ItemComment> getItemCommentsByCommentID(Integer commentId) {
+        if (emf == null) {
             return null;
         }
         List<ItemComment> itemComments = em.createNamedQuery("ItemComment.findByCommentId").setParameter("commentId", new CommentJpaController(utx, emf).findComment(commentId)).getResultList();
-        
+
         return itemComments;
     }
-    
-    
-    public List<Item> getItemsByItemName(String name){
-        List<Item> items=em.createNamedQuery("Item.findByItemName").setParameter("itemName", name).getResultList();
+
+    public List<Item> getItemsByItemName(String name) {
+        List<Item> items = em.createNamedQuery("Item.findByItemName").setParameter("itemName", name).getResultList();
         return items;
     }
-    
-    
-    public Comment getLastComment(int itemId){
+
+    public Comment getLastComment(int itemId) {
         List<Comment> comments = getCommentByItemID(itemId);
-        Comment c= comments.get(0);
-        for(int i=0;i<comments.size();i++){
-            Comment c2=comments.get(i);
-            if(c2.getTime().after(c.getTime())){
-                c=c2;
+        Comment c = comments.get(0);
+        for (int i = 0; i < comments.size(); i++) {
+            Comment c2 = comments.get(i);
+            if (c2.getTime().after(c.getTime())) {
+                c = c2;
             }
         }
         return c;
     }
-    
-    
-    
-    
-    
-    
-    
 }
