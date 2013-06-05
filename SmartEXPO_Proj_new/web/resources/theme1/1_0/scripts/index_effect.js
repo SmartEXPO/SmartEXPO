@@ -49,6 +49,7 @@ function display() {
             'opacity': '0'
         }, 500, function() {
             $("img#display_item").attr("src", dis.path);
+            $("#display_item_id").attr("href", "item.xhtml?id=" + dis.id);
         });
         $("img#display_item").animate({
             'opacity': '1'
