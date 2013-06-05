@@ -10,17 +10,14 @@ import com.smartexpo.jpgcontrollers.exceptions.IllegalOrphanException;
 import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Manager;
-import com.smartexpo.models.Permission;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -53,12 +50,16 @@ public class UserViewManagedBean implements Serializable {
     public UserViewManagedBean() {
     }
 
+    @PostConstruct
+    public void postConstruct() {
+        gi = new GetInfo(emf, utx);
+    }
+
     /**
      * @return the users
      */
     public List<Manager> getUsers() {
         if (managers == null) {
-            gi = new GetInfo(emf, utx);
             ManagerJpaController mjc = new ManagerJpaController(utx, emf);
             managers = mjc.findManagerEntities();
 

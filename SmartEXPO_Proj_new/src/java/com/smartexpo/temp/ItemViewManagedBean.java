@@ -33,6 +33,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -66,9 +67,22 @@ public class ItemViewManagedBean implements Serializable {
     private String authorIntro;
     private String audioTitle;
 
-    public String getAuthorName() {
+    /**
+     * Creates a new instance of ItemViewManagedBean
+     */
+    public ItemViewManagedBean() {
+//        items = new ArrayList<Item>();
+//        for (int i = 0; i < 88; i++) {
+//            items.add(new Item("name " + i, "pic " + i, "author name " + i, "199" + i, "200" + i, "author introduction " + i, "description title + i", "description content " + i, "audio title " + i, "video title " + i));
+//        }
+    }
 
+    @PostConstruct
+    public void postConstruct() {
         gi = new GetInfo(emf, utx);
+    }
+
+    public String getAuthorName() {
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return "";
@@ -87,7 +101,6 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public Date getAuthorBirthDate() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return null;
@@ -106,7 +119,6 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public Date getAuthorDeathDate() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return null;
@@ -125,7 +137,6 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public String getAuthorIntro() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return "";
@@ -144,7 +155,6 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public String getAudioTitle() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return "";
@@ -163,7 +173,6 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public String getVideoTitle() {
-        gi = new GetInfo(emf, utx);
         if (selectedItem == null) {
             LOG.log(Level.WARNING, "selectedItem null");
             return "";
@@ -182,21 +191,10 @@ public class ItemViewManagedBean implements Serializable {
     private String VideoTitle;
 
     /**
-     * Creates a new instance of ItemViewManagedBean
-     */
-    public ItemViewManagedBean() {
-//        items = new ArrayList<Item>();
-//        for (int i = 0; i < 88; i++) {
-//            items.add(new Item("name " + i, "pic " + i, "author name " + i, "199" + i, "200" + i, "author introduction " + i, "description title + i", "description content " + i, "audio title " + i, "video title " + i));
-//        }
-    }
-
-    /**
      * @return the items
      */
     public List<Item> getItems() {
         if (items == null || items.size() == 0) {
-            gi = new GetInfo(emf, utx);
             ItemJpaController ijc = new ItemJpaController(utx, emf);
             items = ijc.findItemEntities();
         }
@@ -231,7 +229,6 @@ public class ItemViewManagedBean implements Serializable {
 
     public void storeEditedData() {
         try {
-            gi = new GetInfo(emf, utx);
             ItemJpaController ijc = new ItemJpaController(utx, emf);
             ijc.edit(selectedItem);
             Author author = gi.getAuthorsByItemID(selectedItem.getItemId()).get(0);
@@ -280,7 +277,6 @@ public class ItemViewManagedBean implements Serializable {
     public void destroyItem() throws NonexistentEntityException {
         try {
             getItems().remove(getSelectedItem());
-            gi = new GetInfo(emf, utx);
             ItemJpaController ijc = new ItemJpaController(utx, emf);
 
             ItemAuthorJpaController iauthorjc = new ItemAuthorJpaController(utx, emf);
