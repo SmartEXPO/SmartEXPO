@@ -64,8 +64,6 @@ public class ItemInsertMB implements Serializable {
     private GetInfo gi;
     // ItemInsertMB Fields
     private static String imageUploadID = "img_upload";
-    private static String AudioUploadID = "audio_upload";
-    private static String VideoUploadID = "video_upload";
     private String itemName;
     private String desTitle;
     private String desContent;
