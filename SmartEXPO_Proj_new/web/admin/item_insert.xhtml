@@ -25,9 +25,17 @@
                                 <p:inputText id="item_name" required="true"
                                              value="#{itemInsertMB.itemName}" />
 
-                                <h:outputLabel for="item_pic" value="Picture URL" />
-                                <p:inputText id="item_pic"
-                                             value="#{itemInsertMB.imageurl}" />
+                                <h:outputLabel for="img_upload" value="Image Upload" />
+                                <h:form enctype="multipart/form-data">
+                                    <p:fileUpload id="img_upload"
+                                                  fileUploadListener="#{itemInsertMB.upload}"
+                                                  mode="advanced"
+                                                  update="img_upload_msg"
+                                                  auto="true"
+                                                  sizeLimit="10485760"
+                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                    <p:growl id="img_upload_msg" showDetail="true"/>
+                                </h:form>
 
                                 <h:outputLabel for="des_title" value="Description Title" />
                                 <p:inputText id="des_title" required="true"
@@ -73,6 +81,7 @@
                             </p:dataTable>
 
                             <p:commandButton icon="ui-icon-plusthick"
+                                             ajax="true" update="author_add_dialog"
                                              oncomplete="authorVar.show()" />
 
                             <p:dialog id="author_add_dialog" header="Enter Author Info"
@@ -133,6 +142,7 @@
                             </p:dataTable>
 
                             <p:commandButton icon="ui-icon-plusthick"
+                                             ajax="true" update="audio_add_dialog"
                                              oncomplete="audioVar.show()" />
 
                             <p:dialog id="audio_add_dialog" header="Enter Audio Info"
@@ -142,19 +152,16 @@
                                     <p:inputText id="audio_title"
                                                  value="#{itemInsertMB.audioTitle}" />
 
-                                    <h:outputLabel for="audio_url" value="Audio URL" />
-                                    <p:inputText id="audio_url"
-                                                 value="#{itemInsertMB.audioURL}" />
-
+                                    <h:outputLabel for="audio_upload" value="Audio Upload" />
                                     <h:form enctype="multipart/form-data">
-
-                                        <p:fileUpload fileUploadListener="#{itemInsertMB.submit}"
+                                        <p:fileUpload id="audio_upload"
+                                                      fileUploadListener="#{itemInsertMB.upload}"
                                                       mode="advanced"
+                                                      update="audio_upload_msg"
                                                       auto="true"
-                                                      update="uploadmsg"
-                                                      sizeLimit="100000" 
-                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
-                                        <h:messages id="uploadmsg" />
+                                                      sizeLimit="10485760"
+                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                        <p:growl id="audio_upload_msg" showDetail="true"/>
                                     </h:form>
 
                                     <h:outputLabel for="audio_des" value="Audio Description" />
@@ -200,6 +207,7 @@
                             </p:dataTable>
 
                             <p:commandButton icon="ui-icon-plusthick"
+                                             ajax="true" update="video_add_dialog"
                                              oncomplete="videoVar.show()" />
                             <p:commandButton icon="ui-icon-check" update="msg"
                                              value="Submit"
@@ -213,9 +221,17 @@
                                     <p:inputText id="video_title"
                                                  value="#{itemInsertMB.videoTitle}" />
 
-                                    <h:outputLabel for="video_url" value="Video URL" />
-                                    <p:inputText id="video_url"
-                                                 value="#{itemInsertMB.videoURL}" />
+                                    <h:outputLabel for="video_upload" value="Video Upload" />
+                                    <h:form enctype="multipart/form-data">
+                                        <p:fileUpload id="video_upload"
+                                                      fileUploadListener="#{itemInsertMB.upload}"
+                                                      mode="advanced"
+                                                      update="video_upload_msg"
+                                                      auto="true"
+                                                      sizeLimit="104857600"
+                                                      allowTypes="/(\.|\/)(mp4|ogg)$/"/>
+                                        <p:growl id="video_upload_msg" showDetail="true"/>
+                                    </h:form>
 
                                     <h:outputLabel for="video_des" value="Video Description" />
                                     <p:inputTextarea id="video_des" autoResize="false"

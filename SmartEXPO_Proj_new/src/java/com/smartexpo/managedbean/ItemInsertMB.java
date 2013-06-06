@@ -13,6 +13,12 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +63,9 @@ public class ItemInsertMB implements Serializable {
     private UserTransaction utx;
     private GetInfo gi;
     // ItemInsertMB Fields
+    private static String imageUploadID = "img_upload";
+    private static String AudioUploadID = "audio_upload";
+    private static String VideoUploadID = "video_upload";
     private String itemName;
     private String desTitle;
     private String desContent;
@@ -80,7 +89,7 @@ public class ItemInsertMB implements Serializable {
     private String videoTitle;
     private String videoURL;
     private String videoDes;
-    private static String destination = "/Users/Boy/Desktop/SmartEXPO/SmartEXPO_Proj_new/web/upload/";
+    private static String Destination = "/Users/Boy/Desktop/SmartEXPO/SmartEXPO_Proj_new/web/upload/";
     private UploadedFile uploadedFile;
 
     /**
@@ -269,7 +278,7 @@ public class ItemInsertMB implements Serializable {
 
             em.persist(description);
 
-            for (int i = 0; i < authors.size(); i++) {
+            for (int i = 0; i < authors.size(); ++i) {
                 Author a = authors.get(i);
                 ItemAuthor itemAuthor = new ItemAuthor();
                 itemAuthor.setItemId(item);
@@ -278,7 +287,7 @@ public class ItemInsertMB implements Serializable {
                 em.persist(itemAuthor);
             }
 
-            for (int i = 0; i < videos.size(); i++) {
+            for (int i = 0; i < videos.size(); ++i) {
                 Video v = videos.get(i);
                 ItemVideo iv = new ItemVideo();
                 iv.setItemId(item);
@@ -287,7 +296,7 @@ public class ItemInsertMB implements Serializable {
                 em.persist(iv);
             }
 
-            for (int i = 0; i < audios.size(); i++) {
+            for (int i = 0; i < audios.size(); ++i) {
                 Audio a = audios.get(i);
                 ItemAudio ia = new ItemAudio();
                 ia.setItemId(item);
@@ -345,48 +354,65 @@ public class ItemInsertMB implements Serializable {
         author.setDeathDate(authorDeath);
         author.setIntroduction(authorIntro);
         authors.add(author);
-
-
         authorName = authorIntro = null;
         authorBirth = authorDeath = null;
     }
 
     public void removeAuthor() {
-        for (int i = 0; i < authors.size(); i++) {
+        for (int i = 0; i < authors.size(); ++i) {
             Author tmpAuthor = authors.get(i);
             if (tmpAuthor.getName().equals(selectedAuthor.getName())) {
                 authors.remove(i);
             }
         }
-//        authors.remove(selectedAuthor);
     }
 
     // Audio多值添加处，结果暂存储于audios列表中
     public void addAudio() {
         Audio audio = new Audio();
         audio.setTitle(audioTitle);
-        audio.setUrl(audioURL);
         audio.setDescription(audioDes);
+
+        if (uploadedFile != null) {
+            audioURL = processStore(uploadedFile, "audios/");
+        }
+
+        audio.setUrl(audioURL);
         audios.add(audio);
         audioTitle = audioURL = audioDes = null;
     }
 
     public void removeAudio() {
-        audios.remove(selectedAudio);
+        for (int i = 0; i < audios.size(); ++i) {
+            Audio tmpAudio = audios.get(i);
+            if (tmpAudio.getTitle().equals(selectedAudio.getTitle())) {
+                audios.remove(i);
+            }
+        }
     }
 
     // Video多值添加处，结果暂存于videos列表中
     public void addVideo() {
         Video video = new Video();
         video.setTitle(videoTitle);
-        video.setUrl(videoURL);
         video.setDescription(videoDes);
+
+        if (uploadedFile != null) {
+            videoURL = processStore(uploadedFile, "videos/");
+        }
+
+        video.setUrl(videoURL);
         videos.add(video);
         videoTitle = videoURL = videoDes = null;
     }
 
     public void removeVideo() {
-        videos.remove(selectedVideo);
+        for (int i = 0; i < videos.size(); ++i) {
+            Video tmpVideo = videos.get(i);
+            if (tmpVideo.getTitle().equals(selectedVideo.getTitle())) {
+                videos.remove(i);
+            }
+        }
     }
 
     /**
@@ -447,7 +473,59 @@ public class ItemInsertMB implements Serializable {
 
     public void upload(FileUploadEvent event) {
         uploadedFile = event.getFile();
-        LOG.log(Level.WARNING, "File Name: {0}, File Content: {1}", new Object[]{uploadedFile.getFileName(), uploadedFile.getContentType()});
+        String componentID = event.getComponent().getId();
+
+        if (componentID.equals("img_upload")) {
+            imageurl = processStore(uploadedFile, "images/");
+        }
+
+        LOG.log(Level.WARNING, "File Name: {0}, File Content: {1}, File Url: {2}", new Object[]{uploadedFile.getFileName(), uploadedFile.getContentType(), imageurl});
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload successfully!"));
+    }
+
+    /*
+     * The processStore Method
+     * Store the file
+     * 
+     * @param uploadedFile the uploadedFile to store
+     * @param subDir the subdirectory for file to store
+     * 
+     * @return the URL of uploaded file
+     */
+    private String processStore(UploadedFile uploadedFile, String subDir) {
+        String contentType = uploadedFile.getContentType();
+        String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
+        String URL = Destination + subDir + uploadedFile.hashCode() + "." + ext;
+
+        try {
+            storeFile(URL, uploadedFile.getInputstream());
+        } catch (IOException ex) {
+            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return URL;
+    }
+
+    private void storeFile(String fileURL, InputStream in) {
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(new File(fileURL));
+
+            int read = 0;
+            byte[] bytes = new byte[4096];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
