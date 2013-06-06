@@ -52,11 +52,11 @@ public class InstantComment extends HttpServlet {
         String id = null;
         String data = null;
         CommentInfo[] infos = overallInfo.getComment();
-        System.out.println(infos.length + "$$");
+//        System.out.println(infos.length + "$$");
         if (infos.length == 1) {
             id = Integer.toString(infos[0].getId());
             data = parseJSON(infos[0]);
-            System.out.println("@@@@@  " + data + "  " + id);
+//            System.out.println("@@@@@  " + data + "  " + id);
         } else if (infos.length > 1) {
             id = "#";
             data = getInfo(infos);

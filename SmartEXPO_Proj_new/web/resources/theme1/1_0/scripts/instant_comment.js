@@ -12,7 +12,7 @@ function configureInstantComment(username, time, content, callback) {
     $("#instant_comment_time").html(time);
     $("#instant_comment_content").html(content);
 
-    console.log(callback);
+//    console.log(callback);
     if (callback) {
         callback();
     }
@@ -45,7 +45,7 @@ function initInstantComment() {
         var source = new EventSource("/SmartEXPO_Proj_new/InstantComment");
         source.onmessage = processMsg;
         source.onerror = function(event) {
-            console.log(event); //FF会异常
+//            console.log(event); //FF会异常
         }
     }
     else {
@@ -56,7 +56,7 @@ function initInstantComment() {
 function processMsg(event) {
     
     if (_itemid !== event.lastEventId) return;
-    console.log(event);
+//    console.log(event);
     var msg = null;
     if (event.lastEventId === "#") {
         var tmp = JSON.parse(event.data);
