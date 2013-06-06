@@ -8,6 +8,9 @@ var isCommentBarDisplayed = false;
 
 $(document).ready(function() {
     $('#users_comment').perfectScrollbar();
+    $('.popup_link').magnificPopup({
+        type: 'image'
+    });
     initInstantComment();
 
     $(window).scroll(function(e) {
