@@ -16,14 +16,14 @@ This is also for course J2EE.
 	|+ SmartEXPO_Proj		Old version DB access project
 	|+ SmartEXPO_Proj_new	Current Version
 	|- README.md			The file you are reading
-	|- list.json			
+	.- list.json			
 
 ## Features
 We laid heavy stress on the user-interaction. We designed and implemented all our UI components.<br/>
 With the help of Primefaces, we implemented our admin console elegantly.
 
 ## Special Thanks To
-As a webapp, we make good use of some amazing plugins, including:
+As a webapp, we made good use of some amazing plugins, including:
 
 - [jQuery](https://github.com/jquery/jquery)
 - [CreateJS Suite](https://github.com/CreateJS)
