@@ -22,11 +22,11 @@
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-        <h:outputStylesheet library="theme1" name="css/style.css" />
-        <h:outputStylesheet library="theme1" name="css/item_style.css" />
-        <h:outputStylesheet library="theme1" name="css/header_style.css" />
-        <h:outputStylesheet library="theme1" name="css/perfect-scrollbar.css" />
-        <h:outputStylesheet library="theme1" name="css/magnific-popup.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/item_style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/header_style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/perfect-scrollbar.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/magnific-popup.css" />
 
         <title>SmartEXPO</title>
 
@@ -50,8 +50,10 @@
     <h:body>
         <div>
             <header id="header">
-                <h:graphicImage id="logo" library="theme1"
-                                name="images/item_logo.png"/>
+                <h:outputLink value="index.xhtml">
+                    <h:graphicImage id="logo" library="#{info.lib}"
+                                    name="images/item_logo.png"/>
+                </h:outputLink>
                 <nav id="nav">
                     <h:outputLink class="navi" value="map.xhtml">Map</h:outputLink>|
                     <a class="navi" href="#">Info</a>|
@@ -63,7 +65,7 @@
                             </div>
                             <h:outputLink id="show_login" class="navi"
                                           value="#" onclick="popupLogin();
-                                        void(0);"
+                                                  void(0);"
                                           rendered="#{!loginManagedBean.status}">
                                 <h:outputText value="Log In" />
                             </h:outputLink>
@@ -109,13 +111,13 @@
 
                     <!--<div id="content_fixed" style="position:relative;width:1024px;">-->
                     <div id="frame" class="content_fixed">
-                        <h:graphicImage id="frame_back" library="theme1"
+                        <h:graphicImage id="frame_back" library="#{info.lib}"
                                         name="images/item_frame.png" />
-                        <h:graphicImage id="frame_image" library="theme1"
+                        <h:graphicImage id="frame_image" library="#{info.lib}"
                                         name="images/item_item.png" />
-                        <a href="/SmartEXPO_Proj_new/faces/javax.faces.resource/images/item_item.png" class="popup_link">
+                        <a href="/SmartEXPO_Proj_new/faces/javax.faces.resource/images/item_item.png?ln=theme1" class="popup_link">
                             <!--图片链接，怎么处理一下-->
-                            <h:graphicImage id="frame_highlight" library="theme1"
+                            <h:graphicImage id="frame_highlight" library="#{info.lib}"
                                             name="images/item_frame_highlight.png" />
                         </a>
                     </div>
@@ -142,7 +144,7 @@
                 <div id="search_result">
                     here we put search results, using ajax
                 </div>
-                <h:graphicImage id="search_img" library="theme1"
+                <h:graphicImage id="search_img" library="#{info.lib}"
                                 name="images/item_search_button.png" />
                 <h:inputText id="search_box" class="func_input_box search" />
             </div>
@@ -165,7 +167,7 @@
                         </h:form>
                     </div>
                 </div>
-                <h:graphicImage id="comment_img" library="theme1"
+                <h:graphicImage id="comment_img" library="#{info.lib}"
                                 name="images/item_comment_button.png" />
                 <div id="comment_input">
                     <h:form id="comment_form">
@@ -206,7 +208,7 @@
 
                 <input type="button" id="close_panel" value="x"
                        onclick="vanishLogin();
-                                        void(0);" />
+                                                  void(0);" />
             </h:form>
         </div>
 
@@ -219,19 +221,19 @@
             </div>
         </div>
 
-        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js"
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/jquery.mousewheel.js"
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.mousewheel.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/perfect-scrollbar.js"
+        <h:outputScript library="#{info.lib}" name="scripts/perfect-scrollbar.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/jquery.magnific-popup.min.js"
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/instant_comment.js"
+        <h:outputScript library="#{info.lib}" name="scripts/instant_comment.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/item_effect.js"
+        <h:outputScript library="#{info.lib}" name="scripts/item_effect.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/login_effect.js"
+        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
                         target="head" />
 
     </h:body>

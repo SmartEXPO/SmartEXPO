@@ -146,6 +146,17 @@
                                     <p:inputText id="audio_url"
                                                  value="#{itemInsertMB.audioURL}" />
 
+                                    <h:form enctype="multipart/form-data">
+
+                                        <p:fileUpload fileUploadListener="#{itemInsertMB.submit}"
+                                                      mode="advanced"
+                                                      auto="true"
+                                                      update="uploadmsg"
+                                                      sizeLimit="100000" 
+                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                                        <h:messages id="uploadmsg" />
+                                    </h:form>
+
                                     <h:outputLabel for="audio_des" value="Audio Description" />
                                     <p:inputTextarea id="audio_des" autoResize="true"
                                                      value="#{itemInsertMB.audioDes}" />
@@ -221,9 +232,9 @@
                     <p:dialog id="check_and_submit" header="Check and Submit"
                               widgetVar="submitVar" resizable="false" modal="true">
                         <h:graphicImage value="#{itemInsertMB.imageurl}" />
-                        
+
                         <h:panelGrid columns="2">
-                            
+
                         </h:panelGrid>
                         <h:outputText value="#{itemInsertMB.itemName}" />
 

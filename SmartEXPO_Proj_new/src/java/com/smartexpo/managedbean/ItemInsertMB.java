@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -35,7 +36,9 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -53,6 +56,7 @@ public class ItemInsertMB implements Serializable {
     @Resource
     private UserTransaction utx;
     private GetInfo gi;
+    // ItemInsertMB Fields
     private String itemName;
     private String desTitle;
     private String desContent;
@@ -76,6 +80,8 @@ public class ItemInsertMB implements Serializable {
     private String videoTitle;
     private String videoURL;
     private String videoDes;
+    private static String destination = "/Users/Boy/Desktop/SmartEXPO/SmartEXPO_Proj_new/web/upload/";
+    private UploadedFile uploadedFile;
 
     /**
      * Creates a new instance of ItemInsertMB
@@ -423,5 +429,25 @@ public class ItemInsertMB implements Serializable {
      */
     public void setSelectedAuthor(Author selectedAuthor) {
         this.selectedAuthor = selectedAuthor;
+    }
+
+    /**
+     * @return the uploadedFile
+     */
+    public UploadedFile getUploadedFile() {
+        return uploadedFile;
+    }
+
+    /**
+     * @param uploadedFile the uploadedFile to set
+     */
+    public void setUploadedFile(UploadedFile uploadedFile) {
+        this.uploadedFile = uploadedFile;
+    }
+
+    public void upload(FileUploadEvent event) {
+        uploadedFile = event.getFile();
+        LOG.log(Level.WARNING, "File Name: {0}, File Content: {1}", new Object[]{uploadedFile.getFileName(), uploadedFile.getContentType()});
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload successfully!"));
     }
 }
