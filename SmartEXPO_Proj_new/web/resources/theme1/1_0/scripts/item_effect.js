@@ -179,7 +179,9 @@ $(document).ready(function() {
             edit = true;
             $(".edit_description_div").attr("value", "Done");
         } else {
-            toEdit.html(toEdit.children().val());
+            var value = toEdit.children().val();
+            toEdit.html(value);
+            submit_changed_content(value);
             edit = false;
             $(".edit_description_div").attr("value", "Edit");
         }

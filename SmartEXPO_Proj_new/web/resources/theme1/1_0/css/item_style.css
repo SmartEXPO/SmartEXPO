@@ -194,11 +194,18 @@ footer {
 
 
 .edit_description_div {
+    text-align: left;
+    padding-left: 5px;
     font-size: 12px;
     color: white;
     background: black;
     border: none;
-    height: 15px;
+    height: 25px;
+    width: 80px;
+    line-height: 25px;
+    position:fixed;
+    top:50px;
+    right: 0;
 }
 
 .edit_description_box {

@@ -85,22 +85,19 @@
 
             <div id="content">
                 <div id="contentwrapper">
+
                     <div id="description">
                         <br/>
-                        <h1 class="content_title">Description</h1>
                         <input type="button" value="Edit" class="edit_description_div" />
 
                         <div>
+                            <h1 class="content_title">Description</h1>
                             <p id="description_content">
                                 #{itemController.descriptionBean.content}
                                 #{itemController.audioBean.descriptions[0]}
                                 #{itemController.videoBean.descriptions[0]}
                             </p>
-                        </div>
-                        <h1 class="content_title">video</h1>
-                        <input type="button" value="Edit" class="edit_description_div" />
-
-                        <div>
+                            <h1 class="content_title">video</h1>
                             <video width="320" height="240" controls="controls">
                                 <source src="http://www.w3school.com.cn/i/movie.ogg"
                                         type="video/ogg" />
@@ -108,11 +105,7 @@
                                         type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
-                        </div>
-                        <h1 class="content_title">See Also</h1>
-                        <input type="button" value="Edit" class="edit_description_div" />
-
-                        <div>
+                            <h1 class="content_title">See Also</h1>
                             <p>This is the content of see also</p>
                         </div>
                         <br/>
@@ -242,6 +235,8 @@
         <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js"
                         target="head" />
         <h:outputScript library="#{info.lib}" name="scripts/instant_comment.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/itemcontent_change_ajax.js"
                         target="head" />
         <h:outputScript library="#{info.lib}" name="scripts/item_effect.js"
                         target="head" />

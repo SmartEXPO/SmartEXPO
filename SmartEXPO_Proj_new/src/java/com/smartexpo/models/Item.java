@@ -73,7 +73,7 @@ public class Item implements Serializable {
     private String itemName;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemId")
     private Description description;
-    @Size(min = 1, max = 2000)
+    @Size(min = 1, max = 5000)
     @Column(name = "HTML")
     private String html;
 

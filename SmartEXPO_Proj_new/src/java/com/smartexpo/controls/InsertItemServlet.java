@@ -6,6 +6,7 @@ package com.smartexpo.controls;
 
 import com.smartexpo.jpgcontrollers.CommentJpaController;
 import com.smartexpo.jpgcontrollers.ItemCommentJpaController;
+import com.smartexpo.jpgcontrollers.ItemJpaController;
 import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Audio;
@@ -300,7 +301,9 @@ public class InsertItemServlet extends HttpServlet {
             cjc.destroy(comment.getCommentId());
             
             
-            
+            ItemJpaController ijc=new ItemJpaController(utx, emf);
+            item.setHtml("asdfasdfsadf");
+            ijc.edit(item);
             
             
             
