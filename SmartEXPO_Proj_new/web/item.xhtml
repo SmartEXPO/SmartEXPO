@@ -88,21 +88,33 @@
                     <div id="description">
                         <br/>
                         <h1 class="content_title">Description</h1>
-                        <p id="description_content">
-                            #{itemController.descriptionBean.content}
-                            #{itemController.audioBean.descriptions[0]}
-                            #{itemController.videoBean.descriptions[0]}
-                        </p>
+                        <input type="button" value="Edit" class="edit_description_div" />
+
+                        <div>
+                            <p id="description_content">
+                                #{itemController.descriptionBean.content}
+                                #{itemController.audioBean.descriptions[0]}
+                                #{itemController.videoBean.descriptions[0]}
+                            </p>
+                        </div>
                         <h1 class="content_title">video</h1>
-                        <video width="320" height="240" controls="controls">
-                            <source src="http://www.w3school.com.cn/i/movie.ogg"
-                                    type="video/ogg" />
-                            <source src="http://www.w3school.com.cn/i/movie.mp4"
-                                    type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
+                        <input type="button" value="Edit" class="edit_description_div" />
+
+                        <div>
+                            <video width="320" height="240" controls="controls">
+                                <source src="http://www.w3school.com.cn/i/movie.ogg"
+                                        type="video/ogg" />
+                                <source src="http://www.w3school.com.cn/i/movie.mp4"
+                                        type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                         <h1 class="content_title">See Also</h1>
-                        <p>This is the content of see also</p>
+                        <input type="button" value="Edit" class="edit_description_div" />
+
+                        <div>
+                            <p>This is the content of see also</p>
+                        </div>
                         <br/>
                         <br/>
                         <br/>
