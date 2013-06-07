@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -75,6 +76,7 @@ public class Item implements Serializable {
     private Description description;
     @Size(min = 1, max = 5000)
     @Column(name = "HTML")
+    @Lob
     private String html;
 
     public String getHtml() {
