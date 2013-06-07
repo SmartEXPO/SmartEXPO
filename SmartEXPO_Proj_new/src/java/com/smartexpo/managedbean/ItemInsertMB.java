@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -34,6 +35,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -87,7 +90,8 @@ public class ItemInsertMB implements Serializable {
     private String videoTitle;
     private String videoURL;
     private String videoDes;
-    private static String Destination = "/Users/Boy/Desktop/SmartEXPO/SmartEXPO_Proj_new/web/upload/";
+    private static String Destination;
+    private static String SubPath = "/web/upload/";
     private UploadedFile uploadedFile;
 
     /**
@@ -97,6 +101,17 @@ public class ItemInsertMB implements Serializable {
         authors = new ArrayList<Author>();
         audios = new ArrayList<Audio>();
         videos = new ArrayList<Video>();
+    }
+
+    @PostConstruct
+    public void postContrust() {
+        String realPath = ((ServletContext) FacesContext.getCurrentInstance()
+                .getExternalContext().getContext()).getRealPath("/");
+        for (int i = 0; i < 3; ++i) {
+            realPath = realPath.substring(0, realPath.lastIndexOf("/"));
+        }
+        realPath = realPath + SubPath;
+        Destination = realPath;
     }
 
     public String getItemName() {
@@ -504,12 +519,19 @@ public class ItemInsertMB implements Serializable {
         return URL;
     }
 
+    /*
+     * The storeFile Method
+     * store file to Server
+     * 
+     * @param fileURL url of file
+     * @param in inputstream of file
+     */
     private void storeFile(String fileURL, InputStream in) {
-        OutputStream out = null;
+        OutputStream out;
         try {
             out = new FileOutputStream(new File(fileURL));
 
-            int read = 0;
+            int read;
             byte[] bytes = new byte[4096];
 
             while ((read = in.read(bytes)) != -1) {
