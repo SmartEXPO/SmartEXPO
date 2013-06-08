@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <meta charset="UTF-8" />
         <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
@@ -18,22 +19,22 @@
 
         <title>SmartEXPO</title>
 
-        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js"
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
                         target="head" />
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <h:outputScript library="theme1" name="scripts/blocksit.js"
+        <h:outputScript library="#{info.lib}" name="scripts/blocksit.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/list_effect.js"
+        <h:outputScript library="#{info.lib}" name="scripts/list_effect.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/list_ajax.js"
+        <h:outputScript library="#{info.lib}" name="scripts/list_ajax.js"
                         target="head" />
-        <h:outputScript library="theme1" name="scripts/login_effect.js"
+        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
                         target="head" />
-        <h:outputStylesheet library="theme1" name="css/style.css" />
-        <h:outputStylesheet library="theme1" name="css/list_style.css" />
-        <h:outputStylesheet library="theme1" name="css/header_style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/list_style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/header_style.css" />
 
         <!--
                 <link rel='stylesheet' href='./style/list_style.css' media='screen' />
@@ -45,7 +46,7 @@
         <div>
             <header id="header">
                 <h:outputLink value="index.xhtml">
-                    <h:graphicImage id="logo" library="theme1"
+                    <h:graphicImage id="logo" library="#{info.lib}"
                                     name="images/item_logo.png" />
                 </h:outputLink>
                 <nav id="nav">
@@ -80,12 +81,26 @@
             <!-- Content -->
             <section id="wrapper">
                 <hgroup>
-                    <h2>MASTERPIECES IN AREA NO.<span id="area">#{param.area!=null?param.area:"1"}</span></h2>
+                    <h2>MASTERPIECES IN AREA NO.<span id="area">#{param.area != null ? param.area : "1"}</span></h2>
                     <h3>Theme: Postmodernism in Photography</h3>
                     <!--这个地方我觉得能不能建一个能够保存全局信息的bean @applicationScoped-->
                 </hgroup>
                 <!--这里考虑将下面的div全部删除，然后在程序开始的时候用ajax加载-->
                 <div id="container">
+                    <c:forEach items="#{listManagedBean.itemInfos}" var="itemInfo">
+                        <div class="grid">
+                            <div class="imgholder">
+                                <h:graphicImage value="#{itemInfo.imgURL}" />
+                            </div>
+                            <strong>#{itemInfo.itemName}</strong>
+                            <p>
+                                #{itemInfo.desContent}
+                            </p>
+                            <div class="meta">
+                                #{itemInfo.authors}
+                            </div>
+                        </div>
+                    </c:forEach>
                     <div class="grid">
                         <div class="imgholder">
                             <img src="http://www.inwebson.com/demo/blocksit-js/demo2/images/img27.jpg" />
@@ -269,7 +284,7 @@
                     <!---->
                 </div>
                 <div style="text-align:center" id="loading">
-                    <h:graphicImage library="theme1" name="images/loading.gif" />
+                    <h:graphicImage library="#{info.lib}" name="images/loading.gif" />
                     <br/><br/><br/>
                 </div>
                 <br/>

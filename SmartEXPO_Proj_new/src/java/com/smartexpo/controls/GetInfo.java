@@ -20,6 +20,7 @@ import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
 import com.smartexpo.models.Permission;
 import com.smartexpo.models.Video;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -30,7 +31,7 @@ import javax.transaction.UserTransaction;
  *
  * @author tornado718
  */
-public class GetInfo {
+public class GetInfo implements Serializable {
 
     private EntityManager em = null;
     private UserTransaction utx = null;

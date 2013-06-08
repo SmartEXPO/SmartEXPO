@@ -230,6 +230,8 @@ public class CommentViewManagedBean implements Serializable {
     }
 
     public void destroyComment() {
+
+        LOG.log(Level.WARNING, "destroy comment");
         try {
             //ItemComment ic=gi.getItemComment(itemId, selectedComment.getCommentId());
             Comment c = selectedComment;
@@ -257,12 +259,19 @@ public class CommentViewManagedBean implements Serializable {
 
     // All Comments中的detail选项，根据selectdComment找到相应item并将其属性设置为selectedItem的属性
     public void showItemDetail() {
+        LOG.log(Level.WARNING, "selected comment = {0}", selectedComment.getUsername());
     }
 
     // All Items中的detail comments选项，根据selectedItem找到相应的comment，并加入到selectedItemComments这个list中
     public void showDetialComments() {
         List<Comment> comments = gi.getCommentByItemID(selectedItem.getItemId());
+        // 为什么这里comments的size总是又问题
+        LOG.log(Level.WARNING, "ID = {0}, number = {1}", new Object[]{selectedItem.getItemId(), comments.size()});
         this.selectedItemComments = comments;
+    }
+
+    public int getSelectedCommentCount() {
+        return selectedItemComments.size();
     }
 
     /**

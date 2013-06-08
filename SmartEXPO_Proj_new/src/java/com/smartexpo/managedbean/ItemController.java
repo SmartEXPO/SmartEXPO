@@ -16,13 +16,12 @@ import com.smartexpo.models.ItemComment;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.el.ELContext;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -45,14 +44,14 @@ import javax.transaction.UserTransaction;
 @ManagedBean
 @ViewScoped
 public class ItemController implements Serializable {
-    
+
+    private static final Logger LOG = Logger.getLogger(ItemController.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @Resource
     private UserTransaction utx;
     private GetInfo gi = null;
     // ItemController Fields
-    static final Logger logger = Logger.getLogger(ItemController.class.getName());
     @ManagedProperty(value = "#{item}")
     private Item itemBean;
     private int itemID;
@@ -91,7 +90,6 @@ public class ItemController implements Serializable {
     private List<String> commentShowUsernameAndContent;
     private String commentuser;
     private String commentcontent;
-    
     @ManagedProperty(value = "#{overallInfo}")
     private OverallInfo overallInfo;
 
@@ -102,12 +100,12 @@ public class ItemController implements Serializable {
     public void setOverallInfo(OverallInfo overallInfo) {
         this.overallInfo = overallInfo;
     }
-    
+
     public class UsernameContentPair {
-        
+
         private String username;
         private String content;
-        
+
         public UsernameContentPair(String username, String content) {
             this.username = username;
             this.content = content;
@@ -153,7 +151,7 @@ public class ItemController implements Serializable {
         commentShowUsernameAndContent = new ArrayList<String>();
         usernameContentPairs = new ArrayList<UsernameContentPair>();
     }
-    
+
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
@@ -379,12 +377,12 @@ public class ItemController implements Serializable {
         setCommentUsernames(commentBean.getUsernames());
         return commentUsernames;
     }
-    
+
     public List<UsernameContentPair> getUsernameContentPairs() {
         return usernameContentPairs;
     }
-    
-    public void setUsernameContentPairs(UsernameContentPair usernameContentPair) {
+
+    public void setUsernameContentPairs(List<UsernameContentPair> usernameContentPairs) {
         this.usernameContentPairs = usernameContentPairs;
     }
 
@@ -430,128 +428,139 @@ public class ItemController implements Serializable {
     public void setCommentcontent(String commentcontent) {
         this.commentcontent = commentcontent;
     }
-    
+
     public void setItemID(int itemID) {
         this.itemID = itemID;
     }
-    
+
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
-    
+
     public void setDescriptionID(int descriptionID) {
         this.descriptionID = descriptionID;
     }
-    
+
     public void setDescriptionTitle(String descriptionTitle) {
         this.descriptionTitle = descriptionTitle;
     }
-    
+
     public void setDescriptionContent(String descriptionContent) {
         this.descriptionContent = descriptionContent;
     }
-    
+
     public void setAuthorIDs(List<Integer> authorIDs) {
         this.authorIDs = authorIDs;
     }
-    
+
     public void setAuthorNames(List<String> authorNames) {
         this.authorNames = authorNames;
     }
-    
+
     public void setAuthorBirthdays(List<Date> authorBirthdays) {
         this.authorBirthdays = authorBirthdays;
     }
-    
+
     public void setAuthorDeathDates(List<Date> authorDeathDates) {
         this.authorDeathDates = authorDeathDates;
     }
-    
+
     public void setAuthorIntroductions(List<String> authorIntroductions) {
         this.authorIntroductions = authorIntroductions;
     }
-    
+
     public void setAudioIDs(List<Integer> audioIDs) {
         this.audioIDs = audioIDs;
     }
-    
+
     public void setAudioTitles(List<String> audioTitles) {
         this.audioTitles = audioTitles;
     }
-    
+
     public void setAudioURLs(List<String> audioURLs) {
         this.audioURLs = audioURLs;
     }
-    
+
     public void setAudioDescriptions(List<String> audioDescriptions) {
         this.audioDescriptions = audioDescriptions;
     }
-    
+
     public void setVideoIDs(List<Integer> videoIDs) {
         this.videoIDs = videoIDs;
     }
-    
+
     public void setVideoTitles(List<String> videoTitles) {
         this.videoTitles = videoTitles;
     }
-    
+
     public void setVideoURLs(List<String> videoURLs) {
         this.videoURLs = videoURLs;
     }
-    
+
     public void setVideoDescriptions(List<String> videoDescriptions) {
         this.videoDescriptions = videoDescriptions;
     }
-    
+
     public void setCommentIDs(List<Integer> commentIDs) {
         this.commentIDs = commentIDs;
     }
-    
+
     public void setCommentContents(List<String> commentContents) {
         this.commentContents = commentContents;
     }
-    
+
     public void setCommentTimes(List<Date> commentTimes) {
         this.commentTimes = commentTimes;
     }
-    
+
     public void setCommentUsernames(List<String> commentUsernames) {
         this.commentUsernames = commentUsernames;
     }
-    
+
     public void addComment(AjaxBehaviorEvent event) {
         storeComment();
-        
-        setCommentuser("");
-        setCommentcontent("");
+
+        commentuser = null;
+        commentcontent = null;
     }
-    
+
     private void storeComment() {
+        // 获得当前LoginManagedBean
+        FacesContext context = FacesContext.getCurrentInstance();
+        ELContext eLContext = context.getELContext();
+        LoginManagedBean loginManagedBean = (LoginManagedBean) context.getApplication()
+                .getELResolver().getValue(eLContext, null, "loginManagedBean");
+
+        // 若用户已登陆，则commentuser即为登陆用户的username
+        if (loginManagedBean.isStatus()) {
+            commentuser = loginManagedBean.getUsername();
+        }
+
         try {
             com.smartexpo.models.Comment newComment = new com.smartexpo.models.Comment();
             newComment.setUsername(commentuser);
             newComment.setContent(commentcontent);
             newComment.setTime(new Date());
-            
+
             //itemID 为什么是0
             overallInfo.updateComment(new CommentInfo(itemBean.getItem().getItemId(), commentuser, new Date(), commentcontent));
-            logger.log(Level.WARNING, "ItemController overall itemId: " + itemID);
-            
+            LOG.log(Level.WARNING, "ItemController overall itemId: {0}", itemID);
+
             ItemComment newIC = new ItemComment();
             newIC.setItemId(itemBean.getItem());
             newIC.setCommentId(newComment);
-            
+
             addCommentID(newComment);
             addCommentUsername(newComment);
             addCommentTime(newComment);
             addCommentContent(newComment);
             addCommentShowUsernameAndContent(newComment);
-            
+
             utx.begin();
             em.persist(newIC);
             em.persist(newComment);
             utx.commit();
-            
+
         } catch (RollbackException ex) {
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (HeuristicMixedException ex) {
@@ -568,13 +577,13 @@ public class ItemController implements Serializable {
             Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void initialCommentsList() {
         // 获得attribute
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();
         String requestID = request.getParameter("id");
-        
+
         List<com.smartexpo.models.Comment> allComments = gi
                 .getCommentByItemID(Integer.parseInt(requestID));
         for (com.smartexpo.models.Comment com : allComments) {
@@ -585,48 +594,48 @@ public class ItemController implements Serializable {
             addCommentShowUsernameAndContent(com);
         }
     }
-    
+
     private void addCommentID(com.smartexpo.models.Comment com) {
         commentIDs.add(com.getCommentId());
     }
-    
+
     private void addCommentUsername(com.smartexpo.models.Comment com) {
         commentUsernames.add(com.getUsername());
     }
-    
+
     private void addCommentContent(com.smartexpo.models.Comment com) {
         commentContents.add(com.getContent());
     }
-    
+
     private void addCommentTime(com.smartexpo.models.Comment com) {
         commentTimes.add(com.getTime());
     }
-    
+
     private void addCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
         usernameContentPairs.add(new UsernameContentPair(com.getUsername(), com.getContent()));
 //        getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
     }
-    
+
     public Item getItemBean() {
         return itemBean;
     }
-    
+
     public Description getDescriptionBean() {
         return descriptionBean;
     }
-    
+
     public Author getAuthorBean() {
         return authorBean;
     }
-    
+
     public Audio getAudioBean() {
         return audioBean;
     }
-    
+
     public Video getVideoBean() {
         return videoBean;
     }
-    
+
     public Comment getCommentBean() {
         return commentBean;
     }

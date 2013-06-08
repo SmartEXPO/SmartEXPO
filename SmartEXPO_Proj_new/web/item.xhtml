@@ -3,9 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <meta charset="utf-8" />
         <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
@@ -73,7 +71,8 @@
                                            value="Log Out"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
-                                <f:ajax execute="@form" render="@form" />
+                                <f:ajax execute="@form" render="@form :comment_form"
+                                        onevent="finish" />
                             </h:commandLink>
                         </h:form>
                     </div>
@@ -179,7 +178,13 @@
                         <h:inputText required="true"
                                      class="func_input_box name"
                                      value="#{itemController.commentuser}"
-                                     style="display:inline-block" />
+                                     style="display:inline-block"
+                                     rendered="#{!loginManagedBean.status}"/>
+                        <h:inputText class="func_input_box name"
+                                     value="#{loginManagedBean.username}"
+                                     disabled="true"
+                                     style="display:inline-block"
+                                     rendered="#{loginManagedBean.status}" />
                         <h:inputText required="true"
                                      class="func_input_box content"
                                      value="#{itemController.commentcontent}"
@@ -206,7 +211,8 @@
                                  class="login_button" value="Sign In">
                     <f:ajax listener="#{loginManagedBean.verify}"
                             execute="username password"
-                            render="@form :log_form" />
+                            render="@form :log_form :comment_form"
+                            onevent="finish" />
                 </h:commandButton>
                 <h:message for="username" />
                 <h:message for="password" />
@@ -222,7 +228,6 @@
                 <div id="instant_comment_username">Codinfox</div>|
                 <div id="instant_comment_time">2013.4.30 15:30</div>
                 <p id="instant_comment_content">asdasdfasdfasddsfsad. asdfsfsafsdfasfssafasdf</p>
-
             </div>
         </div>
 
