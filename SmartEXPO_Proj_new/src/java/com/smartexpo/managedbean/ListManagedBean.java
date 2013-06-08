@@ -56,7 +56,10 @@ public class ListManagedBean {
             int itemID = item.getItemId();
             String imgURL = item.getImageurl();
             String itemName = item.getItemName();
+            LOG.log(Level.WARNING,"itemID: "+itemID);
+            
             String desContent = gi.getDescriptionByItemID(itemID).get(0).getContent();
+            
             LOG.log(Level.WARNING, "itemid = {0}, description = {1}", new Object[]{itemID, desContent});
             String allAuthors = "";
             List<Author> authors = gi.getAuthorsByItemID(itemID);
