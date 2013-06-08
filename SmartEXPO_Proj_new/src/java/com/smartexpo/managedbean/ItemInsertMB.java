@@ -36,7 +36,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -57,7 +56,6 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class ItemInsertMB implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(ItemInsertMB.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
@@ -66,7 +64,7 @@ public class ItemInsertMB implements Serializable {
     private UserTransaction utx;
     private GetInfo gi;
     // ItemInsertMB Fields
-    private static String imageUploadID = "img_upload";
+    private static String ImageUploadComponentID = "img_upload";
     private String itemName;
     private String desTitle;
     private String desContent;
@@ -84,6 +82,7 @@ public class ItemInsertMB implements Serializable {
     private Date authorDeath;
     private String authorIntro;
     private String imageurl;
+    private String imageSavedLocation;
     private String audioTitle;
     private String audioURL;
     private String audioDes;
@@ -399,6 +398,13 @@ public class ItemInsertMB implements Serializable {
         for (int i = 0; i < audios.size(); ++i) {
             Audio tmpAudio = audios.get(i);
             if (tmpAudio.getTitle().equals(selectedAudio.getTitle())) {
+                String des = ((ServletContext) FacesContext.getCurrentInstance()
+                        .getExternalContext().getContext()).getRealPath("/");
+                String url = tmpAudio.getUrl();
+                Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, Destination);
+                Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, url);
+                Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, des);
+
                 audios.remove(i);
             }
         }
@@ -488,11 +494,13 @@ public class ItemInsertMB implements Serializable {
         uploadedFile = event.getFile();
         String componentID = event.getComponent().getId();
 
-        if (componentID.equals("img_upload")) {
+        if (componentID.equals(ImageUploadComponentID)) {
+            if (imageSavedLocation != null) {
+                deleteFile(imageSavedLocation);
+            }
             imageurl = processStore(uploadedFile, "images/");
         }
 
-        LOG.log(Level.WARNING, "File Name: {0}, File Content: {1}, File Url: {2}", new Object[]{uploadedFile.getFileName(), uploadedFile.getContentType(), imageurl});
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload successfully!"));
     }
 
@@ -503,15 +511,16 @@ public class ItemInsertMB implements Serializable {
      * @param uploadedFile the uploadedFile to store
      * @param subDir the subdirectory for file to store
      * 
-     * @return the URL of uploaded file
+     * @return the imageSavedLocation of uploaded file
      */
     private String processStore(UploadedFile uploadedFile, String subDir) {
         String contentType = uploadedFile.getContentType();
         String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
-        String URL = Destination + subDir + uploadedFile.hashCode() + "." + ext;
+        imageSavedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
+        String URL = imageSavedLocation.substring(imageSavedLocation.indexOf("/upload/"), imageSavedLocation.length());
 
         try {
-            storeFile(URL, uploadedFile.getInputstream());
+            storeFile(imageSavedLocation, uploadedFile.getInputstream());
         } catch (IOException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -523,13 +532,13 @@ public class ItemInsertMB implements Serializable {
      * The storeFile Method
      * store file to Server
      * 
-     * @param fileURL url of file
+     * @param URL url of file
      * @param in inputstream of file
      */
-    private void storeFile(String fileURL, InputStream in) {
+    private void storeFile(String saveLocation, InputStream in) {
         OutputStream out;
         try {
-            out = new FileOutputStream(new File(fileURL));
+            out = new FileOutputStream(new File(saveLocation));
 
             int read;
             byte[] bytes = new byte[4096];
@@ -547,5 +556,10 @@ public class ItemInsertMB implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private boolean deleteFile(String imageSavedLocation) {
+        File file = new File(imageSavedLocation);
+        return file.delete();
     }
 }

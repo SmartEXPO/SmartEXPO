@@ -20,10 +20,8 @@ import javax.faces.bean.ApplicationScoped;
 @ManagedBean(eager = true)
 @ApplicationScoped
 public class OverallInfo {
-    
+
     private final static int threshold = 500;
-    
-    private static final Logger LOG = Logger.getLogger(OverallInfo.class.getName());
     private LinkedList<CommentInfo> commentBuffer = new LinkedList<CommentInfo>();
     private long num = 0;
 
@@ -31,7 +29,6 @@ public class OverallInfo {
      * Creates a new instance of OverallInfo
      */
     public OverallInfo() {
-        LOG.log(Level.WARNING, "$$$$$$$$WORKING$$$$$$$$$");
 //        updateComment(new CommentInfo(1, "codinfox", new Date(), "this is a test, this is a test, this is a test"));
     }
 
@@ -56,9 +53,7 @@ public class OverallInfo {
      * @param info the latest comment information
      */
     public void updateComment(CommentInfo info) {
-        LOG.log(Level.WARNING, "Overall Info");
         info.setNum(num++);
-        LOG.log(Level.WARNING, "NUM:"+num);
         Date cmp = info.getTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(cmp);
@@ -69,15 +64,12 @@ public class OverallInfo {
             if (info.getId() == commentBuffer.get(i).getId()) {
                 duplicate = true;
                 commentBuffer.set(i, info);
-                LOG.log(Level.WARNING, "DUP");
-                LOG.log(Level.WARNING, ""+commentBuffer.get(i).getContent());
             } else if (cmp.after(commentBuffer.get(i).getTime())) {
                 commentBuffer.remove(i);
             }
         }
         if (!duplicate) {
             commentBuffer.add(info);
-            LOG.log(Level.WARNING, ""+commentBuffer.size());
         }
     }
 }
