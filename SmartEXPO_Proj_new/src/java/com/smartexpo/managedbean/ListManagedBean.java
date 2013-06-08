@@ -51,26 +51,9 @@ public class ListManagedBean {
     @PostConstruct
     public void postConstruct() {
         gi = new GetInfo(emf, utx);
-        items = gi.getAllItems();
-        for (Item item : items) {
-            int itemID = item.getItemId();
-            String imgURL = item.getImageurl();
-            String itemName = item.getItemName();
-            String desContent = gi.getDescriptionByItemID(itemID).get(0).getContent();
-            LOG.log(Level.WARNING, "itemid = {0}, description = {1}", new Object[]{itemID, desContent});
-            String allAuthors = "";
-            List<Author> authors = gi.getAuthorsByItemID(itemID);
-            for (int i = 0; i < authors.size(); ++i) {
-                Author tmpAuthor = authors.get(i);
-                if (i != authors.size() - 1) {
-                    allAuthors += tmpAuthor.getName() + " & ";
-                } else {
-                    allAuthors += tmpAuthor.getName();
-                }
-//                LOG.log(Level.WARNING, "authornum: {0}, name: {1}", new Object[]{i, tmpAuthor.getName()});
-            }
-            getItemInfos().add(new ItemInfo(itemID, imgURL, itemName, desContent, allAuthors));
-        }
+
+        initItemInfoList();
+
     }
 
     /**
@@ -85,6 +68,50 @@ public class ListManagedBean {
      */
     public void setItemInfos(List<ItemInfo> itemInfos) {
         this.itemInfos = itemInfos;
+    }
+
+    /**
+     * @return the items
+     */
+    public List<Item> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    private void initItemInfoList() {
+        items = gi.getAllItems();
+        for (Item item : items) {
+            int itemID = item.getItemId();
+            String imgURL = item.getImageurl();
+            String itemName = item.getItemName();
+            String desContent = gi.getDescriptionByItemID(itemID).get(0).getContent();
+            LOG.log(Level.WARNING, "itemid = {0}, description = {1}", new Object[]{itemID, desContent});
+
+            List<Author> authors = gi.getAuthorsByItemID(itemID);
+            String allAuthors = initAuthors(authors);
+
+            getItemInfos().add(new ItemInfo(itemID, imgURL, itemName, desContent, allAuthors));
+        }
+    }
+
+    private String initAuthors(List<Author> authors) {
+        String result = "";
+        for (int i = 0; i < authors.size(); ++i) {
+            Author tmpAuthor = authors.get(i);
+            if (i != authors.size() - 1) {
+                result += tmpAuthor.getName() + " & ";
+            } else {
+                result += tmpAuthor.getName();
+            }
+//                LOG.log(Level.WARNING, "authornum: {0}, name: {1}", new Object[]{i, tmpAuthor.getName()});
+        }
+        return result;
     }
 
     public class ItemInfo {
@@ -172,19 +199,5 @@ public class ListManagedBean {
         public void setAuthors(String authors) {
             this.authors = authors;
         }
-    }
-
-    /**
-     * @return the items
-     */
-    public List<Item> getItems() {
-        return items;
-    }
-
-    /**
-     * @param items the items to set
-     */
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 }
