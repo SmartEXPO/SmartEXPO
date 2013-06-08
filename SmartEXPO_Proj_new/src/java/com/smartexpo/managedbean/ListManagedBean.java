@@ -6,11 +6,9 @@ package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Author;
-import com.smartexpo.models.Description;
 import com.smartexpo.models.Item;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -91,7 +89,6 @@ public class ListManagedBean {
             String imgURL = item.getImageurl();
             String itemName = item.getItemName();
             String desContent = gi.getDescriptionByItemID(itemID).get(0).getContent();
-            LOG.log(Level.WARNING, "itemid = {0}, description = {1}", new Object[]{itemID, desContent});
 
             List<Author> authors = gi.getAuthorsByItemID(itemID);
             String allAuthors = initAuthors(authors);
@@ -109,7 +106,6 @@ public class ListManagedBean {
             } else {
                 result += tmpAuthor.getName();
             }
-//                LOG.log(Level.WARNING, "authornum: {0}, name: {1}", new Object[]{i, tmpAuthor.getName()});
         }
         return result;
     }

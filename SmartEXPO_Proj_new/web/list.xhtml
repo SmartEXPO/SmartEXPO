@@ -89,10 +89,13 @@
                 <div id="container">
                     <c:forEach items="#{listManagedBean.itemInfos}" var="itemInfo">
                         <div class="grid">
-                            <div class="imgholder">
-                                <h:graphicImage value="#{itemInfo.imgURL}" />
-                            </div>
-                            <strong>#{itemInfo.itemName}</strong>
+                            <h:outputLink value="item.xhtml">
+                                <f:param name="id" value="#{itemInfo.itemID}" />
+                                <div class="imgholder">
+                                    <h:graphicImage value="#{itemInfo.imgURL}" />
+                                </div>
+                                <strong>#{itemInfo.itemName}</strong>
+                            </h:outputLink>
                             <p>
                                 #{itemInfo.desContent}
                             </p>
