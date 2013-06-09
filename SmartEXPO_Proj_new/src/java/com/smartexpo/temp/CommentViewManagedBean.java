@@ -46,7 +46,6 @@ public class CommentViewManagedBean implements Serializable {
     @Resource
     private UserTransaction utx;
     private GetInfo gi;
-    private static final Logger LOG = Logger.getLogger(CommentViewManagedBean.class.getName());
     private List<Comment> allComments;
     private List<Comment> selectedItemComments;
     private Comment selectedComment;
@@ -80,7 +79,6 @@ public class CommentViewManagedBean implements Serializable {
     public String getAuthorName() {
 
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
@@ -98,7 +96,6 @@ public class CommentViewManagedBean implements Serializable {
 
     public Date getAuthorBirthDate() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return null;
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
@@ -116,7 +113,6 @@ public class CommentViewManagedBean implements Serializable {
 
     public Date getAuthorDeathDate() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return null;
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
@@ -134,7 +130,6 @@ public class CommentViewManagedBean implements Serializable {
 
     public String getAuthorIntro() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
@@ -152,7 +147,6 @@ public class CommentViewManagedBean implements Serializable {
 
     public String getAudioTitle() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
         List<Audio> audios = gi.getAudioByItemID(selectedItem.getItemId());
@@ -170,7 +164,6 @@ public class CommentViewManagedBean implements Serializable {
 
     public String getVideoTitle() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
         List<Video> videos = gi.getVideoByItemID(selectedItem.getItemId());
@@ -263,6 +256,10 @@ public class CommentViewManagedBean implements Serializable {
     public void showDetialComments() {
         List<Comment> comments = gi.getCommentByItemID(selectedItem.getItemId());
         this.selectedItemComments = comments;
+    }
+
+    public int getSelectedCommentCount() {
+        return selectedItemComments.size();
     }
 
     /**

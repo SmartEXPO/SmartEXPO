@@ -9,8 +9,6 @@ import com.smartexpo.models.Description;
 import com.smartexpo.models.Item;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
@@ -29,7 +27,6 @@ import javax.transaction.UserTransaction;
 @RequestScoped
 public class IndexManagedBean {
 
-    private static final Logger LOG = Logger.getLogger(IndexManagedBean.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")

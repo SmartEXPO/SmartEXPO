@@ -120,7 +120,7 @@ public class LoginManagedBean implements Serializable {
         if (isPass()) { // 数据库验证
             setStatus(true);
             RequestContext.getCurrentInstance()
-                    .execute("editDialog.hide();"); // Close login pannel
+                    .execute("vanishLogin();void(0);"); // Close login pannel
         } else {
             RequestContext.getCurrentInstance()
                     .execute(("alert('Username or password wrong')"));
