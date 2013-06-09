@@ -75,3 +75,11 @@ p {
 ::-webkit-scrollbar-thumb:window-inactive {
         background: #A9A9A9;
 }*/
+
+@font-face {
+ font-family: 'American Typewriter';
+ src: url('fontName.eot');
+ src: local('American Typewriter'), 
+              local('American Typewriter'), 
+              url('at.ttf') format('truetype');/*这个字体的地址怎么写*/
+}  
