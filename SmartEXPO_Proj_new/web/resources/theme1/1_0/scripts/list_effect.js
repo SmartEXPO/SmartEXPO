@@ -67,11 +67,16 @@ $(document).ready(function() {
             }
     });
 
-    var o = 0;
-    while (o < $(window).height() / 450) {
-        list_conn();//在程序开始的时候加载
-        o++;
-    }
+        delayLoad();//在程序开始的时候加载
+
 });
 
 var isWaiting = false;
+
+function delayLoad() {
+    if ($(window).height() >= $(document).height()) {
+        list_conn();
+//        console.log("h");
+        setTimeout("delayLoad()", 1000);
+    }
+}
