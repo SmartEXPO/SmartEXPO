@@ -54,10 +54,10 @@ $(document).ready(function() {
             });
         }
     });
-
-    $("#loading").css({
-        'display': 'none'
-    });
+//
+//    $("#loading").css({
+//        'display': 'none'
+//    });
     $(window).scroll(function() {
         if (!isWaiting)
             if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
@@ -67,7 +67,7 @@ $(document).ready(function() {
             }
     });
 
-    //list_conn();在程序开始的时候加载
+    list_conn();//在程序开始的时候加载
 });
 
 var isWaiting = false;
