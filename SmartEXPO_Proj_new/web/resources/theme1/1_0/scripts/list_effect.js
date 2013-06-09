@@ -5,11 +5,11 @@ var area;
 $(document).ready(function() {
 
     area = $("#area").html();
-    if (!(parseInt(area) < 6)){
+    if (!(parseInt(area) < 6)) {
         area = "1";
         $("#area").html("1");
     }
-        
+
     $('#footer').css({
         'bottom': -15
     }).delay(1000).animate({
@@ -60,14 +60,18 @@ $(document).ready(function() {
 //    });
     $(window).scroll(function() {
         if (!isWaiting)
-            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 5) {
                 isWaiting = true;
                 $("#loading").css({'display': 'block'});
                 list_conn();
             }
     });
 
-    list_conn();//在程序开始的时候加载
+    var o = 0;
+    while (o < $(window).height() / 450) {
+        list_conn();//在程序开始的时候加载
+        o++;
+    }
 });
 
 var isWaiting = false;
