@@ -338,6 +338,7 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public void destroyItem() throws NonexistentEntityException {
+        LOG.log(Level.WARNING, "selesct = " + selectedItem.getItemName());
         try {
             getItems().remove(getSelectedItem());
             ItemJpaController ijc = new ItemJpaController(utx, emf);

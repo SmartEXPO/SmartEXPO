@@ -162,7 +162,6 @@ public class SignUpManagedBean implements Serializable {
     }
 
     private void storeManager() {
-
         try {
             Manager manager = new Manager();
             manager.setUsername(username);

@@ -109,7 +109,8 @@
                               rendered="#{loginManagedBean.permissions[3]}">
                         <p:commandLink action="#{userViewManagedBean.test}">
                             <p:rowEditor />
-                            <f:setPropertyActionListener value="#{user}" target="#{userViewManagedBean.selectedUser}"/>
+                            <f:setPropertyActionListener value="#{user}"
+                                                         target="#{userViewManagedBean.selectedUser}"/>
                         </p:commandLink>
                     </p:column>
 
