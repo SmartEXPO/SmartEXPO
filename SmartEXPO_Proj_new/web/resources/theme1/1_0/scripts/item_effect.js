@@ -194,6 +194,8 @@ function finish(e) {
     console.log($("#login_name").html());
     $(".func_input_box.name").attr("placeholder", "Username");
     $(".func_input_box.content").attr("placeholder", "Content");
+    $("#comment_form .name").val(trim($("#login_name").html()));
+
 
     $("#users_comment").scrollTop($("#all_comments").height() - 340);
     $("#users_comment").perfectScrollbar('update');
