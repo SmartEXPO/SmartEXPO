@@ -3,14 +3,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Manager | Sign Up</ui:define>
         <ui:define name="content">
             <h:form>
-                <p:growl id="msg" />
+                <p:growl id="msg" showDetail="true" />
                 <h:panelGrid columns="2" style="font-size: 200%;">
                     <p:inputText id="username" required="true"
                                  value="#{signUpManagedBean.username}" />
@@ -24,19 +23,25 @@
                                 value="#{signUpManagedBean.confirmPassword}" />
                     <p:watermark for="confirm_password" value="Confirm Password" />
 
-                    <p:selectManyCheckbox id="permission_sel"
-                                          value="#{signUpManagedBean.permissions}">
-                        <f:selectItem itemValue="#{signUpManagedBean.permissions[0]}"
-                                      itemLabel="Connoisseur" />
-                        <f:selectItem itemValue="#{signUpManagedBean.permissions[1]}"
-                                      itemLabel="Alter Item" />
-                        <f:selectItem itemValue="#{signUpManagedBean.permissions[2]}"
-                                      itemLabel="Add/Del Item" />
-                        <f:selectItem itemValue="#{signUpManagedBean.permissions[3]}"
-                                      itemLabel="Add/Del Manager" />
-                        <f:selectItem itemValue="#{signUpManagedBean.permissions[4]}"
-                                      itemLabel="Alter Manager" />
-                    </p:selectManyCheckbox>
+                    <h:outputLabel for="connoisseur" value="Connoisseur" />
+                    <p:selectBooleanCheckbox id="connoisseur"
+                                             value="#{signUpManagedBean.permissions[0]}" />
+
+                    <h:outputLabel for="alter_item" value="Alter Item" />
+                    <p:selectBooleanCheckbox id="alter_item"
+                                             value="#{signUpManagedBean.permissions[1]}" />
+
+                    <h:outputLabel for="add_del_item" value="Add/Del Item" />
+                    <p:selectBooleanCheckbox id="add_del_item"
+                                             value="#{signUpManagedBean.permissions[2]}" />
+
+                    <h:outputLabel for="add_del_manager" value="Add/Del Manager" />
+                    <p:selectBooleanCheckbox id="add_del_manager"
+                                             value="#{signUpManagedBean.permissions[3]}" />
+
+                    <h:outputLabel for="alter_manager" value="Alter Manager" />
+                    <p:selectBooleanCheckbox id="alter_manager"
+                                             value="#{signUpManagedBean.permissions[4]}" />
                 </h:panelGrid>
                 <p:commandButton actionListener="#{signUpManagedBean.verify}"
                                  value="Sign Up" ajax="true" update="@form"/>

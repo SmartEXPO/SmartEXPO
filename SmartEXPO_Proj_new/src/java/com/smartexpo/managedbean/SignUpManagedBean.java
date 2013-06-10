@@ -131,11 +131,11 @@ public class SignUpManagedBean implements Serializable {
 
         if (isExist()) { // Username has existed
             FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage("Username has existed."));
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sign up Error", "Username has existed."));
             isVerify = false;
         } else if (!password.equals(confirmPassword)) {
             FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage("Password not match"));
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sign up Error", "Password not match"));
             isVerify = false;
             logger.log(Level.WARNING, "Password not match");
         } else {
