@@ -28,6 +28,7 @@ import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -72,6 +73,22 @@ public class ItemViewManagedBean implements Serializable {
      * Creates a new instance of ItemViewManagedBean
      */
     public ItemViewManagedBean() {
+        audios = new ArrayList<Audio>();
+        for (int i = 0; i < 244; ++i) {
+            Audio audio = new Audio();
+            audio.setTitle("audio " + i);
+            audio.setUrl("urlllllll " + i * i);
+            audio.setDescription("desccccccccć " + i * i / 55);
+            audios.add(audio);
+        }
+        videos = new ArrayList<Video>();
+        for (int i = 0; i < 255; ++i) {
+            Video video = new Video();
+            video.setTitle("video " + i);
+            video.setUrl("Ullrllrr " + i * i);
+            video.setDescription("dekhafsa " + i * i / 213);
+            videos.add(video);
+        }
     }
 
     @PostConstruct
@@ -220,8 +237,66 @@ public class ItemViewManagedBean implements Serializable {
         this.selectedItem = selectedItem;
     }
 
+    /**
+     * @return the audios
+     */
+    public List<Audio> getAudios() {
+        return audios;
+    }
+
+    /**
+     * @param audios the audios to set
+     */
+    public void setAudios(List<Audio> audios) {
+        this.audios = audios;
+    }
+
+    /**
+     * @return the videos
+     */
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    /**
+     * @param videos the videos to set
+     */
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
+
     public int getCount() {
         return getItems().size();
+    }
+
+    public int getAudioSize() {
+        return audios.size();
+    }
+
+    public int getVideoSize() {
+        return videos.size();
+    }
+
+    // view接口，selectedItem为目标item
+    public void beginViewDetail() {
+    }
+
+    // 根据selectedItem找到对应Audio放在audios这个List中
+    public void beginViewAudio() {
+    }
+
+    // 根据selectedItem找到对应Video放在videos这个List中
+    public void beginViewVideo() {
+    }
+
+    // edit接口，selectedItem为目标item
+    public void beginEditItem() {
+    }
+
+    public void beginEditAudio() {
+    }
+
+    public void beginEditVideo() {
     }
 
     public void storeEditedData() {
@@ -260,15 +335,6 @@ public class ItemViewManagedBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }
-
-    // edit接口，selectedItem为目标item
-    public void editItem() {
-    }
-
-    // view接口，selectedItem为目标item
-    public void viewDetail() {
     }
 
     public void destroyItem() throws NonexistentEntityException {
@@ -278,7 +344,7 @@ public class ItemViewManagedBean implements Serializable {
 
             ItemAuthorJpaController iauthorjc = new ItemAuthorJpaController(utx, emf);
             List<ItemAuthor> itemAuthors = gi.getItemAuthorsByItemID(selectedItem.getItemId());
-            for (int i = 0; i < itemAuthors.size(); i++) {
+            for (int i = 0; i < itemAuthors.size(); ++i) {
 
                 iauthorjc.destroy(itemAuthors.get(i).getItemAuthorId());
 
@@ -286,7 +352,7 @@ public class ItemViewManagedBean implements Serializable {
 
             ItemVideoJpaController ivjc = new ItemVideoJpaController(utx, emf);
             List<ItemVideo> itemVideos = gi.getItemVideosByItemID(selectedItem.getItemId());
-            for (int i = 0; i < itemVideos.size(); i++) {
+            for (int i = 0; i < itemVideos.size(); ++i) {
 
                 ivjc.destroy(itemVideos.get(i).getItemVideoId());
 
@@ -294,7 +360,7 @@ public class ItemViewManagedBean implements Serializable {
 
             ItemAudioJpaController iaudiojc = new ItemAudioJpaController(utx, emf);
             List<ItemAudio> itemAudios = gi.getItemAudiosByItemID(selectedItem.getItemId());
-            for (int i = 0; i < itemAudios.size(); i++) {
+            for (int i = 0; i < itemAudios.size(); ++i) {
 
                 iaudiojc.destroy(itemAudios.get(i).getItemAudioId());
 
@@ -302,7 +368,7 @@ public class ItemViewManagedBean implements Serializable {
 
             ItemCommentJpaController icjc = new ItemCommentJpaController(utx, emf);
             List<ItemComment> itemComments = gi.getItemCommentsByItemID(selectedItem.getItemId());
-            for (int i = 0; i < itemComments.size(); i++) {
+            for (int i = 0; i < itemComments.size(); ++i) {
 
                 icjc.destroy(itemComments.get(i).getItemCommentId());
 
@@ -314,7 +380,7 @@ public class ItemViewManagedBean implements Serializable {
 
             ItemDisplayColumnJpaController idcjc = new ItemDisplayColumnJpaController(utx, emf);
             List<DisplayColumn> displayColumns = gi.getDisplayColumnsByItemID(selectedItem.getItemId());
-            for (int i = 0; i < displayColumns.size(); i++) {
+            for (int i = 0; i < displayColumns.size(); ++i) {
                 idcjc.destroy(displayColumns.get(i).getDisplayColumnId());
             }
 
@@ -329,33 +395,5 @@ public class ItemViewManagedBean implements Serializable {
         if (items.size() == 0) {
             items = null;
         }
-    }
-
-    /**
-     * @return the audios
-     */
-    public List<Audio> getAudios() {
-        return audios;
-    }
-
-    /**
-     * @param audios the audios to set
-     */
-    public void setAudios(List<Audio> audios) {
-        this.audios = audios;
-    }
-
-    /**
-     * @return the videos
-     */
-    public List<Video> getVideos() {
-        return videos;
-    }
-
-    /**
-     * @param videos the videos to set
-     */
-    public void setVideos(List<Video> videos) {
-        this.videos = videos;
     }
 }

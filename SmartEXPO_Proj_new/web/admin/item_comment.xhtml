@@ -95,11 +95,11 @@
                             </p:column>
 
                             <!--  这部分column为新添加的，用于查看comment对应的item -->
-
+                            <!-- tooltip效果不是很好，考虑改为dialog -->
                             <p:column headerText="Item">
                                 <p:commandLink id="view_detail_link"
                                                value="item name + Detail"
-                                               update="@form"
+                                               update="item_detail"
                                                action="#{commentViewManagedBean.showItemDetail}">
                                     <f:setPropertyActionListener value="#{com}"
                                                                  target="#{commentViewManagedBean.selectedComment}" />

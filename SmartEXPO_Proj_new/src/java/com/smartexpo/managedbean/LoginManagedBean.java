@@ -167,7 +167,7 @@ public class LoginManagedBean implements Serializable {
                     .getExternalContext().getSession(false);
             session.setAttribute("user", username);
 
-            return "item_view";
+            return "item_view?faces-redirect=true";
         }
 
         return null;
