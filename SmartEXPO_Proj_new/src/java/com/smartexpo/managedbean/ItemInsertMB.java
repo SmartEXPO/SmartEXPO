@@ -106,6 +106,7 @@ public class ItemInsertMB implements Serializable {
     public void postContrust() {
         String realPath = ((ServletContext) FacesContext.getCurrentInstance()
                 .getExternalContext().getContext()).getRealPath("/");
+
         for (int i = 0; i < 3; ++i) {
             realPath = realPath.substring(0, realPath.lastIndexOf("/"));
         }
@@ -400,10 +401,11 @@ public class ItemInsertMB implements Serializable {
             if (tmpAudio.getTitle().equals(selectedAudio.getTitle())) {
                 String des = ((ServletContext) FacesContext.getCurrentInstance()
                         .getExternalContext().getContext()).getRealPath("/");
+                for (int j = 0; j < 3; ++j) {
+                    des = des.substring(0, des.lastIndexOf("/"));
+                }
                 String url = tmpAudio.getUrl();
-                Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, Destination);
-                Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, url);
-                Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, des);
+                deleteFile(des + "/web" + url);
 
                 audios.remove(i);
             }
@@ -429,6 +431,14 @@ public class ItemInsertMB implements Serializable {
         for (int i = 0; i < videos.size(); ++i) {
             Video tmpVideo = videos.get(i);
             if (tmpVideo.getTitle().equals(selectedVideo.getTitle())) {
+                String des = ((ServletContext) FacesContext.getCurrentInstance()
+                        .getExternalContext().getContext()).getRealPath("/");
+                for (int j = 0; j < 3; ++j) {
+                    des = des.substring(0, des.lastIndexOf("/"));
+                }
+                String url = tmpVideo.getUrl();
+                deleteFile(des + "/web" + url);
+
                 videos.remove(i);
             }
         }
