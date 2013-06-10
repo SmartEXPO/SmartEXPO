@@ -163,7 +163,7 @@ $(document).ready(function() {
         }
     });
 
-    $(".func_input_box.name").attr("placeholder", "User");
+    $(".func_input_box.name").attr("placeholder", trim($("#login_name").html()));
     $(".func_input_box.content").attr("placeholder", "Content");
     $(".func_input_box.search").attr("placeholder", "Search");
 
@@ -189,12 +189,18 @@ $(document).ready(function() {
 });
 
 function finish(e) {
-    $(".func_input_box.content").css({width: "235px"});
-    $(".func_input_box.name").attr("placeholder", "User");
+    if (isCommentBarDisplayed)
+        $(".func_input_box.content").css({width: "235px"});
+    console.log($("#login_name").html());
+    $(".func_input_box.name").attr("placeholder", trim($("#login_name").html()));
     $(".func_input_box.content").attr("placeholder", "Content");
 
     $("#users_comment").scrollTop($("#all_comments").height() - 340);
     $("#users_comment").perfectScrollbar('update');
 
     console.log(e);
+}
+
+function trim(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
 }
