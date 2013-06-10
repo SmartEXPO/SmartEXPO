@@ -58,8 +58,8 @@
                     <a class="navi" href="#">Contact</a>
                     <div id="login">
                         <h:form id="log_form">
-                            <div>
-                                #{loginManagedBean.status ? loginManagedBean.username : "guest"}
+                            <div id="login_name">
+                                #{loginManagedBean.status ? loginManagedBean.username : "Guest"}
                             </div>
                             <h:outputLink id="show_login" class="navi"
                                           value="#" onclick="popupLogin();
