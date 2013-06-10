@@ -68,6 +68,14 @@ public class GetInfo implements Serializable {
         }
         return null;
     }
+    
+    public List<ManagerPermission> getManagerPermissionsByManagerID(int id){
+        List<ManagerPermission> mps=em.createNamedQuery("ManagerPermission.findByManagerId").setParameter("managerId", getManagerByManagerID(id).get(0)).getResultList();
+        if(!mps.isEmpty()){
+            return mps;
+        }
+        return null;
+    }
 
     public List<Manager> getManagerByName(String name) {
         List<Manager> managers = em.createNamedQuery("Manager.findByUsername").setParameter("username", name).getResultList();

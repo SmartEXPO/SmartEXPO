@@ -6,10 +6,12 @@ package com.smartexpo.temp;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.jpgcontrollers.ManagerJpaController;
+import com.smartexpo.jpgcontrollers.ManagerPermissionJpaController;
 import com.smartexpo.jpgcontrollers.exceptions.IllegalOrphanException;
 import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Manager;
+import com.smartexpo.models.ManagerPermission;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
@@ -102,16 +104,37 @@ public class UserViewManagedBean implements Serializable {
 
     // 缺少从数据库中删除这一步，目标为selectedUser
     public void destroyUser() {
-        managers.remove(selectedUser);
+        try {
+            managers.remove(selectedUser);
+            GetInfo gi=new GetInfo(emf, utx);
+            ManagerPermissionJpaController mpjc=new ManagerPermissionJpaController(utx, emf);
+            List<ManagerPermission> mps=gi.getManagerPermissionsByManagerID(selectedUser.getManagerId());
+            for(int i=0;i<mps.size();i++){
+                mpjc.destroy(mps.get(i).getManagerPermissionId());
+            }
+            
+            ManagerJpaController mjc=new ManagerJpaController(utx, emf);
+            
+            mjc.destroy(gi.getManagerByName(selectedUser.getUsername()).get(0).getManagerId());
+            
 
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
-        String user = (String) session.getAttribute("user");
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSession(false);
+            String user = (String) session.getAttribute("user");
 
-        if (user != null && selectedUser.getUsername().equals(user)) {
-            session.invalidate();
+            if (user != null && selectedUser.getUsername().equals(user)) {
+                session.invalidate();
 
-            RequestContext.getCurrentInstance().execute("location.reload(true)");
+                RequestContext.getCurrentInstance().execute("location.reload(true)");
+            }
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(UserViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(UserViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(UserViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(UserViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
