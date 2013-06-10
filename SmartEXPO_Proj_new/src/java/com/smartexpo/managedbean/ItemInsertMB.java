@@ -336,10 +336,6 @@ public class ItemInsertMB implements Serializable {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
-        session.invalidate();
-
         RequestContext.getCurrentInstance()
                 .execute(("alert('Insert Successfully!');location.reload(true)"));
     }

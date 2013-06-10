@@ -36,6 +36,7 @@ public class Item implements Serializable {
     private com.smartexpo.models.Item item;
     private int id;
     private String name;
+    private String picURL;
 
     /**
      * Creates a new instance of Item
@@ -57,6 +58,7 @@ public class Item implements Serializable {
         id = Integer.parseInt(tmpID);
         setItem(gi.getItemByID(id));
         name = getItem().getItemName();
+        picURL = getItem().getImageurl();
     }
 
     /**
@@ -99,5 +101,19 @@ public class Item implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the picURL
+     */
+    public String getPicURL() {
+        return picURL;
+    }
+
+    /**
+     * @param picURL the picURL to set
+     */
+    public void setPicURL(String picURL) {
+        this.picURL = picURL;
     }
 }

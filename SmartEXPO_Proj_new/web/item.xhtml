@@ -85,13 +85,11 @@
 
             <div id="content">
                 <div id="contentwrapper">
-
                     <div id="description">
                         <br/>
                         <h:commandButton id="alter_item_btn" type="button" value="Edit"
                                          class="edit_description_div"
                                          disabled="#{not loginManagedBean.permissions[2]}" />
-
                         <div>
                             <h1 class="content_title">Description</h1>
                             <p id="description_content">
@@ -120,13 +118,13 @@
                     <div id="frame" class="content_fixed">
                         <h:graphicImage id="frame_back" library="#{info.lib}"
                                         name="images/item_frame.png" />
-                        <h:graphicImage id="frame_image" library="#{info.lib}"
-                                        name="images/item_item.png" />
-                        <a href="/SmartEXPO_Proj_new/faces/javax.faces.resource/images/item_item.png?ln=theme1" class="popup_link">
-                            <!--图片链接，怎么处理一下-->
+                        <h:graphicImage id="frame_image"
+                                        value="#{itemController.itemBean.picURL}" />
+                        <h:outputLink value="#{facesContext.externalContext.requestContextPath}#{itemController.itemBean.picURL}"
+                                      class="popup_link">
                             <h:graphicImage id="frame_highlight" library="#{info.lib}"
                                             name="images/item_frame_highlight.png" />
-                        </a>
+                        </h:outputLink>
                     </div>
                     <div class="content_fixed">
                         <div id="shade"></div>
