@@ -16,13 +16,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -39,8 +43,7 @@ public class UserViewManagedBean implements Serializable {
     EntityManagerFactory emf;
     @Resource
     private UserTransaction utx;
-    private GetInfo gi;
-    private static final Logger LOG = Logger.getLogger(CommentViewManagedBean.class.getName());
+    private GetInfo gi = null;
     private List<Manager> managers;
     private Manager selectedUser;
 
@@ -62,7 +65,6 @@ public class UserViewManagedBean implements Serializable {
         if (managers == null) {
             ManagerJpaController mjc = new ManagerJpaController(utx, emf);
             managers = mjc.findManagerEntities();
-
         }
 
         return managers;
@@ -79,6 +81,9 @@ public class UserViewManagedBean implements Serializable {
         try {
             ManagerJpaController mjc = new ManagerJpaController(utx, emf);
             mjc.edit(selectedUser);
+
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage("Edit successfully.", "Username is " + ((Manager) event.getObject()).getUsername()));
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(UserViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
@@ -91,10 +96,23 @@ public class UserViewManagedBean implements Serializable {
     }
 
     public void onCancel(RowEditEvent event) {
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage("Edit cancelled."));
     }
 
+    // 缺少从数据库中删除这一步，目标为selectedUser
     public void destroyUser() {
         managers.remove(selectedUser);
+
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        String user = (String) session.getAttribute("user");
+
+        if (user != null && selectedUser.getUsername().equals(user)) {
+            session.invalidate();
+
+            RequestContext.getCurrentInstance().execute("location.reload(true)");
+        }
     }
 
     public void test() {

@@ -36,7 +36,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -66,6 +65,7 @@ public class ItemInsertMB implements Serializable {
     // ItemInsertMB Fields
     private static String ImageUploadComponentID = "img_upload";
     private String itemName;
+    private String itemArea;
     private String desTitle;
     private String desContent;
     private List<Author> authors;
@@ -120,6 +120,14 @@ public class ItemInsertMB implements Serializable {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public String getItemArea() {
+        return itemArea;
+    }
+
+    public void setItemArea(String itemArea) {
+        this.itemArea = itemArea;
     }
 
     public String getDesTitle() {
@@ -281,6 +289,7 @@ public class ItemInsertMB implements Serializable {
             Item item = new Item();
             item.setItemName(itemName);
             item.setImageurl(imageurl);
+            item.setArea(itemArea);
 
             em.persist(item);
 
