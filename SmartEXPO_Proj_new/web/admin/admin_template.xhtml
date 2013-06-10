@@ -32,7 +32,8 @@
                 <ui:insert name="left">
                     <p:panel header="Item" toggleable="true">
                         <div>
-                            <h:outputLink value="item_insert.xhtml">
+                            <h:outputLink value="item_insert.xhtml"
+                                          rendered="#{loginManagedBean.permissions[3]}">
                                 Input Item
                             </h:outputLink>
                         </div>
@@ -50,7 +51,8 @@
 
                     <p:panel header="Manager" toggleable="true">
                         <div>
-                            <h:outputLink value="sign_up.xhtml">
+                            <h:outputLink value="sign_up.xhtml"
+                                          rendered="#{loginManagedBean.permissions[4]}">
                                 Sign Up
                             </h:outputLink>
                         </div>

@@ -28,7 +28,6 @@ import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -73,10 +72,6 @@ public class ItemViewManagedBean implements Serializable {
      * Creates a new instance of ItemViewManagedBean
      */
     public ItemViewManagedBean() {
-//        items = new ArrayList<Item>();
-//        for (int i = 0; i < 88; i++) {
-//            items.add(new Item("name " + i, "pic " + i, "author name " + i, "199" + i, "200" + i, "author introduction " + i, "description title + i", "description content " + i, "audio title " + i, "video title " + i));
-//        }
     }
 
     @PostConstruct

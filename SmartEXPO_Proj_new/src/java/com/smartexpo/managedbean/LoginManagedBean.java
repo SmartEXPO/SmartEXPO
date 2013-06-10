@@ -7,8 +7,8 @@ package com.smartexpo.managedbean;
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Manager;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -77,6 +77,9 @@ public class LoginManagedBean implements Serializable {
                 && password != null && !password.equals("")) {
             // 数据库验证
             setStatus(true);
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSession(false);
+            session.setAttribute("user", username);
         }
     }
 
@@ -142,14 +145,32 @@ public class LoginManagedBean implements Serializable {
      * @return item.xhtml or error.xhtml
      */
     public void verify(AjaxBehaviorEvent event) {
+        logger.log(Level.WARNING, "loooooooog");
         if (isPass()) { // 数据库验证
             setStatus(true);
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSession(false);
+            session.setAttribute("user", username);
+
             RequestContext.getCurrentInstance()
                     .execute("vanishLogin();void(0);"); // Close login pannel
         } else {
             RequestContext.getCurrentInstance()
                     .execute(("alert('Username or password wrong')"));
         }
+    }
+
+    public String adminLogin() {
+        if (isPass()) {
+            setStatus(true);
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSession(false);
+            session.setAttribute("user", username);
+
+            return "item_view";
+        }
+
+        return null;
     }
 
     public void logout(ActionEvent event) {

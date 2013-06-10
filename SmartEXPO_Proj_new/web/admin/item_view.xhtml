@@ -18,7 +18,6 @@
                         <h:panelGrid columns="1" style="width: 100%;">
 
                             <h:graphicImage value="#{show_item.imageurl}" />
-                            <h:outputText value="#{show_item.itemId}" />
                             <h:outputText value="#{show_item.itemName}" />
 
                             <p:separator />
@@ -41,31 +40,35 @@
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
 
-                            <p:separator />
+                            <p:separator rendered="#{loginManagedBean.permissions[2]}" />
 
                             <p:commandLink value="Edit Info" update=":edit_item_form"
                                            oncomplete="editInfoDialog.show()"
                                            action="#{itemViewManagedBean.viewDetail}"
-                                           title="Edit Item">
+                                           title="Edit Item"
+                                           rendered="#{loginManagedBean.permissions[2]}">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
                             <p:commandLink value="Edit Audios"
-                                           title="Edit Item Audios">
+                                           title="Edit Item Audios"
+                                           rendered="#{loginManagedBean.permissions[2]}">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
                             <p:commandLink value="Edit Videos"
-                                           title="Edit Item Videos">
+                                           title="Edit Item Videos"
+                                           rendered="#{loginManagedBean.permissions[2]}">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
 
-                            <p:separator />
+                            <p:separator rendered="#{loginManagedBean.permissions[2]}" />
 
                             <p:commandButton value="Destroy" icon="ui-icon-notice"
                                              action="#{itemViewManagedBean.destroyItem}"
-                                             update=":all_item">
+                                             update=":all_item"
+                                             rendered="#{loginManagedBean.permissions[2]}">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandButton>

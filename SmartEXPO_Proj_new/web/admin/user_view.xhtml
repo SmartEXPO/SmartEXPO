@@ -105,14 +105,16 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Edit" style="text-align: center">
+                    <p:column headerText="Edit" style="text-align: center"
+                              rendered="#{loginManagedBean.permissions[3]}">
                         <p:commandLink action="#{userViewManagedBean.test}">
                             <p:rowEditor />
                             <f:setPropertyActionListener value="#{user}" target="#{userViewManagedBean.selectedUser}"/>
                         </p:commandLink>
                     </p:column>
-                    
-                    <p:column headerText="Destroy" style="text-align: center">
+
+                    <p:column headerText="Destroy" style="text-align: center"
+                              rendered="#{loginManagedBean.permissions[4]}">
                         <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
                                          action="#{userViewManagedBean.destroyUser}">
                             <f:setPropertyActionListener value="#{user}"
