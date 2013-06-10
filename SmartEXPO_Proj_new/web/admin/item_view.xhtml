@@ -21,22 +21,47 @@
                             <h:outputText value="#{show_item.itemId}" />
                             <h:outputText value="#{show_item.itemName}" />
 
+                            <p:separator />
 
-                            <p:commandLink value="Detail" update=":show_item_form"
-                                           oncomplete="itemDialog.show()"
+                            <p:commandLink value="Info Detail" update=":show_item_form"
+                                           oncomplete="itemInfoDialog.show()"
                                            action="#{itemViewManagedBean.editItem}"
                                            title="View Detail">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
+                            <p:commandLink value="Audio Detail"
+                                           title="View Audio Detail">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+                            <p:commandLink value="Video Detail"
+                                           title="View Video Detail">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
 
-                            <p:commandLink value="Edit" update=":edit_item_form"
-                                           oncomplete="editDialog.show()"
+                            <p:separator />
+
+                            <p:commandLink value="Edit Info" update=":edit_item_form"
+                                           oncomplete="editInfoDialog.show()"
                                            action="#{itemViewManagedBean.viewDetail}"
                                            title="Edit Item">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
+                            <p:commandLink value="Edit Audios"
+                                           title="Edit Item Audios">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+                            <p:commandLink value="Edit Videos"
+                                           title="Edit Item Videos">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+
+                            <p:separator />
 
                             <p:commandButton value="Destroy" icon="ui-icon-notice"
                                              action="#{itemViewManagedBean.destroyItem}"
@@ -49,7 +74,7 @@
                 </p:panel>
             </p:dataGrid>
 
-            <p:dialog header="Item Detail" widgetVar="itemDialog"
+            <p:dialog header="Item Detail" widgetVar="itemInfoDialog"
                       resizable="false" modal="true">
                 <p:outputPanel id="item_detail" style="text-align: center;"
                                layout="block">
@@ -88,7 +113,7 @@
                 </p:outputPanel>
             </p:dialog>
 
-            <p:dialog header="Edit Item" widgetVar="editDialog"
+            <p:dialog header="Edit Item" widgetVar="editInfoDialog"
                       resizable="false" modal="true">
                 <p:outputPanel id="edit_item" style="text-align: center;"
                                layout="block">
@@ -96,10 +121,6 @@
                         <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}" />
 
                         <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputLabel for="edit_item_id" value="ID: " />
-                            <p:inputText id="edit_item_id"
-                                         value="#{itemViewManagedBean.selectedItem.itemId}" />
-
                             <h:outputLabel for="edit_item_name" value="Name: " />
                             <p:inputText id="edit_item_name"
                                          value="#{itemViewManagedBean.selectedItem.itemName}" />
@@ -109,12 +130,12 @@
                                          value="#{itemViewManagedBean.authorName}" />
 
                             <h:outputLabel for="edit_author_birthday" value="Author Birthday: " />
-                            <p:inputText id="edit_author_birthday"
-                                         value="#{itemViewManagedBean.authorBirthDate}" />
+                            <p:calendar id="edit_author_birthday"
+                                        value="#{itemViewManagedBean.authorBirthDate}" />
 
                             <h:outputLabel for="edit_author_death_date" value="Author Death Date: " />
-                            <p:inputText id="edit_author_death_date"
-                                         value="#{itemViewManagedBean.authorDeathDate}" />
+                            <p:calendar id="edit_author_death_date"
+                                        value="#{itemViewManagedBean.authorDeathDate}" />
 
                             <h:outputLabel for="edit_author_intro" value="Author Introduction: " />
                             <p:inputText id="edit_author_intro"
@@ -130,7 +151,7 @@
 
                             <f:facet name="footer">
                                 <p:commandButton value="Confirm" update=":all_item"
-                                                 oncomplete="editDialog.hide()"
+                                                 oncomplete="editInfoDialog.hide()"
                                                  action="#{itemViewManagedBean.storeEditedData}"/>
                             </f:facet>
                         </h:panelGrid>

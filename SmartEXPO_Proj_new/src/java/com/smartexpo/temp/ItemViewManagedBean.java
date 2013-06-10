@@ -66,6 +66,8 @@ public class ItemViewManagedBean implements Serializable {
     private Date authorDeathDate;
     private String authorIntro;
     private String audioTitle;
+    private List<Audio> audios;
+    private List<Video> videos;
 
     /**
      * Creates a new instance of ItemViewManagedBean
@@ -235,8 +237,8 @@ public class ItemViewManagedBean implements Serializable {
             Video video = gi.getVideoByItemID(selectedItem.getItemId()).get(0);
             Audio audio = gi.getAudioByItemID(selectedItem.getItemId()).get(0);
 
-            //author.setBirthday(authorBirthDate);
-            //author.setDeathDate(authorDeathDate);
+            author.setBirthday(authorBirthDate);
+            author.setDeathDate(authorDeathDate);
             author.setName(authorName);
             author.setIntroduction(authorIntro);
 
@@ -332,5 +334,33 @@ public class ItemViewManagedBean implements Serializable {
         if (items.size() == 0) {
             items = null;
         }
+    }
+
+    /**
+     * @return the audios
+     */
+    public List<Audio> getAudios() {
+        return audios;
+    }
+
+    /**
+     * @param audios the audios to set
+     */
+    public void setAudios(List<Audio> audios) {
+        this.audios = audios;
+    }
+
+    /**
+     * @return the videos
+     */
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    /**
+     * @param videos the videos to set
+     */
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 }

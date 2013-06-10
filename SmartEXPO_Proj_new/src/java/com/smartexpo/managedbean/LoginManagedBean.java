@@ -5,7 +5,9 @@
 package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
+import com.smartexpo.models.Manager;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -18,7 +20,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import org.primefaces.context.RequestContext;
@@ -33,26 +37,33 @@ public class LoginManagedBean implements Serializable {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
+    @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
+    EntityManagerFactory emf;
     @Resource
     private UserTransaction utx;
+    private GetInfo gi;
     // LoginManagedBean Field
     private static final Logger logger = Logger.getLogger(LoginManagedBean.class.getName());
     private String username;
     private String password;
+    private boolean[] permissions;
     @ManagedProperty(value = "false")
     private boolean status;
-    private GetInfo gi = null;
 
     /**
      * Creates a new instance of LoginManagedBean
      */
     public LoginManagedBean() {
+        permissions = new boolean[6];
+        for (int i = 0; i <= 5; ++i) {
+            permissions[i] = false;
+        }
     }
 
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
-            gi = new GetInfo(em, utx);
+            gi = new GetInfo(emf, utx);
         }
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SignUpManagedBean signUpManagedBean = (SignUpManagedBean) facesContext
@@ -98,6 +109,20 @@ public class LoginManagedBean implements Serializable {
     }
 
     /**
+     * @return the permissions
+     */
+    public boolean[] getPermissions() {
+        return permissions;
+    }
+
+    /**
+     * @param permissions the permissions to set
+     */
+    public void setPermissions(boolean[] permissions) {
+        this.permissions = permissions;
+    }
+
+    /**
      * @return the status
      */
     public boolean isStatus() {
@@ -131,19 +156,29 @@ public class LoginManagedBean implements Serializable {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.invalidate();
+
+        for (int i = 1; i <= 5; ++i) {
+            permissions[i] = false;
+        }
         setStatus(false);
     }
 
     private boolean isPass() {
         boolean result = false;
 
-        List<com.smartexpo.models.Manager> managers = gi.getManagerByName(username);
+        List<Manager> managers = gi.getManagerByName(username);
         if (managers == null) {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage("Username doesn't exit."));
         } else {
-            com.smartexpo.models.Manager manager = managers.get(0);
+            Manager manager = managers.get(0);
             if (manager.getPassword().equals(password)) {
+                permissions[1] = manager.isPermission1();
+                permissions[2] = manager.isPermission2();
+                permissions[3] = manager.isPermission3();
+                permissions[4] = manager.isPermission4();
+                permissions[5] = manager.isPermission5();
+
                 result = true;
             } else {
                 FacesContext.getCurrentInstance()

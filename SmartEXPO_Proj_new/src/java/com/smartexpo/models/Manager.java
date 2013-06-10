@@ -128,10 +128,6 @@ public class Manager implements Serializable {
     public String toString() {
         return "com.smartexpo.models.Manager[ managerId=" + managerId + " ]";
     }
-
-    
-    
-    
     @NotNull
     @Column(name = "PERMISSION_1")
     private boolean permission1;
@@ -175,19 +171,15 @@ public class Manager implements Serializable {
     public void setPermission5(boolean permission5) {
         this.permission5 = permission5;
     }
-    
     @NotNull
     @Column(name = "PERMISSION_2")
     private boolean permission2;
-    
     @NotNull
     @Column(name = "PERMISSION_3")
     private boolean permission3;
-    
     @NotNull
     @Column(name = "PERMISSION_4")
     private boolean permission4;
-    
     @NotNull
     @Column(name = "PERMISSION_5")
     private boolean permission5;

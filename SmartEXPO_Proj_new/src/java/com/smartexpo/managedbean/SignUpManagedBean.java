@@ -8,8 +8,6 @@ import com.smartexpo.controls.GetInfo;
 import com.smartexpo.jpgcontrollers.ManagerJpaController;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Manager;
-import com.smartexpo.models.ManagerPermission;
-import com.smartexpo.models.Permission;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +43,6 @@ public class SignUpManagedBean implements Serializable {
     EntityManager em;
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
     EntityManagerFactory emf;
-    
     @Resource
     private UserTransaction utx;
     // SignUpManagedBean Field
@@ -61,9 +58,9 @@ public class SignUpManagedBean implements Serializable {
      */
     public SignUpManagedBean() {
         isVerify = false;
-        permissions=new Boolean[5];
-        for(int i=0;i<5;i++){
-            permissions[i]=new Boolean(true);
+        permissions = new Boolean[5];
+        for (int i = 0; i < 5; i++) {
+            permissions[i] = true;
         }
     }
 
@@ -124,8 +121,6 @@ public class SignUpManagedBean implements Serializable {
         this.confirmPassword = confirmPassword;
     }
 
-    
-
     public void verify(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
@@ -167,41 +162,39 @@ public class SignUpManagedBean implements Serializable {
     }
 
     private void storeManager() {
-       
+
         try {
             Manager manager = new Manager();
             manager.setUsername(username);
             manager.setPassword(password);
-            
-            
-            
-            if(permissions[0]){
+
+            if (permissions[0]) {
                 manager.setPermission1(true);
-            }else{
+            } else {
                 manager.setPermission1(false);
             }
-            if(permissions[1]){
+            if (permissions[1]) {
                 manager.setPermission2(true);
-            }else{
+            } else {
                 manager.setPermission2(false);
             }
-            if(permissions[2]){
+            if (permissions[2]) {
                 manager.setPermission3(true);
-            }else{
+            } else {
                 manager.setPermission3(false);
             }
-            if(permissions[3]){
+            if (permissions[3]) {
                 manager.setPermission4(true);
-            }else{
+            } else {
                 manager.setPermission4(false);
             }
-            if(permissions[4]){
+            if (permissions[4]) {
                 manager.setPermission5(true);
-            }else{
+            } else {
                 manager.setPermission5(false);
             }
-            
-            ManagerJpaController mjc= new ManagerJpaController(utx, emf);
+
+            ManagerJpaController mjc = new ManagerJpaController(utx, emf);
             mjc.create(manager);
 
         } catch (NotSupportedException ex) {
@@ -223,6 +216,6 @@ public class SignUpManagedBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 }

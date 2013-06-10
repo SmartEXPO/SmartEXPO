@@ -27,15 +27,15 @@
                     <p:selectManyCheckbox id="permission_sel"
                                           value="#{signUpManagedBean.permissions}">
                         <f:selectItem itemValue="#{signUpManagedBean.permissions[0]}"
-                                      itemLabel="Permission 1" />
+                                      itemLabel="Connoisseur" />
                         <f:selectItem itemValue="#{signUpManagedBean.permissions[1]}"
-                                      itemLabel="Permission 2" />
+                                      itemLabel="Alter Item" />
                         <f:selectItem itemValue="#{signUpManagedBean.permissions[2]}"
-                                      itemLabel="Permission 3" />
+                                      itemLabel="Add/Del Item" />
                         <f:selectItem itemValue="#{signUpManagedBean.permissions[3]}"
-                                      itemLabel="Permission 4" />
+                                      itemLabel="Add/Del Manager" />
                         <f:selectItem itemValue="#{signUpManagedBean.permissions[4]}"
-                                      itemLabel="Permission 5" />
+                                      itemLabel="Alter Manager" />
                     </p:selectManyCheckbox>
                 </h:panelGrid>
                 <p:commandButton actionListener="#{signUpManagedBean.verify}"

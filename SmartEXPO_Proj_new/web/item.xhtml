@@ -71,8 +71,9 @@
                                            value="Log Out"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
-                                <f:ajax execute="@form" render="@form :comment_form"
-                                        onevent="finish" />
+                                <f:ajax execute="@form" onevent="finish"
+                                        render="@form :comment_form :alter_item_btn"
+                                        />
                             </h:commandLink>
                         </h:form>
                     </div>
@@ -87,7 +88,9 @@
 
                     <div id="description">
                         <br/>
-                        <input type="button" value="Edit" class="edit_description_div" />
+                        <h:commandButton id="alter_item_btn" type="button" value="Edit"
+                                         class="edit_description_div"
+                                         disabled="#{not loginManagedBean.permissions[2]}" />
 
                         <div>
                             <h1 class="content_title">Description</h1>
@@ -211,7 +214,7 @@
                                  class="login_button" value="Sign In">
                     <f:ajax listener="#{loginManagedBean.verify}"
                             execute="username password"
-                            render="@form :log_form :comment_form"
+                            render="@form :log_form :comment_form :alter_item_btn"
                             onevent="finish" />
                 </h:commandButton>
                 <h:message for="username" />

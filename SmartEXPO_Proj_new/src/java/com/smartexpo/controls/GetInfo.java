@@ -85,7 +85,7 @@ public class GetInfo implements Serializable {
      */
     public List<Author> getAuthorsByItemID(int id) {
         //if (item == null) {
-            getItemByID(id);
+        getItemByID(id);
         //}
         List<ItemAuthor> itemAuthors = em.createNamedQuery("ItemAuthor.findByItemId").setParameter("itemId", item).getResultList();//.setParameter("itemId", item.getItemId())
         List<Author> authors = new ArrayList<Author>();
@@ -94,14 +94,8 @@ public class GetInfo implements Serializable {
             authors.addAll(em.createNamedQuery("Author.findByAuthorId").setParameter("authorId", ia.getAuthorId().getAuthorId()).getResultList());
         }
 
-
         return authors;
-
     }
-    
-    
-    
-    
 
     public List<Permission> getPermissionByID(int id) {
         if (manager == null) {
@@ -124,7 +118,7 @@ public class GetInfo implements Serializable {
 
     public List<Audio> getAudioByItemID(int id) {
         //if (item == null) {
-            getItemByID(id);
+        getItemByID(id);
         //}
         List<ItemAudio> itemAudios = em.createNamedQuery("ItemAudio.findByItemId").setParameter("itemId", item).getResultList();//.setParameter("itemId", item.getItemId())
         List<Audio> audios = new ArrayList<Audio>();
@@ -139,7 +133,7 @@ public class GetInfo implements Serializable {
 
     public List<Comment> getCommentByItemID(int id) {
         //if (item == null) {
-            getItemByID(id);
+        getItemByID(id);
         //}
         List<ItemComment> itemComments = em.createNamedQuery("ItemComment.findByItemId").setParameter("itemId", item).getResultList();
         List<Comment> comments = new ArrayList<Comment>();
@@ -153,7 +147,7 @@ public class GetInfo implements Serializable {
 
     public List<Video> getVideoByItemID(int id) {
         //if (item == null) {
-            getItemByID(id);
+        getItemByID(id);
         //}
         List<ItemVideo> itemVideos = em.createNamedQuery("ItemVideo.findByItemId").setParameter("itemId", item).getResultList();//.setParameter("itemId", item.getItemId())
         List<Video> videos = new ArrayList<Video>();
@@ -166,7 +160,7 @@ public class GetInfo implements Serializable {
 
     public List<DisplayColumn> getDisplayColumnsByItemID(int id) {
         //if (item == null) {
-            getItemByID(id);
+        getItemByID(id);
         //}
 
         List<ItemDisplayColumn> itemDisplayColumns = em.createNamedQuery("ItemDisplayColumn.fineByItemId").setParameter("itemId", item).getResultList();
@@ -180,7 +174,7 @@ public class GetInfo implements Serializable {
 
     public List<Description> getDescriptionByItemID(int id) {
         //if (item == null) {
-            getItemByID(id);
+        getItemByID(id);
         //}
 
         List<Description> descriptions = em.createNamedQuery("Description.findByItemId").setParameter("itemId", item).getResultList();
