@@ -30,6 +30,17 @@
         <div>
             <div id="left">
                 <ui:insert name="left">
+                    <div style="font-size: 150%;">
+                        <h:outputLabel for="wel_user" value="Welcome, " />
+                        <h:outputText id="wel_user" value="#{loginManagedBean.username}" />
+                        <br />
+                        <h:form>
+                            <h:commandLink value="Log Out"
+                                           actionListener="#{loginManagedBean.logout}"
+                                           action="login?faces-redirect=true" />
+                        </h:form>
+                    </div>
+                    <p:separator />
                     <p:panel header="Item" toggleable="true">
                         <div>
                             <h:outputLink value="item_insert.xhtml"

@@ -11,17 +11,20 @@
             <h:form>
                 <p:growl id="msg" showDetail="true" />
                 <h:panelGrid columns="2" style="font-size: 200%;">
+                    <h:outputLabel for="username" value="Username:" />
                     <p:inputText id="username" required="true"
                                  value="#{signUpManagedBean.username}" />
-                    <p:watermark for="username" value="Username" />
 
+                    <h:outputLabel for="password" value="Password:" />
                     <p:password id="password" required="true"
                                 value="#{signUpManagedBean.password}" />
-                    <p:watermark for="password" value="Password" />
 
+                    <h:outputLabel for="confirm_password" value="Confirm Password:" />
                     <p:password id="confirm_password" required="true"
                                 value="#{signUpManagedBean.confirmPassword}" />
-                    <p:watermark for="confirm_password" value="Confirm Password" />
+
+                    <p:separator />
+                    <p:separator />
 
                     <h:outputLabel for="connoisseur" value="Connoisseur" />
                     <p:selectBooleanCheckbox id="connoisseur"
