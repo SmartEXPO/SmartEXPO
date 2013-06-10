@@ -118,8 +118,10 @@
                     <div id="frame" class="content_fixed">
                         <h:graphicImage id="frame_back" library="#{info.lib}"
                                         name="images/item_frame.png" />
-                        <h:graphicImage id="frame_image"
-                                        value="#{itemController.itemBean.picURL}" />
+                        <div id="frame_viewpoint">
+                            <h:graphicImage id="frame_image"
+                                            value="#{itemController.itemBean.picURL}" />
+                        </div>
                         <h:outputLink value="#{facesContext.externalContext.requestContextPath}#{itemController.itemBean.picURL}"
                                       class="popup_link">
                             <h:graphicImage id="frame_highlight" library="#{info.lib}"

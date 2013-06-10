@@ -32,10 +32,19 @@
 
 #content #contentwrapper #frame #frame_image {
     height: 485px; /*fixed dimension*/
+    width: auto !important;
+    position: absolute;
+    /*left:-100px;*/
+    margin:0 auto;
+}
+
+#frame_viewpoint {
+    height: 485px;
     width: 480px;
     position: absolute;
     top: 11px;
     left: 17px;
+    overflow: hidden;
 }
 
 #contentwrapper #shade {
@@ -248,7 +257,7 @@ footer {
     max-width: 90px;
     display: inline-block;
     color: whitesmoke;
-/*    background: black;*/
+    /*    background: black;*/
     white-space:nowrap;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
