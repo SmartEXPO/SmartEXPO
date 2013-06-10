@@ -34,7 +34,8 @@
     height: 485px; /*fixed dimension*/
     width: auto !important;
     position: absolute;
-    left:-100px;
+    /*left:-100px;*/
+    margin:0 auto;
 }
 
 #frame_viewpoint {
