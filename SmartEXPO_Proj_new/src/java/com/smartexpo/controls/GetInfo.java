@@ -106,12 +106,12 @@ public class GetInfo implements Serializable {
     }
 
     public List<Permission> getPermissionByID(int id) {
-        if (manager == null) {
+        //if (manager == null) {
             getManagerByManagerID(id);
             if (manager == null) {
                 return null;
             }
-        }
+        //}
         List<ManagerPermission> managerPermissions = em.createNamedQuery("ManagerPermission.findByManagerId").setParameter("managerId", manager).getResultList();
         List<Permission> permissions = new ArrayList<Permission>();
         for (int i = 0; i < managerPermissions.size(); i++) {
@@ -235,9 +235,9 @@ public class GetInfo implements Serializable {
     }
 
     public List<Item> getSomeItems(int from, int to) {
-        if (items == null) {
+        //if (items == null) {
             getAllItems();
-        }
+        //}
         List<Item> someItems = new ArrayList<Item>();
         if (from > itemNum) {
             return null;

@@ -82,7 +82,7 @@ public class InsertItemServlet extends HttpServlet {
 
 
             Item item = new Item();
-            item.setArea("Area 1");
+            item.setArea("Area 5");
             item.setImageurl("http:///");
             item.setHtml("asdfhoashdfasopfhsahdofhasohfphaspfhapsdhfhasdiofhsaoipdhfopashdofiha");
             item.setItemName(request.getParameter("item_name"));
@@ -142,6 +142,9 @@ public class InsertItemServlet extends HttpServlet {
             // Manager And Permission Part
             Manager manager = new Manager();
             manager.setUsername("asdfasd");
+            
+           
+            
             manager.setPassword("owefnwnv");
             
             manager.setPermission1(true);
