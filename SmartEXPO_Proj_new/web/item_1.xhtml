@@ -61,9 +61,8 @@
                             <div id="login_name">
                                 #{loginManagedBean.status ? loginManagedBean.username : "Guest"}
                             </div>
-                            <h:outputLink id="show_login" class="navi"
-                                          value="#"
-                                          onclick="popupLogin();void(0);"
+                            <h:outputLink id="show_login" class="navi popup_login"
+                                          value="#login_panel_2"
                                           rendered="#{!loginManagedBean.status}">
                                 <h:outputText value="Log In" />
                             </h:outputLink>
@@ -202,9 +201,7 @@
             </div>
         </div>
 
-        <div id="overall_shade"></div>
-
-        <div id="login_panel">
+        <div id="login_panel_2" class="zoom-anim-dialog mfp-hide">
             <h:form id="login_form">
                 <h:inputText id="username" required="true" class="inbox username"
                              value="#{loginManagedBean.username}" />
@@ -219,10 +216,6 @@
                 </h:commandButton>
                 <h:message for="username" />
                 <h:message for="password" />
-
-                <input type="button" id="close_panel" value="x"
-                       onclick="vanishLogin();
-                                                  void(0);" />
             </h:form>
         </div>
 
