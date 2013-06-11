@@ -203,8 +203,7 @@ footer {
     width: 650px;
     margin-left: 0px;
     margin-right: 0px;
-    overflow-y: auto;
-    overflow-x: none;
+    overflow: hidden;
 }
 
 #side_bar #expand_sidebar #sidebar_back {

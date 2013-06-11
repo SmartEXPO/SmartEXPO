@@ -5,83 +5,50 @@
 
 function autoFit(w, h, target) {
     console.log(w + " " + h);
-    var ratio = w / h;
-    if (ratio >= 1)
-        widthGreater(target, w, h);
-    else
-        heightGreater(target, w, h);
-}
+    resetPic(target);
 
-function widthGreater(target, frame_width, frame_height) {
-    var height = target.height();
-    var width = target.width();
-    console.log("wid: " + width + " hei: " + height);
-    if (width >= frame_width && height >= frame_height) {
-        var offset_x = (width - frame_width) / 2;
-        var offset_y = (height - frame_height) / 2;
+    if (target.width() >= w && target.height() >= h) {
+        var offset_x = (target.width() - w) / 2;
+        var offset_y = (target.height() - h) / 2;
         target.css({
             left: "-" + offset_x + "px",
             top: "-" + offset_y + "px"
         });
-    } else if (width >= frame_width || width >= height) {
-        var th = frame_height;
-        var tw = width / height * th;
-        var offset_x = (tw - frame_width) / 2;
-        target.css({
-            height: th,
-            width: "auto !important",
-            top: 0,
-            left: "-" + offset_x + "px"
-        });
-    } else if (height >= frame_height || height >= width) {
-        var tw = frame_width;
-        var th = height / width * tw;
-        var offset_y = (th - frame_height) / 2;
-        target.css({
-            height: "auto !important",
-            width: tw,
-            top: "-" + offset_y + "px",
-            left: 0
-        });
+        return;
     }
+
+    fitFrame(w, h, target);
+
 }
 
+function resetPic(target) {
+    target.css({
+        height: "auto",
+        width: "auto",
+        top: 0,
+        left: 0
+    });
+}
 
-function heightGreater(target, frame_width, frame_height) {
+function fitFrame(frame_width, frame_height, target) {
     var height = target.height();
     var width = target.width();
-//    console.log(height+ " " + width);
-    if (width >= frame_width && height >= frame_height) {
-        var offset_x = (width - frame_width) / 2;
-        var offset_y = (height - frame_height) / 2;
-        target.css({
-            left: "-" + offset_x + "px",
-            top: "-" + offset_y + "px"
-        });
-    } else if (width >= frame_width || width >= height) {
-        
-        var th = frame_height;
-        var tw = width / height * th;
-        var offset_x = (tw - frame_width) / 2;
-        target.css({
-            height: th,
-            width: "auto !important",
-            top: 0,
-            left: "-" + offset_x + "px"
-        });
-
-
-    } else if (height >= frame_height || height >= width) {
-        var tw = frame_width;
-        var th = height / width * tw;
-        var offset_y = (th - frame_height) / 2;
-        target.css({
-            height: "auto !important",
-            width: tw,
-            top: "-" + offset_y + "px",
-            left: 0
-        });
-        
-
+    var th = frame_height;
+    var tw = width / height * th;
+    if (tw < frame_width) {
+        tw = frame_width;
+        th = height / width * tw;
     }
+    var offset_x = (tw - frame_width) / 2;
+    var offset_y = (th - frame_height) / 2;
+    offset_x = (offset_x < 0) ? 0 : offset_x;
+    offset_y = (offset_y < 0) ? 0 : offset_y;
+
+    target.css({
+        left: "-" + offset_x + "px",
+        top: "-" + offset_y + "px",
+        height: th,
+        width: tw,
+    });
+
 }
