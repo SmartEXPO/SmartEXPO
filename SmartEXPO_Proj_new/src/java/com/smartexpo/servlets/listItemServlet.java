@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -33,6 +35,7 @@ public class listItemServlet extends HttpServlet {
     @Resource
     private UserTransaction utx;
     private GetInfo getInfo;
+    private static final Logger LOG = Logger.getLogger(listItemServlet.class.getName());
 
     @PostConstruct
     private void postConstruct() {
@@ -103,11 +106,13 @@ public class listItemServlet extends HttpServlet {
         for (Item item : items) {
             String link = "item.xhtml?id=" + item.getItemId(); //TODO 具体网址怎么跳转
             String des = item.getDescription().getContent();
+            if(item.getItemAuthor() == null)
+                LOG.log(Level.WARNING, "null pointer");
             String author = item.getItemAuthor().getAuthorId().getName();
             if (des.length() > 20) {
                 des = des.substring(0, 27) + "...";
             }
-
+// LOG.log(Level.WARNING, item.getImageurl());
             String json = "{\"title\":\"" + item.getItemName()
                     + "\",\"img\":\"" + item.getImageurl()
                     + "\",\"description\":\"" + des

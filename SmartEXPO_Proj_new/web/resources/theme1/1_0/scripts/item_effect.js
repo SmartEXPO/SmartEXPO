@@ -186,6 +186,8 @@ $(document).ready(function() {
             $(".edit_description_div").attr("value", "Edit");
         }
     });
+    
+    autoFit($("#frame_viewpoint").width(), $("#frame_viewpoint").height(), $("#frame_image"));
 });
 
 function finish(e) {
