@@ -39,7 +39,7 @@ public class listItemServlet extends HttpServlet {
 
     @PostConstruct
     private void postConstruct() {
-        System.out.println("@@@@@@@@@@@" + em.toString() +"@@@@@@@@@@@");
+        System.out.println("@@@@@@@@@@@" + em.toString() + "@@@@@@@@@@@");
         getInfo = new GetInfo(em, utx);
     }
 
@@ -105,12 +105,19 @@ public class listItemServlet extends HttpServlet {
 
         for (Item item : items) {
             String link = "item.xhtml?id=" + item.getItemId(); //TODO 具体网址怎么跳转
-            if(item.getDescription()==null)
-            LOG.log(Level.WARNING,"item null");
-            String des = item.getDescription().getContent();
-            if(item.getItemAuthor() == null)
-                LOG.log(Level.WARNING, "null pointer");
-            String author = item.getItemAuthor().getAuthorId().getName();
+            String des;
+            String author;
+
+            try {
+                des = item.getDescription().getContent();
+            } catch (Exception e) {
+                des = "Unavailable";
+            }
+            try {
+                author = item.getItemAuthor().getAuthorId().getName();
+            } catch (Exception e) {
+                author = "Unavailable";
+            }
             if (des.length() > 20) {
                 des = des.substring(0, 27) + "...";
             }
