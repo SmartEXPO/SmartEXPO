@@ -5,7 +5,6 @@
 package com.smartexpo.temp;
 
 import com.smartexpo.controls.GetInfo;
-import com.smartexpo.jpgcontrollers.AudioJpaController;
 import com.smartexpo.jpgcontrollers.AuthorJpaController;
 import com.smartexpo.jpgcontrollers.DescriptionJpaController;
 import com.smartexpo.jpgcontrollers.ItemAudioJpaController;
@@ -14,10 +13,10 @@ import com.smartexpo.jpgcontrollers.ItemCommentJpaController;
 import com.smartexpo.jpgcontrollers.ItemDisplayColumnJpaController;
 import com.smartexpo.jpgcontrollers.ItemJpaController;
 import com.smartexpo.jpgcontrollers.ItemVideoJpaController;
-import com.smartexpo.jpgcontrollers.VideoJpaController;
 import com.smartexpo.jpgcontrollers.exceptions.IllegalOrphanException;
 import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
+import com.smartexpo.managedbean.ItemInsertMB;
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
 import com.smartexpo.models.DisplayColumn;
@@ -27,6 +26,12 @@ import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,13 +40,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.servlet.ServletContext;
 import javax.transaction.UserTransaction;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -64,36 +75,35 @@ public class ItemViewManagedBean implements Serializable {
     private String authorName;
     private Date authorBirthDate;
     private Date authorDeathDate;
+    private String savedLocation;
     private String authorIntro;
+    private Audio selectedAudio;
     private String audioTitle;
+    private String audioURL;
+    private String audioDes;
+    private Video selectedVideo;
+    private String videoTitle;
+    private String videoURL;
+    private String videoDes;
     private List<Audio> audios;
     private List<Video> videos;
+    private UploadedFile uploadedFile;
+    private static String Destination;
+    private static String SubPath = "/web/upload/";
 
     /**
      * Creates a new instance of ItemViewManagedBean
      */
     public ItemViewManagedBean() {
         audios = new ArrayList<Audio>();
-        for (int i = 0; i < 244; ++i) {
-            Audio audio = new Audio();
-            audio.setTitle("audio " + i);
-            audio.setUrl("urlllllll " + i * i);
-            audio.setDescription("desccccccccć " + i * i / 55);
-            audios.add(audio);
-        }
         videos = new ArrayList<Video>();
-        for (int i = 0; i < 255; ++i) {
-            Video video = new Video();
-            video.setTitle("video " + i);
-            video.setUrl("Ullrllrr " + i * i);
-            video.setDescription("dekhafsa " + i * i / 213);
-            videos.add(video);
-        }
     }
 
     @PostConstruct
     public void postConstruct() {
         gi = new GetInfo(emf, utx);
+
+        initDestination();
     }
 
     public String getAuthorName() {
@@ -102,7 +112,7 @@ public class ItemViewManagedBean implements Serializable {
             return "";
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors != null && authors.size() != 0) {
+        if (authors != null && !authors.isEmpty()) {
             this.authorName = authors.get(0).getName();
             return authorName;
         } else {
@@ -120,7 +130,7 @@ public class ItemViewManagedBean implements Serializable {
             return null;
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors.size() != 0) {
+        if (!authors.isEmpty()) {
             this.authorBirthDate = authors.get(0).getBirthday();
             return authorBirthDate;
         } else {
@@ -138,7 +148,7 @@ public class ItemViewManagedBean implements Serializable {
             return null;
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors.size() != 0) {
+        if (!authors.isEmpty()) {
             this.authorDeathDate = authors.get(0).getDeathDate();
             return authorDeathDate;
         } else {
@@ -156,7 +166,7 @@ public class ItemViewManagedBean implements Serializable {
             return "";
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors.size() != 0) {
+        if (!authors.isEmpty()) {
             this.authorIntro = authors.get(0).getIntroduction();
             return authorIntro;
         } else {
@@ -168,47 +178,75 @@ public class ItemViewManagedBean implements Serializable {
         this.authorIntro = AuthorIntro;
     }
 
-    public String getAudioTitle() {
-        if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
-            return "";
-        }
-        List<Audio> audios = gi.getAudioByItemID(selectedItem.getItemId());
-        if (audios.size() != 0) {
-            this.audioTitle = audios.get(0).getTitle();
-            return audioTitle;
-        }
+    public Audio getSelectedAudio() {
+        return selectedAudio;
+    }
 
-        return "";
+    public void setSelectedAudio(Audio selectedAudio) {
+        this.selectedAudio = selectedAudio;
+    }
+
+    public String getAudioURL() {
+        return audioURL;
+    }
+
+    public void setAudioURL(String audioURL) {
+        this.audioURL = audioURL;
+    }
+
+    public String getAudioTitle() {
+        return audioTitle;
     }
 
     public void setAudioTitle(String AudioTitle) {
         this.audioTitle = AudioTitle;
     }
 
-    public String getVideoTitle() {
-        if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
-            return "";
-        }
-        List<Video> videos = gi.getVideoByItemID(selectedItem.getItemId());
-        if (videos.size() != 0) {
-            this.VideoTitle = videos.get(0).getTitle();
-            return VideoTitle;
-        }
-        return "";
+    public String getAudioDes() {
+        return audioDes;
     }
 
-    public void setVideoTitle(String VideoTitle) {
-        this.VideoTitle = VideoTitle;
+    public void setAudioDes(String audioDes) {
+        this.audioDes = audioDes;
     }
-    private String VideoTitle;
+
+    public Video getSelectedVideo() {
+        return selectedVideo;
+    }
+
+    public void setSelectedVideo(Video selectedVideo) {
+        this.selectedVideo = selectedVideo;
+    }
+
+    public String getVideoTitle() {
+        return videoTitle;
+    }
+
+    public void setVideoTitle(String videoTitle) {
+        this.videoTitle = videoTitle;
+    }
+
+    public String getVideoURL() {
+        return videoURL;
+    }
+
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
+    }
+
+    public String getVideoDes() {
+        return videoDes;
+    }
+
+    public void setVideoDes(String videoDes) {
+        this.videoDes = videoDes;
+    }
 
     /**
      * @return the items
      */
     public List<Item> getItems() {
-        if (items == null || items.size() == 0) {
+        if (items == null || items.isEmpty()) {
             ItemJpaController ijc = new ItemJpaController(utx, emf);
             items = ijc.findItemEntities();
         }
@@ -269,8 +307,75 @@ public class ItemViewManagedBean implements Serializable {
         return getItems().size();
     }
 
+    public void addAudio() {
+        Audio audio = new Audio();
+        audio.setTitle(audioTitle);
+        audio.setDescription(audioDes);
+
+        if (uploadedFile != null) {
+            audioURL = processStore(uploadedFile, "audios/");
+        }
+
+        audio.setUrl(audioURL);
+        audios.add(audio);
+        audioTitle = audioURL = audioDes = null;
+
+        for (int i = 0; i < audios.size(); ++i) {
+            Audio tmp = audios.get(i);
+            LOG.log(Level.WARNING, "Audio name = {0}", tmp.getTitle());
+        }
+    }
+
+    public void removeAudio() {
+        for (int i = 0; i < audios.size(); ++i) {
+            Audio tmpAudio = audios.get(i);
+            if (tmpAudio.getTitle().equals(selectedAudio.getTitle())) {
+                String des = ((ServletContext) FacesContext.getCurrentInstance()
+                        .getExternalContext().getContext()).getRealPath("/");
+                for (int j = 0; j < 3; ++j) {
+                    des = des.substring(0, des.lastIndexOf("/"));
+                }
+                String url = tmpAudio.getUrl();
+                deleteFile(des + "/web" + url);
+
+                audios.remove(i);
+            }
+        }
+    }
+
     public int getAudioSize() {
         return audios.size();
+    }
+
+    public void addVideo() {
+        Video video = new Video();
+        video.setTitle(videoTitle);
+        video.setDescription(videoDes);
+
+        if (uploadedFile != null) {
+            videoURL = processStore(uploadedFile, "videos/");
+        }
+
+        video.setUrl(videoURL);
+        videos.add(video);
+        videoTitle = videoURL = videoDes = null;
+    }
+
+    public void removeVideo() {
+        for (int i = 0; i < videos.size(); ++i) {
+            Video tmpVideo = videos.get(i);
+            if (tmpVideo.getTitle().equals(selectedVideo.getTitle())) {
+                String des = ((ServletContext) FacesContext.getCurrentInstance()
+                        .getExternalContext().getContext()).getRealPath("/");
+                for (int j = 0; j < 3; ++j) {
+                    des = des.substring(0, des.lastIndexOf("/"));
+                }
+                String url = tmpVideo.getUrl();
+                deleteFile(des + "/web" + url);
+
+                videos.remove(i);
+            }
+        }
     }
 
     public int getVideoSize() {
@@ -295,38 +400,33 @@ public class ItemViewManagedBean implements Serializable {
     public void beginEditItem() {
     }
 
-    public void beginEditAudio() {
+    public String beginEditAudio() {
+        audios = gi.getAudioByItemID(selectedItem.getItemId());
+        return "av_editor.xhtml";
     }
 
     public void beginEditVideo() {
+        videos = gi.getVideoByItemID(selectedItem.getItemId());
     }
 
+    // @stormmax TODO 存储除了Audio和Video部分的信息
     public void storeEditedData() {
         try {
             ItemJpaController ijc = new ItemJpaController(utx, emf);
             ijc.edit(selectedItem);
-            Author author = gi.getAuthorsByItemID(selectedItem.getItemId()).get(0);
-            Video video = gi.getVideoByItemID(selectedItem.getItemId()).get(0);
-            Audio audio = gi.getAudioByItemID(selectedItem.getItemId()).get(0);
 
-            author.setBirthday(authorBirthDate);
-            author.setDeathDate(authorDeathDate);
-            author.setName(authorName);
-            author.setIntroduction(authorIntro);
+            if (gi.getAuthorsByItemID(selectedItem.getItemId()) != null
+                    && !gi.getAudioByItemID(selectedItem.getItemId()).isEmpty()) {
+                Author author = gi.getAuthorsByItemID(selectedItem.getItemId()).get(0);
 
-            video.setTitle(audioTitle);
+                author.setBirthday(authorBirthDate);
+                author.setDeathDate(authorDeathDate);
+                author.setName(authorName);
+                author.setIntroduction(authorIntro);
 
-
-            audio.setTitle(audioTitle);
-
-
-            AudioJpaController ajc = new AudioJpaController(utx, emf);
-            ajc.edit(audio);
-            AuthorJpaController authorjc = new AuthorJpaController(utx, emf);
-            authorjc.edit(author);
-            VideoJpaController vjc = new VideoJpaController(utx, emf);
-            vjc.edit(video);
-
+                AuthorJpaController authorjc = new AuthorJpaController(utx, emf);
+                authorjc.edit(author);
+            }
 
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -340,7 +440,7 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public void destroyItem() throws NonexistentEntityException {
-        LOG.log(Level.WARNING, "selesct = " + selectedItem.getItemName());
+        LOG.log(Level.WARNING, "selesct = {0}", selectedItem.getItemName());
         try {
             getItems().remove(getSelectedItem());
             ItemJpaController ijc = new ItemJpaController(utx, emf);
@@ -395,8 +495,78 @@ public class ItemViewManagedBean implements Serializable {
             Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (items.size() == 0) {
+        if (items.isEmpty()) {
             items = null;
         }
+    }
+
+    // @stormmax TODO 存储修改过后的Audio和Video部分，分别在audios和videos两个list中
+    public void avEditFinish() {
+        RequestContext.getCurrentInstance()
+                .execute(("alert('Modify successfully!');location.reload(true)"));
+    }
+
+    public void back() {
+        RequestContext.getCurrentInstance()
+                .execute(("location.reload(true)"));
+    }
+
+    public void upload(FileUploadEvent event) {
+        uploadedFile = event.getFile();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload successfully!"));
+    }
+
+    private String processStore(UploadedFile uploadedFile, String subDir) {
+        String contentType = uploadedFile.getContentType();
+        String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
+        savedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
+        String URL = savedLocation.substring(savedLocation.indexOf("/upload/"), savedLocation.length());
+
+        try {
+            storeFile(savedLocation, uploadedFile.getInputstream());
+        } catch (IOException ex) {
+            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return URL;
+    }
+
+    private void storeFile(String saveLocation, InputStream in) {
+        OutputStream out;
+        try {
+            out = new FileOutputStream(new File(saveLocation));
+
+            int read;
+            byte[] bytes = new byte[4096];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private boolean deleteFile(String imageSavedLocation) {
+        File file = new File(imageSavedLocation);
+        return file.delete();
+    }
+
+    private void initDestination() {
+        String realPath = ((ServletContext) FacesContext.getCurrentInstance()
+                .getExternalContext().getContext()).getRealPath("/");
+
+        for (int i = 0; i < 3; ++i) {
+            realPath = realPath.substring(0, realPath.lastIndexOf("/"));
+        }
+        realPath = realPath + SubPath;
+        Destination = realPath;
     }
 }
