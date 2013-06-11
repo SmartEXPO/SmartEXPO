@@ -69,7 +69,6 @@ public class ItemViewManagedBean implements Serializable {
     @Resource
     private UserTransaction utx;
     private GetInfo gi;
-    private static final Logger LOG = Logger.getLogger(ItemViewManagedBean.class.getName());
     private List<Item> items;
     private Item selectedItem;
     private String authorName;
@@ -108,7 +107,6 @@ public class ItemViewManagedBean implements Serializable {
 
     public String getAuthorName() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
@@ -126,7 +124,6 @@ public class ItemViewManagedBean implements Serializable {
 
     public Date getAuthorBirthDate() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return null;
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
@@ -144,7 +141,6 @@ public class ItemViewManagedBean implements Serializable {
 
     public Date getAuthorDeathDate() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return null;
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
@@ -162,7 +158,6 @@ public class ItemViewManagedBean implements Serializable {
 
     public String getAuthorIntro() {
         if (selectedItem == null) {
-            LOG.log(Level.WARNING, "selectedItem null");
             return "";
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
@@ -322,7 +317,6 @@ public class ItemViewManagedBean implements Serializable {
 
         for (int i = 0; i < audios.size(); ++i) {
             Audio tmp = audios.get(i);
-            LOG.log(Level.WARNING, "Audio name = {0}", tmp.getTitle());
         }
     }
 
@@ -440,7 +434,6 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     public void destroyItem() throws NonexistentEntityException {
-        LOG.log(Level.WARNING, "selesct = {0}", selectedItem.getItemName());
         try {
             getItems().remove(getSelectedItem());
             ItemJpaController ijc = new ItemJpaController(utx, emf);

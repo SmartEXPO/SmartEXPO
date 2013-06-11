@@ -27,7 +27,6 @@ import javax.servlet.http.HttpSession;
  */
 public class AdminFilter implements Filter {
 
-    private static final boolean debug = true;
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 

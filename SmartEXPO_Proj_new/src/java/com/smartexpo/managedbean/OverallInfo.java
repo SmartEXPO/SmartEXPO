@@ -8,8 +8,6 @@ import com.smartexpo.models.CommentInfo;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
 

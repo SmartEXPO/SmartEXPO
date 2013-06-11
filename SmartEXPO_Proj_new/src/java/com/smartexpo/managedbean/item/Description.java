@@ -12,7 +12,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.UserTransaction;
 
@@ -26,6 +28,8 @@ public class Description implements Serializable {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
+    @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
+    EntityManagerFactory emf;
     @Resource
     private UserTransaction utx;
     private GetInfo gi = null;
@@ -44,7 +48,7 @@ public class Description implements Serializable {
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
-            gi = new GetInfo(em, utx);
+            gi = new GetInfo(emf, utx);
         }
         HttpServletRequest request = (HttpServletRequest) FacesContext
                 .getCurrentInstance().getExternalContext().getRequest();

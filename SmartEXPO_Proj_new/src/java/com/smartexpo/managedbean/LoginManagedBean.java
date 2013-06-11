@@ -8,8 +8,6 @@ import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Manager;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -43,7 +41,6 @@ public class LoginManagedBean implements Serializable {
     private UserTransaction utx;
     private GetInfo gi;
     // LoginManagedBean Field
-    private static final Logger logger = Logger.getLogger(LoginManagedBean.class.getName());
     private String username;
     private String password;
     private boolean[] permissions;
@@ -145,7 +142,6 @@ public class LoginManagedBean implements Serializable {
      * @return item.xhtml or error.xhtml
      */
     public void verify(AjaxBehaviorEvent event) {
-        logger.log(Level.WARNING, "loooooooog");
         if (isPass()) { // 数据库验证
             setStatus(true);
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
