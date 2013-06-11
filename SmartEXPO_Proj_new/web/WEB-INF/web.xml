@@ -4,6 +4,10 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>pepper-grinder</param-value>
+    </context-param>
     <filter>
         <filter-name>AdminFilter</filter-name>
         <filter-class>com.smartexpo.util.filter.AdminFilter</filter-class>
@@ -17,7 +21,7 @@
         </init-param>
         <init-param>
             <param-name>notCheckURLList</param-name>
-            <param-value>/faces/admin/login.xhtml</param-value>
+            <param-value>/faces/admin/login.xhtml;/faces/admin/theme_switcher.xhtml</param-value>
         </init-param>
     </filter>
     <filter>

@@ -53,9 +53,9 @@
                                     name="images/item_logo.png"/>
                 </h:outputLink>
                 <nav id="nav">
-                    <h:outputLink class="navi" value="map.xhtml">Map</h:outputLink>|
-                    <a class="navi" href="#">Info</a>|
-                    <a class="navi" href="#">Contact</a>
+                    <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
+                    <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
+                    <a class="navi" href="#">#{info['navigator.contact']}</a>
                     <div id="login">
                         <h:form id="log_form">
                             <div id="login_name">
@@ -142,7 +142,7 @@
             </div>
 
             <footer>
-                Copyright &#169; 2013 by SmartEXPO orgnization.
+                <h:outputText value="#{info.footer}" escape="false"/>
             </footer>
         </div>
 

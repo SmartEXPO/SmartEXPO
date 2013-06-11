@@ -1,7 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta charset="UTF-8" />
         <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
         Remove this if you use the .htaccess -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -16,19 +19,21 @@
 
         <title>SmartEXPO</title>
 
-        <script src="./scripts/jquery_1_9_1.js"></script>
+        <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/index_style.css" />        
+    </h:head>
 
-        <link rel="stylesheet" type="text/css" href="./style/style.css" />
-        <link rel="stylesheet" type="text/css" href="./style/index_style.css" />
-
-    </head>
-
-    <body onload="init();">
+    <h:body onload="init();">
         <header>
             <nav>
-                <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+                <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
+                <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
+                <a class="navi" href="#">#{info['navigator.contact']}</a>
             </nav>
-            <img id="logo" src="./images/logo.png">
+            <h:outputLink value="index.xhtml">
+                <h:graphicImage id="logo" library="#{info.lib}"
+                                name="images/logo.png"/>
+            </h:outputLink>
             <div id="decologo">
                 <div id="shortbar"></div>
                 <div id="longbar"></div>
@@ -37,10 +42,11 @@
 
 
         <footer style="margin-top:20px">
-            Copyright &copy; 2013 by SmartEXPO orgnization.
+            <h:outputText value="#{info.footer}" escape="false"/>
         </footer>
-        
 
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
+                        target="head"/>
 
-    </body>
+    </h:body>
 </html>
