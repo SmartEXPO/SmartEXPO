@@ -16,7 +16,7 @@
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-        <title>SmartEXPO</title>
+        <title>SmartEXPO | List</title>
 
         <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
                         target="head" />
@@ -49,9 +49,9 @@
                                     name="images/item_logo.png" />
                 </h:outputLink>
                 <nav id="nav">
-                    <h:outputLink class="navi" value="map.xhtml">Map</h:outputLink>|
-                    <a class="navi" href="#">Info</a>|
-                    <a class="navi" href="#">Contact</a>
+                    <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
+                    <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
+                    <a class="navi" href="#">#{info['navigator.contact']}</a>
                     <div id="login">
                         <h:form id="log_form">
                             <div>

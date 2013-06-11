@@ -32,6 +32,7 @@ var t = 0;
 
 //时间都是试出来的，具体为什么加起来不等于上面的interval我也不知道。。。
 function display() {
+
     var dis = info[t];
     $("h1.detail_content").html(dis.title);
     $("p.detail_content").html(dis.description);
@@ -50,6 +51,11 @@ function display() {
         }, 500, function() {
             $("img#display_item").attr("src", dis.path);
             $("#display_item_id").attr("href", "item.xhtml?id=" + dis.id);
+            $("img#display_item").css({
+                height:"auto",
+                width:"auto"
+            });
+            autoFit(480, 320, $("#display_item"));
         });
         $("img#display_item").animate({
             'opacity': '1'
@@ -59,7 +65,6 @@ function display() {
     dechoose();
     choose(t);
     setTimeout(disappear, 9000);
-
 }
 
 function disappear() {

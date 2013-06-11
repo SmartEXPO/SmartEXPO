@@ -38,20 +38,19 @@ import javax.transaction.UserTransaction;
 @SessionScoped
 public class SignUpManagedBean implements Serializable {
 
-    private static final Logger logger = Logger.getLogger(SignUpManagedBean.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
     EntityManagerFactory emf;
     @Resource
     private UserTransaction utx;
+    private GetInfo gi = null;
     // SignUpManagedBean Field
     private String username;
     private String password;
     private String confirmPassword;
     private Boolean[] permissions;
     boolean isVerify;
-    private GetInfo gi = null;
 
     /**
      * Creates a new instance of SignUpManagedBean
@@ -125,7 +124,6 @@ public class SignUpManagedBean implements Serializable {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         if (session.isNew()) {
-            logger.log(Level.WARNING, "session has existed.");
             session.invalidate();
         }
 
@@ -137,7 +135,6 @@ public class SignUpManagedBean implements Serializable {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sign up Error", "Password not match"));
             isVerify = false;
-            logger.log(Level.WARNING, "Password not match");
         } else {
             isVerify = true;
             FacesContext.getCurrentInstance()
@@ -155,7 +152,6 @@ public class SignUpManagedBean implements Serializable {
 
         if (gi.getManagerByName(username) != null) {
             result = true;
-            logger.log(Level.WARNING, "Username \"{0}\" has existed.", username);
         }
 
         return result;

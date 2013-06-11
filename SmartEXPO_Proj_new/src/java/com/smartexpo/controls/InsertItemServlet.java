@@ -55,10 +55,8 @@ public class InsertItemServlet extends HttpServlet {
 
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
-    
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
     EntityManagerFactory emf;
-    
     @Resource
     private UserTransaction utx;
 
@@ -146,14 +144,14 @@ public class InsertItemServlet extends HttpServlet {
            
             
             manager.setPassword("owefnwnv");
-            
+
             manager.setPermission1(true);
             manager.setPermission2(true);
             manager.setPermission3(false);
             manager.setPermission4(false);
             manager.setPermission5(false);
-            
-            
+
+
 
             Permission permission = new Permission();
             permission.setPermissionName("asfe11");
@@ -278,40 +276,40 @@ public class InsertItemServlet extends HttpServlet {
             for (int i = 0; i < displayColumns.size(); i++) {
                 logger.log(Level.WARNING, displayColumns.get(i).getDisplayContent());
             }
-            
-            
-            List<Item> someItems= gi.getItemsFrom(gi.getItemByArea("Area 1"),0, 2);
+
+
+            List<Item> someItems = gi.getItemsFrom(gi.getItemByArea("Area 1"), 0, 2);
             for (int i = 0; i < someItems.size(); i++) {
                 logger.log(Level.WARNING, someItems.get(i).getItemName());
             }
-            
+
             ItemComment itemComment = gi.getItemComment(item.getItemId(), comment.getCommentId());
             logger.log(Level.WARNING, itemComment.getCommentId().getContent());
-            
+
             List<ItemComment> itemComments = gi.getItemCommentsByCommentID(comment.getCommentId());
-            if(itemComments==null){
-                logger.log(Level.WARNING,"null");
-            }else{
-                for(int i=0;i<itemComments.size();i++){
-                    logger.log(Level.WARNING, "comment content:"+itemComment.getCommentId().getContent());
+            if (itemComments == null) {
+                logger.log(Level.WARNING, "null");
+            } else {
+                for (int i = 0; i < itemComments.size(); i++) {
+                    logger.log(Level.WARNING, "comment content:" + itemComment.getCommentId().getContent());
                 }
             }
-            
-            
-            ItemCommentJpaController icjc=new ItemCommentJpaController(utx, emf);
+
+
+            ItemCommentJpaController icjc = new ItemCommentJpaController(utx, emf);
             icjc.destroy(itemComment.getItemCommentId());
-            CommentJpaController cjc=new CommentJpaController(utx, emf);
+            CommentJpaController cjc = new CommentJpaController(utx, emf);
             cjc.destroy(comment.getCommentId());
-            
-            
-            ItemJpaController ijc=new ItemJpaController(utx, emf);
+
+
+            ItemJpaController ijc = new ItemJpaController(utx, emf);
             item.setHtml("asdfasdfsadf");
             ijc.edit(item);
-            
-            
-            
-            
-            
+
+
+
+
+
 
 
             request.setAttribute("item_name", gi.getItemByID(item.getItemId()).getItemName());
@@ -328,7 +326,7 @@ public class InsertItemServlet extends HttpServlet {
 
 
             request.getRequestDispatcher("itemPages/itemInserted.jsp").forward(request, response);
-            
+
         } catch (NotSupportedException ex) {
             Logger.getLogger(InsertItemServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SystemException ex) {

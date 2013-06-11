@@ -82,7 +82,7 @@ public class ItemInsertMB implements Serializable {
     private Date authorDeath;
     private String authorIntro;
     private String imageurl;
-    private String imageSavedLocation;
+    private String savedLocation;
     private String audioTitle;
     private String audioURL;
     private String audioDes;
@@ -345,6 +345,7 @@ public class ItemInsertMB implements Serializable {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        clearAll();
         RequestContext.getCurrentInstance()
                 .execute(("alert('Insert Successfully!');location.reload(true)"));
     }
@@ -366,12 +367,12 @@ public class ItemInsertMB implements Serializable {
     }
 
     public void addAuthor() {
-        Author author = new Author();
-        author.setName(authorName);
-        author.setBirthday(authorBirth);
-        author.setDeathDate(authorDeath);
-        author.setIntroduction(authorIntro);
-        authors.add(author);
+        Author tmpAuthor = new Author();
+        tmpAuthor.setName(authorName);
+        tmpAuthor.setBirthday(authorBirth);
+        tmpAuthor.setDeathDate(authorDeath);
+        tmpAuthor.setIntroduction(authorIntro);
+        authors.add(tmpAuthor);
         authorName = authorIntro = null;
         authorBirth = authorDeath = null;
     }
@@ -387,16 +388,16 @@ public class ItemInsertMB implements Serializable {
 
     // Audio多值添加处，结果暂存储于audios列表中
     public void addAudio() {
-        Audio audio = new Audio();
-        audio.setTitle(audioTitle);
-        audio.setDescription(audioDes);
+        Audio tmpAudio = new Audio();
+        tmpAudio.setTitle(audioTitle);
+        tmpAudio.setDescription(audioDes);
 
         if (uploadedFile != null) {
             audioURL = processStore(uploadedFile, "audios/");
         }
 
-        audio.setUrl(audioURL);
-        audios.add(audio);
+        tmpAudio.setUrl(audioURL);
+        audios.add(tmpAudio);
         audioTitle = audioURL = audioDes = null;
     }
 
@@ -419,16 +420,16 @@ public class ItemInsertMB implements Serializable {
 
     // Video多值添加处，结果暂存于videos列表中
     public void addVideo() {
-        Video video = new Video();
-        video.setTitle(videoTitle);
-        video.setDescription(videoDes);
+        Video tmpVideo = new Video();
+        tmpVideo.setTitle(videoTitle);
+        tmpVideo.setDescription(videoDes);
 
         if (uploadedFile != null) {
             videoURL = processStore(uploadedFile, "videos/");
         }
 
-        video.setUrl(videoURL);
-        videos.add(video);
+        tmpVideo.setUrl(videoURL);
+        videos.add(tmpVideo);
         videoTitle = videoURL = videoDes = null;
     }
 
@@ -510,8 +511,8 @@ public class ItemInsertMB implements Serializable {
         String componentID = event.getComponent().getId();
 
         if (componentID.equals(ImageUploadComponentID)) {
-            if (imageSavedLocation != null) {
-                deleteFile(imageSavedLocation);
+            if (savedLocation != null) {
+                deleteFile(savedLocation);
             }
             imageurl = processStore(uploadedFile, "images/");
         }
@@ -526,16 +527,16 @@ public class ItemInsertMB implements Serializable {
      * @param uploadedFile the uploadedFile to store
      * @param subDir the subdirectory for file to store
      * 
-     * @return the imageSavedLocation of uploaded file
+     * @return the savedLocation of uploaded file
      */
     private String processStore(UploadedFile uploadedFile, String subDir) {
         String contentType = uploadedFile.getContentType();
         String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
-        imageSavedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
-        String URL = imageSavedLocation.substring(imageSavedLocation.indexOf("/upload/"), imageSavedLocation.length());
+        savedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
+        String URL = savedLocation.substring(savedLocation.indexOf("/upload/"), savedLocation.length());
 
         try {
-            storeFile(imageSavedLocation, uploadedFile.getInputstream());
+            storeFile(savedLocation, uploadedFile.getInputstream());
         } catch (IOException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -576,5 +577,17 @@ public class ItemInsertMB implements Serializable {
     private boolean deleteFile(String imageSavedLocation) {
         File file = new File(imageSavedLocation);
         return file.delete();
+    }
+
+    private void clearAll() {
+        itemName = null;
+        itemArea = null;
+        imageurl = null;
+        savedLocation = null;
+        desTitle = null;
+        desContent = null;
+        authors = new ArrayList<Author>();
+        audios = new ArrayList<Audio>();
+        videos = new ArrayList<Video>();
     }
 }

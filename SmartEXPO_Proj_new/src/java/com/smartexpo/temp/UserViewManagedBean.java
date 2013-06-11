@@ -106,17 +106,17 @@ public class UserViewManagedBean implements Serializable {
     public void destroyUser() {
         try {
             managers.remove(selectedUser);
-            GetInfo gi=new GetInfo(emf, utx);
-            ManagerPermissionJpaController mpjc=new ManagerPermissionJpaController(utx, emf);
-            List<ManagerPermission> mps=gi.getManagerPermissionsByManagerID(selectedUser.getManagerId());
-            for(int i=0;i<mps.size();i++){
+
+            ManagerPermissionJpaController mpjc = new ManagerPermissionJpaController(utx, emf);
+            List<ManagerPermission> mps = gi.getManagerPermissionsByManagerID(selectedUser.getManagerId());
+            for (int i = 0; i < mps.size(); i++) {
                 mpjc.destroy(mps.get(i).getManagerPermissionId());
             }
-            
-            ManagerJpaController mjc=new ManagerJpaController(utx, emf);
-            
+
+            ManagerJpaController mjc = new ManagerJpaController(utx, emf);
+
             mjc.destroy(gi.getManagerByName(selectedUser.getUsername()).get(0).getManagerId());
-            
+
 
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                     .getExternalContext().getSession(false);

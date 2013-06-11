@@ -186,6 +186,8 @@ $(document).ready(function() {
             $(".edit_description_div").attr("value", "Edit");
         }
     });
+
+    autoFit($("#frame_viewpoint").width(), $("#frame_viewpoint").height(), $("#frame_image"));
 });
 
 function finish(e) {
@@ -201,6 +203,20 @@ function finish(e) {
     $("#users_comment").perfectScrollbar('update');
 
     console.log(e);
+
+    $('.popup_login').magnificPopup({
+        type: 'inline',
+        fixedContentPos: false,
+        fixedBgPos: true,
+//        overflowY: 'auto',
+        closeBtnInside: true,
+        preloader: false,
+        midClick: true,
+        removalDelay: 300,
+        mainClass: 'my-mfp-slide-bottom'
+    });
+    
+    $.magnificPopup.close();
 }
 
 function trim(str) {

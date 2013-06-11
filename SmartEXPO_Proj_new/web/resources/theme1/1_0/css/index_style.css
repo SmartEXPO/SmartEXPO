@@ -130,9 +130,16 @@ a.navi:hover {
 }
 
 #content #framewrapper #display_item {
+    position: absolute;
+}
+
+#content #framewrapper #display_item_frame {
+    width: 480px;
+    height: 320px;
     position: absolute; /*relative to framewrapper*/
     top: 80px;
     right: 46px;
+    overflow: hidden;
 }
 
 #content #framewrapper #detail {

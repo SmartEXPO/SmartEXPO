@@ -27,7 +27,6 @@ import javax.servlet.http.HttpSession;
  */
 public class AdminFilter implements Filter {
 
-    private static final boolean debug = true;
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
@@ -41,9 +40,6 @@ public class AdminFilter implements Filter {
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
-        if (debug) {
-            log("AdminFilter:DoBeforeProcessing");
-        }
 
         // Initialize the parameters of filter
         redirectURL = filterConfig.getInitParameter("redirectURL");
@@ -84,13 +80,8 @@ public class AdminFilter implements Filter {
 
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
-        if (debug) {
-            log("AdminFilter:DoAfterProcessing");
-        }
-
         // Write code here to process the request and/or response after
         // the rest of the filter chain is invoked.
-
         // For example, a logging filter might log the attributes on the
         // request object after the request has been processed. 
 	/*
@@ -101,7 +92,6 @@ public class AdminFilter implements Filter {
 
          }
          */
-
         // For example, a filter might append something to the response.
 	/*
          PrintWriter respOut = new PrintWriter(response.getWriter());
@@ -122,10 +112,6 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-
-        if (debug) {
-            log("AdminFilter:doFilter()");
-        }
 
         doBeforeProcessing(request, response);
 
@@ -200,11 +186,6 @@ public class AdminFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
-        if (filterConfig != null) {
-            if (debug) {
-                log("AdminFilter:Initializing filter");
-            }
-        }
     }
 
     /**
@@ -263,10 +244,6 @@ public class AdminFilter implements Filter {
         } catch (Exception ex) {
         }
         return stackTrace;
-    }
-
-    public void log(String msg) {
-        filterConfig.getServletContext().log(msg);
     }
 
     private boolean isURLNotInFilterList(HttpServletRequest request) {

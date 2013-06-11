@@ -108,11 +108,13 @@ public class listItemServlet extends HttpServlet {
             if(item.getDescription()==null)
             LOG.log(Level.WARNING,"item null");
             String des = item.getDescription().getContent();
+            if(item.getItemAuthor() == null)
+                LOG.log(Level.WARNING, "null pointer");
             String author = item.getItemAuthor().getAuthorId().getName();
             if (des.length() > 20) {
                 des = des.substring(0, 27) + "...";
             }
-
+// LOG.log(Level.WARNING, item.getImageurl());
             String json = "{\"title\":\"" + item.getItemName()
                     + "\",\"img\":\"" + item.getImageurl()
                     + "\",\"description\":\"" + des

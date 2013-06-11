@@ -15,7 +15,7 @@
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-        <title>SmartEXPO</title>
+        <title>SmartEXPO | Map</title>
 
         <h:outputScript library="theme1" name="scripts/easeljs-0.6.0.min.js" target="head" />
         <h:outputScript library="theme1" name="scripts/tweenjs-0.4.0.min.js" target="head" />
@@ -54,8 +54,9 @@
     <h:body onload="init();">
         <header>
             <nav>
-                <h:outputLink class="navi">Map</h:outputLink>|
-                <a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
+                <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
+                <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
+                <a class="navi" href="#">#{info['navigator.contact']}</a>
             </nav>
             <h:outputLink value="index.xhtml">
                 <h:graphicImage id="logo" library="theme1"

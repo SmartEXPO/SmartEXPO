@@ -17,7 +17,8 @@
                     <h:form id="form">
                         <h:panelGrid columns="1" style="width: 100%;">
 
-                            <h:graphicImage value="#{show_item.imageurl}" />
+                            <h:graphicImage value="#{show_item.imageurl}"
+                                            style="width: 120px; height: 80px;"/>
                             <h:outputText value="#{show_item.itemName}" />
 
                             <p:separator />
@@ -54,14 +55,8 @@
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
                             </p:commandLink>
-                            <p:commandLink value="Edit Audios"
-                                           title="Edit Item Audios"
-                                           rendered="#{loginManagedBean.permissions[2]}">
-                                <f:setPropertyActionListener value="#{show_item}"
-                                                             target="#{itemViewManagedBean.selectedItem}" />
-                            </p:commandLink>
-                            <p:commandLink value="Edit Videos"
-                                           title="Edit Item Videos"
+                            <p:commandLink value="Edit Audios And Video"
+                                           action="#{itemViewManagedBean.beginEditAudio}"
                                            rendered="#{loginManagedBean.permissions[2]}">
                                 <f:setPropertyActionListener value="#{show_item}"
                                                              target="#{itemViewManagedBean.selectedItem}" />
@@ -86,7 +81,8 @@
                 <p:outputPanel id="item_detail" style="text-align: center;"
                                layout="block">
                     <h:form id="show_item_form">
-                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}" />
+                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}"
+                                        style="width: 240px; height: 160px;"/>
 
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="view_item_id" value="ID: " />
@@ -107,79 +103,73 @@
                             <h:outputLabel for="view_author_intro" value="Author Introduction: " />
                             <h:outputText id="view_author_intro"
                                           value="#{itemViewManagedBean.authorIntro}" />
-
-                            <h:outputLabel for="view_audio_title" value="Audio Title: " />
-                            <h:outputText id="view_audio_title"
-                                          value="#{itemViewManagedBean.audioTitle}" />
-
-                            <h:outputLabel for="view_video_title" value="Video Title: " />
-                            <h:outputText id="view_video_title"
-                                          value="#{itemViewManagedBean.videoTitle}" />
                         </h:panelGrid>
                     </h:form>
                 </p:outputPanel>
             </p:dialog>
 
-            <p:dialog header="Audio Info" widgetVar="audioInfoDialog"
+            <p:dialog header="Audio Inforamtion" widgetVar="audioInfoDialog"
                       resizable="false" modal="true">
-                <p:panel header="Audio Information">
-                    <h:form id="audio_info_form">
-                        <p:dataTable id="audio_info_datatable" var="audioList"
-                                     value="#{itemViewManagedBean.audios}"
-                                     paginator="true" rows="10"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,20"
-                                     style="text-align: center;">
-                            <p:column>
-                                <h:outputText value="#{audioList.title}" />
-                            </p:column>
+                <h:form id="audio_info_form">
+                    <p:dataTable id="audio_info_datatable" var="audioList"
+                                 value="#{itemViewManagedBean.audios}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,20"
+                                 style="text-align: center;">
+                        <p:column headerText="Audio Title">
+                            <h:outputText value="#{audioList.title}" />
+                        </p:column>
 
-                            <p:column>
-                                <h:outputLink value="#{audioList.url}">
-                                    <h:outputText value="#{audioList.url}" />
+                        <p:column headerText="Audio">
+                            <audio src="#{facesContext.externalContext.requestContextPath}#{audioList.url}"
+                                   controls="controls">
+                                <h:outputLink value="#{facesContext.externalContext.requestContextPath}#{audioList.url}">
+                                    #{facesContext.externalContext.requestContextPath}#{audioList.url}
                                 </h:outputLink>
-                            </p:column>
+                            </audio>
+                        </p:column>
 
-                            <p:column>
-                                <h:outputText value="#{audioList.description}" />
-                            </p:column>
-                            <f:facet name="footer">
-                                Total #{itemViewManagedBean.audioSize} audios.
-                            </f:facet>
-                        </p:dataTable>
-                    </h:form>
-                </p:panel>
+                        <p:column headerText="Audio Description">
+                            <h:outputText value="#{audioList.description}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            Total #{itemViewManagedBean.audioSize} audios.
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
             </p:dialog>
 
-            <p:dialog header="Video Info" widgetVar="videoInfoDialog"
+            <p:dialog header="Video Inforamtion" widgetVar="videoInfoDialog"
                       resizable="false" modal="true">
-                <p:panel header="Video Information">
-                    <h:form id="video_info_form">
-                        <p:dataTable id="video_info_datatable" var="videoList"
-                                     value="#{itemViewManagedBean.videos}"
-                                     paginator="true" rows="10"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,20"
-                                     style="text-align: center;">
-                            <p:column>
-                                <h:outputText value="#{videoList.title}" />
-                            </p:column>
+                <h:form id="video_info_form">
+                    <p:dataTable id="video_info_datatable" var="videoList"
+                                 value="#{itemViewManagedBean.videos}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,20"
+                                 style="text-align: center;">
+                        <p:column headerText="Video Title">
+                            <h:outputText value="#{videoList.title}" />
+                        </p:column>
 
-                            <p:column>
-                                <h:outputLink value="#{videoList.url}">
-                                    <h:outputText value="#{videoList.url}" />
+                        <p:column headerText="Video">
+                            <video src="#{facesContext.externalContext.requestContextPath}#{videoList.url}"
+                                   controls="controls">
+                                <h:outputLink value="#{facesContext.externalContext.requestContextPath}#{videoList.url}">
+                                    #{facesContext.externalContext.requestContextPath}#{videoList.url}
                                 </h:outputLink>
-                            </p:column>
+                            </video>
+                        </p:column>
 
-                            <p:column>
-                                <h:outputText value="#{videoList.description}" />
-                            </p:column>
-                            <f:facet name="footer">
-                                Total #{itemViewManagedBean.videoSize} audios.
-                            </f:facet>
-                        </p:dataTable>
-                    </h:form>
-                </p:panel>
+                        <p:column headerText="Vdeo Description">
+                            <h:outputText value="#{videoList.description}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            Total #{itemViewManagedBean.videoSize} audios.
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
             </p:dialog>
 
             <p:dialog header="Edit Item" widgetVar="editInfoDialog"
@@ -187,7 +177,8 @@
                 <p:outputPanel id="edit_item" style="text-align: center;"
                                layout="block">
                     <h:form id="edit_item_form">
-                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}" />
+                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}"
+                                        style="width: 240px; height: 160px;"/>
 
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="edit_item_name" value="Name: " />
@@ -210,14 +201,6 @@
                             <p:inputText id="edit_author_intro"
                                          value="#{itemViewManagedBean.authorIntro}" />
 
-                            <h:outputLabel for="edit_audio_title" value="Audio Title: " />
-                            <p:inputText id="edit_audio_title"
-                                         value="#{itemViewManagedBean.audioTitle}" />
-
-                            <h:outputLabel for="edit_video_title" value="Video Title: " />
-                            <p:inputText id="edit_video_title"
-                                         value="#{itemViewManagedBean.videoTitle}" />
-
                             <f:facet name="footer">
                                 <p:commandButton value="Confirm" update=":all_item"
                                                  oncomplete="editInfoDialog.hide()"
@@ -227,6 +210,7 @@
                     </h:form>
                 </p:outputPanel>
             </p:dialog>
+
         </ui:define>
     </ui:composition>
 </html>

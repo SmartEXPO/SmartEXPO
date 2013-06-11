@@ -68,10 +68,10 @@ public class GetInfo implements Serializable {
         }
         return null;
     }
-    
-    public List<ManagerPermission> getManagerPermissionsByManagerID(int id){
-        List<ManagerPermission> mps=em.createNamedQuery("ManagerPermission.findByManagerId").setParameter("managerId", getManagerByManagerID(id).get(0)).getResultList();
-        if(!mps.isEmpty()){
+
+    public List<ManagerPermission> getManagerPermissionsByManagerID(int id) {
+        List<ManagerPermission> mps = em.createNamedQuery("ManagerPermission.findByManagerId").setParameter("managerId", getManagerByManagerID(id).get(0)).getResultList();
+        if (!mps.isEmpty()) {
             return mps;
         }
         return null;
@@ -285,7 +285,7 @@ public class GetInfo implements Serializable {
                 itemComments.remove(ic);
             }
         }
-        if (itemComments.size() == 0) {
+        if (itemComments.isEmpty()) {
             return null;
         }
         return itemComments.get(0);

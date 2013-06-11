@@ -28,7 +28,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -48,6 +50,8 @@ public class ItemController implements Serializable {
     private static final Logger LOG = Logger.getLogger(ItemController.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
+    @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
+    EntityManagerFactory emf;
     @Resource
     private UserTransaction utx;
     private GetInfo gi = null;
@@ -155,7 +159,7 @@ public class ItemController implements Serializable {
     @PostConstruct
     public void postConstruct() {
         if (gi == null) {
-            gi = new GetInfo(em, utx);
+            gi = new GetInfo(emf, utx);
         }
         initialCommentsList();
     }
