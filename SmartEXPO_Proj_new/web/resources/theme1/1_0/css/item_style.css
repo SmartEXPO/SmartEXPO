@@ -69,6 +69,8 @@
     top: 100px;
     left: 570px;
     width: 400px;
+    height: 450px;
+    overflow: hidden;
 }
 
 #description p:first-letter {
@@ -83,8 +85,8 @@
 /*Footer part*/
 
 footer {
-    position: fixed;
-    bottom: 0;
+/*    position: fixed;
+    bottom: 0;*/
     width: 100%;
     background-color: #DADAD2;
     min-height: 20px;
@@ -92,7 +94,7 @@ footer {
     -webkit-box-shadow: 0 0 20px 30px #dadad2;
     -moz-box-shadow: 0 0 20px 30px #dadad2;
     text-align: center;
-    display: none;
+    /*display: none;*/
 }
 
 /*Function button part*/

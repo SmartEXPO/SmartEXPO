@@ -27,6 +27,25 @@
         <h:outputStylesheet library="#{info.lib}" name="css/perfect-scrollbar.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/magnific-popup.css" />
 
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.mousewheel.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/perfect-scrollbar.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/instant_comment.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/itemcontent_change_ajax.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/item_effect.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
+                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/itemPicAutoFit.js"
+                        target="head" />
+
         <title>SmartEXPO | Item</title>
 
         <style>
@@ -86,38 +105,56 @@
             <div id="content">
                 <div id="contentwrapper">
                     <div id="description">
-                        <br/>
-                        <h:commandButton id="alter_item_btn" type="button" value="Edit"
-                                         class="edit_description_div"
-                                         disabled="#{not loginManagedBean.permissions[2]}" />
-                        <div>
-                            <h1 class="content_title">Description</h1>
-                            <p id="description_content">
-                                #{itemController.descriptionBean.content}
-                            </p>
-                            <h1 class="content_title">audio</h1>
-                            <c:forEach items="#{itemController.audioURLs}" var="audioURL">
-                                <audio controls="controls"
-                                       src="#{facesContext.externalContext.requestContextPath}#{audioURL}">
-                                    Your browser does not support the audio tag.
-                                </audio>
-                            </c:forEach>
-                            <h1 class="content_title">video</h1>
-                            <c:forEach items="#{itemController.videoURLs}" var="videoURL">
-                                <video width="320" height="240" controls="controls"
-                                       src="#{facesContext.externalContext.requestContextPath}#{videoURL}">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </c:forEach>
+                        <div id="des_scroll">
+                            <br/>
+                            <h:commandButton id="alter_item_btn" type="button" value="Edit"
+                                             class="edit_description_div"
+                                             disabled="#{not loginManagedBean.permissions[2]}" />
+                            <div>
+                                <h1 class="content_title">Description</h1>
+                                <p id="description_content">
+                                    #{itemController.descriptionBean.content}
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                    This is item content;<br/>
+                                </p>
+                                <h1 class="content_title">audio</h1>
+                                <c:forEach items="#{itemController.audioURLs}" var="audioURL">
+                                    <audio controls="controls"
+                                           src="#{facesContext.externalContext.requestContextPath}#{audioURL}">
+                                        Your browser does not support the audio tag.
+                                    </audio>
+                                </c:forEach>
+                                <h1 class="content_title">video</h1>
+                                <c:forEach items="#{itemController.videoURLs}" var="videoURL">
+                                    <video width="320" height="240" controls="controls"
+                                           src="#{facesContext.externalContext.requestContextPath}#{videoURL}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </c:forEach>
 
-                            <h1 class="content_title">See Also</h1>
-                            <p>This is the content of see also</p>
+                                <h1 class="content_title">See Also</h1>
+                                <p>This is the content of see also</p>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
                         </div>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
                     </div>
+
 
                     <!--<div id="content_fixed" style="position:relative;width:1024px;">-->
                     <div id="frame" class="content_fixed">
@@ -147,6 +184,7 @@
             </div>
 
             <footer>
+                <br/>
                 <h:outputText value="#{info.footer}" escape="false"/>
             </footer>
         </div>
@@ -233,24 +271,6 @@
             </div>
         </div>
 
-        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/jquery.mousewheel.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/perfect-scrollbar.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/instant_comment.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/itemcontent_change_ajax.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/item_effect.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/itemPicAutoFit.js"
-                        target="head" />
 
     </h:body>
 </html>

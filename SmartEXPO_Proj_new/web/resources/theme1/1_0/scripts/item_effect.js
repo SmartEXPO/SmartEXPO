@@ -8,32 +8,34 @@ var isCommentBarDisplayed = false;
 
 $(document).ready(function() {
     $('#users_comment').perfectScrollbar();
+    $('#description').perfectScrollbar();
+
     $('.popup_link').magnificPopup({
         type: 'image'
     });
     initInstantComment();
-
-    $(window).scroll(function(e) {
-        if (isCommentBarDisplayed) {
-            e.preventDefault();
-            //console.log("Scroll");
-        }
-        if (document.getElementsByTagName("header")[0].getBoundingClientRect().top <= -60) {
-            $(".content_fixed").css("position", "fixed");
-            $(".content_fixed").css("top", "40px");
-            if (isBottomBarDisplayed == false) {
-                isBottomBarDisplayed = true;
-                $("footer").fadeIn('slow');
-            }
-        } else {
-            $(".content_fixed").css("position", "");
-            $(".content_fixed").css("top", "");
-            if (isBottomBarDisplayed == true) {
-                isBottomBarDisplayed = false;
-                $("footer").fadeOut('slow');
-            }
-        }
-    });
+//
+//    $(window).scroll(function(e) {
+//        if (isCommentBarDisplayed) {
+//            e.preventDefault();
+//            //console.log("Scroll");
+//        }
+//        if (document.getElementsByTagName("header")[0].getBoundingClientRect().top <= -60) {
+//            $(".content_fixed").css("position", "fixed");
+//            $(".content_fixed").css("top", "40px");
+//            if (isBottomBarDisplayed == false) {
+//                isBottomBarDisplayed = true;
+//                $("footer").fadeIn('slow');
+//            }
+//        } else {
+//            $(".content_fixed").css("position", "");
+//            $(".content_fixed").css("top", "");
+//            if (isBottomBarDisplayed == true) {
+//                isBottomBarDisplayed = false;
+//                $("footer").fadeOut('slow');
+//            }
+//        }
+//    });
 
     function hideSearchPane() {
         isSearchBarDisplayed = false;
@@ -215,7 +217,7 @@ function finish(e) {
         removalDelay: 300,
         mainClass: 'my-mfp-slide-bottom'
     });
-    
+
     $.magnificPopup.close();
 }
 
