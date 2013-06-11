@@ -64,8 +64,10 @@
                 </div>
                 <div id="frame">
                     <h:graphicImage class="frame_content" library="#{info.lib}" name="images/frame.png" />
-                    <h:graphicImage id="display_item" value="#{indexManagedBean.showItems[0].imageurl}"
-                                    style="width: 480px; height: 320px"/>
+                    <div id="display_item_frame">
+                        <h:graphicImage id="display_item" value="#{indexManagedBean.showItems[0].imageurl}"
+                                        />
+                    </div>
                     <h:outputLink id="display_item_id" value="item.xhtml">
                         <h:graphicImage class="frame_content" library="#{info.lib}" name="images/framehl.png" />
                         <f:param name="id" value="#{indexManagedBean.showItems[0].itemId}" />
@@ -163,6 +165,8 @@
         </div>
 
         <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/itemPicAutoFit.js" target="head" />
+
         <h:outputScript library="#{info.lib}" name="scripts/index_effect.js" target="head" />
         <h:outputScript library="#{info.lib}" name="scripts/sidebar.js" target="head" />
 

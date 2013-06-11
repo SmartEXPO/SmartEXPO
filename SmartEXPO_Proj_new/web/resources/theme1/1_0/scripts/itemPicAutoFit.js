@@ -15,6 +15,7 @@ function autoFit(w, h, target) {
 function widthGreater(target, frame_width, frame_height) {
     var height = target.height();
     var width = target.width();
+    console.log("wid: " + width + " hei: " + height);
     if (width >= frame_width && height >= frame_height) {
         var offset_x = (width - frame_width) / 2;
         var offset_y = (height - frame_height) / 2;
