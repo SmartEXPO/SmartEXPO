@@ -279,24 +279,20 @@ public class ItemViewManagedBean implements Serializable {
 
     // view接口，selectedItem为目标item
     public void beginViewDetail() {
-        
     }
 
     // 根据selectedItem找到对应Audio放在audios这个List中
     public void beginViewAudio() {
-        GetInfo gi=new GetInfo(emf, utx);
-        audios=gi.getAudioByItemID(selectedItem.getItemId());
+        audios = gi.getAudioByItemID(selectedItem.getItemId());
     }
 
     // 根据selectedItem找到对应Video放在videos这个List中
     public void beginViewVideo() {
-        GetInfo gi=new GetInfo(emf, utx);
-        videos=gi.getVideoByItemID(selectedItem.getItemId());
+        videos = gi.getVideoByItemID(selectedItem.getItemId());
     }
 
     // edit接口，selectedItem为目标item
     public void beginEditItem() {
-        
     }
 
     public void beginEditAudio() {
