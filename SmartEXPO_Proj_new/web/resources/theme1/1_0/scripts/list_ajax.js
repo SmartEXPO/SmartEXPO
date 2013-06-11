@@ -28,7 +28,7 @@ function trans(obj) {
     var tmp;
     if (obj && (obj.status == "0" || obj.status == "1")) { //正常接受
         for (var i = 0; i < obj.count; i++) {
-            tmp = "<div class=\"grid\"><div class=\"imgholder\"><a href=\""+obj.list[i].link+"\"><img src=\""+obj.list[i].img+"\" /></a></div><a href=\""+obj.list[i].link+"\"><strong>"+obj.list[i].title+"</strong></a><p>"+obj.list[i].description+"</p><div class=\"meta\">"+obj.list[i].author+"</div></div>";
+            tmp = "<div class=\"grid\"><div class=\"imgholder\"><a href=\""+obj.list[i].link+"\"><img src=\"/SmartEXPO_Proj_new"+obj.list[i].img+"\" /></a></div><a href=\""+obj.list[i].link+"\"><strong>"+obj.list[i].title+"</strong></a><p>"+obj.list[i].description+"</p><div class=\"meta\">"+obj.list[i].author+"</div></div>";
             rtrn.push(tmp);
         }
         if (obj.status == "1") finished = true;

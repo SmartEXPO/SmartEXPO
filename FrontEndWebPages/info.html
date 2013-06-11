@@ -20,11 +20,17 @@
 
         <link rel="stylesheet" type="text/css" href="./style/style.css" />
         <link rel="stylesheet" type="text/css" href="./style/index_style.css" />
+        
+        <script>
+            function test() {
+                alert($("#aa").height());
+            }
+        </script>
 
     </head>
 
     <body>
-        <header>
+        <header onclick="test()">
             <nav>
                 <a class="navi" href="#">Map</a>|<a class="navi" href="#">Info</a>|<a class="navi" href="#">Contact</a>
             </nav>
@@ -37,7 +43,7 @@
         
         <div style="width:200px; height: 200px; background:black; margin: 0 auto; position: relative; overflow:hidden; border-radius:100px;">
             
-            <img src="./images/item_item.png" style="position:absolute;left:-200px; top:-200px;" />
+            <img id="aa" src="./images/item_item.png" style="position:absolute;left:-200px; top:-200px; width:500px; height:auto !important;" />
             
         </div>
 
