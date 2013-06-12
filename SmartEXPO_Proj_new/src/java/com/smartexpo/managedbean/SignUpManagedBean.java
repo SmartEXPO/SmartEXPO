@@ -11,6 +11,8 @@ import com.smartexpo.models.Manager;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -51,6 +53,12 @@ public class SignUpManagedBean implements Serializable {
     private String confirmPassword;
     private Boolean[] permissions;
     boolean isVerify;
+    private String usernameIcon;
+    private String passwordIcon;
+    private String confirmPasswordIcon;
+    private static String UsernameComponentID = "username";
+    private static String PasswordComponentID = "password";
+    private static String ConfirmPasswordComponentID = "confirm_password";
 
     /**
      * Creates a new instance of SignUpManagedBean
@@ -118,6 +126,30 @@ public class SignUpManagedBean implements Serializable {
      */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getUsernameIcon() {
+        return usernameIcon;
+    }
+
+    public void setUsernameIcon(String usernameIcon) {
+        this.usernameIcon = usernameIcon;
+    }
+
+    public String getPasswordIcon() {
+        return passwordIcon;
+    }
+
+    public void setPasswordIcon(String passwordIcon) {
+        this.passwordIcon = passwordIcon;
+    }
+
+    public String getConfirmPasswordIcon() {
+        return confirmPasswordIcon;
+    }
+
+    public void setConfirmPasswordIcon(String confirmPasswordIcon) {
+        this.confirmPasswordIcon = confirmPasswordIcon;
     }
 
     public void verify(ActionEvent event) {
@@ -211,6 +243,36 @@ public class SignUpManagedBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    public void onInputValue(String componentID) {
+        if (componentID.equals(UsernameComponentID)) {
+            if (isUsernameLegal(username)) {
+                usernameIcon = "√";
+            } else {
+                usernameIcon = "×";
+            }
+        } else if (componentID.equals(PasswordComponentID)) {
+            if (password.length() >= 3 && password.length() <= 16) {
+                passwordIcon = "√";
+            } else {
+                passwordIcon = "×";
+            }
+        } else if (componentID.equals(ConfirmPasswordComponentID)) {
+            if (password.equals(confirmPassword)) {
+                confirmPasswordIcon = "√";
+            } else {
+                confirmPasswordIcon = "×";
+            }
+        }
+    }
+
+    private boolean isUsernameLegal(String user) {
+        if (null == user || "".equals(user)) {
+            return false;
+        }
+        Pattern p = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]{3,16}$");
+        Matcher matcher = p.matcher(user);
+        return matcher.matches();
     }
 }

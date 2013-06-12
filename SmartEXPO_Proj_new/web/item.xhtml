@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <meta charset="utf-8" />
         <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
@@ -13,8 +13,8 @@
         <meta name="description" content="" />
         <meta name="author" content="Ben" />
 
-        <!--        <meta name="viewport" content="width=device-width;
-                      user-scalable=no, maximun-scale=1.0" />-->
+        <meta name="viewport" content="width=device-width;
+              user-scalable=no, maximun-scale=1.0" />
 
         <!-- Replace favicon.ico & apple-touch-icon.png
         in the root of your domain and delete these references -->
@@ -27,24 +27,15 @@
         <h:outputStylesheet library="#{info.lib}" name="css/perfect-scrollbar.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/magnific-popup.css" />
 
-        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/jquery.mousewheel.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/perfect-scrollbar.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/instant_comment.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/itemcontent_change_ajax.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/item_effect.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/itemPicAutoFit.js"
-                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.mousewheel.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/perfect-scrollbar.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/instant_comment.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/itemcontent_change_ajax.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/item_effect.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/itemPicAutoFit.js" target="head" />
 
         <title>SmartEXPO | Item</title>
 
@@ -78,86 +69,32 @@
                     <a class="navi" href="#">#{info['navigator.contact']}</a>
                     <div id="login">
                         <h:form id="log_form">
-                            <div id="login_name">
+                            <div id="login_name" class="inoutname">
                                 #{loginManagedBean.status ? loginManagedBean.username : "Guest"}
                             </div>
-                            <h:outputLink id="show_login" class="navi popup_login"
+                            <h:outputLink id="show_login" class="navi popup_login inoutlink"
                                           value="#login_panel_2"
                                           rendered="#{!loginManagedBean.status}">
                                 <h:outputText value="Log In" />
                             </h:outputLink>
-                            <h:commandLink id="show_logout" class="navi"
+                            <h:commandLink id="show_logout" class="navi inoutlink"
                                            value="Log Out"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
                                 <f:ajax execute="@form" onevent="finish"
-                                        render="@form :comment_form :alter_item_btn"
-                                        />
+                                        render="@form :comment_form :login_form" />
                             </h:commandLink>
                         </h:form>
                     </div>
                 </nav>
                 <!--separator-->
                 <div style="height:4px;width:100%;background-color:#464646;
-                     position:relative;bottom:6px;"></div>
+                     position:relative;bottom:6px;" id="header_sep"></div>
             </header>
 
             <div id="content">
                 <div id="contentwrapper">
-                    <div id="description">
-                        <div id="des_scroll">
-                            <br/>
-                            <h:commandButton id="alter_item_btn" type="button" value="Edit"
-                                             class="edit_description_div"
-                                             disabled="#{not loginManagedBean.permissions[2]}" />
-                            <div>
-                                <h1 class="content_title">Description</h1>
-                                <p id="description_content">
-                                    #{itemController.descriptionBean.content}
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                    This is item content;<br/>
-                                </p>
-                                <h1 class="content_title">audio</h1>
-                                <c:forEach items="#{itemController.audioURLs}" var="audioURL">
-                                    <audio controls="controls"
-                                           src="#{facesContext.externalContext.requestContextPath}#{audioURL}">
-                                        Your browser does not support the audio tag.
-                                    </audio>
-                                </c:forEach>
-                                <h1 class="content_title">video</h1>
-                                <c:forEach items="#{itemController.videoURLs}" var="videoURL">
-                                    <video width="320" height="240" controls="controls"
-                                           src="#{facesContext.externalContext.requestContextPath}#{videoURL}">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </c:forEach>
-
-                                <h1 class="content_title">See Also</h1>
-                                <p>This is the content of see also</p>
-                            </div>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                        </div>
-                    </div>
-
-
-                    <!--<div id="content_fixed" style="position:relative;width:1024px;">-->
-                    <div id="frame" class="content_fixed">
+                    <div id="frame">
                         <h:graphicImage id="frame_back" library="#{info.lib}"
                                         name="images/item_frame.png" />
                         <div id="frame_viewpoint">
@@ -170,16 +107,57 @@
                                             name="images/item_frame_highlight.png" />
                         </h:outputLink>
                     </div>
-                    <div class="content_fixed">
-                        <div id="shade"></div>
-                        <div id="title">
-                            <h1>#{itemController.itemBean.name}</h1>
-                            <div class="separator"
-                                 style="margin-top:-10px;margin-bottom:-15px;" />
-                            <h3>#{itemController.authorBean.names[0]}</h3>
+                    <div id="shade"></div>
+                    <div id="title">
+                        <h1>#{itemController.itemBean.name}</h1>
+                        <div class="separator"
+                             style="margin-top:-10px;margin-bottom:-15px;" />
+                        <h3>#{itemController.authorBean.names[0]}</h3>
+                    </div>
+
+                    <div id="description">
+                        <div id="des_scroll">
+                            <div>
+                                <h1 class="content_title">Description</h1>
+                                <p id="description_content">
+                                    #{itemController.descriptionBean.content}
+                                    This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>
+                                </p>
+                                <h1 class="content_title">audio</h1>
+                                <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
+                                    <audio controls="controls"
+                                           src="#{facesContext.externalContext.requestContextPath}#{audioURL}">
+                                        Your browser does not support the audio tag.
+                                    </audio>
+                                </ui:repeat>
+                                <h1 class="content_title">video</h1>
+                                <ui:repeat value="#{itemController.videoURLs}" var="videoURL">
+                                    <video width="320" height="240" controls="controls"
+                                           src="#{facesContext.externalContext.requestContextPath}#{videoURL}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </ui:repeat>
+                                <h1 class="content_title">See Also</h1>
+                                <p>This is the content of see also</p>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
                         </div>
                     </div>
-                    <!--</div>-->
+
+
                 </div>
             </div>
 
@@ -255,7 +233,7 @@
                                  class="login_button" value="Sign In">
                     <f:ajax listener="#{loginManagedBean.verify}"
                             execute="username password"
-                            render="@form :log_form :comment_form :alter_item_btn"
+                            render="@form :log_form :comment_form"
                             onevent="finish" />
                 </h:commandButton>
                 <h:message for="username" />
@@ -270,7 +248,6 @@
                 <p id="instant_comment_content">asdasdfasdfasddsfsad. asdfsfsafsdfasfssafasdf</p>
             </div>
         </div>
-
 
     </h:body>
 </html>
