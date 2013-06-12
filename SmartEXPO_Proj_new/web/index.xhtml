@@ -35,11 +35,16 @@
                 this.path = path;
                 this.description = description;
             }
+            
+            function s(d) {
+                return d.replace("#","\'");
+            }
+            
             // 此处数据由数据库获取
             var info = new Array();
-            var description1 = "#{indexManagedBean.showItemsDescriptions[0].content}";
-            var description2 = "#{indexManagedBean.showItemsDescriptions[1].content}";
-            var description3 = "#{indexManagedBean.showItemsDescriptions[2].content}";
+            var description1 = s("#{indexManagedBean.showItemsDescriptions[0].content}");
+            var description2 = s("#{indexManagedBean.showItemsDescriptions[1].content}");
+            var description3 = s("#{indexManagedBean.showItemsDescriptions[2].content}");
             info[0] = new infotemplate("#{indexManagedBean.showItems[0].itemId}", "#{indexManagedBean.showItems[0].itemName}", "#{facesContext.externalContext.requestContextPath}" + "#{indexManagedBean.showItems[0].imageurl}", description1);
             info[1] = new infotemplate("#{indexManagedBean.showItems[1].itemId}", "#{indexManagedBean.showItems[1].itemName}", "#{facesContext.externalContext.requestContextPath}" + "#{indexManagedBean.showItems[1].imageurl}", description2);
             info[2] = new infotemplate("#{indexManagedBean.showItems[2].itemId}", "#{indexManagedBean.showItems[2].itemName}", "#{facesContext.externalContext.requestContextPath}" + "#{indexManagedBean.showItems[2].imageurl}", description3);
