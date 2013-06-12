@@ -276,8 +276,6 @@ public class ItemInsertMB implements Serializable {
         Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, "content1 = {0}", desContent);
         desContent = desContent.replaceAll("\r", " ");
         Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, "content2 = {0}", desContent);
-        desContent = desContent.replaceAll("'", "#");
-        Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, "content3 = {0}", desContent);
 
         try {
             utx.begin();
