@@ -85,6 +85,7 @@
     #login {
         display: inline-block;
         text-align: right;
+        display:none;
     }
 
 }

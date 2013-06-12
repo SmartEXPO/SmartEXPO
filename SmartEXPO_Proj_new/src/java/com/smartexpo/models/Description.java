@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -49,8 +50,9 @@ public class Description implements Serializable {
     private String title;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 300)
+    @Size(min = 1, max = 2000)
     @Column(name = "CONTENT")
+    @Lob
     private String content;
     @JoinColumn(name = "ITEM_ID", referencedColumnName = "ITEM_ID")
     @OneToOne(optional = false)
