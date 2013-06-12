@@ -306,7 +306,11 @@ public class InsertItemServlet extends HttpServlet {
             item.setHtml("asdfasdfsadf");
             ijc.edit(item);
 
-
+            List<Item> searchItems=gi.getItemsByItemNameSubStr("oaw");
+            for(int i=0;i<searchItems.size();i++){
+                logger.log(Level.WARNING,searchItems.get(i).getItemName());
+            }
+            
 
 
 

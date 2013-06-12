@@ -59,6 +59,8 @@ public class GetInfo implements Serializable {
         }
         return null;
     }
+    
+    
 
     public List<Manager> getManagerByManagerID(int id) {
         List<Manager> managers = em.createNamedQuery("Manager.findByManagerId").setParameter("managerId", id).getResultList();
@@ -302,6 +304,18 @@ public class GetInfo implements Serializable {
 
     public List<Item> getItemsByItemName(String name) {
         List<Item> items = em.createNamedQuery("Item.findByItemName").setParameter("itemName", name).getResultList();
+        return items;
+    }
+    
+    
+    public List<Item> getItemsByItemNameSubStr(String name){
+        List<Item> items=getAllItems();
+        for(int i=0;i<items.size();i++){
+            Item itm=items.get(i);
+            if(!itm.getItemName().contains(name)){
+                items.remove(itm);
+            }
+        }
         return items;
     }
 
