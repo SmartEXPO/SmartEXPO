@@ -55,7 +55,7 @@
                 /*position:relative;*/
             }
         </style>
-        
+
     </h:head>
     <h:body>
         <div>
@@ -126,15 +126,17 @@
                                 </p>
                                 <h1 class="content_title">audio</h1>
                                 <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
-                                    <audio controls="controls"
-                                           src="#{facesContext.externalContext.requestContextPath}#{audioURL}">
+                                    <audio controls="controls">
+                                        <source src="#{facesContext.externalContext.requestContextPath}#{audioURL}"
+                                                type="audio/mpeg" />
                                         Your browser does not support the audio tag.
                                     </audio>
                                 </ui:repeat>
                                 <h1 class="content_title">video</h1>
                                 <ui:repeat value="#{itemController.videoURLs}" var="videoURL">
-                                    <video width="320" height="240" controls="controls"
-                                           src="#{facesContext.externalContext.requestContextPath}#{videoURL}">
+                                    <video width="320" height="240" controls="controls">
+                                        <source src="#{facesContext.externalContext.requestContextPath}#{videoURL}"
+                                                type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
                                 </ui:repeat>

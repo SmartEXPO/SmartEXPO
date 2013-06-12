@@ -54,8 +54,11 @@ public class FileManager implements Serializable {
 
         String contentType = uploadedFile.getContentType();
         String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
+        Logger.getLogger(FileManager.class.getName()).log(Level.WARNING, "conten " + contentType);
         if (contentType.equals("audio/x-wav")) {
             ext = contentType.substring(contentType.lastIndexOf("-") + 1, contentType.length());
+        } else if (contentType.equals("audio/mpeg")) {
+            ext = ext.replaceAll("mpeg", "mp3");
         }
         Logger.getLogger(FileManager.class.getName()).log(Level.WARNING, "contentType = {0}, ext = {1}", new Object[]{contentType, ext});
         savedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
