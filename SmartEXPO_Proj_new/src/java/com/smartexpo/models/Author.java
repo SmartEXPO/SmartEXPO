@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -58,8 +59,9 @@ public class Author implements Serializable {
     private Date deathDate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 1000)
     @Column(name = "INTRODUCTION")
+    @Lob
     private String introduction;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "authorId")
     private ItemAuthor itemAuthor;

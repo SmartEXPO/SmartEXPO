@@ -56,35 +56,20 @@ public class InsertManagerServlet extends HttpServlet {
 
 
             Manager manager = new Manager();
-            manager.setUsername("asdfasd");
-            manager.setPassword("owefnwnv");
+            manager.setUsername("aaa");
+            manager.setPassword("aaa");
 
-            Permission permission = new Permission();
-            permission.setPermissionName("asfe11");
-
-            Permission permission2 = new Permission();
-            permission2.setPermissionName("asfe22");
-
-            ManagerPermission mp = new ManagerPermission();
-            mp.setManagerId(manager);
-            mp.setPermissionId(permission);
-
-            ManagerPermission mp2 = new ManagerPermission();
-            mp2.setManagerId(manager);
-            mp2.setPermissionId(permission2);
-
-
-
+            manager.setPermission1(true);
+            manager.setPermission2(true);
+            manager.setPermission3(true);
+            manager.setPermission4(true);
+            manager.setPermission5(true);
 
 
 
 
             utx.begin();
-            em.persist(permission);
             em.persist(manager);
-            em.persist(mp);
-            em.persist(mp2);
-            em.persist(permission2);
 
             utx.commit();
         } catch (NotSupportedException ex) {

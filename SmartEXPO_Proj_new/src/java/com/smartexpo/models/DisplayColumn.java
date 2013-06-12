@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -42,6 +43,7 @@ public class DisplayColumn implements Serializable {
     @NotNull
     @Size(min = 1, max = 3000)
     @Column(name = "DISPLAY_CONTENT")
+    @Lob
     private String displayContent;
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "displayColumnId")
     private ItemDisplayColumn itemDisplayColumn;

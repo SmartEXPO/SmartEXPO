@@ -189,7 +189,7 @@ $(document).ready(function() {
         }
     });
 
-    autoFit($("#frame_viewpoint").width(), $("#frame_viewpoint").height(), $("#frame_image"));
+    autoFit(480, 485, $("#frame_image"));
 });
 
 function finish(e) {

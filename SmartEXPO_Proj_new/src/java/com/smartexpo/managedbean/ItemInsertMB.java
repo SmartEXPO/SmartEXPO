@@ -271,6 +271,12 @@ public class ItemInsertMB implements Serializable {
     }
 
     public void persist() {
+        Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, "content0 = {0}", desContent);
+        desContent = desContent.replaceAll("\n", "<br />");
+        Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, "content1 = {0}", desContent);
+        desContent = desContent.replaceAll("\r", " ");
+        Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, "content2 = {0}", desContent);
+
         try {
             utx.begin();
 
@@ -280,7 +286,6 @@ public class ItemInsertMB implements Serializable {
             item.setArea(itemArea);
 
             em.persist(item);
-
             Description description = new Description();
             description.setTitle(desTitle);
             description.setContent(desContent);

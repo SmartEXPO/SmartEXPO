@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -51,8 +52,9 @@ public class Comment implements Serializable {
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 1000)
     @Column(name = "CONTENT")
+    @Lob
     private String content;
     @Basic(optional = false)
     @NotNull

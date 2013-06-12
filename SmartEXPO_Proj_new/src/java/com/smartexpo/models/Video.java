@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -38,6 +39,7 @@ public class Video implements Serializable {
     private static final long serialVersionUID = 1L;
     @Size(max = 1000)
     @Column(name = "DESCRIPTION")
+    @Lob
     private String description;
     @Basic(optional = false)
     @NotNull
