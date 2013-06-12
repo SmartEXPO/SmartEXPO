@@ -5,6 +5,7 @@
 package com.smartexpo.temp;
 
 import com.smartexpo.controls.GetInfo;
+import com.smartexpo.jpgcontrollers.AudioJpaController;
 import com.smartexpo.jpgcontrollers.AuthorJpaController;
 import com.smartexpo.jpgcontrollers.DescriptionJpaController;
 import com.smartexpo.jpgcontrollers.ItemAudioJpaController;
@@ -13,6 +14,7 @@ import com.smartexpo.jpgcontrollers.ItemCommentJpaController;
 import com.smartexpo.jpgcontrollers.ItemDisplayColumnJpaController;
 import com.smartexpo.jpgcontrollers.ItemJpaController;
 import com.smartexpo.jpgcontrollers.ItemVideoJpaController;
+import com.smartexpo.jpgcontrollers.VideoJpaController;
 import com.smartexpo.jpgcontrollers.exceptions.IllegalOrphanException;
 import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
@@ -371,6 +373,7 @@ public class ItemViewManagedBean implements Serializable {
 
     // view接口，selectedItem为目标item
     public void beginViewDetail() {
+        
     }
 
     // 根据selectedItem找到对应Audio放在audios这个List中
@@ -385,6 +388,7 @@ public class ItemViewManagedBean implements Serializable {
 
     // edit接口，selectedItem为目标item
     public void beginEditItem() {
+        
     }
 
     public String beginEditAudio() {
@@ -488,8 +492,40 @@ public class ItemViewManagedBean implements Serializable {
 
     // @stormmax TODO 存储修改过后的Audio和Video部分，分别在audios和videos两个list中
     public void avEditFinish() {
+        AudioJpaController ajc=new AudioJpaController(utx, emf);
+        for(int i=0;i<audios.size();i++){
+            try {
+                ajc.edit(audios.get(i));
+            } catch (IllegalOrphanException ex) {
+                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        VideoJpaController vjc=new VideoJpaController(utx, emf);
+        for(int i=0;i<videos.size();i++){
+            try {
+                vjc.edit(videos.get(i));
+            } catch (IllegalOrphanException ex) {
+                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
         RequestContext.getCurrentInstance()
                 .execute(("alert('Modify successfully!');location.reload(true)"));
+        
     }
 
     public void back() {
