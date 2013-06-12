@@ -13,8 +13,8 @@
         <meta name="description" content="" />
         <meta name="author" content="Ben" />
 
-        <!--        <meta name="viewport" content="width=device-width;
-                      user-scalable=no, maximun-scale=1.0" />-->
+        <meta name="viewport" content="width=device-width;
+              user-scalable=no, maximun-scale=1.0" />
 
         <!-- Replace favicon.ico & apple-touch-icon.png
         in the root of your domain and delete these references -->
@@ -27,24 +27,15 @@
         <h:outputStylesheet library="#{info.lib}" name="css/perfect-scrollbar.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/magnific-popup.css" />
 
-        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/jquery.mousewheel.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/perfect-scrollbar.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/instant_comment.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/itemcontent_change_ajax.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/item_effect.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/itemPicAutoFit.js"
-                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.mousewheel.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/perfect-scrollbar.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/instant_comment.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/itemcontent_change_ajax.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/item_effect.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/itemPicAutoFit.js" target="head" />
 
         <title>SmartEXPO | Item</title>
 
@@ -78,15 +69,15 @@
                     <a class="navi" href="#">#{info['navigator.contact']}</a>
                     <div id="login">
                         <h:form id="log_form">
-                            <div id="login_name">
+                            <div id="login_name" class="inoutname">
                                 #{loginManagedBean.status ? loginManagedBean.username : "Guest"}
                             </div>
-                            <h:outputLink id="show_login" class="navi popup_login"
+                            <h:outputLink id="show_login" class="navi popup_login inoutlink"
                                           value="#login_panel_2"
                                           rendered="#{!loginManagedBean.status}">
                                 <h:outputText value="Log In" />
                             </h:outputLink>
-                            <h:commandLink id="show_logout" class="navi"
+                            <h:commandLink id="show_logout" class="navi inoutlink"
                                            value="Log Out"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
@@ -98,17 +89,49 @@
                 </nav>
                 <!--separator-->
                 <div style="height:4px;width:100%;background-color:#464646;
-                     position:relative;bottom:6px;"></div>
+                     position:relative;bottom:6px;" id="header_sep"></div>
             </header>
 
             <div id="content">
                 <div id="contentwrapper">
+                    <div id="frame">
+                        <h:graphicImage id="frame_back" library="#{info.lib}"
+                                        name="images/item_frame.png" />
+                        <div id="frame_viewpoint">
+                            <h:graphicImage id="frame_image"
+                                            value="#{itemController.itemBean.picURL}" />
+                        </div>
+                        <h:outputLink value="#{facesContext.externalContext.requestContextPath}#{itemController.itemBean.picURL}"
+                                      class="popup_link">
+                            <h:graphicImage id="frame_highlight" library="#{info.lib}"
+                                            name="images/item_frame_highlight.png" />
+                        </h:outputLink>
+                    </div>
+                    <div id="shade"></div>
+                    <div id="title">
+                        <h1>#{itemController.itemBean.name}</h1>
+                        <div class="separator"
+                             style="margin-top:-10px;margin-bottom:-15px;" />
+                        <h3>#{itemController.authorBean.names[0]}</h3>
+                    </div>
+
                     <div id="description">
                         <div id="des_scroll">
                             <div>
                                 <h1 class="content_title">Description</h1>
                                 <p id="description_content">
                                     #{itemController.descriptionBean.content}
+                                    This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>This is content.<br/>
+                                    This is content.<br/>
                                 </p>
                                 <h1 class="content_title">audio</h1>
                                 <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
@@ -135,30 +158,6 @@
                     </div>
 
 
-                    <!--<div id="content_fixed" style="position:relative;width:1024px;">-->
-                    <div id="frame" class="content_fixed">
-                        <h:graphicImage id="frame_back" library="#{info.lib}"
-                                        name="images/item_frame.png" />
-                        <div id="frame_viewpoint">
-                            <h:graphicImage id="frame_image"
-                                            value="#{itemController.itemBean.picURL}" />
-                        </div>
-                        <h:outputLink value="#{facesContext.externalContext.requestContextPath}#{itemController.itemBean.picURL}"
-                                      class="popup_link">
-                            <h:graphicImage id="frame_highlight" library="#{info.lib}"
-                                            name="images/item_frame_highlight.png" />
-                        </h:outputLink>
-                    </div>
-                    <div class="content_fixed">
-                        <div id="shade"></div>
-                        <div id="title">
-                            <h1>#{itemController.itemBean.name}</h1>
-                            <div class="separator"
-                                 style="margin-top:-10px;margin-bottom:-15px;" />
-                            <h3>#{itemController.authorBean.names[0]}</h3>
-                        </div>
-                    </div>
-                    <!--</div>-->
                 </div>
             </div>
 
