@@ -121,7 +121,8 @@
                             <div>
                                 <h1 class="content_title">Description</h1>
                                 <p id="description_content">
-                                    #{itemController.descriptionBean.content}
+                                    <h:outputText value="#{itemController.descriptionBean.content}"
+                                                  escape="false" />
                                 </p>
                                 <h1 class="content_title">audio</h1>
                                 <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
