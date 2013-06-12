@@ -250,8 +250,9 @@ public class CommentViewManagedBean implements Serializable {
 
     // All Comments中的detail选项，根据selectdComment找到相应item并将其属性设置为selectedItem的属性
     public void showItemDetail() {
+        Logger.getLogger(CommentViewManagedBean.class.getName()).log(Level.WARNING, "comment id = {0}, commment name = {1}", new Object[]{selectedComment.getCommentId(), selectedComment.getContent()});
         selectedItem = gi.getItemByID(gi.getItemCommentsByCommentID(selectedComment.getCommentId()).get(0).getItemId().getItemId());
-
+        Logger.getLogger(CommentViewManagedBean.class.getName()).log(Level.WARNING, "item name = {0}", selectedItem.getItemName());
     }
 
     // All Items中的detail comments选项，根据selectedItem找到相应的comment，并加入到selectedItemComments这个list中

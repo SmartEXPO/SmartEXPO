@@ -13,12 +13,7 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.smartexpo.util.FileManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,8 +84,6 @@ public class ItemInsertMB implements Serializable {
     private String videoTitle;
     private String videoURL;
     private String videoDes;
-    private static String Destination;
-    private static String SubPath = "/web/upload/";
     private UploadedFile uploadedFile;
 
     /**
@@ -106,12 +99,6 @@ public class ItemInsertMB implements Serializable {
     public void postContrust() {
         String realPath = ((ServletContext) FacesContext.getCurrentInstance()
                 .getExternalContext().getContext()).getRealPath("/");
-
-        for (int i = 0; i < 3; ++i) {
-            realPath = realPath.substring(0, realPath.lastIndexOf("/"));
-        }
-        realPath = realPath + SubPath;
-        Destination = realPath;
     }
 
     public String getItemName() {
@@ -393,7 +380,7 @@ public class ItemInsertMB implements Serializable {
         tmpAudio.setDescription(audioDes);
 
         if (uploadedFile != null) {
-            audioURL = processStore(uploadedFile, "audios/");
+            audioURL = FileManager.getInstance().processStore(uploadedFile, "audios/");
         }
 
         tmpAudio.setUrl(audioURL);
@@ -411,7 +398,7 @@ public class ItemInsertMB implements Serializable {
                     des = des.substring(0, des.lastIndexOf("/"));
                 }
                 String url = tmpAudio.getUrl();
-                deleteFile(des + "/web" + url);
+                FileManager.getInstance().deleteFile(des + "/web" + url);
 
                 audios.remove(i);
             }
@@ -425,7 +412,7 @@ public class ItemInsertMB implements Serializable {
         tmpVideo.setDescription(videoDes);
 
         if (uploadedFile != null) {
-            videoURL = processStore(uploadedFile, "videos/");
+            videoURL = FileManager.getInstance().processStore(uploadedFile, "videos/");
         }
 
         tmpVideo.setUrl(videoURL);
@@ -443,7 +430,7 @@ public class ItemInsertMB implements Serializable {
                     des = des.substring(0, des.lastIndexOf("/"));
                 }
                 String url = tmpVideo.getUrl();
-                deleteFile(des + "/web" + url);
+                FileManager.getInstance().deleteFile(des + "/web" + url);
 
                 videos.remove(i);
             }
@@ -512,71 +499,12 @@ public class ItemInsertMB implements Serializable {
 
         if (componentID.equals(ImageUploadComponentID)) {
             if (savedLocation != null) {
-                deleteFile(savedLocation);
+                FileManager.getInstance().deleteFile(savedLocation);
             }
-            imageurl = processStore(uploadedFile, "images/");
+            imageurl = FileManager.getInstance().processStore(uploadedFile, "images/");
         }
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload successfully!"));
-    }
-
-    /*
-     * The processStore Method
-     * Store the file
-     * 
-     * @param uploadedFile the uploadedFile to store
-     * @param subDir the subdirectory for file to store
-     * 
-     * @return the savedLocation of uploaded file
-     */
-    private String processStore(UploadedFile uploadedFile, String subDir) {
-        String contentType = uploadedFile.getContentType();
-        String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
-        savedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
-        String URL = savedLocation.substring(savedLocation.indexOf("/upload/"), savedLocation.length());
-
-        try {
-            storeFile(savedLocation, uploadedFile.getInputstream());
-        } catch (IOException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return URL;
-    }
-
-    /*
-     * The storeFile Method
-     * store file to Server
-     * 
-     * @param URL url of file
-     * @param in inputstream of file
-     */
-    private void storeFile(String saveLocation, InputStream in) {
-        OutputStream out;
-        try {
-            out = new FileOutputStream(new File(saveLocation));
-
-            int read;
-            byte[] bytes = new byte[4096];
-
-            while ((read = in.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-
-            in.close();
-            out.flush();
-            out.close();
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private boolean deleteFile(String imageSavedLocation) {
-        File file = new File(imageSavedLocation);
-        return file.delete();
     }
 
     private void clearAll() {
