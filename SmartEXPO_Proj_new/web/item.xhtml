@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <meta charset="utf-8" />
         <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
@@ -132,20 +132,19 @@
                                     This is item content;<br/>
                                 </p>
                                 <h1 class="content_title">audio</h1>
-                                <c:forEach items="#{itemController.audioURLs}" var="audioURL">
+                                <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
                                     <audio controls="controls"
                                            src="#{facesContext.externalContext.requestContextPath}#{audioURL}">
                                         Your browser does not support the audio tag.
                                     </audio>
-                                </c:forEach>
+                                </ui:repeat>
                                 <h1 class="content_title">video</h1>
-                                <c:forEach items="#{itemController.videoURLs}" var="videoURL">
+                                <ui:repeat value="#{itemController.videoURLs}" var="videoURL">
                                     <video width="320" height="240" controls="controls"
                                            src="#{facesContext.externalContext.requestContextPath}#{videoURL}">
                                         Your browser does not support the video tag.
                                     </video>
-                                </c:forEach>
-
+                                </ui:repeat>
                                 <h1 class="content_title">See Also</h1>
                                 <p>This is the content of see also</p>
                             </div>
