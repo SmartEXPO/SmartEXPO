@@ -20,7 +20,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -54,6 +53,9 @@ public class SignUpManagedBean implements Serializable {
     private String confirmPassword;
     private Boolean[] permissions;
     boolean isVerify;
+    private String usernameIcon;
+    private String passwordIcon;
+    private String confirmPasswordIcon;
     private static String UsernameComponentID = "username";
     private static String PasswordComponentID = "password";
     private static String ConfirmPasswordComponentID = "confirm_password";
@@ -124,6 +126,30 @@ public class SignUpManagedBean implements Serializable {
      */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getUsernameIcon() {
+        return usernameIcon;
+    }
+
+    public void setUsernameIcon(String usernameIcon) {
+        this.usernameIcon = usernameIcon;
+    }
+
+    public String getPasswordIcon() {
+        return passwordIcon;
+    }
+
+    public void setPasswordIcon(String passwordIcon) {
+        this.passwordIcon = passwordIcon;
+    }
+
+    public String getConfirmPasswordIcon() {
+        return confirmPasswordIcon;
+    }
+
+    public void setConfirmPasswordIcon(String confirmPasswordIcon) {
+        this.confirmPasswordIcon = confirmPasswordIcon;
     }
 
     public void verify(ActionEvent event) {
@@ -219,9 +245,25 @@ public class SignUpManagedBean implements Serializable {
         }
     }
 
-    public void onInputValue() {
-        if (isUsernameLegal(username)) {
-            Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.WARNING, "username = {0} leagal", username);
+    public void onInputValue(String componentID) {
+        if (componentID.equals(UsernameComponentID)) {
+            if (isUsernameLegal(username)) {
+                usernameIcon = "√";
+            } else {
+                usernameIcon = "×";
+            }
+        } else if (componentID.equals(PasswordComponentID)) {
+            if (password.length() >= 3 && password.length() <= 16) {
+                passwordIcon = "√";
+            } else {
+                passwordIcon = "×";
+            }
+        } else if (componentID.equals(ConfirmPasswordComponentID)) {
+            if (password.equals(confirmPassword)) {
+                confirmPasswordIcon = "√";
+            } else {
+                confirmPasswordIcon = "×";
+            }
         }
     }
 
@@ -229,7 +271,7 @@ public class SignUpManagedBean implements Serializable {
         if (null == user || "".equals(user)) {
             return false;
         }
-        Pattern p = Pattern.compile("^[a-zA-Z_]{3,16}$");
+        Pattern p = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]{3,16}$");
         Matcher matcher = p.matcher(user);
         return matcher.matches();
     }
