@@ -204,6 +204,9 @@ function finish(e) {
     $("#users_comment").scrollTop($("#all_comments").height() - 340);
     $("#users_comment").perfectScrollbar('update');
 
+    $(".inbox.username").attr("placeholder", "Username");
+    $(".inbox.password").attr("placeholder", "Password");
+
     console.log(e);
 
     $('.popup_login').magnificPopup({
@@ -217,7 +220,9 @@ function finish(e) {
         removalDelay: 300,
         mainClass: 'my-mfp-slide-bottom'
     });
+}
 
+function vanish() {
     $.magnificPopup.close();
 }
 

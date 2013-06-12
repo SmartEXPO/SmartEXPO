@@ -11,6 +11,8 @@ import com.smartexpo.models.Manager;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -18,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -51,6 +54,9 @@ public class SignUpManagedBean implements Serializable {
     private String confirmPassword;
     private Boolean[] permissions;
     boolean isVerify;
+    private static String UsernameComponentID = "username";
+    private static String PasswordComponentID = "password";
+    private static String ConfirmPasswordComponentID = "confirm_password";
 
     /**
      * Creates a new instance of SignUpManagedBean
@@ -211,6 +217,20 @@ public class SignUpManagedBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    public void onInputValue() {
+        if (isUsernameLegal(username)) {
+            Logger.getLogger(SignUpManagedBean.class.getName()).log(Level.WARNING, "username = {0} leagal", username);
+        }
+    }
+
+    private boolean isUsernameLegal(String user) {
+        if (null == user || "".equals(user)) {
+            return false;
+        }
+        Pattern p = Pattern.compile("^[a-zA-Z_]{3,16}$");
+        Matcher matcher = p.matcher(user);
+        return matcher.matches();
     }
 }

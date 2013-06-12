@@ -149,7 +149,7 @@ public class LoginManagedBean implements Serializable {
             session.setAttribute("user", username);
 
             RequestContext.getCurrentInstance()
-                    .execute("vanishLogin();void(0);"); // Close login pannel
+                    .execute("vanish();void(0);"); // Close login pannel
         } else {
             RequestContext.getCurrentInstance()
                     .execute(("alert('Username or password wrong')"));
@@ -177,6 +177,7 @@ public class LoginManagedBean implements Serializable {
         for (int i = 1; i <= 5; ++i) {
             permissions[i] = false;
         }
+        username = password = null;
         setStatus(false);
 
         RequestContext.getCurrentInstance()
@@ -188,8 +189,6 @@ public class LoginManagedBean implements Serializable {
 
         List<Manager> managers = gi.getManagerByName(username);
         if (managers == null) {
-            FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage("Username doesn't exit."));
         } else {
             Manager manager = managers.get(0);
             if (manager.getPassword().equals(password)) {
@@ -200,9 +199,6 @@ public class LoginManagedBean implements Serializable {
                 permissions[5] = manager.isPermission5();
 
                 result = true;
-            } else {
-                FacesContext.getCurrentInstance()
-                        .addMessage(null, new FacesMessage("Password doesn't match."));
             }
         }
         return result;

@@ -10,41 +10,53 @@
         <ui:define name="content">
             <h:form>
                 <p:growl id="msg" showDetail="true" />
-                <h:panelGrid columns="2" style="font-size: 200%;">
+                <h:panelGrid columns="3" style="font-size: 200%;">
                     <h:outputLabel for="username" value="Username:" />
                     <p:inputText id="username" required="true"
-                                 value="#{signUpManagedBean.username}" />
+                                 value="#{signUpManagedBean.username}">
+                        <p:ajax listener="#{signUpManagedBean.onInputValue}" />
+                    </p:inputText>
+                    <p:message for="username" />
 
                     <h:outputLabel for="password" value="Password:" />
                     <p:password id="password" required="true"
-                                value="#{signUpManagedBean.password}" />
+                                value="#{signUpManagedBean.password}" /> 
+                    <p:message for="password" />
 
                     <h:outputLabel for="confirm_password" value="Confirm Password:" />
                     <p:password id="confirm_password" required="true"
-                                value="#{signUpManagedBean.confirmPassword}" />
+                                value="#{signUpManagedBean.confirmPassword}"
+                                valueChangeListener="#{signUpManagedBean.onInputValue}" />
+                    <p:message for="confirm_password" />
 
+                    <p:separator />
                     <p:separator />
                     <p:separator />
 
                     <h:outputLabel for="connoisseur" value="Connoisseur" />
                     <p:selectBooleanCheckbox id="connoisseur"
                                              value="#{signUpManagedBean.permissions[0]}" />
+                    <h:inputHidden />
 
                     <h:outputLabel for="alter_item" value="Alter Item" />
                     <p:selectBooleanCheckbox id="alter_item"
                                              value="#{signUpManagedBean.permissions[1]}" />
+                    <h:inputHidden />
 
                     <h:outputLabel for="add_del_item" value="Add/Del Item" />
                     <p:selectBooleanCheckbox id="add_del_item"
                                              value="#{signUpManagedBean.permissions[2]}" />
+                    <h:inputHidden />
 
                     <h:outputLabel for="add_del_manager" value="Add/Del Manager" />
                     <p:selectBooleanCheckbox id="add_del_manager"
                                              value="#{signUpManagedBean.permissions[3]}" />
+                    <h:inputHidden />
 
                     <h:outputLabel for="alter_manager" value="Alter Manager" />
                     <p:selectBooleanCheckbox id="alter_manager"
                                              value="#{signUpManagedBean.permissions[4]}" />
+                    <h:inputHidden />
                 </h:panelGrid>
                 <p:commandButton actionListener="#{signUpManagedBean.verify}"
                                  value="Sign Up" ajax="true" update="@form"/>
