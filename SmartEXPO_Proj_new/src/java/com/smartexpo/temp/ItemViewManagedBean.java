@@ -16,7 +16,6 @@ import com.smartexpo.jpgcontrollers.ItemVideoJpaController;
 import com.smartexpo.jpgcontrollers.exceptions.IllegalOrphanException;
 import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
-import com.smartexpo.managedbean.ItemInsertMB;
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
 import com.smartexpo.models.DisplayColumn;
@@ -26,12 +25,7 @@ import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.smartexpo.util.FileManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,7 +68,6 @@ public class ItemViewManagedBean implements Serializable {
     private String authorName;
     private Date authorBirthDate;
     private Date authorDeathDate;
-    private String savedLocation;
     private String authorIntro;
     private Audio selectedAudio;
     private String audioTitle;
@@ -87,8 +80,6 @@ public class ItemViewManagedBean implements Serializable {
     private List<Audio> audios;
     private List<Video> videos;
     private UploadedFile uploadedFile;
-    private static String Destination;
-    private static String SubPath = "/web/upload/";
 
     /**
      * Creates a new instance of ItemViewManagedBean
@@ -101,8 +92,6 @@ public class ItemViewManagedBean implements Serializable {
     @PostConstruct
     public void postConstruct() {
         gi = new GetInfo(emf, utx);
-
-        initDestination();
     }
 
     public String getAuthorName() {
@@ -308,7 +297,9 @@ public class ItemViewManagedBean implements Serializable {
         audio.setDescription(audioDes);
 
         if (uploadedFile != null) {
-            audioURL = processStore(uploadedFile, "audios/");
+            String[] audioLocPair =
+                    FileManager.getInstance().processStore(uploadedFile, "audios/");
+            audioURL = audioLocPair[0];
         }
 
         audio.setUrl(audioURL);
@@ -330,7 +321,7 @@ public class ItemViewManagedBean implements Serializable {
                     des = des.substring(0, des.lastIndexOf("/"));
                 }
                 String url = tmpAudio.getUrl();
-                deleteFile(des + "/web" + url);
+                FileManager.getInstance().deleteFile(des + "/web" + url);
 
                 audios.remove(i);
             }
@@ -347,7 +338,9 @@ public class ItemViewManagedBean implements Serializable {
         video.setDescription(videoDes);
 
         if (uploadedFile != null) {
-            videoURL = processStore(uploadedFile, "videos/");
+            String[] videoLocPair =
+                    FileManager.getInstance().processStore(uploadedFile, "videos/");
+            videoURL = videoLocPair[0];
         }
 
         video.setUrl(videoURL);
@@ -365,7 +358,7 @@ public class ItemViewManagedBean implements Serializable {
                     des = des.substring(0, des.lastIndexOf("/"));
                 }
                 String url = tmpVideo.getUrl();
-                deleteFile(des + "/web" + url);
+                FileManager.getInstance().deleteFile(des + "/web" + url);
 
                 videos.remove(i);
             }
@@ -507,59 +500,5 @@ public class ItemViewManagedBean implements Serializable {
     public void upload(FileUploadEvent event) {
         uploadedFile = event.getFile();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload successfully!"));
-    }
-
-    private String processStore(UploadedFile uploadedFile, String subDir) {
-        String contentType = uploadedFile.getContentType();
-        String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
-        savedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
-        String URL = savedLocation.substring(savedLocation.indexOf("/upload/"), savedLocation.length());
-
-        try {
-            storeFile(savedLocation, uploadedFile.getInputstream());
-        } catch (IOException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return URL;
-    }
-
-    private void storeFile(String saveLocation, InputStream in) {
-        OutputStream out;
-        try {
-            out = new FileOutputStream(new File(saveLocation));
-
-            int read;
-            byte[] bytes = new byte[4096];
-
-            while ((read = in.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-
-            in.close();
-            out.flush();
-            out.close();
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private boolean deleteFile(String imageSavedLocation) {
-        File file = new File(imageSavedLocation);
-        return file.delete();
-    }
-
-    private void initDestination() {
-        String realPath = ((ServletContext) FacesContext.getCurrentInstance()
-                .getExternalContext().getContext()).getRealPath("/");
-
-        for (int i = 0; i < 3; ++i) {
-            realPath = realPath.substring(0, realPath.lastIndexOf("/"));
-        }
-        realPath = realPath + SubPath;
-        Destination = realPath;
     }
 }

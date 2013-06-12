@@ -13,12 +13,8 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.smartexpo.temp.ItemViewManagedBean;
+import com.smartexpo.util.FileManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -61,7 +58,7 @@ public class ItemInsertMB implements Serializable {
     EntityManagerFactory emf;
     @Resource
     private UserTransaction utx;
-    private GetInfo gi;
+    private GetInfo gi = null;
     // ItemInsertMB Fields
     private static String ImageUploadComponentID = "img_upload";
     private String itemName;
@@ -82,15 +79,13 @@ public class ItemInsertMB implements Serializable {
     private Date authorDeath;
     private String authorIntro;
     private String imageurl;
-    private String savedLocation;
     private String audioTitle;
     private String audioURL;
     private String audioDes;
     private String videoTitle;
     private String videoURL;
     private String videoDes;
-    private static String Destination;
-    private static String SubPath = "/web/upload/";
+    private String savedLocation;
     private UploadedFile uploadedFile;
 
     /**
@@ -104,14 +99,7 @@ public class ItemInsertMB implements Serializable {
 
     @PostConstruct
     public void postContrust() {
-        String realPath = ((ServletContext) FacesContext.getCurrentInstance()
-                .getExternalContext().getContext()).getRealPath("/");
-
-        for (int i = 0; i < 3; ++i) {
-            realPath = realPath.substring(0, realPath.lastIndexOf("/"));
-        }
-        realPath = realPath + SubPath;
-        Destination = realPath;
+        gi = new GetInfo(emf, utx);
     }
 
     public String getItemName() {
@@ -346,6 +334,7 @@ public class ItemInsertMB implements Serializable {
         }
 
         clearAll();
+        reloadItem();
         RequestContext.getCurrentInstance()
                 .execute(("alert('Insert Successfully!');location.reload(true)"));
     }
@@ -393,7 +382,10 @@ public class ItemInsertMB implements Serializable {
         tmpAudio.setDescription(audioDes);
 
         if (uploadedFile != null) {
-            audioURL = processStore(uploadedFile, "audios/");
+            String[] audioLocPair =
+                    FileManager.getInstance().processStore(uploadedFile, "audios/");
+            audioURL = audioLocPair[0];
+            savedLocation = audioLocPair[1];
         }
 
         tmpAudio.setUrl(audioURL);
@@ -411,7 +403,7 @@ public class ItemInsertMB implements Serializable {
                     des = des.substring(0, des.lastIndexOf("/"));
                 }
                 String url = tmpAudio.getUrl();
-                deleteFile(des + "/web" + url);
+                FileManager.getInstance().deleteFile(des + "/web" + url);
 
                 audios.remove(i);
             }
@@ -425,7 +417,10 @@ public class ItemInsertMB implements Serializable {
         tmpVideo.setDescription(videoDes);
 
         if (uploadedFile != null) {
-            videoURL = processStore(uploadedFile, "videos/");
+            String[] videoLocPair =
+                    FileManager.getInstance().processStore(uploadedFile, "videos/");
+            videoURL = videoLocPair[0];
+            savedLocation = videoLocPair[1];
         }
 
         tmpVideo.setUrl(videoURL);
@@ -443,7 +438,7 @@ public class ItemInsertMB implements Serializable {
                     des = des.substring(0, des.lastIndexOf("/"));
                 }
                 String url = tmpVideo.getUrl();
-                deleteFile(des + "/web" + url);
+                FileManager.getInstance().deleteFile(des + "/web" + url);
 
                 videos.remove(i);
             }
@@ -512,71 +507,15 @@ public class ItemInsertMB implements Serializable {
 
         if (componentID.equals(ImageUploadComponentID)) {
             if (savedLocation != null) {
-                deleteFile(savedLocation);
+                FileManager.getInstance().deleteFile(savedLocation);
             }
-            imageurl = processStore(uploadedFile, "images/");
+            String[] imageLocPair =
+                    FileManager.getInstance().processStore(uploadedFile, "images/");
+            imageurl = imageLocPair[0];
+            savedLocation = imageLocPair[1];
         }
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload successfully!"));
-    }
-
-    /*
-     * The processStore Method
-     * Store the file
-     * 
-     * @param uploadedFile the uploadedFile to store
-     * @param subDir the subdirectory for file to store
-     * 
-     * @return the savedLocation of uploaded file
-     */
-    private String processStore(UploadedFile uploadedFile, String subDir) {
-        String contentType = uploadedFile.getContentType();
-        String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
-        savedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
-        String URL = savedLocation.substring(savedLocation.indexOf("/upload/"), savedLocation.length());
-
-        try {
-            storeFile(savedLocation, uploadedFile.getInputstream());
-        } catch (IOException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return URL;
-    }
-
-    /*
-     * The storeFile Method
-     * store file to Server
-     * 
-     * @param URL url of file
-     * @param in inputstream of file
-     */
-    private void storeFile(String saveLocation, InputStream in) {
-        OutputStream out;
-        try {
-            out = new FileOutputStream(new File(saveLocation));
-
-            int read;
-            byte[] bytes = new byte[4096];
-
-            while ((read = in.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-
-            in.close();
-            out.flush();
-            out.close();
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private boolean deleteFile(String imageSavedLocation) {
-        File file = new File(imageSavedLocation);
-        return file.delete();
     }
 
     private void clearAll() {
@@ -589,5 +528,15 @@ public class ItemInsertMB implements Serializable {
         authors = new ArrayList<Author>();
         audios = new ArrayList<Audio>();
         videos = new ArrayList<Video>();
+    }
+
+    private void reloadItem() {
+        // 获得当前ItemViewManagedBean并更新
+        FacesContext context = FacesContext.getCurrentInstance();
+        ELContext eLContext = context.getELContext();
+        ItemViewManagedBean itemViewManagedBean = (ItemViewManagedBean) context.getApplication()
+                .getELResolver().getValue(eLContext, null, "itemViewManagedBean");
+
+        itemViewManagedBean.setItems(gi.getAllItems());
     }
 }
