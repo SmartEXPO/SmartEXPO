@@ -82,6 +82,7 @@ public class ItemViewManagedBean implements Serializable {
     private List<Audio> audios;
     private List<Video> videos;
     private UploadedFile uploadedFile;
+    private static final Logger LOG = Logger.getLogger(ItemViewManagedBean.class.getName());
 
     /**
      * Creates a new instance of ItemViewManagedBean
@@ -492,36 +493,91 @@ public class ItemViewManagedBean implements Serializable {
 
     // @stormmax TODO 存储修改过后的Audio和Video部分，分别在audios和videos两个list中
     public void avEditFinish() {
+        GetInfo gi=new GetInfo(emf, utx);
+        List<Audio> as=gi.getAudioByItemID(selectedItem.getItemId());
+        List<Video> vs=gi.getVideoByItemID(selectedItem.getItemId());
         AudioJpaController ajc=new AudioJpaController(utx, emf);
-        for(int i=0;i<audios.size();i++){
-            try {
-                ajc.edit(audios.get(i));
-            } catch (IllegalOrphanException ex) {
-                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NonexistentEntityException ex) {
-                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        VideoJpaController vjc=new VideoJpaController(utx, emf);
+        
+        for(int i=0;i<as.size();i++){
+            Audio a=as.get(i);
+            List<ItemAudio> ias=gi.getItemAudiosByItemID(selectedItem.getItemId());
+            ItemAudioJpaController iajc=new ItemAudioJpaController(utx, emf);
+            if(audios.contains(a)){
+                LOG.log(Level.WARNING,"audio contain");
+                try {
+                    ajc.edit(a);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                LOG.log(Level.WARNING,"audio contain");
+                
+                try {
+                    for(int j=0;j<ias.size();j++){
+                        if(ias.get(j).getAudioId().getAudioId()==a.getAudioId()){
+                            iajc.destroy(ias.get(j).getItemAudioId());
+                        }
+                    }
+                    ajc.destroy(a.getAudioId());
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         
-        VideoJpaController vjc=new VideoJpaController(utx, emf);
-        for(int i=0;i<videos.size();i++){
-            try {
-                vjc.edit(videos.get(i));
-            } catch (IllegalOrphanException ex) {
-                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NonexistentEntityException ex) {
-                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        for(int i=0;i<vs.size();i++){
+            Video v=vs.get(i);
+            List<ItemVideo> ivs=gi.getItemVideosByItemID(selectedItem.getItemId());
+            ItemVideoJpaController ivjc=new ItemVideoJpaController(utx, emf);
+            if(videos.contains(v)){
+                LOG.log(Level.WARNING,"video contain");
+                try {
+                    vjc.edit(v);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                LOG.log(Level.WARNING,"video contain");
+                try {
+                    for(int j=0;j<ivs.size();j++){
+                        if(ivs.get(j).getVideoId().getVideoId()==v.getVideoId()){
+                            ivjc.destroy(ivs.get(j).getItemVideoId());
+                        }
+                    }
+                    vjc.destroy(v.getVideoId());
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            
         }
+        
+        
+        
         
         RequestContext.getCurrentInstance()
                 .execute(("alert('Modify successfully!');location.reload(true)"));
