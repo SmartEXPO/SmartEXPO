@@ -135,6 +135,7 @@ footer {
 	padding:0 0 5px;
 	font-size:17px;
     text-decoration: none;
+    text-transform: capitalize;
 }
 .grid .meta{
 	text-align:right;
