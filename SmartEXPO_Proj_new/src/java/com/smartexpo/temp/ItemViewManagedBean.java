@@ -80,7 +80,6 @@ public class ItemViewManagedBean implements Serializable {
     private List<Audio> audios;
     private List<Video> videos;
     private UploadedFile uploadedFile;
-    private String savedLocation;
 
     /**
      * Creates a new instance of ItemViewManagedBean
@@ -301,7 +300,6 @@ public class ItemViewManagedBean implements Serializable {
             String[] audioLocPair =
                     FileManager.getInstance().processStore(uploadedFile, "audios/");
             audioURL = audioLocPair[0];
-            savedLocation = audioLocPair[1];
         }
 
         audio.setUrl(audioURL);
@@ -343,7 +341,6 @@ public class ItemViewManagedBean implements Serializable {
             String[] videoLocPair =
                     FileManager.getInstance().processStore(uploadedFile, "videos/");
             videoURL = videoLocPair[0];
-            savedLocation = videoLocPair[1];
         }
 
         video.setUrl(videoURL);

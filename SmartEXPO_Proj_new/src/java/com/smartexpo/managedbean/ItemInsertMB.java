@@ -13,6 +13,7 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
+import com.smartexpo.temp.ItemViewManagedBean;
 import com.smartexpo.util.FileManager;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -56,7 +58,7 @@ public class ItemInsertMB implements Serializable {
     EntityManagerFactory emf;
     @Resource
     private UserTransaction utx;
-    private GetInfo gi;
+    private GetInfo gi = null;
     // ItemInsertMB Fields
     private static String ImageUploadComponentID = "img_upload";
     private String itemName;
@@ -77,13 +79,13 @@ public class ItemInsertMB implements Serializable {
     private Date authorDeath;
     private String authorIntro;
     private String imageurl;
-    private String savedLocation;
     private String audioTitle;
     private String audioURL;
     private String audioDes;
     private String videoTitle;
     private String videoURL;
     private String videoDes;
+    private String savedLocation;
     private UploadedFile uploadedFile;
 
     /**
@@ -97,8 +99,7 @@ public class ItemInsertMB implements Serializable {
 
     @PostConstruct
     public void postContrust() {
-        String realPath = ((ServletContext) FacesContext.getCurrentInstance()
-                .getExternalContext().getContext()).getRealPath("/");
+        gi = new GetInfo(emf, utx);
     }
 
     public String getItemName() {
@@ -333,6 +334,7 @@ public class ItemInsertMB implements Serializable {
         }
 
         clearAll();
+        reloadItem();
         RequestContext.getCurrentInstance()
                 .execute(("alert('Insert Successfully!');location.reload(true)"));
     }
@@ -526,5 +528,15 @@ public class ItemInsertMB implements Serializable {
         authors = new ArrayList<Author>();
         audios = new ArrayList<Audio>();
         videos = new ArrayList<Video>();
+    }
+
+    private void reloadItem() {
+        // 获得当前ItemViewManagedBean并更新
+        FacesContext context = FacesContext.getCurrentInstance();
+        ELContext eLContext = context.getELContext();
+        ItemViewManagedBean itemViewManagedBean = (ItemViewManagedBean) context.getApplication()
+                .getELResolver().getValue(eLContext, null, "itemViewManagedBean");
+
+        itemViewManagedBean.setItems(gi.getAllItems());
     }
 }

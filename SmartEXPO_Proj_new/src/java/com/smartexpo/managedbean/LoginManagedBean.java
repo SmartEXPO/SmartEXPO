@@ -178,9 +178,9 @@ public class LoginManagedBean implements Serializable {
             permissions[i] = false;
         }
         setStatus(false);
-        
+
         RequestContext.getCurrentInstance()
-                    .execute(("alert('Log out successfully.')"));
+                .execute(("alert('Log out successfully.')"));
     }
 
     private boolean isPass() {
