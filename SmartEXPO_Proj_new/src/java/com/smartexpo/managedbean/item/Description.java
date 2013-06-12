@@ -37,7 +37,7 @@ public class Description implements Serializable {
     private com.smartexpo.models.Description descriptions;
     private int id;
     private String title;
-    private String content = "This is item Content.";
+    private String content;
 
     /**
      * Creates a new instance of Description
@@ -55,6 +55,8 @@ public class Description implements Serializable {
 
         int itemID = Integer.parseInt((String) request.getAttribute("id"));
         descriptions = gi.getDescriptionByItemID(itemID).get(0);
+        title = descriptions.getTitle();
+        content = descriptions.getContent();
     }
 
     /**
