@@ -40,7 +40,18 @@ public class FileManager implements Serializable {
         return fileManager;
     }
 
-    public String processStore(UploadedFile uploadedFile, String subDir) {
+    /*
+     * The processStore Method
+     * Store the file
+     * 
+     * @param uploadedFile the uploadedFile to store
+     * @param subDir the subdirectory for file to store
+     * 
+     * @return the pair contain URL and savedLocation of uploaded file
+     */
+    public String[] processStore(UploadedFile uploadedFile, String subDir) {
+        String[] result = new String[2];
+
         String contentType = uploadedFile.getContentType();
         String ext = contentType.substring(contentType.lastIndexOf("/") + 1, contentType.length());
         if (contentType.equals("audio/x-wav")) {
@@ -50,13 +61,16 @@ public class FileManager implements Serializable {
         savedLocation = Destination + subDir + uploadedFile.hashCode() + "." + ext;
         String URL = savedLocation.substring(savedLocation.indexOf("/upload/"), savedLocation.length());
 
+        result[0] = URL;
+        result[1] = savedLocation;
+
         try {
             storeFile(savedLocation, uploadedFile.getInputstream());
         } catch (IOException ex) {
             Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return URL;
+        return result;
     }
 
     private void storeFile(String saveLocation, InputStream in) {

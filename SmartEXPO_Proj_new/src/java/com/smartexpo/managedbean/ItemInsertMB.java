@@ -380,7 +380,10 @@ public class ItemInsertMB implements Serializable {
         tmpAudio.setDescription(audioDes);
 
         if (uploadedFile != null) {
-            audioURL = FileManager.getInstance().processStore(uploadedFile, "audios/");
+            String[] audioLocPair =
+                    FileManager.getInstance().processStore(uploadedFile, "audios/");
+            audioURL = audioLocPair[0];
+            savedLocation = audioLocPair[1];
         }
 
         tmpAudio.setUrl(audioURL);
@@ -412,7 +415,10 @@ public class ItemInsertMB implements Serializable {
         tmpVideo.setDescription(videoDes);
 
         if (uploadedFile != null) {
-            videoURL = FileManager.getInstance().processStore(uploadedFile, "videos/");
+            String[] videoLocPair =
+                    FileManager.getInstance().processStore(uploadedFile, "videos/");
+            videoURL = videoLocPair[0];
+            savedLocation = videoLocPair[1];
         }
 
         tmpVideo.setUrl(videoURL);
@@ -501,7 +507,10 @@ public class ItemInsertMB implements Serializable {
             if (savedLocation != null) {
                 FileManager.getInstance().deleteFile(savedLocation);
             }
-            imageurl = FileManager.getInstance().processStore(uploadedFile, "images/");
+            String[] imageLocPair =
+                    FileManager.getInstance().processStore(uploadedFile, "images/");
+            imageurl = imageLocPair[0];
+            savedLocation = imageLocPair[1];
         }
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload successfully!"));
