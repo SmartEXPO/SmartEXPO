@@ -153,10 +153,17 @@ a.navi:hover {
     text-overflow: ellipsis;
 }
 
-h1.detail_content, p.detail_content {
+p.detail_content {
     position: relative;
     right: 50px; /*default*/
     opacity: 0;
+}
+
+h1.detail_content {
+    position: relative;
+    right: 50px; /*default*/
+    opacity: 0;
+    text-transform: capitalize;
 }
 
 /*End of content part*/
