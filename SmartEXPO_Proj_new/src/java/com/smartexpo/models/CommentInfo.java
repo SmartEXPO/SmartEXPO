@@ -4,13 +4,17 @@
  */
 package com.smartexpo.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  *
  * @author ben
  */
-public class CommentInfo {
+public class CommentInfo implements ServerSentMessage{
+
+    
+        private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm z");
 
     private int id;
     private String username;
@@ -74,5 +78,15 @@ public class CommentInfo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String parseJSON() {
+        String json = "{\"username\":\""+getUsername()
+                +"\", \"time\":\"" + sdf.format(getTime()) 
+                + "\", \"content\":\""+getContent()
+                +"\", \"num\":" + getNum()
+                + "}";
+        return json;
     }
 }

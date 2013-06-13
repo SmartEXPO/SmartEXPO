@@ -6,6 +6,7 @@ package com.smartexpo.servlets;
 
 import com.smartexpo.managedbean.OverallInfo;
 import com.smartexpo.models.CommentInfo;
+import com.smartexpo.models.ServerSentMessage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Used to send server sent messages.
  * @author ben
  */
 @WebServlet(name = "InstantComment", urlPatterns = {"/InstantComment"})
@@ -26,7 +27,6 @@ public class InstantComment extends HttpServlet {
 
 //    @ManagedProperty(value = "#{overallInfo}")
     private OverallInfo overallInfo;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm z");
 
     /**
      * Processes requests for both HTTP
@@ -51,11 +51,11 @@ public class InstantComment extends HttpServlet {
         
         String id = null;
         String data = null;
-        CommentInfo[] infos = overallInfo.getComment();
+        ServerSentMessage[] infos = overallInfo.getMessage();
 //        System.out.println(infos.length + "$$");
         if (infos.length == 1) {
             id = Integer.toString(infos[0].getId());
-            data = parseJSON(infos[0]);
+            data = infos[0].parseJSON();
 //            System.out.println("@@@@@  " + data + "  " + id);
         } else if (infos.length > 1) {
             id = "#";
@@ -66,26 +66,26 @@ public class InstantComment extends HttpServlet {
         }
         out.println("id: " + id);
         out.println("data: " + data);
-        out.println("retry: 500");
+        out.println("retry: " + overallInfo.getThreshold());
         out.println();
         out.flush();
         out.close();
 
     }
-
-    private String parseJSON(CommentInfo info) {
-        String json = "{\"username\":\""+info.getUsername()
-                +"\", \"time\":\"" + sdf.format(info.getTime()) 
-                + "\", \"content\":\""+info.getContent()
-                +"\", \"num\":" + info.getNum()
-                + "}";
-        return json;
-    }
+//
+//    private String parseJSON(CommentInfo info) {
+//        String json = "{\"username\":\""+info.getUsername()
+//                +"\", \"time\":\"" + sdf.format(info.getTime()) 
+//                + "\", \"content\":\""+info.getContent()
+//                +"\", \"num\":" + info.getNum()
+//                + "}";
+//        return json;
+//    }
     
-    private String getInfo(CommentInfo[] info) {
+    private String getInfo(ServerSentMessage[] info) {
         String json = "[";
         for (int i = 0; i < info.length; i++) {
-            json += parseJSON(info[i]);
+            json += info[i].parseJSON();
             if (i != info.length - 1)
                 json += ",";
         }

@@ -547,7 +547,7 @@ public class ItemController implements Serializable {
             newComment.setTime(new Date());
 
             //itemID 为什么是0
-            overallInfo.updateComment(new CommentInfo(itemBean.getItem().getItemId(), commentuser, new Date(), commentcontent));
+            overallInfo.updateMessage(new CommentInfo(itemBean.getItem().getItemId(), commentuser, new Date(), commentcontent));
             LOG.log(Level.WARNING, "ItemController overall itemId: {0}", itemID);
 
             ItemComment newIC = new ItemComment();
