@@ -157,8 +157,12 @@
         </div>
 
         <div id="function">
-            <h:form id="search_form">
-                <div id="search" class="func_button">
+            <div id="search" class="func_button">
+                <h:graphicImage id="search_img" library="#{info.lib}"
+                                name="images/item_search_button.png" />
+
+                <h:form id="search_form">
+
                     <h:dataTable  id="search_result_data_table"
                                   value="#{searchManagedBean.searchedList}"
                                   var="searchedItem">
@@ -170,15 +174,14 @@
                         </div>
                     </h:dataTable>
 
-                    <h:graphicImage id="search_img" library="#{info.lib}"
-                                    name="images/item_search_button.png" />
                     <h:inputText id="search_box" class="func_input_box search"
                                  value="#{searchManagedBean.searchKey}">
                         <f:ajax event="keyup" listener="#{searchManagedBean.searchListener}"
                                 execute="search_box" render="search_result_data_table"/>
                     </h:inputText>
-                </div>
-            </h:form>
+                </h:form>
+
+            </div>
 
             <div id="comment" class="func_button">
                 <div id="users_comment">

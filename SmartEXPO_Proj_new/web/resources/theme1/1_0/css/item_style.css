@@ -245,7 +245,7 @@ footer {
     padding-right: 2px;
 }
 
-#function #search_box {
+.func_input_box.search {
     position: absolute;
     bottom: 7px;
     right: 10px;

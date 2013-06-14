@@ -43,10 +43,10 @@ $(document).ready(function() {
             "width": "40px",
             "height": "40px",
         }, 500);
-        $("#search_box").animate({
+        $(".func_input_box.search").animate({
             width: '0px',
         }, 500, function() {
-            $("#search_box").css('display', 'none');
+            $(".func_input_box.search").css('display', 'none');
         });
         $("#search_result").css('display', 'none');
         $("#search").data("display", "off");
@@ -107,17 +107,17 @@ $(document).ready(function() {
                 "width": "250px",
             }, 500);
             $("#search").data("display", "on");
-            $("#search_box").css('display', 'inline');
-            $("#search_box").animate({
+            $(".func_input_box.search").css('display', 'inline');
+            $(".func_input_box.search").animate({
                 width: '200px',
             }, 500);
-            $("#search_box").val("");
+            $(".func_input_box.search").val("");
         } else {
             hideSearchPane();
         }
     });
 
-    $("#search_box").focus(function() {
+    $(".func_input_box.search").focus(function() {
         $(this).val("");
         $("#search").animate({
             height: '300px',
