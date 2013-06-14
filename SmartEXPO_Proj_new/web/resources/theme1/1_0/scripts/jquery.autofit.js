@@ -2,62 +2,53 @@
  * jQuery plugin - auto fit the image to the frame
  * MIT licensed
  * Author: Ben
- * 
+ *
  */
-( function($) {
+(function($) {
 
-        var setting = {
-            height : $(this).parent().height(),
-            width : $(this).parent().width(),
-            cut : true,
-        };
+    var setting = {
+        height: $(this).parent().height(),
+        width: $(this).parent().width(),
+        cut: true,
+    };
 
-        $.fn.autofit = function(options) {
+    $.fn.autofit = function(options) {
+        settings = $.extend(setting, options);
+        $(this).load(_autofit);
+    }
 
-            settings = $.extend(setting, options);
+    function _autofit() {
 
-            $(this).load(_autoFit);
-        }
-        
-        function _autoFit() {
-            var target = $(this);
-            var w = setting.width;
-            var h = setting.height;
-            console.log("pic h: " + target.height() + " w: " +target.width());
+        var height = $(this).height();
+        var width = $(this).width();
 
-            if (setting.cut && target.width() >= w && target.height() >= h) {
-                var offset_x = (target.width() - w) / 2;
-                var offset_y = (target.height() - h) / 2;
-                target.css({
-                    left : "-" + offset_x + "px",
-                    top : "-" + offset_y + "px"
-                });
-                return;
-            }
-
-            _fitFrame(w, h, target);
-        }
-
-        function _fitFrame(frame_width, frame_height, target) {
-            var height = target.height();
-            var width = target.width();
-            var th = frame_height;
-            var tw = width / height * th;
-            if (tw < frame_width) {
-                tw = frame_width;
-                th = height / width * tw;
-            }
-            var offset_x = (tw - frame_width) / 2;
-            var offset_y = (th - frame_height) / 2;
-            offset_x = (offset_x < 0) ? 0 : offset_x;
-            offset_y = (offset_y < 0) ? 0 : offset_y;
-
-            target.css({
-                left : "-" + offset_x + "px",
-                top : "-" + offset_y + "px",
-                height : th,
-                width : tw,
+        if (setting.cut && width >= setting.width && height >= setting.height) {
+            var offset_x = (width - setting.width) / 2;
+            var offset_y = (height - setting.height) / 2;
+            $(this).css({
+                left: "-" + offset_x + "px",
+                top: "-" + offset_y + "px"
             });
+            return;
         }
 
-    }(jQuery));
+        var th = setting.height;
+        var tw = width / height * th;
+        if (tw < setting.width) {
+            tw = setting.width;
+            th = height / width * tw;
+        }
+        var offset_x = (tw - setting.width) / 2;
+        var offset_y = (th - setting.height) / 2;
+        offset_x = (offset_x < 0) ? 0 : offset_x;
+        offset_y = (offset_y < 0) ? 0 : offset_y;
+
+        $(this).css({
+            left: "-" + offset_x + "px",
+            top: "-" + offset_y + "px",
+            height: th,
+            width: tw,
+        });
+    }
+
+}(jQuery));
