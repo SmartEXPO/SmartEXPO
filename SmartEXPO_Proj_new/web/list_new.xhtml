@@ -67,7 +67,7 @@
                                            value="Log Out"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
-                                <f:ajax execute="@form" onevent="finish"
+                                <f:ajax execute="@form" onevent="regLoginPanel"
                                         render="@form :login_form" />
                             </h:commandLink>
                         </h:form>

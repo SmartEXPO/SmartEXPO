@@ -191,7 +191,7 @@ $(document).ready(function() {
 //    $("#frame_image").load(function() {
 //        autoFit(480, 485, $("#frame_image"));
 //    });
-    $("#frame_image").autofit({height:485, width:480});
+    $("#frame_image").autofit({height: 485, width: 480});
 
 });
 
@@ -199,7 +199,6 @@ $(document).ready(function() {
 function finish(e) {
     if (isCommentBarDisplayed)
         $(".func_input_box.content").css({width: "235px"});
-    console.log($("#login_name").html());
     $(".func_input_box.name").attr("placeholder", "Username");
     $(".func_input_box.content").attr("placeholder", "Content");
     $("#comment_form .name").val(trim($("#login_name").html()));
@@ -208,26 +207,7 @@ function finish(e) {
     $("#users_comment").scrollTop($("#all_comments").height() - 340);
     $("#users_comment").perfectScrollbar('update');
 
-    $(".inbox.username").attr("placeholder", "Username");
-    $(".inbox.password").attr("placeholder", "Password");
-
-    console.log(e);
-
-    $('.popup_login').magnificPopup({
-        type: 'inline',
-        fixedContentPos: false,
-        fixedBgPos: true,
-//        overflowY: 'auto',
-        closeBtnInside: true,
-        preloader: false,
-        midClick: true,
-        removalDelay: 300,
-        mainClass: 'my-mfp-slide-bottom'
-    });
-}
-
-function vanish() {
-    $.magnificPopup.close();
+    regLoginPanel();
 }
 
 function trim(str) {
