@@ -38,5 +38,5 @@ Thanks all the contributors of those remarkable and impressive plugins.
 - Front End Engineer: [Codinfox](https://github.com/codinfox)
 - Service Logic: [Boy Lee](https://github.com/sxmx1111)
 
-## Lisence
+## License
 The project is GPL licensed maybe, lol.
