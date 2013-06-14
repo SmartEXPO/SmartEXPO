@@ -12,6 +12,7 @@ public class MD5 {
 
     /**
      * Convert a string to MD5 encrypted
+     * 用户输入密码的时候直接转换为md5保存到数据库，登陆的时候进行md5之间的比对
      * @param str String to be encrypted
      * @return MD5 corresponding
      */

@@ -26,6 +26,10 @@ $(document).ready(function() {
     display();
     setInterval(display, 10000);
 
+    $("#display_item").load(function() {
+        autoFit(480, 320, $("#display_item"));
+    });
+
 });
 
 var t = 0;
@@ -51,8 +55,8 @@ function display() {
         }, 500, function() {
             $("img#display_item").attr("src", dis.path);
             $("#display_item_id").attr("href", "item.xhtml?id=" + dis.id);
-            
-            autoFit(480, 320, $("#display_item"));
+
+            //autoFit(480, 320, $("#display_item"));
         });
         $("img#display_item").animate({
             'opacity': '1'

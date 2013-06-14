@@ -7,6 +7,8 @@ function autoFit(w, h, target) {
     console.log(w + " " + h);
     resetPic(target);
 
+    target.attr("style","");
+
     if (target.width() >= w && target.height() >= h) {
         var offset_x = (target.width() - w) / 2;
         var offset_y = (target.height() - h) / 2;
@@ -22,12 +24,7 @@ function autoFit(w, h, target) {
 }
 
 function resetPic(target) {
-    target.css({
-        height: "auto",
-        width: "auto",
-        top: 0,
-        left: 0
-    });
+    target.attr("style","");
 }
 
 function fitFrame(frame_width, frame_height, target) {

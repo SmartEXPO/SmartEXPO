@@ -188,9 +188,12 @@ $(document).ready(function() {
             $(".edit_description_div").attr("value", "Edit");
         }
     });
+    $("#frame_image").load(function() {
+        autoFit(480, 485, $("#frame_image"));
+    });
 
-    autoFit(480, 485, $("#frame_image"));
 });
+
 
 function finish(e) {
     if (isCommentBarDisplayed)
