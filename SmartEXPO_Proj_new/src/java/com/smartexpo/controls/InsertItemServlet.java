@@ -140,9 +140,9 @@ public class InsertItemServlet extends HttpServlet {
             // Manager And Permission Part
             Manager manager = new Manager();
             manager.setUsername("asdfasd");
-            
-           
-            
+
+
+
             manager.setPassword("owefnwnv");
 
             manager.setPermission1(true);
@@ -260,10 +260,10 @@ public class InsertItemServlet extends HttpServlet {
             }
 
 
-            List<Permission> permissions = gi.getPermissionByID(item.getItemId());
-            for (int i = 0; i < permissions.size(); i++) {
-                logger.log(Level.WARNING, permissions.get(i).getPermissionName());
-            }
+//            List<Permission> permissions = gi.getPermissionByID(item.getItemId());
+//            for (int i = 0; i < permissions.size(); i++) {
+//                logger.log(Level.WARNING, permissions.get(i).getPermissionName());
+//            }
 
             List<Comment> comments = gi.getCommentByItemID(item.getItemId());
             for (int i = 0; i < comments.size(); i++) {
@@ -306,11 +306,11 @@ public class InsertItemServlet extends HttpServlet {
             item.setHtml("asdfasdfsadf");
             ijc.edit(item);
 
-            List<Item> searchItems=gi.getItemsByItemNameSubStr("oaw");
-            for(int i=0;i<searchItems.size();i++){
-                logger.log(Level.WARNING,"getItemsByItemNameSubStr:"+searchItems.get(i).getItemName());
+            List<Item> searchItems = gi.getItemsByItemNameSubStr("building");
+            for (int i = 0; i < searchItems.size(); i++) {
+//                logger.log(Level.WARNING,"getItemsByItemNameSubStr:"+searchItems.get(i).getItemName());
             }
-            
+
 
 
 

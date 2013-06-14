@@ -22,7 +22,10 @@ import com.smartexpo.models.Permission;
 import com.smartexpo.models.Video;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
@@ -59,8 +62,6 @@ public class GetInfo implements Serializable {
         }
         return null;
     }
-    
-    
 
     public List<Manager> getManagerByManagerID(int id) {
         List<Manager> managers = em.createNamedQuery("Manager.findByManagerId").setParameter("managerId", id).getResultList();
@@ -109,10 +110,10 @@ public class GetInfo implements Serializable {
 
     public List<Permission> getPermissionByID(int id) {
         //if (manager == null) {
-            getManagerByManagerID(id);
-            if (manager == null) {
-                return null;
-            }
+        getManagerByManagerID(id);
+        if (manager == null) {
+            return null;
+        }
         //}
         List<ManagerPermission> managerPermissions = em.createNamedQuery("ManagerPermission.findByManagerId").setParameter("managerId", manager).getResultList();
         List<Permission> permissions = new ArrayList<Permission>();
@@ -238,7 +239,7 @@ public class GetInfo implements Serializable {
 
     public List<Item> getSomeItems(int from, int to) {
         //if (items == null) {
-            getAllItems();
+        getAllItems();
         //}
         List<Item> someItems = new ArrayList<Item>();
         if (from > itemNum) {
@@ -306,15 +307,18 @@ public class GetInfo implements Serializable {
         List<Item> items = em.createNamedQuery("Item.findByItemName").setParameter("itemName", name).getResultList();
         return items;
     }
-    
-    
-    public List<Item> getItemsByItemNameSubStr(String name){
-        List<Item> items=getAllItems();
-        for(int i=0;i<items.size();i++){
-            Item itm=items.get(i);
-            if(!(itm.getItemName().indexOf(name)>=0)){
-                items.remove(itm);
+
+    public List<Item> getItemsByItemNameSubStr(String name) {
+        List<Item> items = getAllItems();
+        Iterator<Item> it = items.iterator();
+        while (it.hasNext()) {
+            Item itm = it.next();
+            if (!(itm.getItemName().indexOf(name) >= 0)) {
+                it.remove();
             }
+        }
+        for (int i = 0; i < items.size(); ++i) {
+            Logger.getLogger(GetInfo.class.getName()).log(Level.WARNING, "item name + " + items.get(i).getItemName());
         }
         return items;
     }
