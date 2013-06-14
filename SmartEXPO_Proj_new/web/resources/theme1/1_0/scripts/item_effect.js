@@ -89,6 +89,7 @@ $(document).ready(function() {
 //        if (!$(this).is(":animated"))
         $(this).fadeTo('fast', 1);
     });
+    
 
     $(".func_button").mouseleave(function() {
         $(this).clearQueue();
@@ -96,7 +97,8 @@ $(document).ready(function() {
             return;
 //        if (!$(this).is(":animated"))
         $(this).fadeTo('fast', 0.8);
-    })
+    });
+
 
     $("#search_img").click(function() {
         $(this).clearQueue();

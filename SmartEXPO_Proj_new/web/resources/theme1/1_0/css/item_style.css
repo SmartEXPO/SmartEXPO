@@ -272,6 +272,11 @@ footer {
     color: #DADAD2;
 }
 
+
+.search_result_table {
+    width: 100%;
+}
+
 #function #search_result a:hover {
     color: #FFF;
 }
