@@ -181,8 +181,7 @@
 
                 <h:form id="search_box_form">
                     <h:inputText id="search_box" class="func_input_box search"
-                                 value="#{searchManagedBean.searchKey}"
-                                 onkeydown="return (event.keyCode == 56)">
+                                 value="#{searchManagedBean.searchKey}">
                         <f:ajax event="keyup" listener="#{searchManagedBean.searchListener}"
                                 execute="search_box" render=":search_result_form"/>
                     </h:inputText>

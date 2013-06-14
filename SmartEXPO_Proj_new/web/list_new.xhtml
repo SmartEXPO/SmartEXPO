@@ -23,16 +23,13 @@
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <h:outputScript library="#{info.lib}" name="scripts/blocksit.js"
-                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/blocksit.js" target="head" />
         <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js" target="head" />
 
-        <h:outputScript library="#{info.lib}" name="scripts/list_effect.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/list_ajax.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
-                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/list_effect.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/list_ajax.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js" target="head" />
+
         <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/list_style.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/header_style.css" />
@@ -111,12 +108,12 @@
                              value="#{loginManagedBean.username}" />
                 <h:inputSecret id="password" required="true" class="inbox password"
                                value="#{loginManagedBean.password}" />
-                <h:commandButton id="login_button" type="submit"
+                <h:commandButton id="login_button"
                                  class="login_button" value="Sign In">
                     <f:ajax listener="#{loginManagedBean.verify}"
                             execute="username password"
-                            render="@form :log_form"
-                            onevent="finish" />
+                            render="login_form :log_form"
+                            />
                 </h:commandButton>
                 <h:message for="username" />
                 <h:message for="password" />
