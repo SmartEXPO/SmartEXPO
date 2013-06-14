@@ -312,7 +312,7 @@ public class GetInfo implements Serializable {
         List<Item> items=getAllItems();
         for(int i=0;i<items.size();i++){
             Item itm=items.get(i);
-            if(!itm.getItemName().contains(name)){
+            if(!(itm.getItemName().indexOf(name)>=0)){
                 items.remove(itm);
             }
         }

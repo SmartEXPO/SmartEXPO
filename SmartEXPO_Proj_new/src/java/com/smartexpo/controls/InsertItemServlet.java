@@ -308,7 +308,7 @@ public class InsertItemServlet extends HttpServlet {
 
             List<Item> searchItems=gi.getItemsByItemNameSubStr("oaw");
             for(int i=0;i<searchItems.size();i++){
-                logger.log(Level.WARNING,searchItems.get(i).getItemName());
+                logger.log(Level.WARNING,"getItemsByItemNameSubStr:"+searchItems.get(i).getItemName());
             }
             
 
