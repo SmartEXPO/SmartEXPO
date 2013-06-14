@@ -172,7 +172,7 @@
                                 <h:outputLink value="item.xhtml">
                                     <f:param name="id" value="#{searchedItem.itemId}" />
                                     <h:outputText value="#{searchedItem.itemName}"
-                                                  style="color: white; text-decoration: none;"/>
+                                                  /><!--我把这里的样式删了添加悬停效果，merge时候注意一点-->
                                 </h:outputLink>
                             </h:column>
                         </h:dataTable>
