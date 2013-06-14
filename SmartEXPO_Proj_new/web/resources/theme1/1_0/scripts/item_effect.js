@@ -3,7 +3,7 @@
  */
 
 var isBottomBarDisplayed = false;
-var isSearchBarDisplayed = false;
+var isSearchBarDisplayed = 0;
 var isCommentBarDisplayed = false;
 
 $(document).ready(function() {
@@ -38,7 +38,7 @@ $(document).ready(function() {
 //    });
 
     function hideSearchPane() {
-        isSearchBarDisplayed = false;
+        isSearchBarDisplayed = 0;
         $("#search").animate({
             "width": "40px",
             "height": "40px",
@@ -101,8 +101,8 @@ $(document).ready(function() {
     $("#search_img").click(function() {
         $(this).clearQueue();
         hideCommentPane();
-        if (isSearchBarDisplayed == false) {
-            isSearchBarDisplayed = true;
+        if (isSearchBarDisplayed == 0) {
+            isSearchBarDisplayed = 1;
             $("#search").animate({
                 "width": "250px",
             }, 500);
@@ -119,12 +119,15 @@ $(document).ready(function() {
 
     $(".func_input_box.search").focus(function() {
         $(this).val("");
-        $("#search").animate({
-            height: '300px',
-        }, 500, function() {
-            $("#search_result").css('display', 'block');
 
-        });
+        if (isSearchBarDisplayed == 2)
+            return;
+        isSearchBarDisplayed = 2;
+//        $("#search").animate({
+//            height: '300px',
+//        }, 500, function() {
+//            $("#search_result").css('display', 'block');
+//        });
     });
 
 
@@ -212,4 +215,28 @@ function finish(e) {
 
 function trim(str) {
     return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+function handleSearch(e) {
+    console.log(e);
+    if (e.status === "success") {
+        $("#search_result").css('display', 'block');
+
+        $("#search_result").clearQueue();
+        var h = 250;
+        if ($(".search_result_table").height() < 250)
+            h = $(".search_result_table").height();
+        if (h < 10) {
+            $(".search_result_table").html("No Result");
+            h = 24;
+        }
+
+
+        $("#search").animate({
+            height: h + 50 + 'px',
+        }, 'fast', function() {
+            $("#search_result").height(h);
+        });
+
+    }
 }

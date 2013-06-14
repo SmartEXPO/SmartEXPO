@@ -165,7 +165,7 @@
 
                 <h:form id="search_result_form">
                     <div id="search_result">
-                        <h:dataTable  id="search_result_data_table"
+                        <h:dataTable  id="search_result_data_table" class="search_result_table" 
                                       value="#{searchManagedBean.searchedList}"
                                       var="searchedItem">
                             <h:column>
@@ -183,7 +183,7 @@
                     <h:inputText id="search_box" class="func_input_box search"
                                  value="#{searchManagedBean.searchKey}">
                         <f:ajax event="keyup" listener="#{searchManagedBean.searchListener}"
-                                execute="search_box" render=":search_result_form"/>
+                                execute="search_box" render=":search_result_form" onevent="handleSearch"/>
                     </h:inputText>
                 </h:form>
 
