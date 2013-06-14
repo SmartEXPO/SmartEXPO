@@ -188,9 +188,10 @@ $(document).ready(function() {
             $(".edit_description_div").attr("value", "Edit");
         }
     });
-    $("#frame_image").load(function() {
-        autoFit(480, 485, $("#frame_image"));
-    });
+//    $("#frame_image").load(function() {
+//        autoFit(480, 485, $("#frame_image"));
+//    });
+    $("#frame_image").autofit({height:485, width:480});
 
 });
 

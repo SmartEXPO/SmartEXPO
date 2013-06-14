@@ -26,9 +26,7 @@ $(document).ready(function() {
     display();
     setInterval(display, 10000);
 
-    $("#display_item").load(function() {
-        autoFit(480, 320, $("#display_item"));
-    });
+    $("#display_item").autofit({height:320,width:480});
 
 });
 
