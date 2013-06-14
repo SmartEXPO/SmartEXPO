@@ -6,6 +6,7 @@ package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Item;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,16 +81,11 @@ public class SearchManagedBean {
 
     public void searchListener(AjaxBehaviorEvent event) {
         searchedList = gi.getItemsByItemName(searchKey);
-        for (int i = 0; i < searchedList.size(); ++i) {
-            Logger.getLogger(SearchManagedBean.class.getName()).log(Level.WARNING, "item {0} = {1}", new Object[]{i, searchedList.get(i).getItemName()});
-        }
         if (searchedList == null || searchedList.isEmpty()) {
             searchedList = gi.getItemsByItemNameSubStr(searchKey);
         } else {
             searchedList.addAll(gi.getItemsByItemNameSubStr(searchKey));
         }
-        Logger.getLogger(SearchManagedBean.class.getName()).log(Level.WARNING, "earchKey = {0}", searchKey);
-        searchedList = gi.getItemsByItemNameSubStr(searchKey);
         for (int i = 0; i < searchedList.size(); ++i) {
             Logger.getLogger(SearchManagedBean.class.getName()).log(Level.WARNING, "item {0} = {1}", new Object[]{i, searchedList.get(i).getItemName()});
         }

@@ -313,13 +313,14 @@ public class GetInfo implements Serializable {
         Iterator<Item> it = items.iterator();
         while (it.hasNext()) {
             Item itm = it.next();
-            if (!(itm.getItemName().indexOf(name) >= 0)) {
+            if (!(itm.getItemName().indexOf(name) >= 0)
+                    || itm.getItemName().equals(name)) {
                 it.remove();
             }
         }
-        for (int i = 0; i < items.size(); ++i) {
-            Logger.getLogger(GetInfo.class.getName()).log(Level.WARNING, "item name + " + items.get(i).getItemName());
-        }
+//        for (int i = 0; i < items.size(); ++i) {
+//            Logger.getLogger(GetInfo.class.getName()).log(Level.WARNING, "item name = " + items.get(i).getItemName());
+//        }
         return items;
     }
 

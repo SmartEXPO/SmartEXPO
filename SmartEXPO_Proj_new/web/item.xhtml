@@ -163,23 +163,28 @@
                 <h:graphicImage id="search_img" library="#{info.lib}"
                                 name="images/item_search_button.png" />
 
-                <h:form id="search_form">
+                <h:form id="search_result_form">
+                    <div id="search_result">
+                        <h:dataTable  id="search_result_data_table"
+                                      value="#{searchManagedBean.searchedList}"
+                                      var="searchedItem">
+                            <h:column>
+                                <h:outputLink value="item.xhtml">
+                                    <f:param name="id" value="#{searchedItem.itemId}" />
+                                    <h:outputText value="#{searchedItem.itemName}"
+                                                  style="color: white; text-decoration: none;"/>
+                                </h:outputLink>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </h:form>
 
-                    <h:dataTable  id="search_result_data_table"
-                                  value="#{searchManagedBean.searchedList}"
-                                  var="searchedItem">
-                        <div id="search_result">
-                            <h:outputLink value="item.xhtml">
-                                <f:param name="id" value="#{searchedItem.itemId}" />
-                                <h:outputText value="#{searchedItem.itemName}" />
-                            </h:outputLink>
-                        </div>
-                    </h:dataTable>
-
+                <h:form id="search_box_form">
                     <h:inputText id="search_box" class="func_input_box search"
-                                 value="#{searchManagedBean.searchKey}">
+                                 value="#{searchManagedBean.searchKey}"
+                                 onkeydown="return (event.keyCode == 56)">
                         <f:ajax event="keyup" listener="#{searchManagedBean.searchListener}"
-                                execute="search_box" render="search_result_data_table"/>
+                                execute="search_box" render=":search_result_form"/>
                     </h:inputText>
                 </h:form>
 
