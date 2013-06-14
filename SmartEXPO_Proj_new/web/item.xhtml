@@ -157,18 +157,32 @@
         </div>
 
         <div id="function">
-            <div id="search" class="func_button">
-                <div id="search_result">
-                    here we put search results, using ajax
+            <h:form id="search_form">
+                <div id="search" class="func_button">
+                    <h:dataTable  id="search_result_data_table"
+                                  value="#{searchManagedBean.searchedList}"
+                                  var="searchedItem">
+                        <div id="search_result">
+                            <h:outputLink value="item.xhtml">
+                                <f:param name="id" value="#{searchedItem.itemId}" />
+                                <h:outputText value="#{searchedItem.itemName}" />
+                            </h:outputLink>
+                        </div>
+                    </h:dataTable>
+
+                    <h:graphicImage id="search_img" library="#{info.lib}"
+                                    name="images/item_search_button.png" />
+                    <h:inputText id="search_box" class="func_input_box search"
+                                 value="#{searchManagedBean.searchKey}">
+                        <f:ajax event="keyup" listener="#{searchManagedBean.searchListener}"
+                                execute="search_box" render="search_result_data_table"/>
+                    </h:inputText>
                 </div>
-                <h:graphicImage id="search_img" library="#{info.lib}"
-                                name="images/item_search_button.png" />
-                <h:inputText id="search_box" class="func_input_box search" />
-            </div>
+            </h:form>
+
             <div id="comment" class="func_button">
                 <div id="users_comment">
                     <div style="min-height: 340px; overflow: hidden;">
-
                         <h:form id="all_comments">
                             <h:dataTable value="#{itemController.usernameContentPairs}"
                                          var="usernameContentPair">
