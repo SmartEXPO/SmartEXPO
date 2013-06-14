@@ -223,13 +223,14 @@ footer {
     -webkit-box-shadow: 0 0 10px;
     -moz-box-sadow: 0 0 10px;
     opacity: 0.8;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 #function img {
     position: absolute;
     left: 7px;
     bottom: 6px;
+    cursor: pointer;
 }
 
 #function .func_input_box {
@@ -264,6 +265,15 @@ footer {
     display: none;
     height: 250px;
     color: white;
+}
+
+#function #search_result a{
+    text-decoration: none;
+    color: #DADAD2;
+}
+
+#function #search_result a:hover {
+    color: #FFF;
 }
 
 #function #comment_input {
