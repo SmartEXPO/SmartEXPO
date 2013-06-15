@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/admin/admin_template.xhtml">
+        <ui:define name="title">User | View</ui:define>
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="messages" showDetail="true" />
+
+                <p:dataTable var="user" value="#{userViewManagedBean.users}"
+                             editable="true" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,20,50,100">
+                    <f:facet name="header">
+                        User
+                    </f:facet>
+
+                    <p:ajax event="rowEdit" update=":form:messages"
+                            listener="#{userViewManagedBean.onEdit}" />
+                    <p:ajax event="rowEditCancel" update=":form:messages"
+                            listener="#{userViewManagedBean.onCancel}" />
+
+                    <p:column headerText="Username">
+                        <h:outputText value="#{user.username}" />
+                    </p:column>
+
+                    <p:column headerText="Password">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.password}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.password}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Connoisseur">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission1}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission1}"
+                                                         disabled="false" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Alter Item">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission2}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission2}"
+                                                         disabled="false" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Add/Del Item">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission3}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission3}"
+                                                         disabled="false" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Add/Del Manager">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission4}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission4}"
+                                                         disabled="false" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Alter Manager">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:selectBooleanCheckbox value="#{user.permission5}"
+                                                         disabled="true" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox value="#{user.permission5}"
+                                                         disabled="false" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Edit" style="text-align: center"
+                              rendered="#{loginManagedBean.permissions[3]}">
+                        <p:commandLink action="#{userViewManagedBean.test}">
+                            <p:rowEditor />
+                            <f:setPropertyActionListener value="#{user}"
+                                                         target="#{userViewManagedBean.selectedUser}"/>
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column headerText="Destroy" style="text-align: center"
+                              rendered="#{loginManagedBean.permissions[4]}">
+                        <p:commandButton value="Destroy" update="@form" icon="ui-icon-notice"
+                                         action="#{userViewManagedBean.destroyUser}">
+                            <f:setPropertyActionListener value="#{user}"
+                                                         target="#{userViewManagedBean.selectedUser}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

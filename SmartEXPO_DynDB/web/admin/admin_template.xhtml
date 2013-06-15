@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta name="author" content="Boyi" />
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <h:outputScript library="theme1" name="scripts/jquery_1_9_1.js"
+                        target="head" />
+        <h:outputScript library="theme1" name="scripts/login_effect.js"
+                        target="head" />
+        <h:outputStylesheet library="theme1" name="css/header_style.css" />
+
+        <title>
+            <ui:insert name="title">Admin Template</ui:insert>
+        </title>
+    </h:head>
+
+    <h:body>
+        <div id="top" style="font-family: 'American Typewriter', serif;
+             text-align: center; font-size: 400%;">
+            <ui:insert name="top">SmartEXPO</ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">
+                    <div style="font-size: 150%;">
+                        <h:outputLabel for="wel_user" value="Welcome, " />
+                        <h:outputText id="wel_user" value="#{loginManagedBean.username}" />
+                        <br />
+                        <h:form>
+                            <h:commandLink value="Log Out"
+                                           actionListener="#{loginManagedBean.logout}"
+                                           action="login?faces-redirect=true" />
+                        </h:form>
+                    </div>
+                    <p:separator />
+                    <p:panel header="Item" toggleable="true">
+                        <div>
+                            <h:outputLink value="item_insert.xhtml"
+                                          rendered="#{loginManagedBean.permissions[3]}">
+                                Input Item
+                            </h:outputLink>
+                        </div>
+                        <div>
+                            <h:outputLink value="item_view.xhtml">
+                                Item View
+                            </h:outputLink>
+                        </div>
+                        <div>
+                            <h:outputLink value="item_comment.xhtml">
+                                Comments
+                            </h:outputLink>
+                        </div>
+                    </p:panel>
+
+                    <p:panel header="Manager" toggleable="true">
+                        <div>
+                            <h:outputLink value="sign_up.xhtml"
+                                          rendered="#{loginManagedBean.permissions[4]}">
+                                Sign Up
+                            </h:outputLink>
+                        </div>
+                        <div>
+                            <h:outputLink value="user_view.xhtml">
+                                Manager View
+                            </h:outputLink>
+                        </div>
+                    </p:panel>
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content">
+
+                </ui:insert>
+            </div>
+        </div>
+        <div id="bottom" style="font-family: 'American Typewriter', serif;
+             text-align: center">
+            <ui:insert name="bottom">Copyright &#169; 2013 by SmartEXPO orgnization.</ui:insert>
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/admin/admin_template.xhtml">
+        <ui:define name="title">Manager | AV Editor</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <h:messages />
+
+                <p:dataTable id="audio_list" var="audioList"
+                             value="#{itemViewManagedBean.audios}"
+                             style="text-align: center;">
+                    <p:column>
+                        <p:commandButton icon="ui-icon-minusthick"
+                                         update="@form"
+                                         action="#{itemViewManagedBean.removeAudio}">
+                            <f:setPropertyActionListener value="#{audioList}"
+                                                         target="#{itemViewManagedBean.selectedAudio}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Audio Title">
+                        <h:outputText value="#{audioList.title}" />
+                    </p:column>
+                    <p:column headerText="Audio URL">
+                        <h:outputText value="#{audioList.url}" />
+                    </p:column>
+                    <p:column headerText="Audio Description">
+                        <h:outputText value="#{audioList.description}" />
+                    </p:column>
+                    <f:facet name="footer">
+                        Total #{itemViewManagedBean.audioSize} audios.
+                    </f:facet>
+                </p:dataTable>
+
+                <p:commandButton icon="ui-icon-plusthick"
+                                 ajax="true" update="@form"
+                                 oncomplete="audioVar.show()" />
+
+                <p:dialog id="audio_add_dialog" header="Enter Audio Info"
+                          widgetVar="audioVar" resizable="false" modal="true">
+                    <h:panelGrid columns="2" columnClasses="label,value">
+                        <h:outputLabel for="audio_title" value="Audio Title" />
+                        <p:inputText id="audio_title"
+                                     value="#{itemViewManagedBean.audioTitle}" />
+
+                        <h:outputLabel for="audio_upload" value="Audio Upload" />
+                        <h:form enctype="multipart/form-data">
+                            <p:fileUpload id="audio_upload"
+                                          fileUploadListener="#{itemViewManagedBean.upload}"
+                                          mode="advanced"
+                                          update="audio_upload_msg"
+                                          auto="true"
+                                          sizeLimit="104857600"
+                                          allowTypes="/(\.|\/)(wav|mp3|ogg)$/" />
+                            <p:growl id="audio_upload_msg" showDetail="true"/>
+                        </h:form>
+
+                        <h:outputLabel for="audio_des" value="Audio Description" />
+                        <p:inputTextarea id="audio_des" autoResize="true"
+                                         value="#{itemViewManagedBean.audioDes}" />
+
+                        <p:commandButton value="Add" icon="ui-icon-check"
+                                         ajax="true" update="audio_list audio_add_dialog"
+                                         action="#{itemViewManagedBean.addAudio}"
+                                         oncomplete="audioVar.hide()"/>
+                    </h:panelGrid>
+                </p:dialog>
+
+                <p:separator style="color: black; height: 30px;" />
+
+                <h:messages />
+
+                <p:dataTable id="video_list" var="videoList"
+                             value="#{itemViewManagedBean.videos}"
+                             style="text-align: center;">
+                    <p:column>
+                        <p:commandButton icon="ui-icon-minusthick"
+                                         update="video_list"
+                                         action="#{itemViewManagedBean.removeVideo}">
+                            <f:setPropertyActionListener value="#{videoList}"
+                                                         target="#{itemViewManagedBean.selectedVideo}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Video Title">
+                        <h:outputText value="#{videoList.title}" />
+                    </p:column>
+                    <p:column headerText="Video URL">
+                        <h:outputText value="#{videoList.url}" />
+                    </p:column>
+                    <p:column headerText="Video Description">
+                        <h:outputText value="#{videoList.description}" />
+                    </p:column>
+                    <f:facet name="footer">
+                        Total #{itemViewManagedBean.videoSize} videos.
+                    </f:facet>
+                </p:dataTable>
+
+                <p:commandButton icon="ui-icon-plusthick"
+                                 ajax="true" update="video_add_dialog"
+                                 oncomplete="videoVar.show()" />
+
+                <p:dialog id="video_add_dialog" header="Enter Video Info"
+                          widgetVar="videoVar" resizable="false" modal="true">
+                    <h:panelGrid columns="2" columnClasses="label,value">
+                        <h:outputLabel for="video_title" value="Video Title" />
+                        <p:inputText id="video_title"
+                                     value="#{itemViewManagedBean.videoTitle}" />
+
+                        <h:outputLabel for="video_upload" value="Video Upload" />
+                        <h:form enctype="multipart/form-data">
+                            <p:fileUpload id="video_upload"
+                                          fileUploadListener="#{itemViewManagedBean.upload}"
+                                          mode="advanced"
+                                          update="video_upload_msg"
+                                          auto="true"
+                                          sizeLimit="1073741824"
+                                          allowTypes="/(\.|\/)(mp4|ogg)$/"/>
+                            <p:growl id="video_upload_msg" showDetail="true"/>
+                        </h:form>
+
+                        <h:outputLabel for="video_des" value="Video Description" />
+                        <p:inputTextarea id="video_des" autoResize="false"
+                                         value ="#{itemViewManagedBean.videoDes}"  />
+                        <p:commandButton value="Add" icon="ui-icon-check"
+                                         ajax="true" update="video_list video_add_dialog"
+                                         action="#{itemViewManagedBean.addVideo}"
+                                         oncomplete="videoVar.hide()" />
+                    </h:panelGrid>
+                </p:dialog>
+
+                <br />
+                <p:commandButton icon="ui-icon-check" value="Submit"
+                                 action="#{itemViewManagedBean.avEditFinish}"/>
+                <p:commandButton icon="ui-icon-cancel" value="Back"
+                                 action="#{itemViewManagedBean.back}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

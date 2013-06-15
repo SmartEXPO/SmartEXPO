@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/admin/admin_template.xhtml">
+        <ui:define name="title">Manager | Sign Up</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <p:growl id="msg" showDetail="true" />
+                <h:panelGrid columns="3" style="font-size: 200%;">
+                    <h:outputLabel for="username" value="Username:" />
+                    <p:inputText id="username" required="true"
+                                 value="#{signUpManagedBean.username}">
+                        <f:validateRegex pattern="^[a-zA-Z_][a-zA-Z0-9_]{3,16}$" />
+                        <p:ajax listener="#{signUpManagedBean.onInputValue('username')}"
+                                update="username_icon"/>
+                    </p:inputText>
+                    <h:outputText id="username_icon" value="#{signUpManagedBean.usernameIcon}" />
+
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:password id="password" required="true"
+                                value="#{signUpManagedBean.password}">
+                        <f:validateLength minimum="3" maximum="16" />
+                        <p:ajax listener="#{signUpManagedBean.onInputValue('password')}"
+                                update="password_icon" />
+                    </p:password>
+                    <h:outputText id="password_icon" value="#{signUpManagedBean.passwordIcon}" />
+
+                    <h:outputLabel for="confirm_password" value="Confirm Password:" />
+                    <p:password id="confirm_password" required="true"
+                                value="#{signUpManagedBean.confirmPassword}">
+                        <p:ajax listener="#{signUpManagedBean.onInputValue('confirm_password')}"
+                                update="confirm_password_icon" />
+                    </p:password>
+                    <h:outputText id="confirm_password_icon" value="#{signUpManagedBean.confirmPasswordIcon}" />
+
+                    <p:separator />
+                    <p:separator />
+                    <p:separator />
+
+                    <h:outputLabel for="connoisseur" value="Connoisseur" />
+                    <p:selectBooleanCheckbox id="connoisseur"
+                                             value="#{signUpManagedBean.permissions[0]}" />
+                    <h:inputHidden />
+
+                    <h:outputLabel for="alter_item" value="Alter Item" />
+                    <p:selectBooleanCheckbox id="alter_item"
+                                             value="#{signUpManagedBean.permissions[1]}" />
+                    <h:inputHidden />
+
+                    <h:outputLabel for="add_del_item" value="Add/Del Item" />
+                    <p:selectBooleanCheckbox id="add_del_item"
+                                             value="#{signUpManagedBean.permissions[2]}" />
+                    <h:inputHidden />
+
+                    <h:outputLabel for="add_del_manager" value="Add/Del Manager" />
+                    <p:selectBooleanCheckbox id="add_del_manager"
+                                             value="#{signUpManagedBean.permissions[3]}" />
+                    <h:inputHidden />
+
+                    <h:outputLabel for="alter_manager" value="Alter Manager" />
+                    <p:selectBooleanCheckbox id="alter_manager"
+                                             value="#{signUpManagedBean.permissions[4]}" />
+                    <h:inputHidden />
+                </h:panelGrid>
+                <p:commandButton actionListener="#{signUpManagedBean.verify}"
+                                 value="Sign Up" ajax="true" update="@form"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

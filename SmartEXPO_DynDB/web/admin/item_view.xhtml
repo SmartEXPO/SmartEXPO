@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/admin/admin_template.xhtml">
+        <ui:define name="title">Item | View</ui:define>
+        <ui:define name="content">
+            <p:dataGrid id="all_item" var="show_item" value="#{itemViewManagedBean.items}"
+                        columns="6" rows="18" paginator="true"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                        rowsPerPageTemplate="18,36,72">
+                <p:panel header="#{show_item.itemId}" style="text-align: center">
+                    <h:form id="form">
+                        <h:panelGrid columns="1" style="width: 100%;">
+
+                            <h:graphicImage value="#{show_item.imageurl}"
+                                            style="width: 120px; height: 80px;"/>
+                            <h:outputText value="#{show_item.itemName}" />
+
+                            <p:separator />
+
+                            <p:commandLink value="Info Detail" update=":show_item_form"
+                                           oncomplete="itemInfoDialog.show()"
+                                           action="#{itemViewManagedBean.beginViewDetail}"
+                                           title="View Detail">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+                            <p:commandLink value="Audio Detail" update=":audio_info_form"
+                                           oncomplete="audioInfoDialog.show()"
+                                           action="#{itemViewManagedBean.beginViewAudio}"
+                                           title="View Audio Detail">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+                            <p:commandLink value="Video Detail" update=":video_info_form"
+                                           oncomplete="videoInfoDialog.show()"
+                                           action="#{itemViewManagedBean.beginViewVideo}"
+                                           title="View Video Detail">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+
+                            <p:separator rendered="#{loginManagedBean.permissions[2]}" />
+
+                            <p:commandLink value="Edit Info" update=":edit_item_form"
+                                           oncomplete="editInfoDialog.show()"
+                                           action="#{itemViewManagedBean.beginEditItem}"
+                                           title="Edit Item"
+                                           rendered="#{loginManagedBean.permissions[2]}">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+                            <p:commandLink value="Edit Audios And Video"
+                                           action="#{itemViewManagedBean.beginEditAudio}"
+                                           rendered="#{loginManagedBean.permissions[2]}">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandLink>
+
+                            <p:separator rendered="#{loginManagedBean.permissions[2]}" />
+
+                            <p:commandButton value="Destroy" icon="ui-icon-notice"
+                                             action="#{itemViewManagedBean.destroyItem}"
+                                             update=":all_item"
+                                             rendered="#{loginManagedBean.permissions[2]}">
+                                <f:setPropertyActionListener value="#{show_item}"
+                                                             target="#{itemViewManagedBean.selectedItem}" />
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </h:form>
+                </p:panel>
+            </p:dataGrid>
+
+            <p:dialog header="Item Detail" widgetVar="itemInfoDialog"
+                      resizable="false" modal="true">
+                <p:outputPanel id="item_detail" style="text-align: center;"
+                               layout="block">
+                    <h:form id="show_item_form">
+                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}"
+                                        style="width: 240px; height: 160px;"/>
+
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="view_item_id" value="ID: " />
+                            <h:outputText id="view_item_id"
+                                          value="#{itemViewManagedBean.selectedItem.itemId}" />
+
+                            <h:outputLabel for="view_item_name" value="Name: " />
+                            <h:outputText id="view_item_name"
+                                          value="#{itemViewManagedBean.selectedItem.itemName}" />
+                            
+                            <h:outputLabel for="view_des" value="Description: " />
+                            <h:outputText id="view_des"
+                                         value="#{itemViewManagedBean.selectedItem.description.content}" />
+                            
+                            <h:outputLabel for="view_author" value="Author: " />
+                            <h:outputText id="view_author"
+                                          value="#{itemViewManagedBean.authorName}" />
+
+                            <h:outputLabel for="view_author_date" value="Author Date: " />
+                            <h:outputText id="view_author_date"
+                                          value="#{itemViewManagedBean.authorBirthDate} -- #{itemViewManagedBean.authorDeathDate}" />
+
+                            <h:outputLabel for="view_author_intro" value="Author Introduction: " />
+                            <h:outputText id="view_author_intro"
+                                          value="#{itemViewManagedBean.authorIntro}" />
+                        </h:panelGrid>
+                    </h:form>
+                </p:outputPanel>
+            </p:dialog>
+
+            <p:dialog header="Audio Inforamtion" widgetVar="audioInfoDialog"
+                      resizable="false" modal="true">
+                <h:form id="audio_info_form">
+                    <p:dataTable id="audio_info_datatable" var="audioList"
+                                 value="#{itemViewManagedBean.audios}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,20"
+                                 style="text-align: center;">
+                        <p:column headerText="Audio Title">
+                            <h:outputText value="#{audioList.title}" />
+                        </p:column>
+
+                        <p:column headerText="Audio">
+                            <audio src="#{facesContext.externalContext.requestContextPath}#{audioList.url}"
+                                   controls="controls">
+                                <h:outputLink value="#{facesContext.externalContext.requestContextPath}#{audioList.url}">
+                                    #{facesContext.externalContext.requestContextPath}#{audioList.url}
+                                </h:outputLink>
+                            </audio>
+                        </p:column>
+
+                        <p:column headerText="Audio Description">
+                            <h:outputText value="#{audioList.description}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            Total #{itemViewManagedBean.audioSize} audios.
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </p:dialog>
+
+            <p:dialog header="Video Inforamtion" widgetVar="videoInfoDialog"
+                      resizable="false" modal="true">
+                <h:form id="video_info_form">
+                    <p:dataTable id="video_info_datatable" var="videoList"
+                                 value="#{itemViewManagedBean.videos}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,20"
+                                 style="text-align: center;">
+                        <p:column headerText="Video Title">
+                            <h:outputText value="#{videoList.title}" />
+                        </p:column>
+
+                        <p:column headerText="Video">
+                            <video src="#{facesContext.externalContext.requestContextPath}#{videoList.url}"
+                                   controls="controls">
+                                <h:outputLink value="#{facesContext.externalContext.requestContextPath}#{videoList.url}">
+                                    #{facesContext.externalContext.requestContextPath}#{videoList.url}
+                                </h:outputLink>
+                            </video>
+                        </p:column>
+
+                        <p:column headerText="Vdeo Description">
+                            <h:outputText value="#{videoList.description}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            Total #{itemViewManagedBean.videoSize} audios.
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </p:dialog>
+
+            <p:dialog header="Edit Item" widgetVar="editInfoDialog"
+                      resizable="false" modal="true">
+                <p:outputPanel id="edit_item" style="text-align: center;"
+                               layout="block">
+                    <h:form id="edit_item_form">
+                        <h:graphicImage value="#{itemViewManagedBean.selectedItem.imageurl}"
+                                        style="width: 240px; height: 160px;"/>
+
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="edit_item_name" value="Name: " />
+                            <p:inputText id="edit_item_name"
+                                         value="#{itemViewManagedBean.selectedItem.itemName}" />
+
+                            <h:outputLabel for="edit_author" value="Author: " />
+                            <p:inputText id="edit_author"
+                                         value="#{itemViewManagedBean.authorName}" />
+                            
+                            <h:outputLabel for="edit_des" value="Description: " />
+                            <p:inputText id="edit_des"
+                                         value="#{itemViewManagedBean.selectedItem.description.content}" />
+
+                            <h:outputLabel for="edit_author_birthday" value="Author Birthday: " />
+                            <p:calendar id="edit_author_birthday"
+                                        value="#{itemViewManagedBean.authorBirthDate}" />
+
+                            <h:outputLabel for="edit_author_death_date" value="Author Death Date: " />
+                            <p:calendar id="edit_author_death_date"
+                                        value="#{itemViewManagedBean.authorDeathDate}" />
+
+                            <h:outputLabel for="edit_author_intro" value="Author Introduction: " />
+                            <p:inputText id="edit_author_intro"
+                                         value="#{itemViewManagedBean.authorIntro}" />
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Confirm" update=":all_item"
+                                                 oncomplete="editInfoDialog.hide()"
+                                                 action="#{itemViewManagedBean.storeEditedData}"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </h:form>
+                </p:outputPanel>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>

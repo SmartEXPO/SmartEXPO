@@ -1,0 +1,308 @@
+/*Header part*/
+
+@media screen and (min-width: 1024px) {
+
+    header {
+        height: 100px;
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    header #logo {
+        display: inline-block;
+    }
+
+    nav {
+        position: relative;
+        bottom: 30px;
+        margin-left: 20px;
+        color: #ffffff;
+        font-size: 120%;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .navi {
+        margin-left: 5px;
+        margin-right: 5px;
+        color: #ffffff;
+        font-size: 120%;
+        text-decoration: none;
+    }
+
+    a.navi:hover {
+        color: #464646;
+    }
+
+    #login {
+        display: inline-block;
+        width: 350px;
+        text-align: right;
+    }
+
+}
+
+
+@media screen and (max-width: 1024px) {
+
+    header {
+        height: 100px;
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    header #logo {
+        display: inline-block;
+    }
+    
+    #header_sep {
+        display:none;
+    }
+
+    nav {
+        position: relative;
+        margin-left: 20px;
+        color: #ffffff;
+        font-size: 120%;
+        text-decoration: none;
+        display: block;
+    }
+
+    .navi {
+        margin-left: 5px;
+        margin-right: 5px;
+        color: #ffffff;
+        font-size: 200%;
+        text-decoration: none;
+    }
+
+    a.navi:hover {
+        color: #464646;
+    }
+
+    #login {
+        display: inline-block;
+        text-align: right;
+        display:none;
+    }
+
+}
+/*End of header part*/
+
+/* Log In/Out Part */
+
+#overall_shade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.4;
+    display: none;
+}
+
+#login_panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    margin-top: -100px;
+    margin-left: -150px;
+    width: 300px;
+    height: 200px;
+    background-color: #464646;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    box-shadow: 0 0 20px;
+    -webkit-box-shadow: 0 0 20px;
+    -moz-box-sadow: 0 0 20px;
+    display: none;
+}
+
+#login_panel form {
+    margin-top: 50px;
+}
+
+.inbox {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 35px;
+    width: 280px;
+    border: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    display: block;
+    color: #464646;
+    background-color: #DADAD2;
+    text-align: center;
+}
+
+.login_button {
+    height: 35px;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    display: block;
+    margin-top: 10px;
+    width: 100px;
+    margin-left: 100px;
+    background: #000000;
+    color: #DADAD2;
+    font-size: 15px;
+    border: none;
+}
+
+#close_panel {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    background: #000000;
+    color: #DADAD2;
+    border: none;
+}
+
+/* End of Log In/Out Part */
+
+
+/**
+ * Fade-zoom animation for first dialog
+ */
+
+/* start state */
+.my-mfp-zoom-in .zoom-anim-dialog {
+    opacity: 0;
+
+    -webkit-transition: all 0.2s ease-in-out; 
+    -moz-transition: all 0.2s ease-in-out; 
+    -o-transition: all 0.2s ease-in-out; 
+    transition: all 0.2s ease-in-out; 
+
+
+
+    -webkit-transform: scale(0.8); 
+    -moz-transform: scale(0.8); 
+    -ms-transform: scale(0.8); 
+    -o-transform: scale(0.8); 
+    transform: scale(0.8); 
+}
+
+/* animate in */
+.my-mfp-zoom-in.mfp-ready .zoom-anim-dialog {
+    opacity: 1;
+
+    -webkit-transform: scale(1); 
+    -moz-transform: scale(1); 
+    -ms-transform: scale(1); 
+    -o-transform: scale(1); 
+    transform: scale(1); 
+}
+
+/* animate out */
+.my-mfp-zoom-in.mfp-removing .zoom-anim-dialog {
+    -webkit-transform: scale(0.8); 
+    -moz-transform: scale(0.8); 
+    -ms-transform: scale(0.8); 
+    -o-transform: scale(0.8); 
+    transform: scale(0.8); 
+
+    opacity: 0;
+}
+
+/* Dark overlay, start state */
+.my-mfp-zoom-in.mfp-bg {
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease-out; 
+    -moz-transition: opacity 0.3s ease-out; 
+    -o-transition: opacity 0.3s ease-out; 
+    transition: opacity 0.3s ease-out;
+}
+/* animate in */
+.my-mfp-zoom-in.mfp-ready.mfp-bg {
+    opacity: 0.8;
+}
+/* animate out */
+.my-mfp-zoom-in.mfp-removing.mfp-bg {
+    opacity: 0;
+}
+
+
+
+/**
+ * Fade-move animation for second dialog
+ */
+
+/* at start */
+.my-mfp-slide-bottom .zoom-anim-dialog {
+    opacity: 0;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+
+    -webkit-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    -moz-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    -ms-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    -o-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+
+}
+
+/* animate in */
+.my-mfp-slide-bottom.mfp-ready .zoom-anim-dialog {
+    opacity: 1;
+    -webkit-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+    -moz-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+    -ms-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+    -o-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+    transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+}
+
+/* animate out */
+.my-mfp-slide-bottom.mfp-removing .zoom-anim-dialog {
+    opacity: 0;
+
+    -webkit-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+    -moz-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+    -ms-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+    -o-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+    transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+}
+
+/* Dark overlay, start state */
+.my-mfp-slide-bottom.mfp-bg {
+    opacity: 0;
+
+    -webkit-transition: opacity 0.3s ease-out; 
+    -moz-transition: opacity 0.3s ease-out; 
+    -o-transition: opacity 0.3s ease-out; 
+    transition: opacity 0.3s ease-out;
+}
+/* animate in */
+.my-mfp-slide-bottom.mfp-ready.mfp-bg {
+    opacity: 0.8;
+}
+/* animate out */
+.my-mfp-slide-bottom.mfp-removing.mfp-bg {
+    opacity: 0;
+}
+
+#login_panel_2 {
+    background: white;
+    padding: 20px 30px;
+    text-align: left;
+    max-width: 300px;
+    margin: 40px auto;
+    position: relative;
+}
