@@ -140,63 +140,63 @@ public class AutoLoginFilter implements Filter {
 
 
         // Filter begin
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession(true);
-
-        if ((!isURLNotInFilterList(req)) && session.getAttribute(sessionKey) == null) {
-            return;
-        }
-
-        String username = null;
-        String sessionid; // last sessionid, not current
-        Cookie[] cookies;
-        boolean isAutoLogin = false;
-
-        String user = (String) session.getAttribute(sessionKey);
-        if (user == null || user.equals("")) {
-            cookies = req.getCookies();
-            for (int i = 0; i < cookies.length; ++i) {
-                Cookie cookie = cookies[i];
-                if (cookie.getName().equals(OverallInfo.COOKIE_NAME_USERNAME)) {
-                    username = cookie.getValue();
-                }
-                if (cookie.getName().equals(OverallInfo.COOKIE_NAME_SESSION_ID)) {
-                    sessionid = cookie.getValue();
-                }
-            }
-            Sessioninfo sessionInfo = gi.getSessioninfosByName(username).get(0);
-            if (sessionInfo == null) {
-                isAutoLogin = false;
-            } else {
-                isAutoLogin = true;
-            }
-        }
-        if (isAutoLogin) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            ELContext eLContext = context.getELContext();
-            LoginManagedBean loginManagedBean = (LoginManagedBean) context.getApplication()
-                    .getELResolver().getValue(eLContext, null, "loginManagedBean");
-            if (loginManagedBean != null) {
-                List<Manager> managers = gi.getManagerByName(username);
-                boolean[] permissions;
-                if (managers == null || managers.isEmpty()) {
-                    return;
-                } else {
-                    Manager manager = managers.get(0);
-                    permissions = new boolean[6];
-
-                    permissions[1] = manager.isPermission1();
-                    permissions[2] = manager.isPermission2();
-                    permissions[3] = manager.isPermission3();
-                    permissions[4] = manager.isPermission4();
-                    permissions[5] = manager.isPermission5();
-                }
-                loginManagedBean.setStatus(true);
-                loginManagedBean.setUsername(username);
-                loginManagedBean.setPermissions(permissions);
-            }
-        }
+//        HttpServletRequest req = (HttpServletRequest) request;
+//        HttpServletResponse res = (HttpServletResponse) response;
+//        HttpSession session = req.getSession(true);
+//
+//        if ((!isURLNotInFilterList(req)) && session.getAttribute(sessionKey) == null) {
+//            return;
+//        }
+//
+//        String username = null;
+//        String sessionid; // last sessionid, not current
+//        Cookie[] cookies;
+//        boolean isAutoLogin = false;
+//
+//        String user = (String) session.getAttribute(sessionKey);
+//        if (user == null || user.equals("")) {
+//            cookies = req.getCookies();
+//            for (int i = 0; i < cookies.length; ++i) {
+//                Cookie cookie = cookies[i];
+//                if (cookie.getName().equals(OverallInfo.COOKIE_NAME_USERNAME)) {
+//                    username = cookie.getValue();
+//                }
+//                if (cookie.getName().equals(OverallInfo.COOKIE_NAME_SESSION_ID)) {
+//                    sessionid = cookie.getValue();
+//                }
+//            }
+//            Sessioninfo sessionInfo = gi.getSessioninfosByName(username).get(0);
+//            if (sessionInfo == null) {
+//                isAutoLogin = false;
+//            } else {
+//                isAutoLogin = true;
+//            }
+//        }
+//        if (isAutoLogin) {
+//            FacesContext context = FacesContext.getCurrentInstance();
+//            ELContext eLContext = context.getELContext();
+//            LoginManagedBean loginManagedBean = (LoginManagedBean) context.getApplication()
+//                    .getELResolver().getValue(eLContext, null, "loginManagedBean");
+//            if (loginManagedBean != null) {
+//                List<Manager> managers = gi.getManagerByName(username);
+//                boolean[] permissions;
+//                if (managers == null || managers.isEmpty()) {
+//                    return;
+//                } else {
+//                    Manager manager = managers.get(0);
+//                    permissions = new boolean[6];
+//
+//                    permissions[1] = manager.isPermission1();
+//                    permissions[2] = manager.isPermission2();
+//                    permissions[3] = manager.isPermission3();
+//                    permissions[4] = manager.isPermission4();
+//                    permissions[5] = manager.isPermission5();
+//                }
+//                loginManagedBean.setStatus(true);
+//                loginManagedBean.setUsername(username);
+//                loginManagedBean.setPermissions(permissions);
+//            }
+//        }
         // Filter end
 
 
