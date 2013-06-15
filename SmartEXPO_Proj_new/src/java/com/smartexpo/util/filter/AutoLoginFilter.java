@@ -4,6 +4,9 @@
  */
 package com.smartexpo.util.filter;
 
+import com.smartexpo.controls.GetInfo;
+import com.smartexpo.managedbean.LoginManagedBean;
+import com.smartexpo.models.Manager;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -11,41 +14,59 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.el.ELContext;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Boy
  */
-public class AdminFilter implements Filter {
+public class AutoLoginFilter implements Filter {
 
+    @PersistenceContext(unitName = "SmartEXPO_ProjPU")
+    EntityManager em;
+    @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
+    EntityManagerFactory emf;
+    @Resource
+    private UserTransaction utx;
+    private GetInfo gi;
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    private String redirectURL = null;
     private List<String> notCheckURLList = new ArrayList<String>();
     private String sessionKey = null;
 
-    public AdminFilter() {
+    public AutoLoginFilter() {
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        gi = new GetInfo(emf, utx);
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
 
-        // Initialize the parameters of filter
-        redirectURL = filterConfig.getInitParameter("redirectURL");
-        sessionKey = filterConfig.getInitParameter("checkSessionKey");
-
         String notCheckURLListStr = filterConfig.getInitParameter("notCheckURLList");
+        sessionKey = filterConfig.getInitParameter("checkSessionKey");
 
         if (notCheckURLList != null) {
             StringTokenizer st = new StringTokenizer(notCheckURLListStr, ";");
@@ -116,23 +137,65 @@ public class AdminFilter implements Filter {
         doBeforeProcessing(request, response);
 
 
-        // Filter Begin
+        // Filter begin
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession();
-        if (sessionKey == null) {
-            chain.doFilter(req, res);
+        HttpSession session = req.getSession(true);
+
+        if ((!isURLNotInFilterList(req)) && session.getAttribute(sessionKey) == null) {
             return;
         }
 
-        if ((!isURLNotInFilterList(req)) && session.getAttribute(sessionKey) == null) {
-            res.sendRedirect(req.getContextPath() + redirectURL);
-            return;
+        String username = null;
+        String sessionid; // last sessionid, not current
+        Cookie[] cookies;
+        boolean isAutoLogin = false;
+
+        String user = (String) session.getAttribute(sessionKey);
+        if (user == null || user.equals("")) {
+            cookies = req.getCookies();
+            for (int i = 0; i < cookies.length; ++i) {
+                Cookie cookie = cookies[i];
+                if (cookie.getName().equals("username")) {
+                    username = cookie.getValue();
+                }
+                if (cookie.getName().equals("sessionid")) {
+                    sessionid = cookie.getValue();
+                }
+            }
+            // lookup数据库
         }
-        // Filter End
+        if (isAutoLogin) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ELContext eLContext = context.getELContext();
+            LoginManagedBean loginManagedBean = (LoginManagedBean) context.getApplication()
+                    .getELResolver().getValue(eLContext, null, "loginManagedBean");
+            if (loginManagedBean != null) {
+                List<Manager> managers = gi.getManagerByName(username);
+                boolean[] permissions;
+                if (managers == null || managers.isEmpty()) {
+                    return;
+                } else {
+                    Manager manager = managers.get(0);
+                    permissions = new boolean[6];
+
+                    permissions[1] = manager.isPermission1();
+                    permissions[2] = manager.isPermission2();
+                    permissions[3] = manager.isPermission3();
+                    permissions[4] = manager.isPermission4();
+                    permissions[5] = manager.isPermission5();
+                }
+                loginManagedBean.setStatus(true);
+                loginManagedBean.setUsername(username);
+                loginManagedBean.setPermissions(permissions);
+            }
+        }
+        // Filter end
 
 
         Throwable problem = null;
+
+
         try {
             chain.doFilter(request, response);
         } catch (Throwable t) {
@@ -143,10 +206,10 @@ public class AdminFilter implements Filter {
         }
 
         doAfterProcessing(request, response);
-
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
-        if (problem != null) {
+        if (problem
+                != null) {
             if (problem instanceof ServletException) {
                 throw (ServletException) problem;
             }
@@ -186,6 +249,8 @@ public class AdminFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
+        if (filterConfig != null) {
+        }
     }
 
     /**
@@ -194,9 +259,9 @@ public class AdminFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AdminFilter()");
+            return ("AutoLoginFilter()");
         }
-        StringBuilder sb = new StringBuilder("AdminFilter(");
+        StringBuilder sb = new StringBuilder("AutoLoginFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

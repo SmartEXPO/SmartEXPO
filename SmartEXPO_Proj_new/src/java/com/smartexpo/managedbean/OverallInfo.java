@@ -5,14 +5,19 @@
 package com.smartexpo.managedbean;
 
 import com.smartexpo.models.ServerSentMessage;
+import com.sun.istack.logging.Logger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.logging.Level;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  * This bean is used to store some buffered information for server sent message.
+ *
  * @author ben
  */
 @ManagedBean(eager = true)
@@ -32,7 +37,8 @@ public class OverallInfo {
 
     /**
      * Get the buffered messages
-     * @return 
+     *
+     * @return
      */
     public ServerSentMessage[] getMessage() {
         ServerSentMessage[] rtrn = new ServerSentMessage[msgbuffer.size()];
@@ -43,6 +49,7 @@ public class OverallInfo {
 
     /**
      * Update the message buffer
+     *
      * @param info the new message to be sent
      */
     public void updateMessage(ServerSentMessage info) {
@@ -72,10 +79,10 @@ public class OverallInfo {
 
     /**
      * Set push frequency (ms)
-     * @param threshold 
+     *
+     * @param threshold
      */
     public void setThreshold(int threshold) {
         this.threshold = threshold;
     }
-    
 }

@@ -171,8 +171,7 @@
                             <h:column>
                                 <h:outputLink value="item.xhtml">
                                     <f:param name="id" value="#{searchedItem.itemId}" />
-                                    <h:outputText value="#{searchedItem.itemName}"
-                                                  /><!--我把这里的样式删了添加悬停效果，merge时候注意一点-->
+                                    #{searchedItem.itemName}
                                 </h:outputLink>
                             </h:column>
                         </h:dataTable>
@@ -183,7 +182,8 @@
                     <h:inputText id="search_box" class="func_input_box search"
                                  value="#{searchManagedBean.searchKey}">
                         <f:ajax event="keyup" listener="#{searchManagedBean.searchListener}"
-                                execute="search_box" render=":search_result_form" onevent="handleSearch"/>
+                                execute="search_box" render=":search_result_form"
+                                onevent="handleSearch"/>
                     </h:inputText>
                 </h:form>
 

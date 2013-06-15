@@ -8,6 +8,7 @@ import com.smartexpo.controls.GetInfo;
 import com.smartexpo.jpgcontrollers.ManagerJpaController;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Manager;
+import com.smartexpo.util.MD5;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,9 +74,7 @@ public class SignUpManagedBean implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        if (gi == null) {
-            gi = new GetInfo(em, utx);
-        }
+        gi = new GetInfo(emf, utx);
     }
 
     /**
@@ -159,7 +158,7 @@ public class SignUpManagedBean implements Serializable {
             session.invalidate();
         }
 
-        if (isExist()) { // Username has existed
+        if (isExist(username)) { // Username has existed
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sign up Error", "Username has existed."));
             isVerify = false;
@@ -174,48 +173,49 @@ public class SignUpManagedBean implements Serializable {
         }
 
         if (isVerify) {
-            storeManager();
+            storeManager(username, password, permissions);
         }
-        username = password = confirmPassword = "";
+        username = password = confirmPassword = null;
     }
 
-    private boolean isExist() {
+    private boolean isExist(String user) {
         boolean result = false;
 
-        if (gi.getManagerByName(username) != null) {
+        if (gi.getManagerByName(user) != null) {
             result = true;
         }
 
         return result;
     }
 
-    private void storeManager() {
+    private void storeManager(String user, String pass, Boolean[] pers) {
+        String encryptPassword = MD5.md5(pass);
         try {
             Manager manager = new Manager();
-            manager.setUsername(username);
-            manager.setPassword(password);
+            manager.setUsername(user);
+            manager.setPassword(encryptPassword);
 
-            if (permissions[0]) {
+            if (pers[0]) {
                 manager.setPermission1(true);
             } else {
                 manager.setPermission1(false);
             }
-            if (permissions[1]) {
+            if (pers[1]) {
                 manager.setPermission2(true);
             } else {
                 manager.setPermission2(false);
             }
-            if (permissions[2]) {
+            if (pers[2]) {
                 manager.setPermission3(true);
             } else {
                 manager.setPermission3(false);
             }
-            if (permissions[3]) {
+            if (pers[3]) {
                 manager.setPermission4(true);
             } else {
                 manager.setPermission4(false);
             }
-            if (permissions[4]) {
+            if (pers[4]) {
                 manager.setPermission5(true);
             } else {
                 manager.setPermission5(false);

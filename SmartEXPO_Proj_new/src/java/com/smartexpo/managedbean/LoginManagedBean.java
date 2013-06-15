@@ -6,10 +6,9 @@ package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Manager;
+import com.smartexpo.util.MD5;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +21,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import org.primefaces.context.RequestContext;
@@ -30,7 +31,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author Boy
  */
-@ManagedBean
+@ManagedBean(eager = true)
 @SessionScoped
 public class LoginManagedBean implements Serializable {
 
@@ -143,13 +144,15 @@ public class LoginManagedBean implements Serializable {
      * @return item.xhtml or error.xhtml
      */
     public void verify(AjaxBehaviorEvent event) {
-        Logger.getLogger(LoginManagedBean.class.getName()).log(Level.WARNING, "login fff");
-
-        if (isPass()) { // 数据库验证
+        if (isPass(username, password)) { // 数据库验证
             setStatus(true);
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                     .getExternalContext().getSession(false);
             session.setAttribute("user", username);
+
+            if (true) { // choose auto log in
+//                recordCookie(username);
+            }
 
             RequestContext.getCurrentInstance()
                     .execute("vanish();void(0);"); // Close login pannel
@@ -160,7 +163,7 @@ public class LoginManagedBean implements Serializable {
     }
 
     public String adminLogin() {
-        if (isPass()) {
+        if (isPass(username, password)) {
             setStatus(true);
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                     .getExternalContext().getSession(false);
@@ -183,18 +186,20 @@ public class LoginManagedBean implements Serializable {
         username = password = null;
         setStatus(false);
 
+        // 从数据库删除username和session的tuple，保证下次不会自动登录
         RequestContext.getCurrentInstance()
-                .execute(("alert('Log out successfully.')"));
+                .execute(("alert('Log out successfully!');location.reload(true);"));
     }
 
-    private boolean isPass() {
+    private boolean isPass(String user, String pass) {
         boolean result = false;
 
-        List<Manager> managers = gi.getManagerByName(username);
+        String encryptPassword = MD5.md5(pass);
+        List<Manager> managers = gi.getManagerByName(user);
         if (managers == null) {
         } else {
             Manager manager = managers.get(0);
-            if (manager.getPassword().equals(password)) {
+            if (manager.getPassword().equals(encryptPassword)) {
                 permissions[1] = manager.isPermission1();
                 permissions[2] = manager.isPermission2();
                 permissions[3] = manager.isPermission3();
@@ -205,5 +210,24 @@ public class LoginManagedBean implements Serializable {
             }
         }
         return result;
+    }
+
+    private void recordCookie(String user) {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        HttpServletResponse response = (HttpServletResponse) FacesContext
+                .getCurrentInstance().getExternalContext().getResponse();
+
+        Cookie usernameCookie, sessionIDCookie;
+        usernameCookie = new Cookie("username", user);
+        usernameCookie.setMaxAge(60 * 60 * 24 * 14);
+        response.addCookie(usernameCookie);
+
+        String sessionID = session.getId();
+        sessionIDCookie = new Cookie("sessionid", sessionID);
+        sessionIDCookie.setMaxAge(60 * 60 * 24 * 14);
+        response.addCookie(sessionIDCookie);
+
+        // 将信息插入到数据库中
     }
 }

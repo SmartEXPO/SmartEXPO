@@ -32,6 +32,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -148,6 +149,9 @@ public class ItemController implements Serializable {
      * Creates a new instance of ItemController
      */
     public ItemController() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        LOG.log(Level.WARNING, "sessionid = {0}", session.getId());
         commentIDs = new ArrayList<Integer>();
         commentContents = new ArrayList<String>();
         commentTimes = new ArrayList<Date>();
@@ -617,7 +621,6 @@ public class ItemController implements Serializable {
 
     private void addCommentShowUsernameAndContent(com.smartexpo.models.Comment com) {
         usernameContentPairs.add(new UsernameContentPair(com.getUsername(), com.getContent()));
-//        getCommentShowUsernameAndContent().add(com.getUsername() + ": " + com.getContent());
     }
 
     public Item getItemBean() {

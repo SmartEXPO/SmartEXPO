@@ -21,7 +21,7 @@
         </init-param>
         <init-param>
             <param-name>notCheckURLList</param-name>
-            <param-value>/faces/admin/login.xhtml;/faces/admin/theme_switcher.xhtml</param-value>
+            <param-value>login;theme_switcher</param-value>
         </init-param>
     </filter>
     <filter>
@@ -36,14 +36,30 @@
             <param-value>/WEB-INF/urlrewrite.xml</param-value>
         </init-param>
     </filter>
-    <filter-mapping>
-        <filter-name>AdminFilter</filter-name>
-        <url-pattern>/faces/admin/*</url-pattern>
-    </filter-mapping>
+    <filter>
+        <filter-name>AutoLoginFilter</filter-name>
+        <filter-class>com.smartexpo.util.filter.AutoLoginFilter</filter-class>
+        <init-param>
+            <param-name>checkSessionKey</param-name>
+            <param-value>user</param-value>
+        </init-param>
+        <init-param>
+            <param-name>notCheckURLList</param-name>
+            <param-value>admin_template;av_editor;item_comment;item_insert;item_view;login;sign_up;theme_switcher;user_view</param-value>
+        </init-param>
+    </filter>
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
     </filter>
+    <filter-mapping>
+        <filter-name>AutoLoginFilter</filter-name>
+        <url-pattern>/faces/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/faces/admin/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>

@@ -86,8 +86,5 @@ public class SearchManagedBean {
         } else {
             searchedList.addAll(gi.getItemsByItemNameSubStr(searchKey));
         }
-        for (int i = 0; i < searchedList.size(); ++i) {
-            Logger.getLogger(SearchManagedBean.class.getName()).log(Level.WARNING, "item {0} = {1}", new Object[]{i, searchedList.get(i).getItemName()});
-        }
     }
 }
