@@ -241,6 +241,9 @@
                              value="#{loginManagedBean.username}" />
                 <h:inputSecret id="password" required="true" class="inbox password"
                                value="#{loginManagedBean.password}" />
+
+                <h:selectBooleanCheckbox style="margin-top:15px;" id="autologin"/>
+                <h:outputLabel value="Stay signed in" for="autologin" style="font-family:Times New Roman, Times, serif"/>
                 <h:commandButton id="login_button" type="submit"
                                  class="login_button" value="Sign In">
                     <f:ajax listener="#{loginManagedBean.verify}"

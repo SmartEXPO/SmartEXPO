@@ -23,17 +23,18 @@
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <h:outputScript library="#{info.lib}" name="scripts/blocksit.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/list_effect.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/list_ajax.js"
-                        target="head" />
-        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js"
-                        target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/blocksit.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/jquery.magnific-popup.min.js" target="head" />
+
+        <h:outputScript library="#{info.lib}" name="scripts/list_effect.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/list_ajax.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/login_effect.js" target="head" />
+
         <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/list_style.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/header_style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/magnific-popup.css" />
+
 
         <!--
                 <link rel='stylesheet' href='./style/list_style.css' media='screen' />
@@ -54,20 +55,20 @@
                     <a class="navi" href="#">#{info['navigator.contact']}</a>
                     <div id="login">
                         <h:form id="log_form">
-                            <div>
+                            <div id="login_name" class="inoutname">
                                 #{loginManagedBean.status ? loginManagedBean.username : "Guest"}
                             </div>
-                            <h:outputLink id="show_login" class="navi"
-                                          value="#" onclick="popupLogin();
-                                                  void(0);"
+                            <h:outputLink id="show_login" class="navi popup_login inoutlink"
+                                          value="#login_panel_2"
                                           rendered="#{!loginManagedBean.status}">
                                 <h:outputText value="Log In" />
                             </h:outputLink>
-                            <h:commandLink id="show_logout" class="navi"
+                            <h:commandLink id="show_logout" class="navi inoutlink"
                                            value="Log Out"
                                            actionListener="#{loginManagedBean.logout}"
                                            rendered="#{loginManagedBean.status}">
-                                <f:ajax execute="@form" render="@form" />
+                                <f:ajax execute="@form" onevent="regLoginPanel"
+                                        render="@form :login_form" />
                             </h:commandLink>
                         </h:form>
                     </div>
@@ -101,26 +102,24 @@
             </footer>
         </div>
 
-        <div id="overall_shade"></div>
-
-        <div id="login_panel">
+        <div id="login_panel_2" class="zoom-anim-dialog mfp-hide">
             <h:form id="login_form">
                 <h:inputText id="username" required="true" class="inbox username"
                              value="#{loginManagedBean.username}" />
                 <h:inputSecret id="password" required="true" class="inbox password"
                                value="#{loginManagedBean.password}" />
-                <h:commandButton id="login_button" type="submit"
+                <h:selectBooleanCheckbox style="margin-top:15px;" id="autologin"/>
+                <h:outputLabel value="Stay signed in" for="autologin" style="font-family:Times New Roman, Times, serif"/>
+
+                <h:commandButton id="login_button"
                                  class="login_button" value="Sign In">
                     <f:ajax listener="#{loginManagedBean.verify}"
                             execute="username password"
-                            render="@form :log_form" />
+                            render="login_form :log_form"
+                            />
                 </h:commandButton>
                 <h:message for="username" />
                 <h:message for="password" />
-
-                <input type="button" id="close_panel" value="x"
-                       onclick="vanishLogin();
-                                                  void(0);" />
             </h:form>
         </div>
     </h:body>
