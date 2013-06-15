@@ -13,7 +13,7 @@ import com.smartexpo.dbproto.AttrGroup;
 import com.smartexpo.dbproto.AttrInt;
 import com.smartexpo.dbproto.AttrString;
 import com.smartexpo.dbproto.AttrText;
-import com.smartexpo.dbproto.Item;
+import com.smartexpo.dbproto.DBItem;
 import com.smartexpo.jpacontrollers.AgAgJpaController;
 import com.smartexpo.jpacontrollers.AgAttrJpaController;
 import com.smartexpo.jpacontrollers.AttrDateJpaController;
@@ -57,7 +57,7 @@ public class GetInfoFeatured implements Serializable {
         this.persister = p;
     }
 
-    public void addItem(Item item) {
+    public void addItem(DBItem item) {
         AttrGroup ag = new AttrGroup();
         ag.setAttrGroupName(item.getItemName());
         item.setItemAttrGroupId(ag);
@@ -126,11 +126,11 @@ public class GetInfoFeatured implements Serializable {
         persister.persist(agAttr);
     }
 
-    public void addAttr(Item item, Attr attr) {
+    public void addAttr(DBItem item, Attr attr) {
         addAttr(item.getItemAttrGroupId(), attr);
     }
 
-    public void addAttrGroup(Item item, AttrGroup ag) {
+    public void addAttrGroup(DBItem item, AttrGroup ag) {
         AttrGroup ag_parent = item.getItemAttrGroupId();
         addAttrGroup(ag_parent, ag);
     }
@@ -145,11 +145,11 @@ public class GetInfoFeatured implements Serializable {
 
     }
 
-    public String getStringAttr(Item item, String attrName) {
+    public String getStringAttr(DBItem item, String attrName) {
         return getStringAttr(item.getItemAttrGroupId(), attrName);
     }
 
-    public List<AttrGroup> getAGByName(Item item, String ag_name) {
+    public List<AttrGroup> getAGByName(DBItem item, String ag_name) {
         AttrGroup item_ag = item.getItemAttrGroupId();
 
         return getAGByName(item_ag, ag_name);
@@ -177,7 +177,7 @@ public class GetInfoFeatured implements Serializable {
         return null;
     }
 
-    public void destoryAttrGroupByName(Item item, String ag_name) {
+    public void destoryAttrGroupByName(DBItem item, String ag_name) {
         destoryAttrGroupByName(item.getItemAttrGroupId(), ag_name);
     }
 
