@@ -25,13 +25,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author tornado718
  */
 @Entity
-@Table(name = "ITEM")
+@Table(name = "DBItem")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
-    @NamedQuery(name = "Item.findByItemId", query = "SELECT i FROM Item i WHERE i.itemId = :itemId"),
-    @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName")})
-public class Item implements Serializable {
+    @NamedQuery(name = "DBItem.findAll", query = "SELECT i FROM DBItem i"),
+    @NamedQuery(name = "DBItem.findByItemId", query = "SELECT i FROM DBItem i WHERE i.itemId = :itemId"),
+    @NamedQuery(name = "DBItem.findByItemName", query = "SELECT i FROM DBItem i WHERE i.itemName = :itemName")})
+public class DBItem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,14 +47,14 @@ public class Item implements Serializable {
     @OneToOne(optional = false)
     private AttrGroup itemAttrGroupId;
 
-    public Item() {
+    public DBItem() {
     }
 
-    public Item(Integer itemId) {
+    public DBItem(Integer itemId) {
         this.itemId = itemId;
     }
 
-    public Item(Integer itemId, String itemName) {
+    public DBItem(Integer itemId, String itemName) {
         this.itemId = itemId;
         this.itemName = itemName;
     }
@@ -93,10 +93,10 @@ public class Item implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Item)) {
+        if (!(object instanceof DBItem)) {
             return false;
         }
-        Item other = (Item) object;
+        DBItem other = (DBItem) object;
         if ((this.itemId == null && other.itemId != null) || (this.itemId != null && !this.itemId.equals(other.itemId))) {
             return false;
         }

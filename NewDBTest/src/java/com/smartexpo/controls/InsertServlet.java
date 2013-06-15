@@ -9,7 +9,7 @@ import com.smartexpo.dbproto.Attr;
 import com.smartexpo.dbproto.AttrGroup;
 import com.smartexpo.dbproto.AttrString;
 import com.smartexpo.models.type.AttrType;
-import com.smartexpo.dbproto.Item;
+import com.smartexpo.dbproto.DBItem;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -62,11 +62,11 @@ public class InsertServlet extends HttpServlet implements Persister{
         
         gif=new GetInfoFeatured(emf, utx, this);
         
-        Item item =new Item();
+        DBItem item =new DBItem();
         item.setItemName(request.getParameter("item_name"));
         gif.addItem(item);
         
-        Item item2=new Item();
+        DBItem item2=new DBItem();
         item2.setItemName("new Item");
         gif.addItem(item2);
         

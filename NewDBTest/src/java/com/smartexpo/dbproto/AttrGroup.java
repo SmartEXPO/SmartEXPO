@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AttrGroup.findByAttrGroupName", query = "SELECT a FROM AttrGroup a WHERE a.attrGroupName = :attrGroupName")})
 public class AttrGroup implements Serializable {
     @OneToMany(mappedBy = "itemAttrGroupId")
-    private Collection<Item> itemCollection;
+    private Collection<DBItem> itemCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "agChildId")
     private AgAg agAg_toParent;
     private static final long serialVersionUID = 1L;
@@ -51,7 +51,7 @@ public class AttrGroup implements Serializable {
     @Column(name = "ATTR_GROUP_NAME")
     private String attrGroupName;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "itemAttrGroupId")
-    private Item item;
+    private DBItem item;
 
     public AttrGroup() {
     }
@@ -83,11 +83,11 @@ public class AttrGroup implements Serializable {
 
    
 
-    public Item getItem() {
+    public DBItem getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(DBItem item) {
         this.item = item;
     }
 
@@ -127,11 +127,11 @@ public class AttrGroup implements Serializable {
     
 
     @XmlTransient
-    public Collection<Item> getItemCollection() {
+    public Collection<DBItem> getItemCollection() {
         return itemCollection;
     }
 
-    public void setItemCollection(Collection<Item> itemCollection) {
+    public void setItemCollection(Collection<DBItem> itemCollection) {
         this.itemCollection = itemCollection;
     }
     

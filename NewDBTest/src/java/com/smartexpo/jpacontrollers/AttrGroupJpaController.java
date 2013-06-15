@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.smartexpo.dbproto.Item;
+import com.smartexpo.dbproto.DBItem;
 import com.smartexpo.dbproto.AgAg;
 import com.smartexpo.dbproto.AttrGroup;
 import com.smartexpo.jpacontrollers.exceptions.IllegalOrphanException;
@@ -41,13 +41,13 @@ public class AttrGroupJpaController implements Serializable {
 
     public void create(AttrGroup attrGroup) throws RollbackFailureException, Exception {
         if (attrGroup.getItemCollection() == null) {
-            attrGroup.setItemCollection(new ArrayList<Item>());
+            attrGroup.setItemCollection(new ArrayList<DBItem>());
         }
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Item item = attrGroup.getItem();
+            DBItem item = attrGroup.getItem();
             if (item != null) {
                 item = em.getReference(item.getClass(), item.getItemId());
                 attrGroup.setItem(item);
@@ -57,8 +57,8 @@ public class AttrGroupJpaController implements Serializable {
                 agAg_toParent = em.getReference(agAg_toParent.getClass(), agAg_toParent.getAgAgId());
                 attrGroup.setAgAg_toParent(agAg_toParent);
             }
-            Collection<Item> attachedItemCollection = new ArrayList<Item>();
-            for (Item itemCollectionItemToAttach : attrGroup.getItemCollection()) {
+            Collection<DBItem> attachedItemCollection = new ArrayList<DBItem>();
+            for (DBItem itemCollectionItemToAttach : attrGroup.getItemCollection()) {
                 itemCollectionItemToAttach = em.getReference(itemCollectionItemToAttach.getClass(), itemCollectionItemToAttach.getItemId());
                 attachedItemCollection.add(itemCollectionItemToAttach);
             }
@@ -82,7 +82,7 @@ public class AttrGroupJpaController implements Serializable {
                 agAg_toParent.setAgChildId(attrGroup);
                 agAg_toParent = em.merge(agAg_toParent);
             }
-            for (Item itemCollectionItem : attrGroup.getItemCollection()) {
+            for (DBItem itemCollectionItem : attrGroup.getItemCollection()) {
                 AttrGroup oldItemAttrGroupIdOfItemCollectionItem = itemCollectionItem.getItemAttrGroupId();
                 itemCollectionItem.setItemAttrGroupId(attrGroup);
                 itemCollectionItem = em.merge(itemCollectionItem);
@@ -112,12 +112,12 @@ public class AttrGroupJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             AttrGroup persistentAttrGroup = em.find(AttrGroup.class, attrGroup.getAttrGroupId());
-            Item itemOld = persistentAttrGroup.getItem();
-            Item itemNew = attrGroup.getItem();
+            DBItem itemOld = persistentAttrGroup.getItem();
+            DBItem itemNew = attrGroup.getItem();
             AgAg agAg_toParentOld = persistentAttrGroup.getAgAg_toParent();
             AgAg agAg_toParentNew = attrGroup.getAgAg_toParent();
-            Collection<Item> itemCollectionOld = persistentAttrGroup.getItemCollection();
-            Collection<Item> itemCollectionNew = attrGroup.getItemCollection();
+            Collection<DBItem> itemCollectionOld = persistentAttrGroup.getItemCollection();
+            Collection<DBItem> itemCollectionNew = attrGroup.getItemCollection();
             List<String> illegalOrphanMessages = null;
             if (itemOld != null && !itemOld.equals(itemNew)) {
                 if (illegalOrphanMessages == null) {
@@ -131,7 +131,7 @@ public class AttrGroupJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("You must retain AgAg " + agAg_toParentOld + " since its agChildId field is not nullable.");
             }
-            for (Item itemCollectionOldItem : itemCollectionOld) {
+            for (DBItem itemCollectionOldItem : itemCollectionOld) {
                 if (!itemCollectionNew.contains(itemCollectionOldItem)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
@@ -150,8 +150,8 @@ public class AttrGroupJpaController implements Serializable {
                 agAg_toParentNew = em.getReference(agAg_toParentNew.getClass(), agAg_toParentNew.getAgAgId());
                 attrGroup.setAgAg_toParent(agAg_toParentNew);
             }
-            Collection<Item> attachedItemCollectionNew = new ArrayList<Item>();
-            for (Item itemCollectionNewItemToAttach : itemCollectionNew) {
+            Collection<DBItem> attachedItemCollectionNew = new ArrayList<DBItem>();
+            for (DBItem itemCollectionNewItemToAttach : itemCollectionNew) {
                 itemCollectionNewItemToAttach = em.getReference(itemCollectionNewItemToAttach.getClass(), itemCollectionNewItemToAttach.getItemId());
                 attachedItemCollectionNew.add(itemCollectionNewItemToAttach);
             }
@@ -176,7 +176,7 @@ public class AttrGroupJpaController implements Serializable {
                 agAg_toParentNew.setAgChildId(attrGroup);
                 agAg_toParentNew = em.merge(agAg_toParentNew);
             }
-            for (Item itemCollectionNewItem : itemCollectionNew) {
+            for (DBItem itemCollectionNewItem : itemCollectionNew) {
                 if (!itemCollectionOld.contains(itemCollectionNewItem)) {
                     AttrGroup oldItemAttrGroupIdOfItemCollectionNewItem = itemCollectionNewItem.getItemAttrGroupId();
                     itemCollectionNewItem.setItemAttrGroupId(attrGroup);
@@ -222,7 +222,7 @@ public class AttrGroupJpaController implements Serializable {
                 throw new NonexistentEntityException("The attrGroup with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Item itemOrphanCheck = attrGroup.getItem();
+            DBItem itemOrphanCheck = attrGroup.getItem();
             if (itemOrphanCheck != null) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
@@ -236,8 +236,8 @@ public class AttrGroupJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This AttrGroup (" + attrGroup + ") cannot be destroyed since the AgAg " + agAg_toParentOrphanCheck + " in its agAg_toParent field has a non-nullable agChildId field.");
             }
-            Collection<Item> itemCollectionOrphanCheck = attrGroup.getItemCollection();
-            for (Item itemCollectionOrphanCheckItem : itemCollectionOrphanCheck) {
+            Collection<DBItem> itemCollectionOrphanCheck = attrGroup.getItemCollection();
+            for (DBItem itemCollectionOrphanCheckItem : itemCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }

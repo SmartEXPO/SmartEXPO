@@ -19,6 +19,7 @@ import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
 import com.smartexpo.models.Permission;
+import com.smartexpo.models.Sessioninfo;
 import com.smartexpo.models.Video;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -334,5 +335,14 @@ public class GetInfo implements Serializable {
             }
         }
         return c;
+    }
+    
+    
+    public List<Sessioninfo> getSessioninfosByName(String username){
+        List<Sessioninfo> sinfos=em.createNamedQuery("Sessioninfo.findByUsername").setParameter("username", username).getResultList();
+        if(sinfos.isEmpty()){
+            return null;
+        }
+        return sinfos;
     }
 }

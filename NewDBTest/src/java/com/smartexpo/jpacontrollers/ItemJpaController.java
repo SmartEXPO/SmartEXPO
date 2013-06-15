@@ -10,7 +10,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.smartexpo.dbproto.AttrGroup;
-import com.smartexpo.dbproto.Item;
+import com.smartexpo.dbproto.DBItem;
 import com.smartexpo.jpacontrollers.exceptions.IllegalOrphanException;
 import com.smartexpo.jpacontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpacontrollers.exceptions.RollbackFailureException;
@@ -37,11 +37,11 @@ public class ItemJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Item item) throws IllegalOrphanException, RollbackFailureException, Exception {
+    public void create(DBItem item) throws IllegalOrphanException, RollbackFailureException, Exception {
         List<String> illegalOrphanMessages = null;
         AttrGroup itemAttrGroupIdOrphanCheck = item.getItemAttrGroupId();
         if (itemAttrGroupIdOrphanCheck != null) {
-            Item oldItemOfItemAttrGroupId = itemAttrGroupIdOrphanCheck.getItem();
+            DBItem oldItemOfItemAttrGroupId = itemAttrGroupIdOrphanCheck.getItem();
             if (oldItemOfItemAttrGroupId != null) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
@@ -81,17 +81,17 @@ public class ItemJpaController implements Serializable {
         }
     }
 
-    public void edit(Item item) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(DBItem item) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Item persistentItem = em.find(Item.class, item.getItemId());
+            DBItem persistentItem = em.find(DBItem.class, item.getItemId());
             AttrGroup itemAttrGroupIdOld = persistentItem.getItemAttrGroupId();
             AttrGroup itemAttrGroupIdNew = item.getItemAttrGroupId();
             List<String> illegalOrphanMessages = null;
             if (itemAttrGroupIdNew != null && !itemAttrGroupIdNew.equals(itemAttrGroupIdOld)) {
-                Item oldItemOfItemAttrGroupId = itemAttrGroupIdNew.getItem();
+                DBItem oldItemOfItemAttrGroupId = itemAttrGroupIdNew.getItem();
                 if (oldItemOfItemAttrGroupId != null) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
@@ -142,9 +142,9 @@ public class ItemJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Item item;
+            DBItem item;
             try {
-                item = em.getReference(Item.class, id);
+                item = em.getReference(DBItem.class, id);
                 item.getItemId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The item with id " + id + " no longer exists.", enfe);
@@ -170,19 +170,19 @@ public class ItemJpaController implements Serializable {
         }
     }
 
-    public List<Item> findItemEntities() {
+    public List<DBItem> findItemEntities() {
         return findItemEntities(true, -1, -1);
     }
 
-    public List<Item> findItemEntities(int maxResults, int firstResult) {
+    public List<DBItem> findItemEntities(int maxResults, int firstResult) {
         return findItemEntities(false, maxResults, firstResult);
     }
 
-    private List<Item> findItemEntities(boolean all, int maxResults, int firstResult) {
+    private List<DBItem> findItemEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Item.class));
+            cq.select(cq.from(DBItem.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -194,10 +194,10 @@ public class ItemJpaController implements Serializable {
         }
     }
 
-    public Item findItem(Integer id) {
+    public DBItem findItem(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Item.class, id);
+            return em.find(DBItem.class, id);
         } finally {
             em.close();
         }
@@ -207,7 +207,7 @@ public class ItemJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Item> rt = cq.from(Item.class);
+            Root<DBItem> rt = cq.from(DBItem.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
