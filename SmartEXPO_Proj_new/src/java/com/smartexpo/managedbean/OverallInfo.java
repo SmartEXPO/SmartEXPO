@@ -5,15 +5,11 @@
 package com.smartexpo.managedbean;
 
 import com.smartexpo.models.ServerSentMessage;
-import com.sun.istack.logging.Logger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.logging.Level;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 /**
  * This bean is used to store some buffered information for server sent message.
@@ -24,6 +20,8 @@ import javax.servlet.http.HttpSession;
 @ApplicationScoped
 public class OverallInfo {
 
+    public static final String COOKIE_NAME_SESSION_ID = "SESSION_ID";
+    public static final String COOKIE_NAME_USERNAME = "USERNAME";
     private int threshold = 500;
     private LinkedList<ServerSentMessage> msgbuffer = new LinkedList<ServerSentMessage>();
     private long num = 0;

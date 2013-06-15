@@ -6,7 +6,9 @@ package com.smartexpo.util.filter;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.managedbean.LoginManagedBean;
+import com.smartexpo.managedbean.OverallInfo;
 import com.smartexpo.models.Manager;
+import com.smartexpo.models.Sessioninfo;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -156,14 +158,19 @@ public class AutoLoginFilter implements Filter {
             cookies = req.getCookies();
             for (int i = 0; i < cookies.length; ++i) {
                 Cookie cookie = cookies[i];
-                if (cookie.getName().equals("username")) {
+                if (cookie.getName().equals(OverallInfo.COOKIE_NAME_USERNAME)) {
                     username = cookie.getValue();
                 }
-                if (cookie.getName().equals("sessionid")) {
+                if (cookie.getName().equals(OverallInfo.COOKIE_NAME_SESSION_ID)) {
                     sessionid = cookie.getValue();
                 }
             }
-            // lookup数据库
+            Sessioninfo sessionInfo = gi.getSessioninfosByName(username).get(0);
+            if (sessionInfo == null) {
+                isAutoLogin = false;
+            } else {
+                isAutoLogin = true;
+            }
         }
         if (isAutoLogin) {
             FacesContext context = FacesContext.getCurrentInstance();

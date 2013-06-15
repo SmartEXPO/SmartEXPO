@@ -183,10 +183,12 @@ public class LoginManagedBean implements Serializable {
         for (int i = 1; i <= 5; ++i) {
             permissions[i] = false;
         }
+
+        // TODO @storm 从数据库删除username和sessionid的tuple，保证下次不会自动登录
+        //             依靠username删除，此时sessionid是未知的
         username = password = null;
         setStatus(false);
 
-        // 从数据库删除username和session的tuple，保证下次不会自动登录
         RequestContext.getCurrentInstance()
                 .execute(("alert('Log out successfully!');location.reload(true);"));
     }
@@ -219,15 +221,15 @@ public class LoginManagedBean implements Serializable {
                 .getCurrentInstance().getExternalContext().getResponse();
 
         Cookie usernameCookie, sessionIDCookie;
-        usernameCookie = new Cookie("username", user);
+        usernameCookie = new Cookie(OverallInfo.COOKIE_NAME_USERNAME, user);
         usernameCookie.setMaxAge(60 * 60 * 24 * 14);
         response.addCookie(usernameCookie);
 
         String sessionID = session.getId();
-        sessionIDCookie = new Cookie("sessionid", sessionID);
+        sessionIDCookie = new Cookie(OverallInfo.COOKIE_NAME_SESSION_ID, sessionID);
         sessionIDCookie.setMaxAge(60 * 60 * 24 * 14);
         response.addCookie(sessionIDCookie);
 
-        // 将信息插入到数据库中
+        // TODO @storm 将信息插入到数据库中，username和sessionID两个String
     }
 }
