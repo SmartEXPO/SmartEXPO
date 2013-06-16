@@ -20,13 +20,18 @@
         <title>SmartEXPO | Info</title>
 
         <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
-        <h:outputStylesheet library="#{info.lib}" name="css/index_style.css" />        
+        <h:outputStylesheet library="#{info.lib}" name="css/index_style.css" />      
+
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
+                        target="head"/>
+        <h:outputScript library="#{info.lib}" name="scripts/sidebar.js" target="head" />
+
     </h:head>
 
-    <h:body onload="init();">
+    <h:body>
         <header>
             <nav>
-               <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
+                <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
                 <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
                 <h:outputLink class="navi" value="contact.xhtml">#{info['navigator.contact']}</h:outputLink>
             </nav>
@@ -45,8 +50,76 @@
             <h:outputText value="#{info.footer}" escape="false"/>
         </footer>
 
-        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
-                        target="head"/>
+
+        <div id="side_bar">
+            <h:graphicImage id="handler" library="#{info.lib}" name="images/handler.png" />
+            <div id="expand_sidebar">
+                <div id="sidebar_back"></div>
+                <div id="sidebar_content">
+                    <div style="text-align:center;padding-top:20px;">
+                        <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
+                        <h2 style="margin-top:-2px;padding-left:40px;">
+                            <h:outputText value="#{indexBundle.exhibitionAreaMap}" 
+                                          escape="false" />
+                        </h2>
+                        <!--这个地方貌似那个图片不是居中做的-->
+                        <h:outputLink value="map.xhtml">
+                            <h:graphicImage library="#{info.lib}" name="images/map.png" />
+                        </h:outputLink>
+                        <br /><br />
+                        <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
+                        <h2 style="margin-top:-2px;padding-left:40px;">
+                            <h:outputText value="#{indexBundle.recommendItem}"
+                                          escape="false" />
+                        </h2>
+                        <div style="text-align: center;">
+                            <table id="sidebar_rect" width="547" height="101" border="0" cellpadding="0" cellspacing="0" 
+                                   background="/SmartEXPO_Proj_new/faces/javax.faces.resource/images/sidebar_rect.png?ln=#{info.lib}"
+                                   style="margin:0 auto;padding:0 0 0 0;">
+                                <tr>
+                                    <td colspan="9" style="width:547px;height:3px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:11px;height:80px;"></td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[0].itemId}">
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[0].imageurl}"
+                                                            style="width: 120px; height: 80px;" />
+                                        </h:outputLink>
+                                    </td>
+                                    <td style="width:15px;height:80px;"></td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[1].itemId}">
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[1].imageurl}"
+                                                            style="width: 120px; height: 80px" />
+                                        </h:outputLink>
+                                    </td>
+                                    <td style="width:15px;height:80px;"></td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[2].itemId}">
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[2].imageurl}"
+                                                            style="width: 120px; height: 80px" />
+                                        </h:outputLink>
+                                    </td>
+                                    <td style="width:15px;height:80px;"></td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[3].itemId}">
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[3].imageurl}"
+                                                            style="width: 120px; height: 80px" />
+                                        </h:outputLink>
+                                    </td>
+                                    <td style="width:11px;height:80px;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" style="width:547px;height:18px;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="handler_vanish"></div>
+            </div>
+        </div>
 
     </h:body>
 </html>
