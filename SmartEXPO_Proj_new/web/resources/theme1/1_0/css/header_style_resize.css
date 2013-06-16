@@ -175,12 +175,12 @@
 
 /* End of Log In/Out Part */
 
-
-/**
+/*
+*
  * Fade-zoom animation for first dialog
- */
+ 
 
-/* start state */
+ start state 
 .my-mfp-zoom-in .zoom-anim-dialog {
     opacity: 0;
 
@@ -198,7 +198,7 @@
     transform: scale(0.8); 
 }
 
-/* animate in */
+ animate in 
 .my-mfp-zoom-in.mfp-ready .zoom-anim-dialog {
     opacity: 1;
 
@@ -209,7 +209,7 @@
     transform: scale(1); 
 }
 
-/* animate out */
+ animate out 
 .my-mfp-zoom-in.mfp-removing .zoom-anim-dialog {
     -webkit-transform: scale(0.8); 
     -moz-transform: scale(0.8); 
@@ -220,7 +220,7 @@
     opacity: 0;
 }
 
-/* Dark overlay, start state */
+ Dark overlay, start state 
 .my-mfp-zoom-in.mfp-bg {
     opacity: 0;
     -webkit-transition: opacity 0.3s ease-out; 
@@ -228,15 +228,15 @@
     -o-transition: opacity 0.3s ease-out; 
     transition: opacity 0.3s ease-out;
 }
-/* animate in */
+ animate in 
 .my-mfp-zoom-in.mfp-ready.mfp-bg {
     opacity: 0.8;
 }
-/* animate out */
+ animate out 
 .my-mfp-zoom-in.mfp-removing.mfp-bg {
     opacity: 0;
 }
-
+*/
 
 
 /**

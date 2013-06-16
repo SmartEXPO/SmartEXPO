@@ -126,12 +126,12 @@ a.navi:hover {
 
 /* End of Log In/Out Part */
 
-
-/**
+/*
+*
  * Fade-zoom animation for first dialog
- */
+ 
 
-/* start state */
+ start state 
 .my-mfp-zoom-in .zoom-anim-dialog {
     opacity: 0;
 
@@ -149,7 +149,7 @@ a.navi:hover {
     transform: scale(0.8); 
 }
 
-/* animate in */
+ animate in 
 .my-mfp-zoom-in.mfp-ready .zoom-anim-dialog {
     opacity: 1;
 
@@ -160,7 +160,7 @@ a.navi:hover {
     transform: scale(1); 
 }
 
-/* animate out */
+ animate out 
 .my-mfp-zoom-in.mfp-removing .zoom-anim-dialog {
     -webkit-transform: scale(0.8); 
     -moz-transform: scale(0.8); 
@@ -171,7 +171,7 @@ a.navi:hover {
     opacity: 0;
 }
 
-/* Dark overlay, start state */
+ Dark overlay, start state 
 .my-mfp-zoom-in.mfp-bg {
     opacity: 0;
     -webkit-transition: opacity 0.3s ease-out; 
@@ -179,14 +179,14 @@ a.navi:hover {
     -o-transition: opacity 0.3s ease-out; 
     transition: opacity 0.3s ease-out;
 }
-/* animate in */
+ animate in 
 .my-mfp-zoom-in.mfp-ready.mfp-bg {
     opacity: 0.8;
 }
-/* animate out */
+ animate out 
 .my-mfp-zoom-in.mfp-removing.mfp-bg {
     opacity: 0;
-}
+}*/
 
 
 
@@ -202,11 +202,11 @@ a.navi:hover {
     -o-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
 
-    -webkit-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
-    -moz-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
-    -ms-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
-    -o-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
-    transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    -webkit-transform: translateY(-20px) perspective( 600px ) rotateX( 30deg );
+    -moz-transform: translateY(-20px) perspective( 600px ) rotateX( 30deg );
+    -ms-transform: translateY(-20px) perspective( 600px ) rotateX( 30deg );
+    -o-transform: translateY(-20px) perspective( 600px ) rotateX( 30deg );
+    transform: translateY(-20px) perspective( 600px ) rotateX( 30deg );
 
 }
 
