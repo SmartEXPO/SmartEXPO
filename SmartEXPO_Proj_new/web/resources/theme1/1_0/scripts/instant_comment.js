@@ -34,8 +34,10 @@ function showInstantComment() {
 /*Function */
 
 function getURLParam(name) {
-    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
-        return decodeURIComponent(name[1]);
+//    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
+//        return decodeURIComponent(name[1]);
+    console.log($("#itemidhiddenbox").attr('value'));
+    return $("#itemidhiddenbox").attr('value');
 }
 
 function initInstantComment() {
