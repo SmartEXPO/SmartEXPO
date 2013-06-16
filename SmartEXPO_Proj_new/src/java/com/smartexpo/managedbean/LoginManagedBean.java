@@ -6,10 +6,12 @@ package com.smartexpo.managedbean;
 
 import com.smartexpo.bundle.SessioninfoJpaController;
 import com.smartexpo.bundle.exceptions.NonexistentEntityException;
+import com.smartexpo.bundle.exceptions.PreexistingEntityException;
 import com.smartexpo.bundle.exceptions.RollbackFailureException;
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.Sessioninfo;
+import com.smartexpo.models.SessioninfoPK;
 import com.smartexpo.util.MD5;
 import java.io.Serializable;
 import java.util.List;
@@ -30,6 +32,11 @@ import javax.persistence.PersistenceUnit;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.primefaces.context.RequestContext;
 
@@ -209,13 +216,11 @@ public class LoginManagedBean implements Serializable {
                 .getExternalContext().getSession(false);
         session.invalidate();
 
-        // TODO @storm 从数据库删除username和sessionid的tuple，保证下次不会自动登录
-        //             依靠username删除，此时sessionid是未知的
 
-        GetInfo gi=new GetInfo(emf, utx);
-        List<Sessioninfo> sinfos=gi.getSessioninfosByName(username);
-        SessioninfoJpaController sijc=new SessioninfoJpaController(utx, emf);
-        for(int i=0;i<sinfos.size();i++){
+        GetInfo gi = new GetInfo(emf, utx);
+        List<Sessioninfo> sinfos = gi.getSessioninfosByName(username);
+        SessioninfoJpaController sijc = new SessioninfoJpaController(utx, emf);
+        for (int i = 0; i < sinfos.size(); i++) {
             try {
                 sijc.destroy(sinfos.get(i).getSessioninfoPK());
             } catch (NonexistentEntityException ex) {
@@ -226,7 +231,7 @@ public class LoginManagedBean implements Serializable {
                 Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         username = password = null;
         for (int i = 1; i <= 5; ++i) {
             permissions[i] = false;
@@ -259,21 +264,49 @@ public class LoginManagedBean implements Serializable {
     }
 
     private void recordCookie(String user) {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
-        HttpServletResponse response = (HttpServletResponse) FacesContext
-                .getCurrentInstance().getExternalContext().getResponse();
+        try {
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSession(false);
+            HttpServletResponse response = (HttpServletResponse) FacesContext
+                    .getCurrentInstance().getExternalContext().getResponse();
 
-        Cookie usernameCookie, sessionIDCookie;
-        usernameCookie = new Cookie(OverallInfo.COOKIE_NAME_USERNAME, user);
-        usernameCookie.setMaxAge(60 * 60 * 24 * 14);
-        response.addCookie(usernameCookie);
+            Cookie usernameCookie, sessionIDCookie;
+            usernameCookie = new Cookie(OverallInfo.COOKIE_NAME_USERNAME, user);
+            usernameCookie.setMaxAge(60 * 60 * 24 * 14);
+            response.addCookie(usernameCookie);
 
-        String sessionID = session.getId();
-        sessionIDCookie = new Cookie(OverallInfo.COOKIE_NAME_SESSION_ID, sessionID);
-        sessionIDCookie.setMaxAge(60 * 60 * 24 * 14);
-        response.addCookie(sessionIDCookie);
+            String sessionID = session.getId();
+            sessionIDCookie = new Cookie(OverallInfo.COOKIE_NAME_SESSION_ID, sessionID);
+            sessionIDCookie.setMaxAge(60 * 60 * 24 * 14);
+            response.addCookie(sessionIDCookie);
 
-        // TODO @storm 将信息插入到数据库中，username和sessionID两个String
+
+
+            Sessioninfo sinfo = new Sessioninfo();
+            SessioninfoPK sinfoPK = new SessioninfoPK();
+            sinfoPK.setSessionid(sessionID);
+            sinfoPK.setUsername(username);
+            sinfo.setSessioninfoPK(sinfoPK);
+            utx.begin();
+            
+            em.persist(sinfo);
+            try {
+                utx.commit();
+            } catch (RollbackException ex) {
+                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (HeuristicMixedException ex) {
+                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (HeuristicRollbackException ex) {
+                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalStateException ex) {
+                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SystemException ex) {
+            Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

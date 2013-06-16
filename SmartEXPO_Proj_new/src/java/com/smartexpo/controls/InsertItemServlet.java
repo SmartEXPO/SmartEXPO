@@ -23,6 +23,8 @@ import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.ManagerPermission;
 import com.smartexpo.models.Permission;
+import com.smartexpo.models.Sessioninfo;
+import com.smartexpo.models.SessioninfoPK;
 import com.smartexpo.models.Video;
 import java.io.IOException;
 import java.util.Date;
@@ -199,6 +201,15 @@ public class InsertItemServlet extends HttpServlet {
             ItemDisplayColumn idc2 = new ItemDisplayColumn();
             idc2.setItemId(item);
             idc2.setDisplayColumnId(dc2);
+            
+            String sessionid="asdfasdf";
+            String username="max";
+            
+            Sessioninfo sinfo=new Sessioninfo();
+            SessioninfoPK sinfoPK=new SessioninfoPK();
+            sinfoPK.setSessionid(sessionid);
+            sinfoPK.setUsername(username);
+            sinfo.setSessioninfoPK(sinfoPK);
 
 
             utx.begin();
@@ -233,6 +244,10 @@ public class InsertItemServlet extends HttpServlet {
             em.persist(itemAudio1);
             em.persist(video);
             em.persist(itemVideo);
+            
+            //em.persist(sinfoPK);
+            em.persist(sinfo);
+            
 
             utx.commit();
 

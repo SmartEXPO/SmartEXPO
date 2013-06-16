@@ -204,6 +204,10 @@ public class ItemController implements Serializable {
         return audioURLs;
     }
 
+    public boolean isAudioUrlEmpty() {
+        return audioBean.getURLs().isEmpty();
+    }
+
     /**
      * @return the audioDescriptions
      */
@@ -241,6 +245,10 @@ public class ItemController implements Serializable {
     public List<String> getVideoURLs() {
         setVideoURLs(videoBean.getURLs());
         return videoURLs;
+    }
+
+    public boolean isVideoUrlEmpty() {
+        return videoBean.getURLs().isEmpty();
     }
 
     /**
