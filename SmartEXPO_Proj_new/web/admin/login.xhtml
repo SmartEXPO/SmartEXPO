@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <title>SmartEXPO | Admin Console</title>
@@ -27,15 +29,8 @@
             </div> <!-- End #logn-top -->
 
             <div id="login-content">
-
                 <h:form>
-
-                    <div class="notification information png_bg">
-                        <div>
-                            Some information/messages here.
-                        </div>
-                    </div> 
-
+                    <p:growl id="msg"/>
                     <p>
                         <h:outputLabel for="username" value="Username" />
                         <h:inputText id="username" required="true" class="text-input"
@@ -49,15 +44,17 @@
                     </p>
                     <div class="clear"></div>
                     <p>
-                        <h:commandButton id="login_button" type="submit" class="button"
-                                         value="Sign In"
-                                         action="#{loginManagedBean.adminLogin}" />
+                        <h:commandButton id="login_button" type="submit"
+                                         value="Sign In" class="button"
+                                         action="#{loginManagedBean.adminLogin}">
+                            <f:ajax execute="@form" render="msg" />
+                        </h:commandButton>
                     </p>
 
                 </h:form>
             </div> <!-- End #login-content -->
 
         </div> <!-- End #login-wrapper -->
-        
+
     </body>
 </html>

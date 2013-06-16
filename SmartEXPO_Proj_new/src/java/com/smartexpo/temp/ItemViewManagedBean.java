@@ -589,9 +589,6 @@ public class ItemViewManagedBean implements Serializable {
             }
         }
 
-
-
-
         RequestContext.getCurrentInstance()
                 .execute(("alert('Modify successfully!');location.reload(true)"));
 

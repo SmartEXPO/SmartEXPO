@@ -63,10 +63,13 @@
         <div>
             <input id="itemidhiddenbox" hidden="true" value="#{itemController.itemBean.id}" />
             <div class="edit_description_div">
-                <h:outputLink class="edit_description_link"
-                              value="#edit_content_panel_2">
-                    Edit
-                </h:outputLink>
+                <h:form id="edit_html_form">
+                    <h:outputLink class="edit_description_link"
+                                  value="#edit_content_panel_2"
+                                  rendered="#{loginManagedBean.permissions[2]}">
+                        Edit
+                    </h:outputLink>
+                </h:form>
             </div>
 
             <header id="header">
@@ -265,7 +268,7 @@
                                  class="login_button" value="Sign In">
                     <f:ajax listener="#{loginManagedBean.verify}"
                             execute="username password autologin"
-                            render="@form :log_form :comment_form :edit_btn"
+                            render="@form :log_form :comment_form :edit_btn :edit_html_form"
                             onevent="finish" />
                 </h:commandButton>
                 <h:message for="username" />

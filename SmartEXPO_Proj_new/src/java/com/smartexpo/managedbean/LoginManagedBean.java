@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -201,6 +202,8 @@ public class LoginManagedBean implements Serializable {
 
             return "item_view?faces-redirect=true";
         } else {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage("Username or password Error!"));
         }
 
         return null;
