@@ -204,6 +204,7 @@ public class LoginManagedBean implements Serializable {
         } else {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage("Username or password Error!"));
+            username = password = null;
         }
 
         return null;
@@ -244,12 +245,11 @@ public class LoginManagedBean implements Serializable {
     private boolean isPass(String user, String pass) {
         boolean result = false;
 
-        String encryptPassword = MD5.md5(pass);
         List<Manager> managers = gi.getManagerByName(user);
         if (managers == null) {
         } else {
             Manager manager = managers.get(0);
-            if (manager.getPassword().equals(encryptPassword)) {
+            if (manager.getPassword().equals(pass)) {
                 permissions[1] = manager.isPermission1();
                 permissions[2] = manager.isPermission2();
                 permissions[3] = manager.isPermission3();

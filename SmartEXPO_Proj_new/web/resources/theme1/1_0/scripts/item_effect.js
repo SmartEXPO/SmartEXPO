@@ -9,7 +9,7 @@ var isCommentBarDisplayed = false;
 $(document).ready(function() {
     $('#users_comment').perfectScrollbar();
     $('#description').perfectScrollbar();
-            regEditBtn();
+    regEditBtn();
 
 
     $('.popup_link').magnificPopup({
@@ -179,11 +179,7 @@ $(document).ready(function() {
 //    $("#frame_image").load(function() {
 //        autoFit(480, 485, $("#frame_image"));
 //    });
-    $("#frame_image").autofit({height: 485, width: 480});
-
-    
-    
-
+    $("#frame_image").autofit({height: 485, width: 480, cut: false});
 });
 
 

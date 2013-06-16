@@ -26,6 +26,23 @@
                         target="head"/>
         <h:outputScript library="#{info.lib}" name="scripts/sidebar.js" target="head" />
 
+        <script>
+            //<![CDATA[
+
+            function shapeWrapper(lineHeight, Xs) {
+                var out = '';
+                Xvalues = Xs.split('|');
+                for (i = 0; i < Xvalues.length; i++) {
+                    parts = Xvalues[i].split(',');
+                    out += '<div style="float:left;clear:left;height:' + lineHeight + 'px;width:' + parts[1] + 'px"></div>';
+                    out += '<div style="float:right;clear:right;height:' + lineHeight + 'px;width:' + parts[2] + 'px"></div>';
+                }
+                document.write(out);
+            }
+            //]]>
+
+        </script>
+
     </h:head>
 
     <h:body>
@@ -45,6 +62,14 @@
             </div>
         </header>
 
+        <div style="margin:30px auto 0 auto; width: 360px;height:360px; font-family: Arial, sans-serif;border-radius: 180px; overflow: hidden; line-break: strict;">
+            <script>
+                shapeWrapper("15", "7.5,141,145|22.5,89,89|37.5,68,69|52.5,46,50|67.5,36,39|82.5,27,29|97.5,18,18|112.5,12,14|127.5,9,11|142.5,5,8|157.5,2,5|172.5,3,4|187.5,6,7|202.5,8,10|217.5,11,13|232.5,14,16|247.5,23,22|262.5,31,32|277.5,40,43|292.5,57,59|307.5,74,80|322.5,104,102|337.5,155,0|");
+            </script>
+
+            SmartEXPO is an <span style="color: black; font-size: 1.3em;">elegantly</span> designed and <span style="">gracefully</span> implemented online <span style="font-size: 1.1em; color: black">exhibition system</span>. Powered by Java EE and latest Web Technology, it is fully <span style="font-size: 1.6em;color:black;">dynamic</span>, both in service logic and user interaction. In <span style="font-size: 2.2em; color: black;">SmartEXPO</span>, we strictly followed <span style="font-size:1.2em;color:black;">MVC</span> model to enable the low coupling. We carefully designed our database structure with <span style="1.6em;color:black;">E-R</span> model to make it logically sound. We also <span style="font-size:1.4em;color:black;">elaborately</span> carved the browser client effect to make it <span style='font-size:1.3em; color: black;'>responsive</span>. We do hope the project could be impressive and <span style="color:black; font-size: 1em">phenomenal*.</span>
+
+        </div>
 
         <footer style="margin-top:20px">
             <h:outputText value="#{info.footer}" escape="false"/>

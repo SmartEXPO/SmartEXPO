@@ -103,7 +103,9 @@
 
                             <h:outputLabel for="view_author_date" value="Author Date: " />
                             <h:outputText id="view_author_date"
-                                          value="#{itemViewManagedBean.authorBirthDate} -- #{itemViewManagedBean.authorDeathDate}" />
+                                          value="#{itemViewManagedBean.authorBirthDate}--#{itemViewManagedBean.authorDeathDate}">
+                                <f:converter converterId="outputDataConverter" />
+                            </h:outputText>
 
                             <h:outputLabel for="view_author_intro" value="Author Introduction: " />
                             <h:outputText id="view_author_intro"
@@ -196,7 +198,7 @@
 
                             <h:outputLabel for="edit_des" value="Description: " />
                             <p:inputText id="edit_des"
-                                         value="#{itemViewManagedBean.selectedItem.description.content}" />
+                                         value="#{itemViewManagedBean.selectedDescription.content}" />
 
                             <h:outputLabel for="edit_author_birthday" value="Author Birthday: " />
                             <p:calendar id="edit_author_birthday"

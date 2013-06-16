@@ -68,6 +68,7 @@ public class ItemViewManagedBean implements Serializable {
     private GetInfo gi;
     private List<Item> items;
     private Item selectedItem;
+    private Author selectedAuthor;
     private Description selectedDescription;
     private String authorName;
     private Date authorBirthDate;
@@ -97,6 +98,14 @@ public class ItemViewManagedBean implements Serializable {
     @PostConstruct
     public void postConstruct() {
         gi = new GetInfo(emf, utx);
+    }
+
+    public Author getSelectedAuthor() {
+        return selectedAuthor;
+    }
+
+    public void setSelectedAuthor(Author selectedAuthor) {
+        this.selectedAuthor = selectedAuthor;
     }
 
     public Description getSelectedDescription() {
@@ -390,6 +399,13 @@ public class ItemViewManagedBean implements Serializable {
         } else {
             selectedDescription = descriptions.get(0);
         }
+
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors == null || descriptions.isEmpty()) {
+            selectedAuthor = new Author();
+        } else {
+            selectedAuthor = authors.get(0);
+        }
     }
 
     // 根据selectedItem找到对应Audio放在audios这个List中
@@ -404,6 +420,19 @@ public class ItemViewManagedBean implements Serializable {
 
     // edit接口，selectedItem为目标item
     public void beginEditItem() {
+        List<Description> descriptions = gi.getDescriptionByItemID(selectedItem.getItemId());
+        if (descriptions == null || descriptions.isEmpty()) {
+            selectedDescription = new Description();
+        } else {
+            selectedDescription = descriptions.get(0);
+        }
+
+        List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
+        if (authors == null || descriptions.isEmpty()) {
+            selectedAuthor = new Author();
+        } else {
+            selectedAuthor = authors.get(0);
+        }
     }
 
     public String beginEditAudio() {
@@ -415,25 +444,22 @@ public class ItemViewManagedBean implements Serializable {
         videos = gi.getVideoByItemID(selectedItem.getItemId());
     }
 
-    // @stormmax TODO 存储除了Audio和Video部分的信息
     public void storeEditedData() {
         try {
             selectedItem.setHtml(null);
             ItemJpaController ijc = new ItemJpaController(utx, emf);
             ijc.edit(selectedItem);
 
-            if (gi.getAuthorsByItemID(selectedItem.getItemId()) != null
-                    && !gi.getAudioByItemID(selectedItem.getItemId()).isEmpty()) {
-                Author author = gi.getAuthorsByItemID(selectedItem.getItemId()).get(0);
+            DescriptionJpaController djc = new DescriptionJpaController(utx, emf);
+            djc.edit(selectedDescription);
 
-                author.setBirthday(authorBirthDate);
-                author.setDeathDate(authorDeathDate);
-                author.setName(authorName);
-                author.setIntroduction(authorIntro);
+            selectedAuthor.setName(authorName);
+            selectedAuthor.setBirthday(authorBirthDate);
+            selectedAuthor.setDeathDate(authorDeathDate);
+            selectedAuthor.setIntroduction(authorIntro);
 
-                AuthorJpaController authorjc = new AuthorJpaController(utx, emf);
-                authorjc.edit(author);
-            }
+            AuthorJpaController ajc = new AuthorJpaController(utx, emf);
+            ajc.edit(selectedAuthor);
 
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -507,7 +533,7 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     // @stormmax TODO 存储修改过后的Audio和Video部分，分别在audios和videos两个list中
-    public void avEditFinish() {
+    public String avEditFinish() {
         selectedItem.setHtml(null);
         ItemJpaController ijc = new ItemJpaController(utx, emf);
 
@@ -605,14 +631,11 @@ public class ItemViewManagedBean implements Serializable {
             }
         }
 
-        RequestContext.getCurrentInstance()
-                .execute(("alert('Modify successfully!');location.reload(true)"));
-
+        return "item_view.xhtml";
     }
 
-    public void back() {
-        RequestContext.getCurrentInstance()
-                .execute(("location.reload(true)"));
+    public String back() {
+        return "item_view.xhtml?faces-redirect=true";
     }
 
     public void upload(FileUploadEvent event) {

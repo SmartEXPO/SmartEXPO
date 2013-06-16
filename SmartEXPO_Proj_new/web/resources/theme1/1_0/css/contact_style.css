@@ -1,0 +1,24 @@
+/* 
+    Document   : contact_style
+    Created on : Jun 17, 2013, 1:21:23 AM
+    Author     : ben
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#lby {
+    background: url('../images/contact/b_contactpage_08.png?ln=theme1') no-repeat;
+}
+
+#zyq {
+    background: url('../images/contact/b_contactpage_10.png?ln=theme1') no-repeat;
+}
+
+#lzh {
+    background: url('../images/contact/b_contactpage_04.png?ln=theme1') no-repeat;
+}
+
+#lyr {
+    background: url('../images/contact/b_contactpage_02.png?ln=theme1') no-repeat;
+}
+
