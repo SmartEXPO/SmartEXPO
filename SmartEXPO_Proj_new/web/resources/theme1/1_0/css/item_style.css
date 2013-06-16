@@ -330,6 +330,7 @@ footer {
     border: none;
     background: black;
     padding:5px 50px 5px 10px;
+    opacity: 0.8;
 }
 
 .edit_description_div {
@@ -338,6 +339,7 @@ footer {
     position:fixed;
     top:50px;
     right: 0;
+    z-index: 2;
 }
 
 #edit_content_panel_2 {
