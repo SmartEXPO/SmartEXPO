@@ -374,7 +374,6 @@ public class ItemViewManagedBean implements Serializable {
 
     // view接口，selectedItem为目标item
     public void beginViewDetail() {
-        
     }
 
     // 根据selectedItem找到对应Audio放在audios这个List中
@@ -389,7 +388,6 @@ public class ItemViewManagedBean implements Serializable {
 
     // edit接口，selectedItem为目标item
     public void beginEditItem() {
-        
     }
 
     public String beginEditAudio() {
@@ -404,6 +402,7 @@ public class ItemViewManagedBean implements Serializable {
     // @stormmax TODO 存储除了Audio和Video部分的信息
     public void storeEditedData() {
         try {
+            selectedItem.setHtml(null);
             ItemJpaController ijc = new ItemJpaController(utx, emf);
             ijc.edit(selectedItem);
 
@@ -493,18 +492,32 @@ public class ItemViewManagedBean implements Serializable {
 
     // @stormmax TODO 存储修改过后的Audio和Video部分，分别在audios和videos两个list中
     public void avEditFinish() {
-        GetInfo gi=new GetInfo(emf, utx);
-        List<Audio> as=gi.getAudioByItemID(selectedItem.getItemId());
-        List<Video> vs=gi.getVideoByItemID(selectedItem.getItemId());
-        AudioJpaController ajc=new AudioJpaController(utx, emf);
-        VideoJpaController vjc=new VideoJpaController(utx, emf);
-        
-        for(int i=0;i<as.size();i++){
-            Audio a=as.get(i);
-            List<ItemAudio> ias=gi.getItemAudiosByItemID(selectedItem.getItemId());
-            ItemAudioJpaController iajc=new ItemAudioJpaController(utx, emf);
-            if(audios.contains(a)){
-                LOG.log(Level.WARNING,"audio contain");
+        selectedItem.setHtml(null);
+        ItemJpaController ijc = new ItemJpaController(utx, emf);
+
+        try {
+            ijc.edit(selectedItem);
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        List<Audio> as = gi.getAudioByItemID(selectedItem.getItemId());
+        List<Video> vs = gi.getVideoByItemID(selectedItem.getItemId());
+        AudioJpaController ajc = new AudioJpaController(utx, emf);
+        VideoJpaController vjc = new VideoJpaController(utx, emf);
+
+        for (int i = 0; i < as.size(); i++) {
+            Audio a = as.get(i);
+            List<ItemAudio> ias = gi.getItemAudiosByItemID(selectedItem.getItemId());
+            ItemAudioJpaController iajc = new ItemAudioJpaController(utx, emf);
+            if (audios.contains(a)) {
+                LOG.log(Level.WARNING, "audio contain");
                 try {
                     ajc.edit(a);
                 } catch (IllegalOrphanException ex) {
@@ -516,12 +529,12 @@ public class ItemViewManagedBean implements Serializable {
                 } catch (Exception ex) {
                     Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else{
-                LOG.log(Level.WARNING,"audio contain");
-                
+            } else {
+                LOG.log(Level.WARNING, "audio contain");
+
                 try {
-                    for(int j=0;j<ias.size();j++){
-                        if(ias.get(j).getAudioId().getAudioId()==a.getAudioId()){
+                    for (int j = 0; j < ias.size(); j++) {
+                        if (ias.get(j).getAudioId().getAudioId() == a.getAudioId()) {
                             iajc.destroy(ias.get(j).getItemAudioId());
                         }
                     }
@@ -537,13 +550,13 @@ public class ItemViewManagedBean implements Serializable {
                 }
             }
         }
-        
-        for(int i=0;i<vs.size();i++){
-            Video v=vs.get(i);
-            List<ItemVideo> ivs=gi.getItemVideosByItemID(selectedItem.getItemId());
-            ItemVideoJpaController ivjc=new ItemVideoJpaController(utx, emf);
-            if(videos.contains(v)){
-                LOG.log(Level.WARNING,"video contain");
+
+        for (int i = 0; i < vs.size(); i++) {
+            Video v = vs.get(i);
+            List<ItemVideo> ivs = gi.getItemVideosByItemID(selectedItem.getItemId());
+            ItemVideoJpaController ivjc = new ItemVideoJpaController(utx, emf);
+            if (videos.contains(v)) {
+                LOG.log(Level.WARNING, "video contain");
                 try {
                     vjc.edit(v);
                 } catch (IllegalOrphanException ex) {
@@ -555,11 +568,11 @@ public class ItemViewManagedBean implements Serializable {
                 } catch (Exception ex) {
                     Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else{
-                LOG.log(Level.WARNING,"video contain");
+            } else {
+                LOG.log(Level.WARNING, "video contain");
                 try {
-                    for(int j=0;j<ivs.size();j++){
-                        if(ivs.get(j).getVideoId().getVideoId()==v.getVideoId()){
+                    for (int j = 0; j < ivs.size(); j++) {
+                        if (ivs.get(j).getVideoId().getVideoId() == v.getVideoId()) {
                             ivjc.destroy(ivs.get(j).getItemVideoId());
                         }
                     }
@@ -575,13 +588,13 @@ public class ItemViewManagedBean implements Serializable {
                 }
             }
         }
-        
-        
-        
-        
+
+
+
+
         RequestContext.getCurrentInstance()
                 .execute(("alert('Modify successfully!');location.reload(true)"));
-        
+
     }
 
     public void back() {
