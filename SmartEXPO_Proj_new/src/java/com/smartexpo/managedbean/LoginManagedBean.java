@@ -5,12 +5,16 @@
 package com.smartexpo.managedbean;
 
 import com.smartexpo.bundle.SessioninfoJpaController;
+import com.smartexpo.bundle.exceptions.NonexistentEntityException;
+import com.smartexpo.bundle.exceptions.RollbackFailureException;
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.Sessioninfo;
 import com.smartexpo.util.MD5;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
@@ -65,7 +69,9 @@ public class LoginManagedBean implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        gi = new GetInfo(emf, utx);
+        if (gi == null) {
+            gi = new GetInfo(emf, utx);
+        }
 
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
@@ -205,9 +211,22 @@ public class LoginManagedBean implements Serializable {
 
         // TODO @storm 从数据库删除username和sessionid的tuple，保证下次不会自动登录
         //             依靠username删除，此时sessionid是未知的
-        List<Sessioninfo> sinfos = gi.getSessioninfosByName(username);
-        SessioninfoJpaController sijc = new SessioninfoJpaController(utx, emf);
 
+        GetInfo gi=new GetInfo(emf, utx);
+        List<Sessioninfo> sinfos=gi.getSessioninfosByName(username);
+        SessioninfoJpaController sijc=new SessioninfoJpaController(utx, emf);
+        for(int i=0;i<sinfos.size();i++){
+            try {
+                sijc.destroy(sinfos.get(i).getSessioninfoPK());
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         username = password = null;
         for (int i = 1; i <= 5; ++i) {
             permissions[i] = false;

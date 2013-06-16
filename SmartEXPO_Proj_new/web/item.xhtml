@@ -120,25 +120,24 @@
                     </div>
 
                     <div id="description">
-                        <br/>
-                        <h:form id="edit_btn">
-                            <h:commandButton id="alter_item_btn" type="button"
-                                             value="Edit" class="edit_description_div"
-                                             rendered="#{loginManagedBean.permissions[2]}"/>
+                        <div id="des_scroll">
+                            <br/>
+                            <h:form id="edit_btn">
+                                <h:commandButton id="alter_item_btn" type="button"
+                                                 value="Edit" class="edit_description_div"
+                                                 rendered="#{loginManagedBean.permissions[2]}"/>
 
-                            <div id="des_scroll">
-                                <h:outputText value="#{itemController.itemBean.html}"
-                                              rendered="#{itemController.itemBean.hasHtml}"
-                                              escape="false" />
                                 <div>
+                                    <h:outputText value="#{itemController.itemBean.html}"
+                                                  rendered="#{itemController.itemBean.hasHtml}"
+                                                  escape="false" />
+
                                     <h1 class="content_title">Description</h1>
                                     <p id="description_content">
                                         <h:outputText value="#{itemController.descriptionBean.content}"
                                                       escape="false" />
                                     </p>
-                                    <h:column rendered="#{!itemController.audioUrlEmpty}">
-                                        <h1 id="audio_h1" class="content_title">audio</h1>
-                                    </h:column>
+                                    <h1 class="content_title">audio</h1>
                                     <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
                                         <audio controls="controls">
                                             <source src="#{facesContext.externalContext.requestContextPath}#{audioURL}"
@@ -146,9 +145,7 @@
                                             Your browser does not support the audio tag.
                                         </audio>
                                     </ui:repeat>
-                                    <h:column rendered="#{!itemController.videoUrlEmpty}">
-                                        <h1 class="content_title">video</h1>
-                                    </h:column>
+                                    <h1 class="content_title">video</h1>
                                     <ui:repeat value="#{itemController.videoURLs}" var="videoURL">
                                         <video width="320" height="240" controls="controls">
                                             <source src="#{facesContext.externalContext.requestContextPath}#{videoURL}"
@@ -159,8 +156,9 @@
                                     <h1 class="content_title">See Also</h1>
                                     <p>This is the content of see also</p>
                                 </div>
-                            </div>
-                        </h:form>
+                            </h:form>
+
+                        </div>
                     </div>
 
                 </div>
