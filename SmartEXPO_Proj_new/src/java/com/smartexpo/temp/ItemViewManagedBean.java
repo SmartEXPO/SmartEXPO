@@ -20,6 +20,7 @@ import com.smartexpo.jpgcontrollers.exceptions.NonexistentEntityException;
 import com.smartexpo.jpgcontrollers.exceptions.RollbackFailureException;
 import com.smartexpo.models.Audio;
 import com.smartexpo.models.Author;
+import com.smartexpo.models.Description;
 import com.smartexpo.models.DisplayColumn;
 import com.smartexpo.models.Item;
 import com.smartexpo.models.ItemAudio;
@@ -67,6 +68,7 @@ public class ItemViewManagedBean implements Serializable {
     private GetInfo gi;
     private List<Item> items;
     private Item selectedItem;
+    private Description selectedDescription;
     private String authorName;
     private Date authorBirthDate;
     private Date authorDeathDate;
@@ -95,6 +97,14 @@ public class ItemViewManagedBean implements Serializable {
     @PostConstruct
     public void postConstruct() {
         gi = new GetInfo(emf, utx);
+    }
+
+    public Description getSelectedDescription() {
+        return selectedDescription;
+    }
+
+    public void setSelectedDescription(Description selectedDescription) {
+        this.selectedDescription = selectedDescription;
     }
 
     public String getAuthorName() {
@@ -374,6 +384,12 @@ public class ItemViewManagedBean implements Serializable {
 
     // view接口，selectedItem为目标item
     public void beginViewDetail() {
+        List<Description> descriptions = gi.getDescriptionByItemID(selectedItem.getItemId());
+        if (descriptions == null || descriptions.isEmpty()) {
+            selectedDescription = new Description();
+        } else {
+            selectedDescription = descriptions.get(0);
+        }
     }
 
     // 根据selectedItem找到对应Audio放在audios这个List中
