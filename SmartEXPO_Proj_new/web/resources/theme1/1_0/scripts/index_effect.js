@@ -52,7 +52,7 @@ function display() {
             'opacity': '0'
         }, 500, function() {
             $("img#display_item").attr("src", dis.path);
-            $("#display_item_id").attr("href", "item.xhtml?id=" + dis.id);
+            $("#display_item_id").attr("href", "item" + dis.id);
 
             //autoFit(480, 320, $("#display_item"));
         });

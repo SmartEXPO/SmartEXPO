@@ -48,7 +48,6 @@ import javax.transaction.UserTransaction;
 @ViewScoped
 public class ItemController implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(ItemController.class.getName());
     @PersistenceContext(unitName = "SmartEXPO_ProjPU")
     EntityManager em;
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
@@ -59,20 +58,10 @@ public class ItemController implements Serializable {
     // ItemController Fields
     @ManagedProperty(value = "#{item}")
     private Item itemBean;
-    private int itemID;
-    private String itemName;
     @ManagedProperty(value = "#{description}")
     private Description descriptionBean;
-    private int descriptionID;
-    private String descriptionTitle;
-    private String descriptionContent;
     @ManagedProperty(value = "#{author}")
     private Author authorBean;
-    private List<Integer> authorIDs;
-    private List<String> authorNames;
-    private List<Date> authorBirthdays;
-    private List<Date> authorDeathDates;
-    private List<String> authorIntroductions;
     @ManagedProperty(value = "#{audio}")
     private Audio audioBean;
     private List<Integer> audioIDs;
@@ -149,9 +138,6 @@ public class ItemController implements Serializable {
      * Creates a new instance of ItemController
      */
     public ItemController() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
-        LOG.log(Level.WARNING, "sessionid = {0}", session.getId());
         commentIDs = new ArrayList<Integer>();
         commentContents = new ArrayList<String>();
         commentTimes = new ArrayList<Date>();
@@ -176,22 +162,6 @@ public class ItemController implements Serializable {
     }
 
     /**
-     * @return the itemID
-     */
-    public int getItemID() {
-        setItemID(itemBean.getId());
-        return itemID;
-    }
-
-    /**
-     * @return the itemName
-     */
-    public String getItemName() {
-        setItemName(itemBean.getName());
-        return itemName;
-    }
-
-    /**
      * @param descriptionBean the descriptionBean to set
      */
     public void setDescriptionBean(Description descriptionBean) {
@@ -199,74 +169,10 @@ public class ItemController implements Serializable {
     }
 
     /**
-     * @return the descriptionID
-     */
-    public int getDescriptionID() {
-        setDescriptionID(descriptionBean.getId());
-        return descriptionID;
-    }
-
-    /**
-     * @return the descriptionTitle
-     */
-    public String getDescriptionTitle() {
-        setDescriptionTitle(descriptionBean.getTitle());
-        return descriptionTitle;
-    }
-
-    /**
-     * @return the descriptionContent
-     */
-    public String getDescriptionContent() {
-        setDescriptionContent(descriptionBean.getContent());
-        return descriptionContent;
-    }
-
-    /**
      * @param authorBean the authorBean to set
      */
     public void setAuthorBean(Author authorBean) {
         this.authorBean = authorBean;
-    }
-
-    /**
-     * @return the authorIDs
-     */
-    public List<Integer> getAuthorIDs() {
-        setAuthorIDs(authorBean.getIds());
-        return authorIDs;
-    }
-
-    /**
-     * @return the authorNames
-     */
-    public List<String> getAuthorNames() {
-        setAuthorNames(authorBean.getNames());
-        return authorNames;
-    }
-
-    /**
-     * @return the authorBirthdays
-     */
-    public List<Date> getAuthorBirthdays() {
-        setAuthorBirthdays(authorBean.getBirthdays());
-        return authorBirthdays;
-    }
-
-    /**
-     * @return the authorDeathDates
-     */
-    public List<Date> getAuthorDeathDates() {
-        setAuthorDeathDates(authorBean.getDeathDates());
-        return authorDeathDates;
-    }
-
-    /**
-     * @return the authorIntroductions
-     */
-    public List<String> getAuthorIntroductions() {
-        setAuthorIntroductions(authorBean.getIntroductions());
-        return authorIntroductions;
     }
 
     /**
@@ -437,46 +343,6 @@ public class ItemController implements Serializable {
         this.commentcontent = commentcontent;
     }
 
-    public void setItemID(int itemID) {
-        this.itemID = itemID;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public void setDescriptionID(int descriptionID) {
-        this.descriptionID = descriptionID;
-    }
-
-    public void setDescriptionTitle(String descriptionTitle) {
-        this.descriptionTitle = descriptionTitle;
-    }
-
-    public void setDescriptionContent(String descriptionContent) {
-        this.descriptionContent = descriptionContent;
-    }
-
-    public void setAuthorIDs(List<Integer> authorIDs) {
-        this.authorIDs = authorIDs;
-    }
-
-    public void setAuthorNames(List<String> authorNames) {
-        this.authorNames = authorNames;
-    }
-
-    public void setAuthorBirthdays(List<Date> authorBirthdays) {
-        this.authorBirthdays = authorBirthdays;
-    }
-
-    public void setAuthorDeathDates(List<Date> authorDeathDates) {
-        this.authorDeathDates = authorDeathDates;
-    }
-
-    public void setAuthorIntroductions(List<String> authorIntroductions) {
-        this.authorIntroductions = authorIntroductions;
-    }
-
     public void setAudioIDs(List<Integer> audioIDs) {
         this.audioIDs = audioIDs;
     }
@@ -552,7 +418,6 @@ public class ItemController implements Serializable {
 
             //itemID 为什么是0
             overallInfo.updateMessage(new CommentInfo(itemBean.getItem().getItemId(), commentuser, new Date(), commentcontent));
-            LOG.log(Level.WARNING, "ItemController overall itemId: {0}", itemID);
 
             ItemComment newIC = new ItemComment();
             newIC.setItemId(itemBean.getItem());
