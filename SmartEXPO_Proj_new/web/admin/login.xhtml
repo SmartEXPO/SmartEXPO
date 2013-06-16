@@ -40,14 +40,16 @@
                     <p>
                         <h:outputLabel for="password" value="Password:" />
                         <h:inputSecret id="password" required="true" class="text-input"
-                                       value="#{loginManagedBean.password}" />
+                                       value="#{loginManagedBean.password}">
+                            <f:converter converterId="encryptConverter" />
+                        </h:inputSecret>
                     </p>
                     <div class="clear"></div>
                     <p>
                         <h:commandButton id="login_button" type="submit"
                                          value="Sign In" class="button"
                                          action="#{loginManagedBean.adminLogin}">
-                            <f:ajax execute="@form" render="msg" />
+                            <f:ajax execute="@form" render="@form" />
                         </h:commandButton>
                     </p>
 

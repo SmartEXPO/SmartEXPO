@@ -13,4 +13,13 @@
             <var>info</var>
         </resource-bundle>
     </application>
+    
+    <converter>
+        <converter-id>encryptConverter</converter-id>
+        <converter-class>com.smartexpo.util.converter.EncryptConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>outputDataConverter</converter-id>
+        <converter-class>com.smartexpo.util.converter.OutputDataConverter</converter-class>
+    </converter>
 </faces-config>
