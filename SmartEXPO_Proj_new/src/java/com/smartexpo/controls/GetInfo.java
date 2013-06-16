@@ -353,4 +353,9 @@ public class GetInfo implements Serializable {
     }
     
     
+    public List<Sessioninfo> getSessioninfosByUsername(String name){
+        List<Sessioninfo> sinfos=em.createNamedQuery("Sessioninfo.findByUsername").setParameter("username", name).getResultList();
+        return sinfos;
+    }   
+    
 }

@@ -4,8 +4,10 @@
  */
 package com.smartexpo.managedbean;
 
+import com.smartexpo.bundle.SessioninfoJpaController;
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Manager;
+import com.smartexpo.models.Sessioninfo;
 import com.smartexpo.util.MD5;
 import java.io.Serializable;
 import java.util.List;
@@ -205,7 +207,12 @@ public class LoginManagedBean implements Serializable {
 
         // TODO @storm 从数据库删除username和sessionid的tuple，保证下次不会自动登录
         //             依靠username删除，此时sessionid是未知的
-        
+        GetInfo gi=new GetInfo(emf, utx);
+        List<Sessioninfo> sinfos=gi.getSessioninfosByName(username);
+        SessioninfoJpaController sijc=new SessioninfoJpaController(utx, emf);
+        for(int i=0;i<sinfos.size();i++){
+            sijc.destroy(sinfos.get(i));
+        }
         
 
         username = password = null;
