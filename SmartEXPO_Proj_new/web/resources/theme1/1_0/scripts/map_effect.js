@@ -7,20 +7,20 @@ function initMapInteraction() {
     shadow = new createjs.Shadow("#6e6e6e", 3, 3, 10);
 
     for (var i = 0; i < area.length; i++) {
-        area[i].set({id:(i+1)}); //为每个area设置id，编号从1开始
+        area[i].set({id: (i + 1)}); //为每个area设置id，编号从1开始
         area[i].addEventListener("mouseover", function(e) {
             e.target.set({
-                shadow : shadow,
+                shadow: shadow,
             });
         });
         area[i].addEventListener("mouseout", function(e) {
             e.target.set({
-                shadow : null,
+                shadow: null,
             });
         });
         area[i].addEventListener("click", function(e) {
             //alert(e.target.id);
-            window.location.href = "list.xhtml?area="+e.target.id;
+            window.location.href = "list" + e.target.id;
         });
     }
 }

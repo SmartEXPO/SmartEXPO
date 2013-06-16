@@ -20,8 +20,23 @@
     </rule>
     
     <rule>
-        <from>/home.html</from>
+        <from>/home</from>
         <to>/index.xhtml</to>
+    </rule>
+    
+    <rule>
+        <from>/item_insert.xhtml</from>
+        <to>/insert_basic_info.xhtml</to>
+    </rule>
+    
+    <rule>
+        <from>/list([0-9]+)$</from>
+        <to>/list.xhtml?area=$1</to>
+    </rule>
+    
+    <rule>
+        <from>/item([0-9]+)$</from>
+        <to>/item.xhtml?id=$1</to>
     </rule>
 
 
