@@ -28,6 +28,7 @@
 
         <h:outputStylesheet library="theme1" name="css/style.css" />
         <h:outputStylesheet library="theme1" name="css/index_style.css" />
+        <h:outputStylesheet library="theme1" name="css/map_style.css" />
 
         <script>
             var canvas, stage, exportRoot;
@@ -51,7 +52,7 @@
         </script>
     </h:head>
 
-    <h:body onload="init();">
+    <h:body onload="init();" style="position:relative;">
         <header>
             <nav>
                 <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
@@ -68,6 +69,7 @@
             </div>
         </header>
 
+        <div id="areaname">No.5 Area</div>
         <canvas id="canvas" width="700" height="520" style="position:relative; left:50%; margin-left:-350px; margin-top:40px;"></canvas>
 
         <footer style="margin-top:20px">
