@@ -62,14 +62,15 @@
     <h:body>
         <div>
             <header id="header">
-                <h:outputLink value="#{info.homeHref}">
+
+                <h:outputLink value="../../#{info.homeHref}">
                     <h:graphicImage id="logo" library="#{info.lib}"
                                     name="images/item_logo.png"/>
                 </h:outputLink>
                 <nav id="nav">
-                    <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
-                    <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
-                    <h:outputLink class="navi" value="contact.xhtml">#{info['navigator.contact']}</h:outputLink>
+                    <h:outputLink class="navi" value="../../map.xhtml">#{info['navigator.map']}</h:outputLink>|
+                    <h:outputLink class="navi" value="../../info.xhtml">#{info['navigator.info']}</h:outputLink>|
+                    <h:outputLink class="navi" value="../../contact.xhtml">#{info['navigator.contact']}</h:outputLink>
                     <div id="login">
                         <h:form id="log_form">
                             <div id="login_name" class="inoutname">
@@ -119,7 +120,17 @@
                     </div>
 
                     <div id="description">
+                        <br/>
+                        <h:form id="edit_btn">
+                            <h:commandButton id="alter_item_btn" type="button"
+                                             value="Edit" class="edit_description_div"
+                                             rendered="#{loginManagedBean.permissions[2]}"/>
+                        </h:form>
+
                         <div id="des_scroll">
+                            <h:outputText value="#{itemController.itemBean.html}"
+                                          rendered="#{itemController.itemBean.hasHtml}"
+                                          escape="false" />
                             <div>
                                 <h1 class="content_title">Description</h1>
                                 <p id="description_content">
@@ -147,7 +158,6 @@
                             </div>
                         </div>
                     </div>
-
 
                 </div>
             </div>
@@ -250,7 +260,7 @@
                                  class="login_button" value="Sign In">
                     <f:ajax listener="#{loginManagedBean.verify}"
                             execute="username password autologin"
-                            render="@form :log_form :comment_form"
+                            render="@form :log_form :comment_form :edit_btn"
                             onevent="finish" />
                 </h:commandButton>
                 <h:message for="username" />

@@ -6,10 +6,7 @@ package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Item;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
