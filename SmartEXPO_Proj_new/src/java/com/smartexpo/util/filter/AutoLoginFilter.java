@@ -14,6 +14,8 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -134,7 +136,7 @@ public class AutoLoginFilter implements Filter {
 
         doBeforeProcessing(request, response);
 
-
+        Logger.getLogger(AutoLoginFilter.class.getName()).log(Level.WARNING, "aksfljwqkfwqljfwqjfowpqjofwqpjolq");
         // Filter begin
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
@@ -142,7 +144,7 @@ public class AutoLoginFilter implements Filter {
 
         if ((!isURLNotInFilterList(req)) && session.getAttribute(sessionKey) == null) {
             String username = null;
-            String sessionid; // last sessionid, not current
+            String sessionid = null; // last sessionid, not current
             Cookie[] cookies;
             boolean isAutoLogin = false;
 
@@ -160,16 +162,11 @@ public class AutoLoginFilter implements Filter {
                         }
                     }
                 }
-                List<Sessioninfo> sessioninfos = gi.getSessioninfosByName(username);
+                List<Sessioninfo> sessioninfos = gi.getAllSessioninfos();
                 if (sessioninfos == null || sessioninfos.isEmpty()) {
                     isAutoLogin = false;
                 } else {
-                    Sessioninfo sessionInfo = gi.getSessioninfosByName(username).get(0);
-                    if (sessionInfo == null) {
-                        isAutoLogin = false;
-                    } else { // 要将sessionid与sessionInfo中sessionid
-                        isAutoLogin = true;
-                    }
+                    isAutoLogin = isInSessionInfo(username, sessionid, sessioninfos);
                 }
             }
             if (isAutoLogin) {
@@ -300,5 +297,21 @@ public class AutoLoginFilter implements Filter {
         String url = request.getServletPath()
                 + (request.getPathInfo() == null ? "" : request.getPathInfo());
         return notCheckURLList.contains(url);
+    }
+
+    private boolean isInSessionInfo(String username, String sessionid, List<Sessioninfo> sessioninfos) {
+        boolean result = false;
+
+        for (int i = 0; i < sessioninfos.size(); ++i) {
+            Sessioninfo sessioninfo = sessioninfos.get(i);
+            String savedUsername = sessioninfo.getSessioninfoPK().getUsername();
+            String savedSessionID = sessioninfo.getSessioninfoPK().getSessionid();
+            if (savedUsername.equals(username) && savedSessionID.equals(sessionid)) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     }
 }

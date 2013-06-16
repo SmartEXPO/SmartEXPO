@@ -69,9 +69,7 @@ public class LoginManagedBean implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        if (gi == null) {
-            gi = new GetInfo(emf, utx);
-        }
+        gi = new GetInfo(emf, utx);
 
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
@@ -212,10 +210,9 @@ public class LoginManagedBean implements Serializable {
         // TODO @storm 从数据库删除username和sessionid的tuple，保证下次不会自动登录
         //             依靠username删除，此时sessionid是未知的
 
-        GetInfo gi=new GetInfo(emf, utx);
-        List<Sessioninfo> sinfos=gi.getSessioninfosByName(username);
-        SessioninfoJpaController sijc=new SessioninfoJpaController(utx, emf);
-        for(int i=0;i<sinfos.size();i++){
+        List<Sessioninfo> sinfos = gi.getSessioninfosByName(username);
+        SessioninfoJpaController sijc = new SessioninfoJpaController(utx, emf);
+        for (int i = 0; i < sinfos.size(); i++) {
             try {
                 sijc.destroy(sinfos.get(i).getSessioninfoPK());
             } catch (NonexistentEntityException ex) {
@@ -226,7 +223,7 @@ public class LoginManagedBean implements Serializable {
                 Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         username = password = null;
         for (int i = 1; i <= 5; ++i) {
             permissions[i] = false;
