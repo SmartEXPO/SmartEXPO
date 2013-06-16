@@ -275,6 +275,7 @@ footer {
 
 .search_result_table {
     width: 100%;
+    text-transform: capitalize;
 }
 
 #function #search_result a:hover {
