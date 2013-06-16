@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -21,10 +20,13 @@
 
         <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/index_style.css" />      
+        <h:outputStylesheet library="#{info.lib}" name="css/contact_style.css" />      
+
 
         <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
                         target="head"/>
         <h:outputScript library="#{info.lib}" name="scripts/sidebar.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="scripts/contact_effect.js" target="head" />
 
     </h:head>
 
@@ -44,6 +46,66 @@
                 <div id="longbar"></div>
             </div>
         </header>
+
+        <div style="text-align: center;">
+            <table id="__01" width="801" height="600" border="0" cellpadding="0" cellspacing="0" style="margin:30px auto 0 auto;">
+                <tr>
+                    <td colspan="4">
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_01.png" width="800" height="47" alt=""/></td>
+                    <td width="1" height="47">
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" style="height:167px;width:165px;" id="lyr">
+                        <a href='http://blog.luyiren.com/'>
+                            <h:graphicImage id="lyr_g" library="#{info.lib}" name="images/contact/contactpage_02.png" width="165" height="167" alt="" style="display:none;"/></a></td>
+                    <td>
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_03.png" width="235" height="166" alt=""/></td>
+                    <td style="height:166px;width:167px;" id="lzh">
+                        <a href="https://github.com/codinfox">
+                        <h:graphicImage id="lzh_g" library="#{info.lib}" name="images/contact/contactpage_04.png" width="167" height="166" alt="" style="display:none;"/></a></td>
+                    <td>
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_05.png" width="233" height="166" alt=""/></td>
+                    <td width="1" height="166" ></td>
+                </tr>
+                <tr>
+                    <td colspan="3" rowspan="2">
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_06.png" width="635" height="93" alt=""/></td>
+                    <td width="1" height="1" ></td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_07.png" width="165" height="92" alt=""/></td>
+                    <td width="1" height="92" ></td>
+                </tr>
+                <tr>
+                    <td rowspan="2" style="height:167px;width:165px;" id="lby">
+                        <a href="https://github.com/sxmx1111/">
+                            <h:graphicImage id="lby_g" library="#{info.lib}" name="images/contact/contactpage_08.png" width="165" height="167" alt="" style="display:none;"/></a>
+                    </td>
+                    <td>
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_09.png" width="235" height="166" alt=""/></td>
+                    <td rowspan="2" style="height:167px;width:167px;" id="zyq">
+                        <a href="#">
+                        <h:graphicImage id="zyq_g" library="#{info.lib}" name="images/contact/contactpage_10.png" width="167" height="167" alt="" style="display:none;"/></a></td>
+                    <td rowspan="3">
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_11.png" width="233" height="294" alt=""/></td>
+                    <td width="1" height="166" ></td>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_12.png" width="235" height="128" alt=""/></td>
+                    <td width="1" height="1" ></td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_13.png" width="165" height="127" alt=""/></td>
+                    <td>
+                        <h:graphicImage library="#{info.lib}" name="images/contact/contactpage_14.png" width="167" height="127" alt=""/></td>
+                    <td width="1" height="127" ></td>
+                </tr>
+            </table>
+        </div>
 
 
         <footer style="margin-top:20px">
