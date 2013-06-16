@@ -26,7 +26,7 @@ $(document).ready(function() {
     display();
     setInterval(display, 10000);
 
-    $("#display_item").autofit({height: 320, width: 480});
+    $("#display_item").autofit({height: 320, width: 480, cut: false});
 
 });
 
