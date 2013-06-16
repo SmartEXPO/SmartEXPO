@@ -61,6 +61,10 @@
     </h:head>
     <h:body>
         <div>
+            <div class="edit_description_div">
+                <a class="edit_description_link" href="#edit_content_panel_2">Edit</a>
+            </div>
+
             <header id="header">
 
                 <h:outputLink value="../../#{info.homeHref}">
@@ -123,11 +127,9 @@
                         <div id="des_scroll">
                             <br/>
                             <h:form id="edit_btn">
-                                <h:commandButton id="alter_item_btn" type="button"
-                                                 value="Edit" class="edit_description_div"
-                                                 rendered="#{loginManagedBean.permissions[2]}"/>
 
-                                <div>
+
+                                <div id="information_content">
                                     <h:outputText value="#{itemController.itemBean.html}"
                                                   rendered="#{itemController.itemBean.hasHtml}"
                                                   escape="false" />
@@ -267,6 +269,11 @@
                 <h:message for="username" />
                 <h:message for="password" />
             </h:form>
+        </div>
+
+        <div id="edit_content_panel_2" class="zoom-anim-dialog mfp-hide">
+            <textarea id="edit_content_textarea"></textarea>
+            <input type="button" value="Done" onclick="finishEditing()" />
         </div>
 
         <div id="instant_comment">
