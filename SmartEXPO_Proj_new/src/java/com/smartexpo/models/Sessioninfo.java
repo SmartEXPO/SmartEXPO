@@ -31,16 +31,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Sessioninfo.findBySessionid", query = "SELECT s FROM Sessioninfo s WHERE s.sessionid = :sessionid"),
     @NamedQuery(name = "Sessioninfo.findBySessioninfoId", query = "SELECT s FROM Sessioninfo s WHERE s.sessioninfoId = :sessioninfoId")})
 public class Sessioninfo implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "SESSIONID")
+    private String sessionid;
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "USERNAME")
     private String username;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "SESSIONID")
-    private int sessionid;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -54,7 +55,7 @@ public class Sessioninfo implements Serializable {
         this.sessioninfoId = sessioninfoId;
     }
 
-    public Sessioninfo(Integer sessioninfoId, String username, int sessionid) {
+    public Sessioninfo(Integer sessioninfoId, String username, String sessionid) {
         this.sessioninfoId = sessioninfoId;
         this.username = username;
         this.sessionid = sessionid;
@@ -66,14 +67,6 @@ public class Sessioninfo implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public int getSessionid() {
-        return sessionid;
-    }
-
-    public void setSessionid(int sessionid) {
-        this.sessionid = sessionid;
     }
 
     public Integer getSessioninfoId() {
@@ -107,6 +100,14 @@ public class Sessioninfo implements Serializable {
     @Override
     public String toString() {
         return "com.smartexpo.models.Sessioninfo[ sessioninfoId=" + sessioninfoId + " ]";
+    }
+
+    public String getSessionid() {
+        return sessionid;
+    }
+
+    public void setSessionid(String sessionid) {
+        this.sessionid = sessionid;
     }
     
 }
