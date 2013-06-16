@@ -314,8 +314,8 @@ public class GetInfo implements Serializable {
         Iterator<Item> it = items.iterator();
         while (it.hasNext()) {
             Item itm = it.next();
-            if (!(itm.getItemName().indexOf(name) >= 0)
-                    || itm.getItemName().equals(name)) {
+            if (!(itm.getItemName().toLowerCase().indexOf(name.toLowerCase()) >= 0)
+                    || itm.getItemName().toLowerCase().equals(name.toLowerCase())) {
                 it.remove();
             }
         }
