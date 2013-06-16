@@ -351,4 +351,6 @@ public class GetInfo implements Serializable {
         List<Sessioninfo> sinfos=em.createNamedQuery("Sessioninfo.findAll").getResultList();
         return sinfos;
     }
+    
+    
 }

@@ -5,17 +5,11 @@
 package com.smartexpo.models;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,60 +21,36 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Sessioninfo.findAll", query = "SELECT s FROM Sessioninfo s"),
-    @NamedQuery(name = "Sessioninfo.findByUsername", query = "SELECT s FROM Sessioninfo s WHERE s.username = :username"),
-    @NamedQuery(name = "Sessioninfo.findBySessionid", query = "SELECT s FROM Sessioninfo s WHERE s.sessionid = :sessionid"),
-    @NamedQuery(name = "Sessioninfo.findBySessioninfoId", query = "SELECT s FROM Sessioninfo s WHERE s.sessioninfoId = :sessioninfoId")})
+    @NamedQuery(name = "Sessioninfo.findBySessionid", query = "SELECT s FROM Sessioninfo s WHERE s.sessioninfoPK.sessionid = :sessionid"),
+    @NamedQuery(name = "Sessioninfo.findByUsername", query = "SELECT s FROM Sessioninfo s WHERE s.sessioninfoPK.username = :username")})
 public class Sessioninfo implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "SESSIONID")
-    private String sessionid;
     private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "USERNAME")
-    private String username;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "SESSIONINFO_ID")
-    private Integer sessioninfoId;
+    @EmbeddedId
+    protected SessioninfoPK sessioninfoPK;
 
     public Sessioninfo() {
     }
 
-    public Sessioninfo(Integer sessioninfoId) {
-        this.sessioninfoId = sessioninfoId;
+    public Sessioninfo(SessioninfoPK sessioninfoPK) {
+        this.sessioninfoPK = sessioninfoPK;
     }
 
-    public Sessioninfo(Integer sessioninfoId, String username, String sessionid) {
-        this.sessioninfoId = sessioninfoId;
-        this.username = username;
-        this.sessionid = sessionid;
+    public Sessioninfo(String sessionid, String username) {
+        this.sessioninfoPK = new SessioninfoPK(sessionid, username);
     }
 
-    public String getUsername() {
-        return username;
+    public SessioninfoPK getSessioninfoPK() {
+        return sessioninfoPK;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Integer getSessioninfoId() {
-        return sessioninfoId;
-    }
-
-    public void setSessioninfoId(Integer sessioninfoId) {
-        this.sessioninfoId = sessioninfoId;
+    public void setSessioninfoPK(SessioninfoPK sessioninfoPK) {
+        this.sessioninfoPK = sessioninfoPK;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (sessioninfoId != null ? sessioninfoId.hashCode() : 0);
+        hash += (sessioninfoPK != null ? sessioninfoPK.hashCode() : 0);
         return hash;
     }
 
@@ -91,7 +61,7 @@ public class Sessioninfo implements Serializable {
             return false;
         }
         Sessioninfo other = (Sessioninfo) object;
-        if ((this.sessioninfoId == null && other.sessioninfoId != null) || (this.sessioninfoId != null && !this.sessioninfoId.equals(other.sessioninfoId))) {
+        if ((this.sessioninfoPK == null && other.sessioninfoPK != null) || (this.sessioninfoPK != null && !this.sessioninfoPK.equals(other.sessioninfoPK))) {
             return false;
         }
         return true;
@@ -99,15 +69,7 @@ public class Sessioninfo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.smartexpo.models.Sessioninfo[ sessioninfoId=" + sessioninfoId + " ]";
-    }
-
-    public String getSessionid() {
-        return sessionid;
-    }
-
-    public void setSessionid(String sessionid) {
-        this.sessionid = sessionid;
+        return "com.smartexpo.models.Sessioninfo[ sessioninfoPK=" + sessioninfoPK + " ]";
     }
     
 }

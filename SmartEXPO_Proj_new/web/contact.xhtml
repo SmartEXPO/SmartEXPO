@@ -1,12 +1,125 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <meta charset="UTF-8" />
+        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+        Remove this if you use the .htaccess -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="description" content="" />
+        <meta name="author" content="Ben" />
+
+        <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+        <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+        <title>SmartEXPO | Contact</title>
+
+        <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="css/index_style.css" />      
+
+        <h:outputScript library="#{info.lib}" name="scripts/jquery_1_9_1.js"
+                        target="head"/>
+        <h:outputScript library="#{info.lib}" name="scripts/sidebar.js" target="head" />
+
     </h:head>
+
     <h:body>
-        Hello from Facelets
+        <header>
+            <nav>
+                <h:outputLink class="navi" value="map.xhtml">#{info['navigator.map']}</h:outputLink>|
+                <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
+                <h:outputLink class="navi" value="contact.xhtml">#{info['navigator.contact']}</h:outputLink>
+            </nav>
+            <h:outputLink value="#{info.homeHref}">
+                <h:graphicImage id="logo" library="#{info.lib}"
+                                name="images/logo.png"/>
+            </h:outputLink>
+            <div id="decologo">
+                <div id="shortbar"></div>
+                <div id="longbar"></div>
+            </div>
+        </header>
+
+
+        <footer style="margin-top:20px">
+            <h:outputText value="#{info.footer}" escape="false"/>
+        </footer>
+
+
+        <div id="side_bar">
+            <h:graphicImage id="handler" library="#{info.lib}" name="images/handler.png" />
+            <div id="expand_sidebar">
+                <div id="sidebar_back"></div>
+                <div id="sidebar_content">
+                    <div style="text-align:center;padding-top:20px;">
+                        <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
+                        <h2 style="margin-top:-2px;padding-left:40px;">
+                            <h:outputText value="#{indexBundle.exhibitionAreaMap}" 
+                                          escape="false" />
+                        </h2>
+                        <!--这个地方貌似那个图片不是居中做的-->
+                        <h:outputLink value="map.xhtml">
+                            <h:graphicImage library="#{info.lib}" name="images/map.png" />
+                        </h:outputLink>
+                        <br /><br />
+                        <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
+                        <h2 style="margin-top:-2px;padding-left:40px;">
+                            <h:outputText value="#{indexBundle.recommendItem}"
+                                          escape="false" />
+                        </h2>
+                        <div style="text-align: center;">
+                            <table id="sidebar_rect" width="547" height="101" border="0" cellpadding="0" cellspacing="0" 
+                                   background="/SmartEXPO_Proj_new/faces/javax.faces.resource/images/sidebar_rect.png?ln=#{info.lib}"
+                                   style="margin:0 auto;padding:0 0 0 0;">
+                                <tr>
+                                    <td colspan="9" style="width:547px;height:3px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:11px;height:80px;"></td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[0].itemId}">
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[0].imageurl}"
+                                                            style="width: 120px; height: 80px;" />
+                                        </h:outputLink>
+                                    </td>
+                                    <td style="width:15px;height:80px;"></td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[1].itemId}">
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[1].imageurl}"
+                                                            style="width: 120px; height: 80px" />
+                                        </h:outputLink>
+                                    </td>
+                                    <td style="width:15px;height:80px;"></td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[2].itemId}">
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[2].imageurl}"
+                                                            style="width: 120px; height: 80px" />
+                                        </h:outputLink>
+                                    </td>
+                                    <td style="width:15px;height:80px;"></td>
+                                    <td style="width:120px;height:80px;">
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[3].itemId}">
+                                            <h:graphicImage value="#{indexManagedBean.recommendItems[3].imageurl}"
+                                                            style="width: 120px; height: 80px" />
+                                        </h:outputLink>
+                                    </td>
+                                    <td style="width:11px;height:80px;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" style="width:547px;height:18px;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="handler_vanish"></div>
+            </div>
+        </div>
+
     </h:body>
 </html>
-
