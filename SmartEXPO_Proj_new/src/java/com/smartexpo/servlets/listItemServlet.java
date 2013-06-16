@@ -104,7 +104,7 @@ public class listItemServlet extends HttpServlet {
         List<String> jsons = new ArrayList<String>();
 
         for (Item item : items) {
-            String link = "item.xhtml?id=" + item.getItemId(); //TODO 具体网址怎么跳转
+            String link = "item" + item.getItemId(); //TODO 具体网址怎么跳转
             String des;
             String author;
 

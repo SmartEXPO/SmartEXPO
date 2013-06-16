@@ -30,7 +30,7 @@
                 <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
                 <a class="navi" href="#">#{info['navigator.contact']}</a>
             </nav>
-            <h:outputLink value="index.xhtml">
+            <h:outputLink value="#{info.homeHref}">
                 <h:graphicImage id="logo" library="#{info.lib}"
                                 name="images/logo.png"/>
             </h:outputLink>

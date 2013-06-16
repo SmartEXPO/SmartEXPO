@@ -56,7 +56,7 @@
                 <h:outputLink class="navi" value="info.xhtml">#{info['navigator.info']}</h:outputLink>|
                 <a class="navi" href="#">#{info['navigator.contact']}</a>
             </nav>
-            <h:outputLink value="index.xhtml">
+            <h:outputLink value="#{info.homeHref}">
                 <h:graphicImage id="logo" library="#{info.lib}" name="images/logo.png" alt="SmartEXPO" />
             </h:outputLink>
             <div id="decologo">
@@ -74,12 +74,10 @@
                 <div id="frame">
                     <h:graphicImage class="frame_content" library="#{info.lib}" name="images/frame.png" />
                     <div id="display_item_frame">
-                        <h:graphicImage id="display_item" value="#{indexManagedBean.showItems[0].imageurl}"
-                                        />
+                        <h:graphicImage id="display_item" value="#{indexManagedBean.showItems[0].imageurl}" />
                     </div>
-                    <h:outputLink id="display_item_id" value="item.xhtml">
+                    <h:outputLink id="display_item_id" value="item#{indexManagedBean.showItems[0].itemId}">
                         <h:graphicImage class="frame_content" library="#{info.lib}" name="images/framehl.png" />
-                        <f:param name="id" value="#{indexManagedBean.showItems[0].itemId}" />
                     </h:outputLink>
                 </div>
                 <div id="detail">
@@ -128,32 +126,28 @@
                                 <tr>
                                     <td style="width:11px;height:80px;"></td>
                                     <td style="width:120px;height:80px;">
-                                        <h:outputLink value="item.xhtml">
-                                            <f:param name="id" value="#{indexManagedBean.recommendItems[0].itemId}" />
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[0].itemId}">
                                             <h:graphicImage value="#{indexManagedBean.recommendItems[0].imageurl}"
                                                             style="width: 120px; height: 80px;" />
                                         </h:outputLink>
                                     </td>
                                     <td style="width:15px;height:80px;"></td>
                                     <td style="width:120px;height:80px;">
-                                        <h:outputLink value="item.xhtml">
-                                            <f:param name="id" value="#{indexManagedBean.recommendItems[1].itemId}" />
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[1].itemId}">
                                             <h:graphicImage value="#{indexManagedBean.recommendItems[1].imageurl}"
                                                             style="width: 120px; height: 80px" />
                                         </h:outputLink>
                                     </td>
                                     <td style="width:15px;height:80px;"></td>
                                     <td style="width:120px;height:80px;">
-                                        <h:outputLink value="item.xhtml">
-                                            <f:param name="id" value="#{indexManagedBean.recommendItems[2].itemId}" />
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[2].itemId}">
                                             <h:graphicImage value="#{indexManagedBean.recommendItems[2].imageurl}"
                                                             style="width: 120px; height: 80px" />
                                         </h:outputLink>
                                     </td>
                                     <td style="width:15px;height:80px;"></td>
                                     <td style="width:120px;height:80px;">
-                                        <h:outputLink value="item.xhtml">
-                                            <f:param name="id" value="#{indexManagedBean.recommendItems[3].itemId}" />
+                                        <h:outputLink value="item#{indexManagedBean.recommendItems[3].itemId}">
                                             <h:graphicImage value="#{indexManagedBean.recommendItems[3].imageurl}"
                                                             style="width: 120px; height: 80px" />
                                         </h:outputLink>

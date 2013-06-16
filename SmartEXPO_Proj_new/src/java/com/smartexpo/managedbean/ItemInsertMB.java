@@ -342,11 +342,7 @@ public class ItemInsertMB implements Serializable {
         clearAll();
         reloadItem();
         RequestContext.getCurrentInstance()
-                .execute(("alert('Insert Successfully!');location.reload(true)"));
-    }
-
-    public String onFlowProcess(FlowEvent event) {
-        return event.getNewStep();
+                .execute(("alert('Insert successfully!')window.location.href='item_insert.xhtml'"));
     }
 
     public void forwardPage(ActionEvent event) {

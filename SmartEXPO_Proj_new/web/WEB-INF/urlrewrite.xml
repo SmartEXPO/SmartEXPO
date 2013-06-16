@@ -18,7 +18,7 @@
         <from>/test/status/</from>
         <to type="redirect">%{context-path}/rewrite-status</to>
     </rule>
-    
+
     <rule>
         <from>/home</from>
         <to>/index.xhtml</to>
