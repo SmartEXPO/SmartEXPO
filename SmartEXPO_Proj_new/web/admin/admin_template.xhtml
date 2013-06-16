@@ -23,12 +23,14 @@
         </title>
     </h:head>
 
-    <h:body style="width: 100%; margin: 0 0 0 0; position: relative; ">
+    <h:body style="width: 100%; margin: 0 0 0 0; position: relative; overflow-x: hidden;">
         <div id="top" style="font-family: 'American Typewriter', serif;
              text-align: center; font-size: 400%;">
-            <ui:insert name="top">SmartEXPO</ui:insert>
+            <ui:insert name="top">
+                <h:graphicImage id="logo" library="#{info.lib}" name="admin/images/item_logo.png" style="margin-top: 20px;"/>
+            </ui:insert>
         </div>
-        <div>
+        <div style="min-height: 300px;">
             <div id="left">
                 <ui:insert name="left">
                     <div style="font-size: 150%;">
@@ -85,7 +87,7 @@
             </div>
         </div>
         <div id="bottom" style="font-family: 'American Typewriter', serif;
-             text-align: center; position: absolute; bottom:-20px ; width: 100%;">
+             text-align: center;width: 100%;">
             <ui:insert name="bottom">Copyright &#169; 2013 by SmartEXPO orgnization.</ui:insert>
         </div>
     </h:body>
