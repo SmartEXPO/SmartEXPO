@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/admin/admin_template.xhtml">
+        <ui:define name="title">Item | Insert | Authors</ui:define>
+        <ui:define name="content">
+            <h:outputText value="Authors" style="font-size: 200%;" />
+            <p:separator style="height: 5px;" />
+
+            <h:form>
+                <p:dataTable id="author_list" var="authorList"
+                             value="#{itemInsertMB.authors}"
+                             style="text-align: center;">
+                    <p:column>
+                        <p:commandButton icon="ui-icon-minusthick"
+                                         update="author_list"
+                                         action="#{itemInsertMB.removeAuthor}">
+                            <f:setPropertyActionListener value="#{authorList}"
+                                                         target="#{itemInsertMB.selectedAuthor}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Author Name">
+                        <h:outputText value="#{authorList.name}" />
+                    </p:column>
+                    <p:column headerText="Author Birthday">
+                        <h:outputText value="#{authorList.birthday}" />
+                    </p:column>
+                    <p:column headerText="Author Death Date">
+                        <h:outputText value="#{authorList.deathDate}" />
+                    </p:column>
+                    <p:column headerText="Author Introduction">
+                        <h:outputText value="#{authorList.introduction}" />
+                    </p:column>
+                    <f:facet name="footer">
+                        Total #{itemInsertMB.authorSize} authors.
+                    </f:facet>
+                </p:dataTable>
+
+                <p:commandButton icon="ui-icon-plusthick"
+                                 ajax="true" update="author_add_dialog"
+                                 oncomplete="authorVar.show()" />
+
+                <p:dialog id="author_add_dialog" header="Enter Author Info"
+                          widgetVar="authorVar" resizable="false" modal="true">
+                    <h:panelGrid columns="2" columnClasses="label,value">
+                        <h:outputLabel for="author_name" value="Author Name" />
+                        <p:inputText id="author_name"
+                                     value="#{itemInsertMB.authorName}" />
+
+                        <h:outputLabel for="author_birth" value="Author Birthday" />
+                        <p:calendar id="author_birth"
+                                    value="#{itemInsertMB.authorBirth}" />
+
+                        <h:outputLabel for="author_death" value="Author Death Date" />
+                        <p:calendar id="author_death"
+                                    value="#{itemInsertMB.authorDeath}" />
+
+                        <h:outputLabel for="author_intro" value="Author Introduction" />
+                        <p:inputTextarea id="author_intro" autoResize="false"
+                                         value="#{itemInsertMB.authorIntro}" />
+
+                        <p:commandButton value="Add" icon="ui-icon-check"
+                                         ajax="true" update="author_list author_add_dialog"
+                                         action="#{itemInsertMB.addAuthor}"
+                                         oncomplete="authorVar.hide()" />
+                    </h:panelGrid>
+                </p:dialog>
+                <div>
+                    <p:commandButton value="Back" ajax="false"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{itemInsertMB.forwardStep}"
+                                     actionListener="#{itemInsertMB.forwardPage}">
+                        <f:attribute name="next_page" value="insert_basic_info.xhtml" />
+                    </p:commandButton>
+                    <p:commandButton value="Next" ajax="false"
+                                     icon="ui-icon-arrowreturnthick-1-e"
+                                     action="#{itemInsertMB.forwardStep}"
+                                     actionListener="#{itemInsertMB.forwardPage}">
+                        <f:attribute name="next_page" value="insert_audios.xhtml" />
+                    </p:commandButton>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

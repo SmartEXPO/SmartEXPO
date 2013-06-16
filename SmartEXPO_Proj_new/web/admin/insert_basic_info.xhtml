@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/admin/admin_template.xhtml">
+        <ui:define name="title">Item | Insert | Basic Info</ui:define>
+        <ui:define name="content">
+            <h:outputText value="Basic Information" style="font-size: 200%;" />
+            <p:separator style="height: 5px;" />
+
+            <h:form enctype="multipart/form-data">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label,value"
+                             styleClass="grid">
+                    <h:outputLabel for="item_name" value="Item Name" />
+                    <p:inputText id="item_name"
+                                 value="#{itemInsertMB.itemName}" />
+
+                    <h:outputLabel for="item_area" value="Item Area" />
+                    <p:selectOneMenu id="item_area" value="#{itemInsertMB.itemArea}">
+                        <f:selectItem itemLabel="Area 1" itemValue="Area 1" />
+                        <f:selectItem itemLabel="Area 2" itemValue="Area 2" />
+                        <f:selectItem itemLabel="Area 3" itemValue="Area 3" />
+                        <f:selectItem itemLabel="Area 4" itemValue="Area 4" />
+                        <f:selectItem itemLabel="Area 5" itemValue="Area 5" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="img_upload" value="Image Upload" />
+                    <h:column>
+                        <p:fileUpload id="img_upload"
+                                      fileUploadListener="#{itemInsertMB.upload}"
+                                      mode="advanced"
+                                      update="img_upload_msg"
+                                      auto="true"
+                                      sizeLimit="10485760"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        <p:growl id="img_upload_msg" showDetail="true"/>
+                    </h:column>
+
+                    <h:outputLabel for="des_title" value="Description Title" />
+                    <p:inputText id="des_title"
+                                 value="#{itemInsertMB.desTitle}" />
+
+                    <h:outputLabel for="des_content" value="Description Content" />
+                    <p:inputTextarea id="des_content" autoResize="false"
+                                     value="#{itemInsertMB.desContent}" />
+                </h:panelGrid>
+                <p:commandButton value="Next" ajax="false"
+                                 icon="ui-icon-arrowreturnthick-1-e"
+                                 action="#{itemInsertMB.forwardStep}"
+                                 actionListener="#{itemInsertMB.forwardPage}">
+                    <f:attribute name="next_page" value="insert_authors.xhtml" />
+                </p:commandButton>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

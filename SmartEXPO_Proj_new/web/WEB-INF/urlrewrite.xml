@@ -18,10 +18,25 @@
         <from>/test/status/</from>
         <to type="redirect">%{context-path}/rewrite-status</to>
     </rule>
+
+    <rule>
+        <from>/home</from>
+        <to>/index.xhtml</to>
+    </rule>
     
     <rule>
-        <from>/home.html</from>
-        <to>/index.xhtml</to>
+        <from>/item_insert.xhtml</from>
+        <to>/insert_basic_info.xhtml</to>
+    </rule>
+    
+    <rule>
+        <from>/list([0-9]+)$</from>
+        <to>/list.xhtml?area=$1</to>
+    </rule>
+    
+    <rule>
+        <from>/item([0-9]+)$</from>
+        <to>/item.xhtml?id=$1</to>
     </rule>
 
 

@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -27,7 +28,9 @@ import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -87,6 +90,7 @@ public class ItemInsertMB implements Serializable {
     private String videoDes;
     private String savedLocation;
     private UploadedFile uploadedFile;
+    private String nextPage;
 
     /**
      * Creates a new instance of ItemInsertMB
@@ -338,11 +342,19 @@ public class ItemInsertMB implements Serializable {
         clearAll();
         reloadItem();
         RequestContext.getCurrentInstance()
-                .execute(("alert('Insert Successfully!');location.reload(true)"));
+                .execute(("alert('Insert successfully!')window.location.href='item_insert.xhtml'"));
     }
 
-    public String onFlowProcess(FlowEvent event) {
-        return event.getNewStep();
+    public void forwardPage(ActionEvent event) {
+        UIComponent component = event.getComponent();
+        Map<String, Object> attributes = component.getAttributes();
+
+        nextPage = (String) attributes.get("next_page");
+    }
+
+    public String forwardStep() {
+        Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, "nextpage = {0}", nextPage);
+        return nextPage;
     }
 
     public int getAuthorSize() {

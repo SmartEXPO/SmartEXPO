@@ -23,17 +23,21 @@
         </title>
     </h:head>
 
-    <h:body>
+    <h:body style="width: 100%; margin: 0 0 0 0; position: relative; overflow-x: hidden;">
         <div id="top" style="font-family: 'American Typewriter', serif;
              text-align: center; font-size: 400%;">
-            <ui:insert name="top">SmartEXPO</ui:insert>
+            <ui:insert name="top">
+                <h:graphicImage id="logo" library="#{info.lib}" name="admin/images/item_logo.png" style="margin-top: 20px;"/>
+            </ui:insert>
         </div>
-        <div>
+        <div style="min-height: 300px;">
             <div id="left">
                 <ui:insert name="left">
                     <div style="font-size: 150%;">
-                        <h:outputLabel for="wel_user" value="Welcome, " />
-                        <h:outputText id="wel_user" value="#{loginManagedBean.username}" />
+                        <h:outputLabel for="wel_user" value="Welcome, "
+                                       style="color: black;"/>
+                        <h:outputText id="wel_user" value="#{loginManagedBean.username}"
+                                      style="color: black;"/>
                         <br />
                         <h:form>
                             <h:commandLink value="Log Out"
@@ -76,14 +80,14 @@
                     </p:panel>
                 </ui:insert>
             </div>
-            <div id="content" class="left_content">
+            <div id="content" class="left_content" style="color: black;">
                 <ui:insert name="content">
 
                 </ui:insert>
             </div>
         </div>
         <div id="bottom" style="font-family: 'American Typewriter', serif;
-             text-align: center">
+             text-align: center;width: 100%;">
             <ui:insert name="bottom">Copyright &#169; 2013 by SmartEXPO orgnization.</ui:insert>
         </div>
     </h:body>
