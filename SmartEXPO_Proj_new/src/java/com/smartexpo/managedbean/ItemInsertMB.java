@@ -345,6 +345,11 @@ public class ItemInsertMB implements Serializable {
         return event.getNewStep();
     }
 
+    public String nextStep() {
+        Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, "actionnnnnnnnn");
+        return "insert_authors";
+    }
+
     public int getAuthorSize() {
         return authors.size();
     }

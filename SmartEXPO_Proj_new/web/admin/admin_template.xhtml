@@ -32,8 +32,10 @@
             <div id="left">
                 <ui:insert name="left">
                     <div style="font-size: 150%;">
-                        <h:outputLabel for="wel_user" value="Welcome, " />
-                        <h:outputText id="wel_user" value="#{loginManagedBean.username}" />
+                        <h:outputLabel for="wel_user" value="Welcome, "
+                                       style="color: black;"/>
+                        <h:outputText id="wel_user" value="#{loginManagedBean.username}"
+                                      style="color: black;"/>
                         <br />
                         <h:form>
                             <h:commandLink value="Log Out"
@@ -76,7 +78,7 @@
                     </p:panel>
                 </ui:insert>
             </div>
-            <div id="content" class="left_content">
+            <div id="content" class="left_content" style="color: black;">
                 <ui:insert name="content">
 
                 </ui:insert>
