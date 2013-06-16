@@ -150,8 +150,6 @@ public class ItemController implements Serializable {
         gi = new GetInfo(emf, utx);
 
         initialCommentsList();
-
-        Logger.getLogger(ItemController.class.getName()).log(Level.WARNING, "hashtml = {0}", itemBean.isHasHtml());
     }
 
     /**

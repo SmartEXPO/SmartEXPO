@@ -25,7 +25,6 @@
                     <p:password id="password" required="true"
                                 value="#{signUpManagedBean.password}">
                         <f:validateLength minimum="3" maximum="16" />
-                        <f:converter converterId="encryptConverter" />
                         <p:ajax listener="#{signUpManagedBean.onInputValue('password')}"
                                 update="password_icon" />
                     </p:password>
@@ -34,7 +33,6 @@
                     <h:outputLabel for="confirm_password" value="Confirm Password:" />
                     <p:password id="confirm_password" required="true"
                                 value="#{signUpManagedBean.confirmPassword}">
-                        <f:converter converterId="encryptConverter" />
                         <p:ajax listener="#{signUpManagedBean.onInputValue('confirm_password')}"
                                 update="confirm_password_icon" />
                     </p:password>
