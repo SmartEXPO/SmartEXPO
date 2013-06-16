@@ -182,6 +182,10 @@ public class ItemController implements Serializable {
         this.audioBean = audioBean;
     }
 
+    public boolean isAuthorEmpty() {
+        return authorBean.getIntroductions().isEmpty();
+    }
+
     /**
      * @return the audioIDs
      */

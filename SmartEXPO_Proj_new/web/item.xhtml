@@ -127,7 +127,10 @@
                         <h1>#{itemController.itemBean.name}</h1>
                         <div class="separator"
                              style="margin-top:-10px;margin-bottom:-15px;" />
-                        <h3>#{itemController.authorBean.names[0]}</h3>
+                        <ui:repeat value="#{itemController.authorBean.names}"
+                                   var="name">
+                            <h3>#{name}</h3>
+                        </ui:repeat>
                     </div>
 
                     <div id="description">
@@ -140,12 +143,23 @@
                                                   escape="false" />
 
                                     <h:column id="from_data" rendered="#{!itemController.itemBean.hasHtml}">
+                                        <h:column rendered="#{!itemController.authorEmpty}">
+                                            <h1 class="content_title">author introduction</h1>
+                                        </h:column>
+                                        <ui:repeat value="#{itemController.authorBean.introductions}"
+                                                   var="intro">
+                                            <h:outputText value="#{intro}" escape="false" />
+                                        </ui:repeat>
+
                                         <h1 class="content_title">Description</h1>
                                         <p id="description_content">
                                             <h:outputText value="#{itemController.descriptionBean.content}"
                                                           escape="false" />
                                         </p>
-                                        <h1 class="content_title">audio</h1>
+
+                                        <h:column rendered="#{!itemController.audioUrlEmpty}">
+                                            <h1 class="content_title">audio</h1>
+                                        </h:column>
                                         <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
                                             <audio controls="controls">
                                                 <source src="#{facesContext.externalContext.requestContextPath}#{audioURL}"
@@ -153,7 +167,10 @@
                                                 Your browser does not support the audio tag.
                                             </audio>
                                         </ui:repeat>
-                                        <h1 class="content_title">video</h1>
+
+                                        <h:column rendered="#{!itemController.videoUrlEmpty}">
+                                            <h1 class="content_title">video</h1>
+                                        </h:column>
                                         <ui:repeat value="#{itemController.videoURLs}" var="videoURL">
                                             <video width="320" height="240" controls="controls">
                                                 <source src="#{facesContext.externalContext.requestContextPath}#{videoURL}"
@@ -161,8 +178,8 @@
                                                 Your browser does not support the video tag.
                                             </video>
                                         </ui:repeat>
-                                        <h1 class="content_title">See Also</h1>
-                                        <p>This is the content of see also</p>
+                                        <br />
+                                        <br />
                                     </h:column>
                                 </div>
                             </h:form>
@@ -204,7 +221,6 @@
                                 onevent="handleSearch"/>
                     </h:inputText>
                 </h:form>
-
             </div>
 
             <div id="comment" class="func_button">
