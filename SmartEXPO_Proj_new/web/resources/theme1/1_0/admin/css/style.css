@@ -71,8 +71,8 @@ p {
 .button {
 				font-family: Verdana, Arial, sans-serif;
                 display: inline-block;
-                background: #459300 url('../images/bg-button-green.gif?ln=theme1') top left repeat-x !important;
-                border: 1px solid #459300 !important;
+                background: #931300 url('../images/bg-button-green.gif?ln=theme1') top left repeat-x !important;
+                border: 1px solid #931300 !important;
                 padding: 4px 7px 4px 7px !important;
                 color: #fff !important;
                 font-size: 11px !important;

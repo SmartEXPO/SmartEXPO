@@ -15,7 +15,7 @@
 
     </h:head>
 
-    <h:body id="login">
+    <body id="login">
 
         <div id="login-wrapper" class="png_bg">
             <div id="login-top">
@@ -23,7 +23,7 @@
                 <h1>Simpla Admin</h1>
                 <!-- Logo (221px width) -->
                 <h:graphicImage id="logo" library="#{info.lib}"
-                                name="images/item_logo.png" />
+                                name="admin/images/item_logo.png" />
             </div> <!-- End #logn-top -->
 
             <div id="login-content">
@@ -48,12 +48,8 @@
                                        value="#{loginManagedBean.password}" />
                     </p>
                     <div class="clear"></div>
-                    <p id="remember-password">
-                        <input type="checkbox" />Remember me
-                    </p>
-                    <div class="clear"></div>
                     <p>
-                        <h:commandButton id="login_button" type="submit"
+                        <h:commandButton id="login_button" type="submit" class="button"
                                          value="Sign In"
                                          action="#{loginManagedBean.adminLogin}" />
                     </p>
@@ -63,5 +59,5 @@
 
         </div> <!-- End #login-wrapper -->
         
-    </h:body>
+    </body>
 </html>
