@@ -63,7 +63,10 @@
         <div>
             <input id="itemidhiddenbox" hidden="true" value="#{itemController.itemBean.id}" />
             <div class="edit_description_div">
-                <a class="edit_description_link" href="#edit_content_panel_2">Edit</a>
+                <h:outputLink class="edit_description_link"
+                              value="#edit_content_panel_2">
+                    Edit
+                </h:outputLink>
             </div>
 
             <header id="header">
@@ -128,41 +131,40 @@
                         <div id="des_scroll">
                             <br/>
                             <h:form id="edit_btn">
-
                                 <div id="information_content">
                                     <h:outputText value="#{itemController.itemBean.html}"
                                                   rendered="#{itemController.itemBean.hasHtml}"
                                                   escape="false" />
 
-                                    <h1 class="content_title">Description</h1>
-                                    <p id="description_content">
-                                        <h:outputText value="#{itemController.descriptionBean.content}"
-                                                      escape="false" />
-                                    </p>
-                                    <h1 class="content_title">audio</h1>
-                                    <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
-                                        <audio controls="controls">
-                                            <source src="#{facesContext.externalContext.requestContextPath}#{audioURL}"
-                                                    type="audio/mpeg" />
-                                            Your browser does not support the audio tag.
-                                        </audio>
-                                    </ui:repeat>
-                                    <h1 class="content_title">video</h1>
-                                    <ui:repeat value="#{itemController.videoURLs}" var="videoURL">
-                                        <video width="320" height="240" controls="controls">
-                                            <source src="#{facesContext.externalContext.requestContextPath}#{videoURL}"
-                                                    type="video/mp4" />
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </ui:repeat>
-                                    <h1 class="content_title">See Also</h1>
-                                    <p>This is the content of see also</p>
+                                    <h:column id="from_data" rendered="#{!itemController.itemBean.hasHtml}">
+                                        <h1 class="content_title">Description</h1>
+                                        <p id="description_content">
+                                            <h:outputText value="#{itemController.descriptionBean.content}"
+                                                          escape="false" />
+                                        </p>
+                                        <h1 class="content_title">audio</h1>
+                                        <ui:repeat value="#{itemController.audioURLs}" var="audioURL">
+                                            <audio controls="controls">
+                                                <source src="#{facesContext.externalContext.requestContextPath}#{audioURL}"
+                                                        type="audio/mpeg" />
+                                                Your browser does not support the audio tag.
+                                            </audio>
+                                        </ui:repeat>
+                                        <h1 class="content_title">video</h1>
+                                        <ui:repeat value="#{itemController.videoURLs}" var="videoURL">
+                                            <video width="320" height="240" controls="controls">
+                                                <source src="#{facesContext.externalContext.requestContextPath}#{videoURL}"
+                                                        type="video/mp4" />
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </ui:repeat>
+                                        <h1 class="content_title">See Also</h1>
+                                        <p>This is the content of see also</p>
+                                    </h:column>
                                 </div>
                             </h:form>
-
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -273,7 +275,7 @@
 
         <div id="edit_content_panel_2" class="zoom-anim-dialog mfp-hide">
             <textarea id="edit_content_textarea"></textarea>
-            <input type="button" value="Done" onclick="finishEditing()" />
+            <input type="button" value="Done" onclick="finishEditing();" />
         </div>
 
         <div id="instant_comment">
