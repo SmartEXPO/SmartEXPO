@@ -26,7 +26,7 @@ $(document).ready(function() {
     display();
     setInterval(display, 10000);
 
-    $("#display_item").autofit({height:320,width:480});
+    $("#display_item").autofit({height: 320, width: 480});
 
 });
 
@@ -51,8 +51,9 @@ function display() {
         $("img#display_item").animate({
             'opacity': '0'
         }, 500, function() {
+            var title = dis.title.toString().replace(/[ ]/g, "-");
             $("img#display_item").attr("src", dis.path);
-            $("#display_item_id").attr("href", "item" + dis.id);
+            $("#display_item_id").attr("href", "item/" + dis.id + "/" + title);
 
             //autoFit(480, 320, $("#display_item"));
         });

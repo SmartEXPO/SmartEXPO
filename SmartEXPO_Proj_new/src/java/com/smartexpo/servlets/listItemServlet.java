@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -38,7 +37,7 @@ public class listItemServlet extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(listItemServlet.class.getName());
 
     @PostConstruct
-    private void postConstruct() {
+    public void postConstruct() {
         System.out.println("@@@@@@@@@@@" + em.toString() + "@@@@@@@@@@@");
         getInfo = new GetInfo(em, utx);
     }
@@ -104,7 +103,7 @@ public class listItemServlet extends HttpServlet {
         List<String> jsons = new ArrayList<String>();
 
         for (Item item : items) {
-            String link = "item" + item.getItemId(); //TODO 具体网址怎么跳转
+            String link = "item/" + item.getItemId() + "/" + item.getItemName().replace(' ', '-'); //TODO 具体网址怎么跳转
             String des;
             String author;
 

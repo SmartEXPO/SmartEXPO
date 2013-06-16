@@ -38,6 +38,8 @@ public class Item implements Serializable {
     private int id;
     private String name;
     private String picURL;
+    private String html;
+    private boolean hasHtml;
 
     /**
      * Creates a new instance of Item
@@ -60,6 +62,12 @@ public class Item implements Serializable {
         setItem(gi.getItemByID(id));
         name = getItem().getItemName();
         picURL = getItem().getImageurl();
+        html = getItem().getHtml();
+        if (html == null || html.equals("")) {
+            setHasHtml(false);
+        } else {
+            setHasHtml(true);
+        }
     }
 
     /**
@@ -116,5 +124,33 @@ public class Item implements Serializable {
      */
     public void setPicURL(String picURL) {
         this.picURL = picURL;
+    }
+
+    /**
+     * @return the html
+     */
+    public String getHtml() {
+        return html;
+    }
+
+    /**
+     * @param html the html to set
+     */
+    public void setHtml(String html) {
+        this.html = html;
+    }
+
+    /**
+     * @return the hasHtml
+     */
+    public boolean isHasHtml() {
+        return hasHtml;
+    }
+
+    /**
+     * @param hasHtml the hasHtml to set
+     */
+    public void setHasHtml(boolean hasHtml) {
+        this.hasHtml = hasHtml;
     }
 }
