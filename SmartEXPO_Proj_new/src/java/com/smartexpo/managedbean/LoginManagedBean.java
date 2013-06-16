@@ -188,7 +188,7 @@ public class LoginManagedBean implements Serializable {
                     .execute("vanish();void(0);"); // Close login pannel
         } else {
             RequestContext.getCurrentInstance()
-                    .execute(("alert('Username or password wrong')"));
+                    .execute("alert('Username or password wrong')");
         }
     }
 
@@ -211,18 +211,20 @@ public class LoginManagedBean implements Serializable {
                 .getExternalContext().getSession(false);
         session.invalidate();
 
-
         List<Sessioninfo> sinfos = gi.getSessioninfosByName(username);
-        SessioninfoJpaController sijc = new SessioninfoJpaController(utx, emf);
-        for (int i = 0; i < sinfos.size(); i++) {
-            try {
-                sijc.destroy(sinfos.get(i).getSessioninfoPK());
-            } catch (NonexistentEntityException ex) {
-                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        if (sinfos == null || sinfos.isEmpty()) {
+        } else {
+            SessioninfoJpaController sijc = new SessioninfoJpaController(utx, emf);
+            for (int i = 0; i < sinfos.size(); i++) {
+                try {
+                    sijc.destroy(sinfos.get(i).getSessioninfoPK());
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 
@@ -233,7 +235,7 @@ public class LoginManagedBean implements Serializable {
         setStatus(false);
 
         RequestContext.getCurrentInstance()
-                .execute(("alert('Log out successfully!');location.reload(true);"));
+                .execute("location.reload(true);");
     }
 
     private boolean isPass(String user, String pass) {

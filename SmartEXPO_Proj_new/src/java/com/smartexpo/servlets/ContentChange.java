@@ -32,11 +32,11 @@ import org.primefaces.json.JSONException;
 public class ContentChange extends HttpServlet {
 
     private GetInfo gi = null;
-    
     @PersistenceUnit(unitName = "SmartEXPO_ProjPU")
     private EntityManagerFactory pu;
     @Resource
     private UserTransaction utx;
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -53,13 +53,13 @@ public class ContentChange extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("itemid"));
             String html = request.getParameter("html");
-            System.out.println(id + "@@@@@@@@@@@"+ html +"@@@@@@@@@@");
-            
+            System.out.println(id + "@@@@@@@@@@@" + html + "@@@@@@@@@@");
+
             Item item = gi.getItemByID(id);
             item.setHtml(html);
             ItemJpaController ijc = new ItemJpaController(utx, pu);
             ijc.edit(item);
-            
+
         } catch (JSONException ex) {
             Logger.getLogger(ContentChange.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalOrphanException ex) {

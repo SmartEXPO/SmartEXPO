@@ -61,6 +61,7 @@
     </h:head>
     <h:body>
         <div>
+            <input hidden="true" value="#{itemController.itemBean.id}" />
             <div class="edit_description_div">
                 <a class="edit_description_link" href="#edit_content_panel_2">Edit</a>
             </div>
@@ -127,7 +128,6 @@
                         <div id="des_scroll">
                             <br/>
                             <h:form id="edit_btn">
-
 
                                 <div id="information_content">
                                     <h:outputText value="#{itemController.itemBean.html}"

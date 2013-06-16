@@ -343,7 +343,7 @@ public class ItemInsertMB implements Serializable {
         clearAll();
         reloadItem();
         RequestContext.getCurrentInstance()
-                .execute(("alert('Insert successfully!')window.location.href='item_insert.xhtml'"));
+                .execute("alert('Insert successfully!');window.location.href='item_insert.xhtml'");
     }
 
     public void forwardPage(ActionEvent event) {
