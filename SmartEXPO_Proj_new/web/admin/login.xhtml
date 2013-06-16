@@ -1,25 +1,67 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>Login</title>
-    </h:head>
-    <h:body>
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel for="username" value="Username:" />
-                <h:inputText id="username" required="true"
-                             value="#{loginManagedBean.username}" />
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>SmartEXPO | Admin Console</title>
+        <h:outputStylesheet library="#{info.lib}" name="admin/css/reset.css" />
+        <h:outputStylesheet library="#{info.lib}" name="admin/css/style.css" />
+        <h:outputStylesheet library="#{info.lib}" name="admin/css/invalid.css" />
+        <h:outputScript library="#{info.lib}" name="admin/scripts/jquery-1.3.2.min.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="admin/scripts/simpla.jquery.configuration.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="admin/scripts/facebox.js" target="head" />
+        <h:outputScript library="#{info.lib}" name="admin/scripts/jquery.wysiwyg.js" target="head" />
 
-                <h:outputLabel for="password" value="Password:" />
-                <h:inputSecret id="password" required="true"
-                               value="#{loginManagedBean.password}" />
-            </h:panelGrid>
-            <h:commandButton id="login_button" type="submit"
-                             value="Sign In"
-                             action="#{loginManagedBean.adminLogin}" />
-        </h:form>
+    </h:head>
+
+    <h:body id="login">
+
+        <div id="login-wrapper" class="png_bg">
+            <div id="login-top">
+
+                <h1>Simpla Admin</h1>
+                <!-- Logo (221px width) -->
+                <h:graphicImage id="logo" library="#{info.lib}"
+                                name="images/item_logo.png" />
+            </div> <!-- End #logn-top -->
+
+            <div id="login-content">
+
+                <h:form>
+
+                    <div class="notification information png_bg">
+                        <div>
+                            Some information/messages here.
+                        </div>
+                    </div> 
+
+                    <p>
+                        <h:outputLabel for="username" value="Username" />
+                        <h:inputText id="username" required="true" class="text-input"
+                                     value="#{loginManagedBean.username}" />
+                    </p>
+                    <div class="clear"></div>
+                    <p>
+                        <h:outputLabel for="password" value="Password:" />
+                        <h:inputSecret id="password" required="true" class="text-input"
+                                       value="#{loginManagedBean.password}" />
+                    </p>
+                    <div class="clear"></div>
+                    <p id="remember-password">
+                        <input type="checkbox" />Remember me
+                    </p>
+                    <div class="clear"></div>
+                    <p>
+                        <h:commandButton id="login_button" type="submit"
+                                         value="Sign In"
+                                         action="#{loginManagedBean.adminLogin}" />
+                    </p>
+
+                </h:form>
+            </div> <!-- End #login-content -->
+
+        </div> <!-- End #login-wrapper -->
+        
     </h:body>
 </html>
