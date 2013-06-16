@@ -89,7 +89,7 @@ $(document).ready(function() {
 //        if (!$(this).is(":animated"))
         $(this).fadeTo('fast', 1);
     });
-    
+
 
     $(".func_button").mouseleave(function() {
         $(this).clearQueue();
@@ -174,29 +174,14 @@ $(document).ready(function() {
     $(".func_input_box.content").attr("placeholder", "Content");
     $(".func_input_box.search").attr("placeholder", "Search");
 
-
-
-    var edit = false;
-    var toEdit;
-    $(".edit_description_div").click(function() {
-        if (edit == false) {
-            toEdit = $(this).next();
-            var content = toEdit.html();
-            toEdit.html("<textarea class='edit_description_box'>" + content + "</textarea>");
-            edit = true;
-            $(".edit_description_div").attr("value", "Done");
-        } else {
-            var value = toEdit.children().val();
-            toEdit.html(value);
-            submit_changed_content(value);
-            edit = false;
-            $(".edit_description_div").attr("value", "Edit");
-        }
-    });
 //    $("#frame_image").load(function() {
 //        autoFit(480, 485, $("#frame_image"));
 //    });
     $("#frame_image").autofit({height: 485, width: 480});
+
+    $(window).load(function() {
+        regEditBtn();
+    });
 
 });
 
@@ -213,6 +198,7 @@ function finish(e) {
     $("#users_comment").perfectScrollbar('update');
 
     regLoginPanel();
+    regEditBtn();
 }
 
 function trim(str) {
