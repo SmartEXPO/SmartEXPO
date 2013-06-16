@@ -17,7 +17,7 @@
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-        <title>SmartEXPO | Info</title>
+        <title>SmartEXPO | Contact</title>
 
         <h:outputStylesheet library="#{info.lib}" name="css/style.css" />
         <h:outputStylesheet library="#{info.lib}" name="css/index_style.css" />      
@@ -50,7 +50,6 @@
             <h:outputText value="#{info.footer}" escape="false"/>
         </footer>
 
-
         <div id="side_bar">
             <h:graphicImage id="handler" library="#{info.lib}" name="images/handler.png" />
             <div id="expand_sidebar">
@@ -59,7 +58,7 @@
                     <div style="text-align:center;padding-top:20px;">
                         <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
                         <h2 style="margin-top:-2px;padding-left:40px;">
-                            <h:outputText value="#{indexBundle.exhibitionAreaMap}" 
+                            <h:outputText value="#{info['sideBar.exhibitionAreaMap']}" 
                                           escape="false" />
                         </h2>
                         <!--这个地方貌似那个图片不是居中做的-->
@@ -69,7 +68,7 @@
                         <br /><br />
                         <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
                         <h2 style="margin-top:-2px;padding-left:40px;">
-                            <h:outputText value="#{indexBundle.recommendItem}"
+                            <h:outputText value="#{info['sideBar.recommendItem']}"
                                           escape="false" />
                         </h2>
                         <div style="text-align: center;">
@@ -82,28 +81,28 @@
                                 <tr>
                                     <td style="width:11px;height:80px;"></td>
                                     <td style="width:120px;height:80px;">
-                                        <h:outputLink value="item#{indexManagedBean.recommendItems[0].itemId}">
+                                        <h:outputLink value="item/#{indexManagedBean.recommendItems[0].itemId}/#{indexManagedBean.recommendItems[0].itemName.replaceAll(' ', '-')}">
                                             <h:graphicImage value="#{indexManagedBean.recommendItems[0].imageurl}"
                                                             style="width: 120px; height: 80px;" />
                                         </h:outputLink>
                                     </td>
                                     <td style="width:15px;height:80px;"></td>
                                     <td style="width:120px;height:80px;">
-                                        <h:outputLink value="item#{indexManagedBean.recommendItems[1].itemId}">
+                                        <h:outputLink value="item/#{indexManagedBean.recommendItems[1].itemId}/#{indexManagedBean.recommendItems[1].itemName.replaceAll(' ', '-')}">
                                             <h:graphicImage value="#{indexManagedBean.recommendItems[1].imageurl}"
                                                             style="width: 120px; height: 80px" />
                                         </h:outputLink>
                                     </td>
                                     <td style="width:15px;height:80px;"></td>
                                     <td style="width:120px;height:80px;">
-                                        <h:outputLink value="item#{indexManagedBean.recommendItems[2].itemId}">
+                                        <h:outputLink value="item/#{indexManagedBean.recommendItems[2].itemId}/#{indexManagedBean.recommendItems[2].itemName.replaceAll(' ', '-')}">
                                             <h:graphicImage value="#{indexManagedBean.recommendItems[2].imageurl}"
                                                             style="width: 120px; height: 80px" />
                                         </h:outputLink>
                                     </td>
                                     <td style="width:15px;height:80px;"></td>
                                     <td style="width:120px;height:80px;">
-                                        <h:outputLink value="item#{indexManagedBean.recommendItems[3].itemId}">
+                                        <h:outputLink value="item/#{indexManagedBean.recommendItems[3].itemId}/#{indexManagedBean.recommendItems[3].itemName.replaceAll(' ', '-')}">
                                             <h:graphicImage value="#{indexManagedBean.recommendItems[3].imageurl}"
                                                             style="width: 120px; height: 80px" />
                                         </h:outputLink>

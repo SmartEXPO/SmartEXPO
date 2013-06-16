@@ -32,7 +32,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -148,9 +147,8 @@ public class ItemController implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        if (gi == null) {
-            gi = new GetInfo(emf, utx);
-        }
+        gi = new GetInfo(emf, utx);
+
         initialCommentsList();
     }
 
@@ -394,6 +392,7 @@ public class ItemController implements Serializable {
     public void addComment(AjaxBehaviorEvent event) {
         storeComment();
 
+
         commentuser = null;
         commentcontent = null;
     }
@@ -416,7 +415,6 @@ public class ItemController implements Serializable {
             newComment.setContent(commentcontent);
             newComment.setTime(new Date());
 
-            //itemID 为什么是0
             overallInfo.updateMessage(new CommentInfo(itemBean.getItem().getItemId(), commentuser, new Date(), commentcontent));
 
             ItemComment newIC = new ItemComment();

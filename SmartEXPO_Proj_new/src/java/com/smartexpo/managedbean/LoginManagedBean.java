@@ -207,6 +207,7 @@ public class LoginManagedBean implements Serializable {
 
         // TODO @storm 从数据库删除username和sessionid的tuple，保证下次不会自动登录
         //             依靠username删除，此时sessionid是未知的
+<<<<<<< HEAD
         GetInfo gi=new GetInfo(emf, utx);
         List<Sessioninfo> sinfos=gi.getSessioninfosByName(username);
         SessioninfoJpaController sijc=new SessioninfoJpaController(utx, emf);
@@ -214,6 +215,9 @@ public class LoginManagedBean implements Serializable {
             sijc.destroy(sinfos.get(i));
         }
         
+=======
+
+>>>>>>> e852416cc03da35ffe01cb62f5e94e8a81d08706
 
         username = password = null;
         for (int i = 1; i <= 5; ++i) {
