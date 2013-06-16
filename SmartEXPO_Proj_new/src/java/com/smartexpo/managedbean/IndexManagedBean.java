@@ -53,6 +53,9 @@ public class IndexManagedBean {
         gi = new GetInfo(emf, utx);
 
         List<Item> allItems = gi.getAllItems();
+        if (allItems == null || allItems.isEmpty()) {
+            return;
+        }
 
         // 主页用于切换的Items
         for (int i = 0; i < 3; i++) {

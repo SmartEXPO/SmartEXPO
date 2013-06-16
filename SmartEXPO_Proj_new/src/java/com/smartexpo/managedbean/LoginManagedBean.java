@@ -11,6 +11,7 @@ import com.smartexpo.bundle.exceptions.RollbackFailureException;
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.Sessioninfo;
+import com.smartexpo.models.SessioninfoPK;
 import com.smartexpo.util.MD5;
 import java.io.Serializable;
 import java.util.List;
@@ -210,11 +211,10 @@ public class LoginManagedBean implements Serializable {
                 .getExternalContext().getSession(false);
         session.invalidate();
 
-        
-        GetInfo gi=new GetInfo(emf, utx);
-        List<Sessioninfo> sinfos=gi.getSessioninfosByName(username);
-        SessioninfoJpaController sijc=new SessioninfoJpaController(utx, emf);
-        for(int i=0;i<sinfos.size();i++){
+
+        List<Sessioninfo> sinfos = gi.getSessioninfosByName(username);
+        SessioninfoJpaController sijc = new SessioninfoJpaController(utx, emf);
+        for (int i = 0; i < sinfos.size(); i++) {
             try {
                 sijc.destroy(sinfos.get(i).getSessioninfoPK());
             } catch (NonexistentEntityException ex) {
@@ -225,7 +225,7 @@ public class LoginManagedBean implements Serializable {
                 Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         username = password = null;
         for (int i = 1; i <= 5; ++i) {
             permissions[i] = false;
@@ -273,15 +273,16 @@ public class LoginManagedBean implements Serializable {
         sessionIDCookie.setMaxAge(60 * 60 * 24 * 14);
         response.addCookie(sessionIDCookie);
 
-        
-        
-        Sessioninfo sessioninfo =new Sessioninfo();
+
+        SessioninfoPK sessioninfoPK = new SessioninfoPK();
+        Sessioninfo sessioninfo = new Sessioninfo();
+        sessioninfo.setSessioninfoPK(sessioninfoPK);
         sessioninfo.getSessioninfoPK().setSessionid(sessionID);
-        sessioninfo.getSessioninfoPK().setUsername(username);
-        SessioninfoJpaController sijc=new SessioninfoJpaController(utx, emf);
+        sessioninfo.getSessioninfoPK().setUsername(user);
+        SessioninfoJpaController sijc = new SessioninfoJpaController(utx, emf);
+
         try {
             sijc.create(sessioninfo);
-            // TODO @storm 将信息插入到数据库中，username和sessionID两个String
         } catch (PreexistingEntityException ex) {
             Logger.getLogger(LoginManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RollbackFailureException ex) {

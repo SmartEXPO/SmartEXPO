@@ -21,7 +21,7 @@
         </init-param>
         <init-param>
             <param-name>notCheckURLList</param-name>
-            <param-value>login;theme_switcher</param-value>
+            <param-value>login;theme_switcher;sign_up</param-value>
         </init-param>
     </filter>
     <filter>

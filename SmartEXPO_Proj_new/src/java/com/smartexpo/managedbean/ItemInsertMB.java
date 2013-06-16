@@ -278,6 +278,7 @@ public class ItemInsertMB implements Serializable {
         desContent = desContent.replaceAll("\n", "<br />");
         desContent = desContent.replaceAll("\r", " ");
 
+        Logger.getLogger(ItemInsertMB.class.getName()).log(Level.WARNING, "saljfpsajfoasopfjoqw[ofgjwq[o");
         try {
             utx.begin();
 
@@ -353,7 +354,6 @@ public class ItemInsertMB implements Serializable {
     }
 
     public String forwardStep() {
-        Logger.getLogger(ItemInsertMB.class.getName()).log(Level.SEVERE, "nextpage = {0}", nextPage);
         return nextPage;
     }
 

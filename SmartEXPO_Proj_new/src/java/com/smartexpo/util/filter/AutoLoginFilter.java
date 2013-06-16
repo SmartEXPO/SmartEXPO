@@ -14,8 +14,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -136,7 +134,6 @@ public class AutoLoginFilter implements Filter {
 
         doBeforeProcessing(request, response);
 
-        Logger.getLogger(AutoLoginFilter.class.getName()).log(Level.WARNING, "aksfljwqkfwqljfwqjfowpqjofwqpjolq");
         // Filter begin
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
