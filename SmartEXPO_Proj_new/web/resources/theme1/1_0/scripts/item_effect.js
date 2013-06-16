@@ -9,6 +9,8 @@ var isCommentBarDisplayed = false;
 $(document).ready(function() {
     $('#users_comment').perfectScrollbar();
     $('#description').perfectScrollbar();
+            regEditBtn();
+
 
     $('.popup_link').magnificPopup({
         type: 'image'
@@ -179,9 +181,8 @@ $(document).ready(function() {
 //    });
     $("#frame_image").autofit({height: 485, width: 480});
 
-    $(window).load(function() {
-        regEditBtn();
-    });
+    
+    
 
 });
 
