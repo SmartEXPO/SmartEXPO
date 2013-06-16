@@ -345,4 +345,10 @@ public class GetInfo implements Serializable {
         }
         return sinfos;
     }
+    
+    
+    public List<Sessioninfo> getAllSessioninfos(){
+        List<Sessioninfo> sinfos=em.createNamedQuery("Sessioninfo.findAll").getResultList();
+        return sinfos;
+    }
 }
