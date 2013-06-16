@@ -103,7 +103,7 @@
                     <div style="text-align:center;padding-top:20px;">
                         <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
                         <h2 style="margin-top:-2px;padding-left:40px;">
-                            <h:outputText value="#{indexBundle.exhibitionAreaMap}" 
+                            <h:outputText value="#{info['sideBar.exhibitionAreaMap']}" 
                                           escape="false" />
                         </h2>
                         <!--这个地方貌似那个图片不是居中做的-->
@@ -113,7 +113,7 @@
                         <br /><br />
                         <h:graphicImage library="#{info.lib}" name="images/decobar.png" />
                         <h2 style="margin-top:-2px;padding-left:40px;">
-                            <h:outputText value="#{indexBundle.recommendItem}"
+                            <h:outputText value="#{info['sideBar.recommendItem']}"
                                           escape="false" />
                         </h2>
                         <div style="text-align: center;">

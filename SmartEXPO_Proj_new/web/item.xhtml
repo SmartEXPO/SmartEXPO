@@ -179,8 +179,7 @@
                                       value="#{searchManagedBean.searchedList}"
                                       var="searchedItem">
                             <h:column>
-                                <h:outputLink value="item.xhtml">
-                                    <f:param name="id" value="#{searchedItem.itemId}" />
+                                <h:outputLink value="../../item/#{searchedItem.itemId}/#{searchedItem.itemName.replaceAll(' ', '-')}">
                                     #{searchedItem.itemName}
                                 </h:outputLink>
                             </h:column>
