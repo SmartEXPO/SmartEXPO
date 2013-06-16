@@ -507,7 +507,7 @@ public class ItemViewManagedBean implements Serializable {
     }
 
     // @stormmax TODO 存储修改过后的Audio和Video部分，分别在audios和videos两个list中
-    public void avEditFinish() {
+    public String avEditFinish() {
         selectedItem.setHtml(null);
         ItemJpaController ijc = new ItemJpaController(utx, emf);
 
@@ -605,14 +605,11 @@ public class ItemViewManagedBean implements Serializable {
             }
         }
 
-        RequestContext.getCurrentInstance()
-                .execute(("alert('Modify successfully!');location.reload(true)"));
-
+        return "item_view.xhtml";
     }
 
-    public void back() {
-        RequestContext.getCurrentInstance()
-                .execute(("location.reload(true)"));
+    public String back() {
+        return "item_view.xhtml?faces-redirect=true";
     }
 
     public void upload(FileUploadEvent event) {

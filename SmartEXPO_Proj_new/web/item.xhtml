@@ -258,7 +258,9 @@
                 <h:inputText id="username" required="true" class="inbox username"
                              value="#{loginManagedBean.username}" />
                 <h:inputSecret id="password" required="true" class="inbox password"
-                               value="#{loginManagedBean.password}" />
+                               value="#{loginManagedBean.password}">
+                    <f:converter converterId="encryptConverter" />
+                </h:inputSecret>
 
                 <h:selectBooleanCheckbox style="margin-top:15px;" id="autologin"
                                          value="#{loginManagedBean.autoLogin}" />
