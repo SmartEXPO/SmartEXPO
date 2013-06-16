@@ -31,7 +31,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author Boy
  */
-@ManagedBean(eager = true)
+@ManagedBean
 @SessionScoped
 public class LoginManagedBean implements Serializable {
 
@@ -46,6 +46,8 @@ public class LoginManagedBean implements Serializable {
     private String username;
     private String password;
     private boolean[] permissions;
+    @ManagedProperty(value = "false")
+    private boolean autoLogin;
     @ManagedProperty(value = "false")
     private boolean status;
 
@@ -64,21 +66,27 @@ public class LoginManagedBean implements Serializable {
         if (gi == null) {
             gi = new GetInfo(emf, utx);
         }
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SignUpManagedBean signUpManagedBean = (SignUpManagedBean) facesContext
-                .getELContext().getELResolver()
-                .getValue(facesContext.getELContext(), null, "signUpManagedBean");
 
-        username = signUpManagedBean.getUsername();
-        password = signUpManagedBean.getPassword();
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        String sessionUsername = (String) session.getAttribute("user");
 
-        if (username != null && !username.equals("")
-                && password != null && !password.equals("")) {
-            // 数据库验证
-            setStatus(true);
-            HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                    .getExternalContext().getSession(false);
-            session.setAttribute("user", username);
+        if (sessionUsername != null) {
+            List<Manager> managers = gi.getManagerByName(sessionUsername);
+            if (managers == null || managers.isEmpty()) {
+            } else {
+                Manager manager = managers.get(0);
+                username = manager.getUsername();
+                password = manager.getPassword();
+
+                permissions[1] = manager.isPermission1();
+                permissions[2] = manager.isPermission2();
+                permissions[3] = manager.isPermission3();
+                permissions[4] = manager.isPermission4();
+                permissions[5] = manager.isPermission5();
+
+                setStatus(true);
+            }
         }
     }
 
@@ -108,6 +116,20 @@ public class LoginManagedBean implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the autoLogin
+     */
+    public boolean isAutoLogin() {
+        return autoLogin;
+    }
+
+    /**
+     * @param autoLogin the autoLogin to set
+     */
+    public void setAutoLogin(boolean autoLogin) {
+        this.autoLogin = autoLogin;
     }
 
     /**
@@ -150,8 +172,8 @@ public class LoginManagedBean implements Serializable {
                     .getExternalContext().getSession(false);
             session.setAttribute("user", username);
 
-            if (true) { // choose auto log in
-//                recordCookie(username);
+            if (isAutoLogin()) { // choose auto log in check box
+                recordCookie(username);
             }
 
             RequestContext.getCurrentInstance()
@@ -180,13 +202,13 @@ public class LoginManagedBean implements Serializable {
                 .getExternalContext().getSession(false);
         session.invalidate();
 
+        // TODO @storm 从数据库删除username和sessionid的tuple，保证下次不会自动登录
+        //             依靠username删除，此时sessionid是未知的
+
+        username = password = null;
         for (int i = 1; i <= 5; ++i) {
             permissions[i] = false;
         }
-
-        // TODO @storm 从数据库删除username和sessionid的tuple，保证下次不会自动登录
-        //             依靠username删除，此时sessionid是未知的
-        username = password = null;
         setStatus(false);
 
         RequestContext.getCurrentInstance()

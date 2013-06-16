@@ -5,9 +5,7 @@
 package com.smartexpo.util.filter;
 
 import com.smartexpo.controls.GetInfo;
-import com.smartexpo.managedbean.LoginManagedBean;
 import com.smartexpo.managedbean.OverallInfo;
-import com.smartexpo.models.Manager;
 import com.smartexpo.models.Sessioninfo;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -18,8 +16,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.el.ELContext;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -140,68 +136,50 @@ public class AutoLoginFilter implements Filter {
 
 
         // Filter begin
-//        HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse res = (HttpServletResponse) response;
-//        HttpSession session = req.getSession(true);
-//
-//        if ((!isURLNotInFilterList(req)) && session.getAttribute(sessionKey) == null) {
-//            return;
-//        }
-//
-//        String username = null;
-//        String sessionid; // last sessionid, not current
-//        Cookie[] cookies;
-//        boolean isAutoLogin = false;
-//
-//        String user = (String) session.getAttribute(sessionKey);
-//        if (user == null || user.equals("")) {
-//            cookies = req.getCookies();
-//            for (int i = 0; i < cookies.length; ++i) {
-//                Cookie cookie = cookies[i];
-//                if (cookie.getName().equals(OverallInfo.COOKIE_NAME_USERNAME)) {
-//                    username = cookie.getValue();
-//                }
-//                if (cookie.getName().equals(OverallInfo.COOKIE_NAME_SESSION_ID)) {
-//                    sessionid = cookie.getValue();
-//                }
-//            }
-//            Sessioninfo sessionInfo = gi.getSessioninfosByName(username).get(0);
-//            if (sessionInfo == null) {
-//                isAutoLogin = false;
-//            } else {
-//                isAutoLogin = true;
-//            }
-//        }
-//        if (isAutoLogin) {
-//            FacesContext context = FacesContext.getCurrentInstance();
-//            ELContext eLContext = context.getELContext();
-//            LoginManagedBean loginManagedBean = (LoginManagedBean) context.getApplication()
-//                    .getELResolver().getValue(eLContext, null, "loginManagedBean");
-//            if (loginManagedBean != null) {
-//                List<Manager> managers = gi.getManagerByName(username);
-//                boolean[] permissions;
-//                if (managers == null || managers.isEmpty()) {
-//                    return;
-//                } else {
-//                    Manager manager = managers.get(0);
-//                    permissions = new boolean[6];
-//
-//                    permissions[1] = manager.isPermission1();
-//                    permissions[2] = manager.isPermission2();
-//                    permissions[3] = manager.isPermission3();
-//                    permissions[4] = manager.isPermission4();
-//                    permissions[5] = manager.isPermission5();
-//                }
-//                loginManagedBean.setStatus(true);
-//                loginManagedBean.setUsername(username);
-//                loginManagedBean.setPermissions(permissions);
-//            }
-//        }
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        HttpSession session = req.getSession();
+
+        if ((!isURLNotInFilterList(req)) && session.getAttribute(sessionKey) == null) {
+            String username = null;
+            String sessionid; // last sessionid, not current
+            Cookie[] cookies;
+            boolean isAutoLogin = false;
+
+            String user = (String) session.getAttribute(sessionKey);
+            if (user == null || user.equals("")) {
+                cookies = req.getCookies();
+                if (cookies != null) {
+                    for (int i = 0; i < cookies.length; ++i) {
+                        Cookie cookie = cookies[i];
+                        if (cookie.getName().equals(OverallInfo.COOKIE_NAME_USERNAME)) {
+                            username = cookie.getValue();
+                        }
+                        if (cookie.getName().equals(OverallInfo.COOKIE_NAME_SESSION_ID)) {
+                            sessionid = cookie.getValue();
+                        }
+                    }
+                }
+                List<Sessioninfo> sessioninfos = gi.getSessioninfosByName(username);
+                if (sessioninfos == null || sessioninfos.isEmpty()) {
+                    isAutoLogin = false;
+                } else {
+                    Sessioninfo sessionInfo = gi.getSessioninfosByName(username).get(0);
+                    if (sessionInfo == null) {
+                        isAutoLogin = false;
+                    } else { // 要将sessionid与sessionInfo中sessionid
+                        isAutoLogin = true;
+                    }
+                }
+            }
+            if (isAutoLogin) {
+                session.setAttribute("user", username);
+            }
+        }
         // Filter end
 
 
         Throwable problem = null;
-
 
         try {
             chain.doFilter(request, response);
