@@ -3,11 +3,104 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | Insert | Videos</ui:define>
         <ui:define name="content">
+            <h:outputText value="Videos" style="font-size: 200%;" />
+            <p:separator style="height: 5px;" />
 
+            <h:form>
+                <p:growl id="msg" sticky="true" showDetail="true" />
+
+                <p:dataTable id="video_list" var="videoList"
+                             value="#{itemInsertMB.videos}"
+                             style="text-align: center;">
+                    <p:column>
+                        <p:commandButton icon="ui-icon-minusthick"
+                                         update="video_list"
+                                         action="#{itemInsertMB.removeVideo}">
+                            <f:setPropertyActionListener value="#{videoList}"
+                                                         target="#{itemInsertMB.selectedVideo}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Video Title">
+                        <h:outputText value="#{videoList.title}" />
+                    </p:column>
+                    <p:column headerText="Video URL">
+                        <h:outputText value="#{videoList.url}" />
+                    </p:column>
+                    <p:column headerText="Video Description">
+                        <h:outputText value="#{videoList.description}" />
+                    </p:column>
+                    <f:facet name="footer">
+                        Total #{itemInsertMB.videoSize} videos.
+                    </f:facet>
+                </p:dataTable>
+
+                <p:commandButton icon="ui-icon-plusthick"
+                                 ajax="true" update="video_add_dialog"
+                                 oncomplete="videoVar.show()" />
+                <div>
+                    <p:commandButton value="Back" ajax="false"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{itemInsertMB.forwardStep}"
+                                     actionListener="#{itemInsertMB.forwardPage}">
+                        <f:attribute name="next_page" value="insert_audios.xhtml" />
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-check" update="msg"
+                                     value="Submit"
+                                     action="#{itemInsertMB.persist}" />
+                </div>
+
+                <p:dialog id="video_add_dialog" header="Enter Video Info"
+                          widgetVar="videoVar" resizable="false" modal="true">
+                    <h:panelGrid columns="2" columnClasses="label,value">
+                        <h:outputLabel for="video_title" value="Video Title" />
+                        <p:inputText id="video_title"
+                                     value="#{itemInsertMB.videoTitle}" />
+
+                        <h:outputLabel for="video_upload" value="Video Upload" />
+                        <h:form enctype="multipart/form-data">
+                            <p:fileUpload id="video_upload"
+                                          fileUploadListener="#{itemInsertMB.upload}"
+                                          mode="advanced"
+                                          update="video_upload_msg"
+                                          auto="true"
+                                          sizeLimit="1073741824"
+                                          allowTypes="/(\.|\/)(mp4|ogg)$/"/>
+                            <p:growl id="video_upload_msg" showDetail="true"/>
+                        </h:form>
+
+                        <h:outputLabel for="video_des" value="Video Description" />
+                        <p:inputTextarea id="video_des" autoResize="false"
+                                         value ="#{itemInsertMB.videoDes}"  />
+                        <p:commandButton value="Add" icon="ui-icon-check"
+                                         ajax="true" update="video_list video_add_dialog"
+                                         action="#{itemInsertMB.addVideo}"
+                                         oncomplete="videoVar.hide()" />
+                    </h:panelGrid>
+                </p:dialog>
+
+
+                <p:dialog id="check_and_submit" header="Check and Submit"
+                          widgetVar="submitVar" resizable="false" modal="true">
+                    <h:graphicImage value="#{itemInsertMB.imageurl}" />
+
+                    <h:panelGrid columns="2">
+
+                    </h:panelGrid>
+                    <h:outputText value="#{itemInsertMB.itemName}" />
+
+                    <h:outputText value="#{itemInsertMB.desTitle}" />
+                    <h:outputText value="#{itemInsertMB.desContent}" />
+
+                    <p:commandButton value="Submit" update="msg"
+                                     action="#{itemInsertMB.persist}" />
+                </p:dialog>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

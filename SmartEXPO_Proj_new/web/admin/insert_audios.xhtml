@@ -3,11 +3,90 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/admin/admin_template.xhtml">
         <ui:define name="title">Item | Insert | Audios</ui:define>
         <ui:define name="content">
+            <h:outputText value="Audios" style="font-size: 200%;" />
+            <p:separator style="height: 5px;" />
 
+            <h:form>
+                <p:dataTable id="audio_list" var="audioList"
+                             value="#{itemInsertMB.audios}"
+                             style="text-align: center;">
+                    <p:column>
+                        <p:commandButton icon="ui-icon-minusthick"
+                                         update="audio_list"
+                                         action="#{itemInsertMB.removeAudio}">
+                            <f:setPropertyActionListener value="#{audioList}"
+                                                         target="#{itemInsertMB.selectedAudio}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Audio Title">
+                        <h:outputText value="#{audioList.title}" />
+                    </p:column>
+                    <p:column headerText="Audio URL">
+                        <h:outputText value="#{audioList.url}" />
+                    </p:column>
+                    <p:column headerText="Audio Description">
+                        <h:outputText value="#{audioList.description}" />
+                    </p:column>
+                    <f:facet name="footer">
+                        Total #{itemInsertMB.audioSize} audios.
+                    </f:facet>
+                </p:dataTable>
+
+                <p:commandButton icon="ui-icon-plusthick"
+                                 ajax="true" update="audio_add_dialog"
+                                 oncomplete="audioVar.show()" />
+
+                <p:dialog id="audio_add_dialog" header="Enter Audio Info"
+                          widgetVar="audioVar" resizable="false" modal="true">
+                    <h:panelGrid columns="2" columnClasses="label,value">
+                        <h:outputLabel for="audio_title" value="Audio Title" />
+                        <p:inputText id="audio_title"
+                                     value="#{itemInsertMB.audioTitle}" />
+
+                        <h:outputLabel for="audio_upload" value="Audio Upload" />
+                        <h:form enctype="multipart/form-data">
+                            <p:fileUpload id="audio_upload"
+                                          fileUploadListener="#{itemInsertMB.upload}"
+                                          mode="advanced"
+                                          update="audio_upload_msg"
+                                          auto="true"
+                                          sizeLimit="104857600"
+                                          allowTypes="/(\.|\/)(wav|mp3|ogg)$/" />
+                            <p:growl id="audio_upload_msg" showDetail="true"/>
+                        </h:form>
+
+                        <h:outputLabel for="audio_des" value="Audio Description" />
+                        <p:inputTextarea id="audio_des" autoResize="true"
+                                         value="#{itemInsertMB.audioDes}" />
+
+                        <p:commandButton value="Add" icon="ui-icon-check"
+                                         ajax="true" update="audio_list audio_add_dialog"
+                                         action="#{itemInsertMB.addAudio}"
+                                         oncomplete="audioVar.hide()"/>
+                    </h:panelGrid>
+                </p:dialog>
+
+                <div>
+                    <p:commandButton value="Back" ajax="false"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{itemInsertMB.forwardStep}"
+                                     actionListener="#{itemInsertMB.forwardPage}">
+                        <f:attribute name="next_page" value="insert_authors.xhtml" />
+                    </p:commandButton>
+                    <p:commandButton value="Next" ajax="false"
+                                     icon="ui-icon-arrowreturnthick-1-e"
+                                     action="#{itemInsertMB.forwardStep}"
+                                     actionListener="#{itemInsertMB.forwardPage}">
+                        <f:attribute name="next_page" value="insert_videos.xhtml" />
+                    </p:commandButton>
+                </div>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

@@ -49,7 +49,12 @@
                     <p:inputTextarea id="des_content" autoResize="false"
                                      value="#{itemInsertMB.desContent}" />
                 </h:panelGrid>
-                <p:commandButton value="Next" action="#{itemInsertMB.nextStep}" />
+                <p:commandButton value="Next" ajax="false"
+                                 icon="ui-icon-arrowreturnthick-1-e"
+                                 action="#{itemInsertMB.forwardStep}"
+                                 actionListener="#{itemInsertMB.forwardPage}">
+                    <f:attribute name="next_page" value="insert_authors.xhtml" />
+                </p:commandButton>
             </h:form>
         </ui:define>
     </ui:composition>
