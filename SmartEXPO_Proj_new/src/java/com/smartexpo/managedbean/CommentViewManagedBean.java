@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.smartexpo.temp;
+package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.jpgcontrollers.CommentJpaController;

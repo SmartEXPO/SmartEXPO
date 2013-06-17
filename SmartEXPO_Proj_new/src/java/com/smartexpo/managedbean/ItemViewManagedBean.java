@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.smartexpo.temp;
+package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.jpgcontrollers.AudioJpaController;
@@ -29,6 +29,7 @@ import com.smartexpo.models.ItemComment;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
 import com.smartexpo.util.FileManager;
+import com.sun.msv.verifier.IVerifier;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +47,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -553,6 +559,108 @@ public class ItemViewManagedBean implements Serializable {
         List<Video> vs = gi.getVideoByItemID(selectedItem.getItemId());
         AudioJpaController ajc = new AudioJpaController(utx, emf);
         VideoJpaController vjc = new VideoJpaController(utx, emf);
+
+        for (int i = 0; i < audios.size(); ++i) {
+            LOG.log(Level.WARNING, "audio anme {0} = {1}", new Object[]{i, audios.get(i).getTitle()});
+        }
+        for (int i = 0; i < videos.size(); ++i) {
+            LOG.log(Level.WARNING, "video name {0} = {1}", new Object[]{i, videos.get(i).getTitle()});
+        }
+
+        LOG.log(Level.WARNING, "as.size()" + as.size());
+
+
+        for (int i = 0; i < audios.size(); i++) {
+            Audio a = audios.get(i);
+            if (as.contains(a)) {
+                try {
+                    ajc.edit(a);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    utx.begin();
+                    em.persist(a);
+                    ItemAudio ia = new ItemAudio();
+                    ia.setItemId(selectedItem);
+                    ia.setAudioId(a);
+                    em.persist(ia);
+                    utx.commit();
+                } catch (NotSupportedException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SystemException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (HeuristicMixedException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (HeuristicRollbackException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SecurityException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalStateException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        }
+
+        for (int i = 0; i < videos.size(); i++) {
+            Video v = videos.get(i);
+            if (vs.contains(v)) {
+                try {
+                    vjc.edit(v);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+
+                try {
+                    utx.begin();
+                    em.persist(v);
+                    ItemVideo iv = new ItemVideo();
+
+                    iv.setItemId(selectedItem);
+                    iv.setVideoId(v);
+
+
+                    em.persist(iv);
+
+
+                    utx.commit();
+
+                } catch (NotSupportedException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SystemException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RollbackException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (HeuristicMixedException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (HeuristicRollbackException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SecurityException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalStateException ex) {
+                    Logger.getLogger(ItemViewManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        }
+
 
         for (int i = 0; i < as.size(); i++) {
             Audio a = as.get(i);

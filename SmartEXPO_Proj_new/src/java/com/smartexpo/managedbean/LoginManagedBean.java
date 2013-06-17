@@ -12,7 +12,6 @@ import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Manager;
 import com.smartexpo.models.Sessioninfo;
 import com.smartexpo.models.SessioninfoPK;
-import com.smartexpo.util.MD5;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;

@@ -13,7 +13,6 @@ import com.smartexpo.models.ItemAudio;
 import com.smartexpo.models.ItemAuthor;
 import com.smartexpo.models.ItemVideo;
 import com.smartexpo.models.Video;
-import com.smartexpo.temp.ItemViewManagedBean;
 import com.smartexpo.util.FileManager;
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.smartexpo.temp;
+package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.jpgcontrollers.ManagerJpaController;
@@ -101,6 +101,7 @@ public class UserViewManagedBean implements Serializable {
         FacesContext.getCurrentInstance()
                 .addMessage(null, new FacesMessage("Edit cancelled."));
     }
+    private static final Logger LOG = Logger.getLogger(UserViewManagedBean.class.getName());
 
     // 缺少从数据库中删除这一步，目标为selectedUser
     public void destroyUser() {
@@ -109,8 +110,11 @@ public class UserViewManagedBean implements Serializable {
 
             ManagerPermissionJpaController mpjc = new ManagerPermissionJpaController(utx, emf);
             List<ManagerPermission> mps = gi.getManagerPermissionsByManagerID(selectedUser.getManagerId());
-            for (int i = 0; i < mps.size(); i++) {
-                mpjc.destroy(mps.get(i).getManagerPermissionId());
+            if (mps == null) {
+            } else {
+                for (int i = 0; i < mps.size(); i++) {
+                    mpjc.destroy(mps.get(i).getManagerPermissionId());
+                }
             }
 
             ManagerJpaController mjc = new ManagerJpaController(utx, emf);
