@@ -5,6 +5,7 @@
 package com.smartexpo.managedbean;
 
 import com.smartexpo.controls.GetInfo;
+import com.smartexpo.jpgcontrollers.CommentJpaController;
 import com.smartexpo.managedbean.item.Audio;
 import com.smartexpo.managedbean.item.Author;
 import com.smartexpo.managedbean.item.Description;
@@ -404,6 +405,14 @@ public class ItemController implements Serializable {
     public void addComment(AjaxBehaviorEvent event) {
         storeComment();
 
+        List<com.smartexpo.models.Comment> allComments = gi.getCommentByItemID(itemBean.getId());
+        if (allComments != null && !allComments.isEmpty()) {
+            usernameContentPairs = new ArrayList<UsernameContentPair>();
+            for (com.smartexpo.models.Comment comment : allComments) {
+                UsernameContentPair newUsernameContentPair = new UsernameContentPair(comment.getUsername(), comment.getContent());
+                usernameContentPairs.add(newUsernameContentPair);
+            }
+        }
 
         commentuser = null;
         commentcontent = null;

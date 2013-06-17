@@ -127,10 +127,12 @@
                         <h1>#{itemController.itemBean.name}</h1>
                         <div class="separator"
                              style="margin-top:-10px;margin-bottom:-15px;" />
-                        <ui:repeat value="#{itemController.authorBean.names}"
-                                   var="name">
-                            <h3>#{name}</h3>
-                        </ui:repeat>
+                        <h3>
+                            <ui:repeat value="#{itemController.authorBean.names}"
+                                       var="name">
+                                #{name} 
+                            </ui:repeat>
+                        </h3>
                     </div>
 
                     <div id="description">
@@ -143,19 +145,21 @@
                                                   escape="false" />
 
                                     <h:column id="from_data" rendered="#{!itemController.itemBean.hasHtml}">
-                                        <h:column rendered="#{!itemController.authorEmpty}">
-                                            <h1 class="content_title">author introduction</h1>
-                                        </h:column>
-                                        <ui:repeat value="#{itemController.authorBean.introductions}"
-                                                   var="intro">
-                                            <h:outputText value="#{intro}" escape="false" />
-                                        </ui:repeat>
-
                                         <h1 class="content_title">Description</h1>
                                         <p id="description_content">
                                             <h:outputText value="#{itemController.descriptionBean.content}"
                                                           escape="false" />
                                         </p>
+
+                                        <h:column rendered="#{!itemController.authorEmpty}">
+                                            <h1 class="content_title">author introduction</h1>
+                                        </h:column>
+                                        <ui:repeat value="#{itemController.authorBean.introductions}"
+                                                   var="intro">
+                                            <p class="description_content">
+                                                <h:outputText value="#{intro}" escape="false" />
+                                            </p>
+                                        </ui:repeat>
 
                                         <h:column rendered="#{!itemController.audioUrlEmpty}">
                                             <h1 class="content_title">audio</h1>
