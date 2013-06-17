@@ -82,7 +82,7 @@ public class CommentViewManagedBean implements Serializable {
             return "";
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors != null && authors.size() != 0) {
+        if (authors != null && !authors.isEmpty()) {
             this.authorName = authors.get(0).getName();
             return authorName;
         } else {
@@ -99,7 +99,7 @@ public class CommentViewManagedBean implements Serializable {
             return null;
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors.size() != 0) {
+        if (!authors.isEmpty()) {
             this.authorBirthDate = authors.get(0).getBirthday();
             return authorBirthDate;
         } else {
@@ -116,7 +116,7 @@ public class CommentViewManagedBean implements Serializable {
             return null;
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors.size() != 0) {
+        if (!authors.isEmpty()) {
             this.authorDeathDate = authors.get(0).getDeathDate();
             return authorDeathDate;
         } else {
@@ -133,7 +133,7 @@ public class CommentViewManagedBean implements Serializable {
             return "";
         }
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors.size() != 0) {
+        if (!authors.isEmpty()) {
             this.authorIntro = authors.get(0).getIntroduction();
             return authorIntro;
         } else {
@@ -150,7 +150,7 @@ public class CommentViewManagedBean implements Serializable {
             return "";
         }
         List<Audio> audios = gi.getAudioByItemID(selectedItem.getItemId());
-        if (audios.size() != 0) {
+        if (!audios.isEmpty()) {
             this.audioTitle = audios.get(0).getTitle();
             return audioTitle;
         }
@@ -167,7 +167,7 @@ public class CommentViewManagedBean implements Serializable {
             return "";
         }
         List<Video> videos = gi.getVideoByItemID(selectedItem.getItemId());
-        if (videos.size() != 0) {
+        if (!videos.isEmpty()) {
             this.VideoTitle = videos.get(0).getTitle();
             return VideoTitle;
         }

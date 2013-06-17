@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.smartexpo.managedbean;
+package com.smartexpo.managedbean.admin;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.models.Audio;

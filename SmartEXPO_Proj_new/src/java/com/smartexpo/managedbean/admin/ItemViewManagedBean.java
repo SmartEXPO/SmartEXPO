@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.smartexpo.managedbean;
+package com.smartexpo.managedbean.admin;
 
 import com.smartexpo.controls.GetInfo;
 import com.smartexpo.jpgcontrollers.AudioJpaController;
@@ -407,7 +407,7 @@ public class ItemViewManagedBean implements Serializable {
         }
 
         List<Author> authors = gi.getAuthorsByItemID(selectedItem.getItemId());
-        if (authors == null || descriptions.isEmpty()) {
+        if (authors == null || authors.isEmpty()) {
             selectedAuthor = new Author();
         } else {
             selectedAuthor = authors.get(0);

@@ -4,7 +4,7 @@
  */
 package com.smartexpo.util;
 
-import com.smartexpo.managedbean.ItemInsertMB;
+import com.smartexpo.managedbean.admin.ItemInsertMB;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
